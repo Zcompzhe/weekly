@@ -7,7 +7,7 @@
     bottom: 0px;
     background-color: #eff2f7;
     z-index: 100;
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: auto;
     .console-main {
       position: relative;

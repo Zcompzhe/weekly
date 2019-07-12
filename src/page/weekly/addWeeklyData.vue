@@ -367,11 +367,12 @@
 
         <el-row :gutter="20">
           <el-col :span="20">
-            <div class="bar">
+            <div class="bar" >
               <el-form-item
                 label="下周的三级及以上风险作业安排、位置及内容"
                 prop="thirdLevelPlusWorkContent"
                 placeholder="请输入下周的三级及以上风险作业安排、位置及内容"
+
               >
                 <el-input
                   type="textarea"
