@@ -7,9 +7,6 @@ const Layout = r => require.ensure([], () => r(require('../page/layout')), 'layo
 const Quick = r => require.ensure([], () => r(require('../page/quick/quick')), 'quick');
 
 
-
-
-
 //周报数据管理
 const weeklyData = r => require.ensure([], () => r(require('../page/weekly/weeklyDataManage')), 'weeklyDataManage');
 
@@ -19,6 +16,11 @@ const addWeekly = r => require.ensure([], () => r(require('../page/weekly/addWee
 //周报数据管理
 const importWeekly = r => require.ensure([], () => r(require('../page/weekly/importWeeklyData')), 'importWeeklyData');
 
+
+//基本信息管理
+const project = r => require.ensure([], () => r(require('../page/back/projectMana')), 'projectMana');  
+const admin = r => require.ensure([], () => r(require('../page/back/adminMana')), 'admin');  
+const supervision = r => require.ensure([], () => r(require('../page/back/supervisionMana')), 'supervision');  
 export default [{
   path: Config.route.login,
   name: 'Login',
@@ -65,6 +67,34 @@ export default [{
     meta: {
       activePath: '/weekly/importWeeklyData',
       bcrumd: ['周报管理', '导入周报'],
+    }
+  }, 
+
+  { // 导入周报数据
+    path: '/back/projectMana',
+    name: 'project',
+    component: project,
+    meta: {
+      activePath: '/back/projectMana',
+      bcrumd: ['项目管理'],
+    }
+  }, 
+  { // 导入周报数据
+    path: '/back/adminMana',
+    name: 'admin',
+    component: admin,
+    meta: {
+      activePath: '/back/adminMana',
+      bcrumd: ['监理管理单位管理'],
+    }
+  }, 
+  { // 导入周报数据
+    path: '/back/supervisionMana',
+    name: 'supervision',
+    component: supervision,
+    meta: {
+      activePath: '/back/supervisionMana',
+      bcrumd: ['项目管理'],
     }
   }, 
   ]

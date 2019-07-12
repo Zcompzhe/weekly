@@ -15,13 +15,13 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="月报开始日期" prop="monthlyStartTime" placeholder="请选择月报开始日期">
+              <el-form-item label="月报开始日期" prop="monthStartTime" placeholder="请选择月报开始日期">
                 <el-date-picker
-                  v-model="ruleForm.monthlyStartTime"
+                  v-model="ruleForm.monthStartTime"
                   align="right"
                   type="date"
                   placeholder="选择日期"
-                  :picker-options="pickerOptions"
+
                   style="min-width:240px"
                 ></el-date-picker>
               </el-form-item>
@@ -36,7 +36,7 @@
                   align="right"
                   type="date"
                   placeholder="选择日期"
-                  :picker-options="pickerOptions"
+
                   style="min-width:240px"
                 ></el-date-picker>
               </el-form-item>
@@ -74,9 +74,9 @@
                 >
                   <el-option
                     v-for="item in projectIdOptions"
-                    :key="item.projectId"
-                    :label="item.projectId"
-                    :value="item.projectId"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -93,9 +93,9 @@
                 >
                   <el-option
                     v-for="item in adminIdOptions"
-                    :key="item.adminId"
-                    :label="item.adminId"
-                    :value="item.adminId"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -113,9 +113,9 @@
                 >
                   <el-option
                     v-for="item in supervisionIdOptions"
-                    :key="item.supervisionId"
-                    :label="item.supervisionId"
-                    :value="item.supervisionId"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -148,9 +148,9 @@
                 >
                   <el-option
                     v-for="item in constructDeptEnterpriseOptions"
-                    :key="item.constructDeptEnterprise"
-                    :label="item.constructDeptEnterprise"
-                    :value="item.constructDeptEnterprise"
+                    :key="item.name"
+                    :label="item.name"
+                    :value="item.name"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -183,9 +183,9 @@
                 >
                   <el-option
                     v-for="item in districtIdOptions"
-                    :key="item.districtId"
-                    :label="item.districtId"
-                    :value="item.districtId"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -229,7 +229,7 @@
                   align="right"
                   type="date"
                   placeholder="选择日期"
-                  :picker-options="pickerOptions"
+            
                   style="min-width:240px"
                 ></el-date-picker>
               </el-form-item>
@@ -243,7 +243,7 @@
                   align="right"
                   type="date"
                   placeholder="选择日期"
-                  :picker-options="pickerOptions"
+        
                   style="min-width:240px"
                 ></el-date-picker>
               </el-form-item>
@@ -336,9 +336,9 @@
                 >
                   <el-option
                     v-for="item in actualStateOptions"
-                    :key="item.actualState"
-                    :label="item.actualState"
-                    :value="item.actualState"
+                    :key="item.name"
+                    :label="item.name"
+                    :value="item.name"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -355,9 +355,9 @@
                 >
                   <el-option
                     v-for="item in controlledStateOptions"
-                    :key="item.controlledState"
-                    :label="item.controlledState"
-                    :value="item.controlledState"
+                    :key="item.name"
+                    :label="item.name"
+                    :value="item.name"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -367,12 +367,11 @@
 
         <el-row :gutter="20">
           <el-col :span="20">
-            <div class="bar" >
+            <div class="bar">
               <el-form-item
                 label="下周的三级及以上风险作业安排、位置及内容"
                 prop="thirdLevelPlusWorkContent"
                 placeholder="请输入下周的三级及以上风险作业安排、位置及内容"
-
               >
                 <el-input
                   type="textarea"
@@ -410,8 +409,8 @@
                 v-model="ruleForm.hasWorkNextWeek"
                 style="margin-left:40px;width:150px "
               >
-                <el-radio :label="1">有</el-radio>
-                <el-radio :label="0">无</el-radio>
+                <el-radio :label="true">有</el-radio>
+                <el-radio :label="false">无</el-radio>
               </el-radio-group>
             </div>
           </el-col>
@@ -423,8 +422,8 @@
                 v-model="ruleForm.hasTowerErectionNextWeek"
                 style="margin-left:40px;width:150px"
               >
-                <el-radio :label="1">有</el-radio>
-                <el-radio :label="0">无</el-radio>
+                <el-radio :label="true">有</el-radio>
+                <el-radio :label="false">无</el-radio>
               </el-radio-group>
             </div>
           </el-col>
@@ -438,8 +437,8 @@
                 v-model="ruleForm.hasThirdLevelPlusWork"
                 style="margin-left:40px;width:150px"
               >
-                <el-radio :label="1">有</el-radio>
-                <el-radio :label="0">无</el-radio>
+                <el-radio :label="true">有</el-radio>
+                <el-radio :label="false">无</el-radio>
               </el-radio-group>
             </div>
           </el-col>
@@ -451,8 +450,8 @@
                 v-model="ruleForm.hasFourthLevelWork"
                 style="margin-left:40px;width:150px"
               >
-                <el-radio :label="1">有</el-radio>
-                <el-radio :label="0">无</el-radio>
+                <el-radio :label="true">有</el-radio>
+                <el-radio :label="false">无</el-radio>
               </el-radio-group>
             </div>
           </el-col>
@@ -464,8 +463,8 @@
                 v-model="ruleForm.hasFifthLevelWork"
                 style="margin-left:40px;width:150px"
               >
-                <el-radio :label="1">有</el-radio>
-                <el-radio :label="0">无</el-radio>
+                <el-radio :label="true">有</el-radio>
+                <el-radio :label="false">无</el-radio>
               </el-radio-group>
             </div>
           </el-col>
@@ -476,11 +475,11 @@
             <div class="bar">
               <div class="title" style="font-size:16px;width:300px">是否重点工程</div>
               <el-radio-group
-                v-model="ruleForm.isMajorProject"
+                v-model="ruleForm.itIsMajorProject"
                 style="margin-left:40px;width:150px"
               >
-                <el-radio :label="1">是</el-radio>
-                <el-radio :label="0">否</el-radio>
+                <el-radio :label="true">是</el-radio>
+                <el-radio :label="false">否</el-radio>
               </el-radio-group>
             </div>
           </el-col>
@@ -489,11 +488,11 @@
             <div class="bar">
               <div class="title" style="font-size:16px;width:300px">本周省公司已督导项目</div>
               <el-radio-group
-                v-model="ruleForm.isSupervisedByProvincialCompany"
+                v-model="ruleForm.itIsSupervisedByProvincialCompany"
                 style="margin-left:40px;width:150px"
               >
-                <el-radio :label="1">是</el-radio>
-                <el-radio :label="0">否</el-radio>
+                <el-radio :label="true">是</el-radio>
+                <el-radio :label="false">否</el-radio>
               </el-radio-group>
             </div>
           </el-col>
@@ -523,8 +522,21 @@ import { POINT_CONVERSION_COMPRESSED } from "constants";
 export default {
   data() {
     return {
-
-      
+      projectIdOptions: [],
+      weekCountOptions: [
+        {
+          weekCount: 1
+        },
+        {
+          weekCount: 2
+        },
+        {
+          weekCount: 3
+        },
+        {
+          weekCount: 4
+        }
+      ],
       rules: {
         customerName: [
           { required: true, message: "请输入客户名称", trigger: "blur" }
@@ -575,7 +587,7 @@ export default {
       },
 
       ruleForm: {
-        monthlyStartTime: "",
+        monthStartTime: "",
         projectId: "",
         adminId: "",
         supervisionId: "",
@@ -590,16 +602,16 @@ export default {
         currentProgress: "",
         currentWorkerNum: "",
         currentSubcontractorNum: "",
-        hasWorkNextWeek: 0,
+        hasWorkNextWeek: false,
         workContentNextWeek: "",
-        hasTowerErectionNextWeek: 0,
-        hasThirdLevelPlusWork: 0,
-        hasFourthLevelWork: 0,
-        isSupervisedByProvincialCompany:0,
-        hasFifthLevelWork: 0,
+        hasTowerErectionNextWeek: false,
+        hasThirdLevelPlusWork: false,
+        hasFourthLevelWork: false,
+        itIsSupervisedByProvincialCompany: false,
+        hasFifthLevelWork: false,
         thirdLevelPlusWorkContent: "",
         contactPerson: "",
-        isMajorProject: 0,
+        itIsMajorProject: false,
         note: "",
         actualState: "",
         controlledState: "",
@@ -610,20 +622,209 @@ export default {
         inherentRisk: "",
         dynamicRisk: "",
         hasInspect: 0
-      }
+      },
+      adminIdOptions: [],
+      supervisionIdOptions: [],
+      districtIdOptions: [],
+      constructDeptEnterpriseOptions: [],
+      actualStateOptions: [],
+      controlledStateOptions: []
     };
   },
 
-  methods: { 
-    goback(){
-        this.$router.push({
+  created() {
+    //获得项目名称下拉框
+    this.$axios
+      .get(`${window.$config.HOST}/baseInfoManagement/getAllProjectBaseInfo`)
+      .then(response => {
+
+        this.projectIdOptions = response.data;
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取项目信息失败！",
+          type: "error"
+        });
+      });
+
+    //获得建设管理单位
+    this.$axios
+      .get(`${window.$config.HOST}/baseInfoManagement/getAllAdministrativeDept`)
+      .then(response => {
+        this.adminIdOptions = response.data;
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取建设管理单位失败！",
+          type: "error"
+        });
+      });
+
+    //获得监理单位
+    this.$axios
+      .get(`${window.$config.HOST}/baseInfoManagement/getAllSupervisionDept`)
+      .then(response => {
+        this.supervisionIdOptions = response.data;
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取监理单位失败！",
+          type: "error"
+        });
+      });
+
+    //获得区域信息
+    this.$axios
+      .get(`${window.$config.HOST}/baseInfoManagement/getAllDistrictName`)
+      .then(response => {
+        this.districtIdOptions = response.data;
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取区域信息失败！",
+          type: "error"
+        });
+      });
+
+    //获取施工单位是否为系统内集体企业的枚举
+    this.$axios
+      .get(
+        `${window.$config.HOST}/baseInfoManagement/getAllProjectConstructDeptEnum`
+      )
+      .then(response => {
+        response.data.forEach(element => {
+          this.constructDeptEnterpriseOptions.push({
+            name: element
+          });
+        });
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取施工单位类型失败！",
+          type: "error"
+        });
+      });
+
+    //获取实际状态
+    this.$axios
+      .get(
+        `${window.$config.HOST}/baseInfoManagement/getAllProjectActualStateEnum`
+      )
+      .then(response => {
+        response.data.forEach(element => {
+          this.actualStateOptions.push({
+            name: element
+          });
+        });
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取实际状态失败！",
+          type: "error"
+        });
+      });
+
+    //获取管控状态
+    this.$axios
+      .get(
+        `${window.$config.HOST}/baseInfoManagement/getAllProjectControlledStateEnum`
+      )
+      .then(response => {
+        response.data.forEach(element => {
+          this.controlledStateOptions.push({
+            name: element
+          });
+        });
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取管控状态失败！",
+          type: "error"
+        });
+      });
+  },
+
+  methods: {
+    // 改变日期格式
+    changeDate(date) {
+
+      if (!date) {
+        return undefined;
+      } else {
+        // var date = new Date(date);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? "0" + m : m;
+        var d = date.getDate();
+        d = d < 10 ? "0" + d : d;
+        return y + "-" + m + "-" + d;
+      }
+    },
+    goback() {
+      this.$router.push({
         path: `/weekly/weeklyDataManage`,
-        query: {
-        }
+        query: {}
       });
     },
     addWeekly() {
-      console.log(this.ruleForm);
+      let list = {
+        projectId: this.ruleForm.projectId,
+        adminId: this.ruleForm.adminId,
+        supervisionId: this.ruleForm.supervisionId,
+        constructDept: this.ruleForm.constructDept,
+        constructDeptEnterprise: this.ruleForm.constructDeptEnterprise,
+        projectLocation: this.ruleForm.projectLocation,
+        districtId: this.ruleForm.districtId,
+        detailedAddress: this.ruleForm.detailedAddress,
+        actualStartTime: this.changeDate(this.ruleForm.actualStartTime),
+        planCompletionTime: this.changeDate(this.ruleForm.planCompletionTime),
+        projectScale: this.ruleForm.projectScale,
+        currentProgress: this.ruleForm.currentProgress,
+        currentSubcontractorNum: this.ruleForm.currentSubcontractorNum,
+        hasWorkNextWeek: this.ruleForm.hasWorkNextWeek,
+        workContentNextWeek: this.ruleForm.workContentNextWeek,
+        hasTowerErectionNextWeek: this.ruleForm.hasTowerErectionNextWeek,
+        hasThirdLevelPlusWork: this.ruleForm.hasThirdLevelPlusWork,
+        hasFourthLevelWork: this.ruleForm.hasFourthLevelWork,
+        hasFifthLevelWork: this.ruleForm.hasFifthLevelWork,
+        thirdLevelPlusWorkContent: this.ruleForm.thirdLevelPlusWorkContent,
+        contactPerson: this.ruleForm.contactPerson,
+        itIsMajorProject: this.ruleForm.itIsMajorProject,
+        itIsSupervisedByProvincialCompany: this.ruleForm
+          .itIsSupervisedByProvincialCompany,
+        note: this.ruleForm.note,
+        actualState: this.ruleForm.actualState,
+        controlledState: this.ruleForm.controlledState,
+        monthStartTime: this.changeDate(this.ruleForm.monthStartTime),
+        weeklyStartTime: this.changeDate(this.ruleForm.weeklyStartTime),
+        weekCount: this.ruleForm.weekCount
+      };
+
+      console.log(list)
+      this.$axios
+        .post(
+          `${window.$config.HOST}/projectWeeklyManagement/addProjectWeekly`,
+          list
+        )
+        .then(response => {
+          if (response.data.returnBackCode === 1) {
+            this.$message({
+              message: "添加成功!",
+              type: "success"
+            });
+          } else {
+            this.$message({
+              message: "添加失败：" + response.data.returnBackInfo,
+              type: "error"
+            });
+          }
+        })
+        .catch(error => {
+          this.$message({
+            message: "添加出现未知的错误！",
+            type: "error"
+          });
+        });
     }
   }
 };
@@ -642,7 +843,7 @@ export default {
   font-size: 2ch;
 }
 .box-card {
-  width:1400px;
+  width: 1400px;
   margin: 20px 50px;
   padding: 0 20px;
   .el-row {
