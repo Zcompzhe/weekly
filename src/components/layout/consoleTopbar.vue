@@ -5,36 +5,36 @@
   left: 0;
   z-index: 101;
   clear: both;
-  height: 50px;
+  height: 100px;
   font-size: 12px;
   width: 100%;
   .el-col {
-    background: #09C;
-    height: 50px;
+    background: #005F61;
+    height: 100px;
     color: #fff;
     font-size: 14px;
     line-height: 50px;
     .topbar-home {
       position: relative;
       display: block;
-      width: 50px;
-      background: #0087b4;
+      width: 100%;
+      background: #005F61;
       font-size: 28px;
       color: #FFF;
       text-align: center;
-      height: 50px;
+      height: 100px;
       line-height: 50px;
       overflow: hidden;
       float: left;
       &:before {
         content: '';
         position: absolute;
-        width: 28px;
-        height: 28px;
-        left: 11px;
-        top: 11px;
+        width: 300px;
+        height: 120px;
+        left: 6px;
+        top: -11px;
         display: inline-block;
-        background: url(../../images/logo.png) no-repeat center center;
+        background: url(../../images/logo.jpg) no-repeat center center;
         background-size: cover;
       }
     }
@@ -56,10 +56,10 @@
       height: 50px;
       display: block;
       z-index: 2;
-      background: #09c;
+      background: #005F61;
       color: #fff;
       font-size: 14px;
-      border-left: 1px solid #008fbf;
+      border-left: 1px solid #005F61;
       text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -84,13 +84,13 @@
 </style>
 <template>
   <el-row class="console-topbar" type="flex">
-    <el-col :xs="12" :sm="12" :md="12" :lg="12">
+    <el-col :xs="12" :sm="12" :md="12" :lg="12" >
       <a class="topbar-home" target="_blank" href="javascript:void(0);"></a>
       <a href="javascript:void(0);" target="_self" class="topbar-home-link">
         <span>管理控制台</span>
       </a>
     </el-col>
-    <el-col :xs="12" :sm="12" :md="12" :lg="12">
+    <el-col :xs="12" :sm="12" :md="12" :lg="12" style="">
       <el-dropdown trigger="click" class="topbar-info" @command="handleCommand">
         <a href="javascript:void(0)" class="user-name">
           sosout<i class="el-icon-caret-bottom el-icon--right"></i>

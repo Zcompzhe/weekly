@@ -139,18 +139,18 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="施工单位类型" prop="isConstructDeptEnterprise" placeholder="请选择">
+              <el-form-item label="施工单位类型" prop="constructDeptEnterprise" placeholder="请选择">
                 <el-select
-                  v-model="ruleForm.isConstructDeptEnterprise"
+                  v-model="ruleForm.constructDeptEnterprise"
                   clearable
                   placeholder="请选择"
                   style="min-width:240px"
                 >
                   <el-option
-                    v-for="item in isConstructDeptEnterpriseOptions"
-                    :key="item.isConstructDeptEnterprise"
-                    :label="item.isConstructDeptEnterprise"
-                    :value="item.isConstructDeptEnterprise"
+                    v-for="item in constructDeptEnterpriseOptions"
+                    :key="item.constructDeptEnterprise"
+                    :label="item.constructDeptEnterprise"
+                    :value="item.constructDeptEnterprise"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -579,7 +579,7 @@ export default {
         adminId: "",
         supervisionId: "",
         constructDept: "",
-        isConstructDeptEnterprise: "",
+        constructDeptEnterprise: "",
         projectLocation: "",
         districtId: "",
         detailedAddress: "",
@@ -589,15 +589,16 @@ export default {
         currentProgress: "",
         currentWorkerNum: "",
         currentSubcontractorNum: "",
-        hasWorkNextWeek: "",
+        hasWorkNextWeek: 0,
         workContentNextWeek: "",
-        hasTowerErectionNextWeek: "",
-        hasThirdLevelPlusWork: "",
-        hasFourthLevelWork: "",
-        hasFifthLevelWork: "",
+        hasTowerErectionNextWeek: 0,
+        hasThirdLevelPlusWork: 0,
+        hasFourthLevelWork: 0,
+        isSupervisedByProvincialCompany:0,
+        hasFifthLevelWork: 0,
         thirdLevelPlusWorkContent: "",
         contactPerson: "",
-        isMajorProject: "",
+        isMajorProject: 0,
         note: "",
         actualState: "",
         controlledState: "",
@@ -607,12 +608,12 @@ export default {
         weekCount: "",
         inherentRisk: "",
         dynamicRisk: "",
-        hasInspect: ""
+        hasInspect: 0
       }
     };
   },
 
-  methods: {
+  methods: { 
     goback(){
         this.$router.push({
         path: `/weekly/weeklyDataManage`,
@@ -640,6 +641,7 @@ export default {
   font-size: 2ch;
 }
 .box-card {
+  width:1400px;
   margin: 20px 50px;
   padding: 0 20px;
   .el-row {

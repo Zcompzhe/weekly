@@ -111,7 +111,7 @@
         <el-table-column width="300" type="adminId" label="建设管理单位" align="center"></el-table-column>
         <el-table-column width="300" type="supervisionId" label="监理单位" align="center"></el-table-column>
         <el-table-column width="300" type="constructDept" label="施工单位" align="center"></el-table-column>
-        <el-table-column width="300" type="isConstructDeptEnterprise" label="施工单位是否为系统内集体企业" align="center"></el-table-column>
+        <el-table-column width="300" type="constructDeptEnterprise" label="施工单位是否为系统内集体企业" align="center"></el-table-column>
         <el-table-column width="300" type="projectLocation" label="项目地点" align="center"></el-table-column>
         <el-table-column width="300" type="detailedAddress" label="详细地址" align="center"></el-table-column>
         <el-table-column width="300" type="actualStartTime" label="实际开工时间" align="center"></el-table-column>
@@ -266,6 +266,7 @@ export default {
 
 <style lang="less" scoped>
 .box-card {
+    width:1400px;
   margin: 20px 50px;
   padding: 0 20px;
   .el-row {

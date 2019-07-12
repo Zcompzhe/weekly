@@ -70,9 +70,9 @@
 </style>
 <template>
   <div class="login-container">
-    <transition name="form-fade" mode="in-out">
-      <div class="login-form" v-show="showLogin">
-        <div class="login-logo">
+    <transition name="form-fade" mode="in-out" >
+      <div class="login-form" v-show="showLogin" >
+        <div class="login-logo" >
           <img src="../../images/logo.png"> <span>element</span>
         </div>
         <el-form :model="formLogin" :rules="rulesLogin" ref="formLogin">

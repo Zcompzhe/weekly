@@ -87,7 +87,7 @@
             <el-table-column width="300" prop="constructDept" label="施工单位" align="center"></el-table-column>
             <el-table-column
               width="300"
-              prop="isConstructDeptEnterprise"
+              prop="constructDeptEnterprise"
               label="施工单位是否为系统内集体企业"
               align="center"
             ></el-table-column>
@@ -271,7 +271,7 @@ export default {
                 adminId: "",
                 supervisionId: "",
                 constructDept: "",
-                isConstructDeptEnterprise: "",
+                constructDeptEnterprise: "",
                 projectLocation: "",
                 detailedAddress: "",
                 actualStartTime: "",
@@ -323,7 +323,7 @@ export default {
                 }
                 if (i % colMax === 5) {
                   // 第二列为rangeAmount
-                  rowData.isConstructDeptEnterprise = value;
+                  rowData.constructDeptEnterprise = value;
                   console.log("value: ", value);
                 }
                 if (i % colMax === 6) {
@@ -422,7 +422,7 @@ export default {
                     adminId: "",
                     supervisionId: "",
                     constructDept: "",
-                    isConstructDeptEnterprise: "",
+                    constructDeptEnterprise: "",
                     projectLocation: "",
                     detailedAddress: "",
                     actualStartTime: "",
@@ -563,6 +563,7 @@ export default {
 
 <style lang="less" scoped>
 .box-card {
+    width:1400px;
   margin: 20px 50px;
   padding: 0 20px;
   .inputBox {

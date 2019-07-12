@@ -34,7 +34,7 @@
 <style scoped lang="less">
   .console-sidebar {
     position: fixed;
-    top: 50px;
+    top: 100px;
     bottom: 0px;
     background-color: #293038;
     z-index: 102;
@@ -86,28 +86,7 @@
         <el-menu-item index="/weekly/importWeeklyData"><i class="el-icon-document"></i>导入周报</el-menu-item>
         
       </el-submenu>
-      <el-submenu index="user">
-        <template slot="title">
-          <i class="el-icon-message"></i>
-          用户中心
-        </template>
-        <el-menu-item index="/user"><i class="el-icon-document"></i>用户管理</el-menu-item>
-      </el-submenu>
-      <el-submenu index="stockin">
-        <template slot="title">
-          <i class="el-icon-message"></i>
-          入库模块
-        </template>
-        <el-menu-item index="/stockin/stockinplan"><i class="el-icon-document"></i>入库计划画面</el-menu-item>
-        <el-menu-item index="/stockin/stockinreceive"><i class="el-icon-document"></i>收货画面</el-menu-item>
-        <el-menu-item index="/stockin/stockintestlist"><i class="el-icon-document"></i>收货检验任务列表</el-menu-item>
-        <el-menu-item index="/stockin/stockintest"><i class="el-icon-document"></i>收获检验画面</el-menu-item>
-        <el-menu-item index="/stockin/stockinpurchase"><i class="el-icon-document"></i>采购订单入库</el-menu-item>
-        <el-menu-item index="/stockin/stockinother"><i class="el-icon-document"></i>其他入库画面</el-menu-item>
-        <el-menu-item index="/stockin/stockinoutplan"><i class="el-icon-document"></i>非计划收获画面</el-menu-item>
-        <el-menu-item index="/stockin/stockinlist"><i class="el-icon-document"></i>入库列表画面</el-menu-item>
-        <el-menu-item index="/stockin/stockinshelf"><i class="el-icon-document"></i>入库上架画面</el-menu-item>
-      </el-submenu>
+
     </el-menu>
   </div>
 </template>
