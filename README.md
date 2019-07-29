@@ -19,6 +19,13 @@ yarn run e2e
 
 # 所有测试
 yarn test
+
+
+#导出为EXCEL 
+npm install --save xlsx file-saver
+
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 ```
 
 ### 访问

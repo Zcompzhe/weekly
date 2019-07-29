@@ -15,12 +15,31 @@ const addWeekly = r => require.ensure([], () => r(require('../page/weekly/addWee
 
 //周报数据管理
 const importWeekly = r => require.ensure([], () => r(require('../page/weekly/importWeeklyData')), 'importWeeklyData');
+const weeklyApproved = r => require.ensure([], () => r(require('../page/weekly/weeklyApproved')), 'weeklyApproved');
 
 
 //基本信息管理
-const project = r => require.ensure([], () => r(require('../page/back/projectMana')), 'projectMana');  
-const admin = r => require.ensure([], () => r(require('../page/back/adminMana')), 'admin');  
-const supervision = r => require.ensure([], () => r(require('../page/back/supervisionMana')), 'supervision');  
+const project = r => require.ensure([], () => r(require('../page/back/projectMana')), 'projectMana');
+const admin = r => require.ensure([], () => r(require('../page/back/adminMana')), 'admin');
+const supervision = r => require.ensure([], () => r(require('../page/back/supervisionMana')), 'supervision');
+const addPerson = r => require.ensure([], () => r(require('../page/back/addPerson')), 'addPerson');
+const personInfoMana = r => require.ensure([], () => r(require('../page/back/personInfoMana')), 'personInfoMana');
+
+//风险管理
+const riskMana = r => require.ensure([], () => r(require('../page/risk/externalRiskMana')), 'externalRiskMana');
+const dynamicRisk = r => require.ensure([], () => r(require('../page/risk/dynamicRisk')), 'dynamicRisk');
+
+//项目信息管理
+const addProject = r => require.ensure([], () => r(require('../page/project/addProjectInfo')), 'addProjectInfo');
+const updateProject = r => require.ensure([], () => r(require('../page/project/updateProjectInfo')), 'updateProjectInfo');
+const projectMana = r => require.ensure([], () => r(require('../page/project/projectInfoMana')), 'projectInfoMana');
+const projectPerson = r => require.ensure([], () => r(require('../page/project/projectPerson')), 'projectPerson');
+
+//督查方案管理
+const supervisionMana = r => require.ensure([], () => r(require('../page/supervision/supervisionMana')), 'supervisionMana');
+const recommendation = r => require.ensure([], () => r(require('../page/supervision/recommendation')), 'recommendation');
+const addSupervision = r => require.ensure([], () => r(require('../page/supervision/addSupervision')), 'addSupervision');
+
 export default [{
   path: Config.route.login,
   name: 'Login',
@@ -36,7 +55,7 @@ export default [{
     meta: {
       bcrumd: ['快速入门']
     }
-  }, 
+  },
 
   { // 周报数据管理
     path: '/weekly/weeklyDataManage',
@@ -46,9 +65,9 @@ export default [{
       activePath: '/weekly/weeklyDataManage',
       bcrumd: ['周报管理', '周报数据管理'],
     }
-  }, 
-  
-  
+  },
+
+
   { // 添加周报信息
     path: '/weekly/addWeeklyData',
     name: 'addWeekly',
@@ -57,9 +76,19 @@ export default [{
       activePath: '/weekly/addWeeklyData',
       bcrumd: ['周报管理', '添加周报信息'],
     }
-  }, 
+  },
 
-  
+    { // 添加周报信息
+    path: '/weekly/weeklyApproved',
+    name: 'weeklyApproved',
+    component: weeklyApproved,
+    meta: {
+      activePath: '/weekly/weeklyApproved',
+      bcrumd: ['周报管理', '周报信息核准'],
+    }
+  },
+
+
   { // 导入周报数据
     path: '/weekly/importWeeklyData',
     name: 'importWeekly',
@@ -68,7 +97,7 @@ export default [{
       activePath: '/weekly/importWeeklyData',
       bcrumd: ['周报管理', '导入周报'],
     }
-  }, 
+  },
 
   { // 导入周报数据
     path: '/back/projectMana',
@@ -78,7 +107,7 @@ export default [{
       activePath: '/back/projectMana',
       bcrumd: ['项目管理'],
     }
-  }, 
+  },
   { // 导入周报数据
     path: '/back/adminMana',
     name: 'admin',
@@ -87,7 +116,7 @@ export default [{
       activePath: '/back/adminMana',
       bcrumd: ['监理管理单位管理'],
     }
-  }, 
+  },
   { // 导入周报数据
     path: '/back/supervisionMana',
     name: 'supervision',
@@ -96,7 +125,116 @@ export default [{
       activePath: '/back/supervisionMana',
       bcrumd: ['项目管理'],
     }
-  }, 
+  },
+
+
+
+  { // 导入周报数据
+    path: '/back/personInfoMana',
+    name: 'personInfoMana',
+    component: personInfoMana,
+    meta: {
+      activePath: '/back/personInfoMana',
+      bcrumd: ['人员信息管理'],
+    }
+  },
+  { // 导入周报数据
+    path: '/back/addPerson',
+    name: 'addPerson',
+    component: addPerson,
+    meta: {
+      activePath: '/back/addPerson',
+      bcrumd: ['添加人员信息'],
+    }
+  },
+
+  { // 外部风险管理
+    path: '/risk/externalRiskMana',
+    name: 'riskMana',
+    component: riskMana,
+    meta: {
+      activePath: '/risk/externalRiskMana',
+      bcrumd: ['外部风险管理'],
+    }
+  },
+  { // 外部风险管理
+    path: '/risk/dynamicRisk',
+    name: 'dynamicRisk',
+    component: dynamicRisk,
+    meta: {
+      activePath: '/risk/dynamicRisk',
+      bcrumd: ['计算动态风险'],
+    }
+  },
+
+
+  { // 添加项目信息
+    path: '/project/addProjectInfo',
+    name: 'addProject',
+    component: addProject,
+    meta: {
+      activePath: '/project/addProjectInfo',
+      bcrumd: ['添加项目信息'],
+    }
+  },
+  { // 添加项目管理人员
+    path: '/project/projectPerson',
+    name: 'projectPerson',
+    component: projectPerson,
+    meta: {
+      activePath: '/project/projectPerson',
+      bcrumd: ['添加项目管理人员'],
+    }
+  },
+
+  { // 修改项目信息
+    path: '/project/updateProjectInfo',
+    name: 'updateProject',
+    component: updateProject,
+    meta: {
+      activePath: '/project/updateProjectInfo',
+      bcrumd: ['修改项目信息'],
+    }
+  },
+  { // 项目信息管理
+    path: '/project/projectInfoMana',
+    name: 'projectMana',
+    component: projectMana,
+    meta: {
+      activePath: '/project/projectInfoMana',
+      bcrumd: ['项目信息管理'],
+    }
+  },
+  { // 督查方案管理
+    path: '/supervision/supervisionMana',
+    name: 'supervisionMana',
+    component: supervisionMana,
+    meta: {
+      activePath: '/supervision/supervisionMana',
+      bcrumd: ['督查方案管理'],
+    }
+  },
+  { // 督查方案推荐
+    path: '/supervision/recommendation',
+    name: 'recommendation',
+    component: recommendation,
+    meta: {
+      activePath: '/supervision/recommendation',
+      bcrumd: ['督查方案推荐'],
+    }
+  },
+  { // 添加督查方案
+    path: '/supervision/addSupervision',
+    name: 'addSupervision',
+    component: addSupervision,
+    meta: {
+      activePath: '/supervision/addSupervision',
+      bcrumd: ['添加督查方案'],
+    }
+  },
+
+
+
   ]
 }, {
   path: '*',
