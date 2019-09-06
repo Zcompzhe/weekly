@@ -12,6 +12,7 @@ const weeklyData = r => require.ensure([], () => r(require('../page/weekly/weekl
 
 //周报数据管理
 const addWeekly = r => require.ensure([], () => r(require('../page/weekly/addWeeklyData')), 'addWeeklyData');
+const updateWeekly = r => require.ensure([], () => r(require('../page/weekly/updateWeeklyData')), 'updateWeeklyData');
 
 //周报数据管理
 const importWeekly = r => require.ensure([], () => r(require('../page/weekly/importWeeklyData')), 'importWeeklyData');
@@ -74,6 +75,16 @@ export default [{
     component: addWeekly,
     meta: {
       activePath: '/weekly/addWeeklyData',
+      bcrumd: ['周报管理', '添加周报信息'],
+    }
+  },
+
+  { // 修改周报信息
+    path: '/weekly/updateWeeklyData',
+    name: 'updateWeekly',
+    component: updateWeekly,
+    meta: {
+      activePath: '/weekly/updateWeeklyData',
       bcrumd: ['周报管理', '添加周报信息'],
     }
   },

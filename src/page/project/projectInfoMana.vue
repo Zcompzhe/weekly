@@ -47,7 +47,7 @@
         </el-col>
         <el-col :offset="1" :span="2">
           <div class="bar">
-            <el-button type="primary" style="margin-right: 20px" @click>修改项目信息</el-button>
+            <el-button type="primary" style="margin-right: 20px" @click="toUpdateProject">修改项目信息</el-button>
           </div>
         </el-col>
       </el-row>
@@ -169,6 +169,7 @@ export default {
     return {
       tableDataA:[],
       tableDataB:[],
+      changedProject:[],
       showIt:false,
       dialogVisible: false,
       tableData: [
@@ -288,6 +289,15 @@ export default {
   },
 
   methods: {
+    toUpdateProject(){
+      console.log(this.changedProject),
+      this.$router.push({
+        path: `/project/updateProjectInfo`,
+        query: {
+          date:this.changedProject
+        }
+      });
+    },
     setProjectPerson(row){
        this.$router.push({
         path: `/project/projectPerson`,
@@ -363,6 +373,7 @@ export default {
       }
       return wbout;
     },
+
 
     addProject() {
       this.$router.push({

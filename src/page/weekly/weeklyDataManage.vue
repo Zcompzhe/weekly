@@ -2,37 +2,36 @@
   <div class="body">
     <el-card class="box-card">
       <el-row :gutter="20">
-        <el-col :span="6">
+        <el-col :span="8">
           <div class="bar">
             <div class="title">周报开始时间</div>
             <el-date-picker
               v-model="weeklyStartTime"
-              align="right"
               type="date"
-              placeholder="选择日期"
-              :picker-options="pickerOptions"
-              style="min-width:260px"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              @change="weeklyChanged"
             ></el-date-picker>
           </div>
         </el-col>
-        <el-col :span="6" style="margin-left:80px">
+        <el-col :span="8">
           <div class="bar">
-            <el-button type="primary">查看周报</el-button>
-            <el-button type="primary">查看月报</el-button>
-          </div>
-        </el-col>
-        <el-col :span="6" style="margin-left:80px">
-          <div class="bar">
-            <el-button type="primary">上一个</el-button>
-            <el-button type="primary">下一个</el-button>
+            <div class="title" style="margin-left:-50px;max-width:20px">~</div>
+            <el-date-picker
+              v-model="weeklyStartTime2"
+              type="date"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              style="margin-left:-30px"
+              :disabled="true"
+            ></el-date-picker>
           </div>
         </el-col>
       </el-row>
-    </el-card>
-
-    <el-card class="box-card">
       <el-row :gutter="20">
-        <el-col :span="6">
+        <el-col :span="8">
           <div class="bar">
             <div class="title">项目名称</div>
             <el-select v-model="projectId" clearable placeholder="请选择" style="min-width:200px">
@@ -45,7 +44,7 @@
             </el-select>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
           <div class="bar">
             <div class="title">建设管理单位</div>
             <el-select v-model="adminId" clearable placeholder="请选择" style="min-width:200px">
@@ -58,7 +57,22 @@
             </el-select>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">项管部门</div>
+            <el-select v-model="adminDept" clearable placeholder="请选择" style="min-width:200px">
+              <el-option
+                v-for="item in adminDeptOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="8">
           <div class="bar">
             <div class="title">下周是否有作业</div>
             <el-select
@@ -76,7 +90,7 @@
             </el-select>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
           <div class="bar">
             <div class="title">存在三级及以上风险</div>
             <el-select
@@ -94,68 +108,6 @@
             </el-select>
           </div>
         </el-col>
-      </el-row>
-
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <div class="bar">
-            <div class="title">项管部门</div>
-            <el-select v-model="adminDept" clearable placeholder="请选择" style="min-width:200px">
-              <el-option
-                v-for="item in adminDeptOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="bar">
-            <div class="title">实际状态</div>
-            <el-select v-model="actualState" clearable placeholder="请选择" style="min-width:200px">
-              <el-option
-                v-for="item in actualStateOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="bar">
-            <div class="title">管控内状态</div>
-            <el-select
-              v-model="controlledState"
-              clearable
-              placeholder="请选择"
-              style="min-width:200px"
-            >
-              <el-option
-                v-for="item in controlledStateOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="bar">
-            <div class="title">督查情况</div>
-            <el-select v-model="supervision" clearable placeholder="请选择" style="min-width:200px">
-              <el-option
-                v-for="item in supervisionOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
         <el-col :span="8">
           <div class="bar">
             <el-button type="primary" style="margin-left: 20px" @click>搜索</el-button>
@@ -165,6 +117,18 @@
     </el-card>
 
     <el-card class="box-card">
+      <el-row :gutter="20">
+        <el-col :span="20">
+          <div class="bar">
+            <div id="title">
+              <p
+                id="tableTitle"
+                style="min-width:1000px;font-size:18px;margin-left:380px"
+              >{{ tableTitle }}</p>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
       <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
         <el-col :span="2">
           <div class="bar">
@@ -213,7 +177,7 @@
         <el-table-column width="200" label="操作" align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="lookDetails">查看详情</el-button>
-            <el-button type="text" @click>修改周报</el-button>
+            <el-button type="text" @click="updateWeekly(scope.row)">修改周报</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -286,13 +250,7 @@
       <br />
       <br />
 
-      <el-table
-        ref="singleTable"
-        :data="tableData"
-        highlight-current-row
-        @current-change="handleCurrentChange"
-        style="width: 100%"
-      >
+      <el-table ref="singleTable" :data="tableData" highlight-current-row style="width: 100%">
         <el-table-column type="index" width="50"></el-table-column>
         <el-table-column property="riskLevel" label="作业风险等级" width="120"></el-table-column>
         <el-table-column property="workContentNextWeek" label="下周作业安排、位置及内容" width="120"></el-table-column>
@@ -395,10 +353,6 @@
         </el-col>
       </el-row>
 
-
-
-
-
       <el-row :gutter="20">
         <el-col :span="20">
           <div class="bar">
@@ -438,7 +392,7 @@
         <el-col :span="8">
           <div class="bar">
             <div class="title">安全监理</div>
-           
+
             <el-input
               v-model="ruleForm.safetySupervisorIdOptions"
               clearable
@@ -476,7 +430,6 @@
               placeholder="请选择"
               style="min-width:200px"
             ></el-input>
-            
           </div>
         </el-col>
         <el-col :span="8">
@@ -503,6 +456,7 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+      tableTitle:"国网上海建设咨询公司2019年在建工程周报(2019-07-12~2019-07-19)",
       projectManagerIdOptions: [],
       safetyStaffIdOptions: [],
       qualityStaffIdOptions: [],
@@ -624,14 +578,35 @@ export default {
           hasInspect: 135
         }
       ],
+      beChanged: [],
+      weeklyStartTime2: "",
       weeklyStartTime: "",
       projectId: "",
       adminId: "",
       supervisionId: "",
       hasThirdLevelPlusWork: "",
-      hasThirdLevelPlusWorkOptions: [],
+      hasThirdLevelPlusWorkOptions: [
+        {
+          id: 1,
+          name: "是"
+        },
+        {
+          id: 2,
+          name: "否"
+        }
+      ],
       hasWorkNextWeek: "",
-      hasWorkNextWeekOptions: [],
+      hasWorkNextWeekOptions: [
+        {
+          id: 1,
+          name: "是"
+        },
+        {
+          id: 2,
+          name: "否"
+        }
+      ],
+      adminDept: "",
       adminDeptId: "",
       adminDeptOptions: [],
       actualState: "",
@@ -726,9 +701,104 @@ export default {
     };
   },
 
+  created() {
+    //初始化显示一周信息
+    this.$axios
+      .get(`${window.$config.HOST}/baseInfoManagement/getAllProjectBaseInfo`)
+      .then(response => {
+        this.projectIdOptions = response.data;
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取项目信息失败！",
+          type: "error"
+        });
+      });
+
+    //获得建设管理单位
+    this.$axios
+      .get(`${window.$config.HOST}/baseInfoManagement/getAllAdministrativeDept`)
+      .then(response => {
+        this.adminOptions = response.data;
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取建设管理单位失败！",
+          type: "error"
+        });
+      });
+
+    //获得项管部门下拉框（待定）
+  },
   methods: {
-    lookDetails(){
-      this.dialogVisible=true
+    updateWeekly(row){
+      this.$router.push({
+        path: `/weekly/updateWeeklyData`,
+        query: {
+          date:row
+        }
+      });
+    },
+    changeDate(date) {
+      if (!date) {
+        return undefined;
+      } else {
+        // var date = new Date(date);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? "0" + m : m;
+        var d = date.getDate();
+        d = d < 10 ? "0" + d : d;
+        return y + "-" + m + "-" + d;
+      }
+    },
+    isChanged(val) {
+      this.beChanged = val;
+    },
+    weeklyChanged() {
+      //先求星期几
+      var c = this.changeDate(this.weeklyStartTime);
+      var b = new Date(Date.parse(c.replace(/\-/g, "/")));
+      console.log("选择的日期是星期", b.getDay());
+
+      //如果星期大于等于5
+      if (b.getDay() >= 5) {
+        //第一步，将截止日期求出来
+
+        this.weeklyStartTime2 = new Date(this.weeklyStartTime);
+        this.weeklyStartTime2.setDate(
+          this.weeklyStartTime2.getDate() - b.getDay() + 11
+        );
+        this.weeklyStartTime2 = this.changeDate(this.weeklyStartTime2);
+
+        //第二步，将起始日期求出来
+
+        this.weeklyStartTime.setDate(
+          this.weeklyStartTime.getDate() - b.getDay() + 5
+        );
+        this.weeklyStartTime = this.changeDate(this.weeklyStartTime);
+      } else {
+        //第一步，将截止日期求出来
+
+        this.weeklyStartTime2 = new Date(this.weeklyStartTime);
+        this.weeklyStartTime2.setDate(
+          this.weeklyStartTime2.getDate() - b.getDay() + 4
+        );
+        this.weeklyStartTime2 = this.changeDate(this.weeklyStartTime2);
+
+        //第二步，将起始日期求出来
+
+        this.weeklyStartTime.setDate(
+          this.weeklyStartTime.getDate() - b.getDay() - 2
+        );
+        this.weeklyStartTime = this.changeDate(this.weeklyStartTime);
+      }
+
+      console.log(this.weeklyStartTime);
+      console.log(this.weeklyStartTime2);
+    },
+    lookDetails() {
+      this.dialogVisible = true;
     },
     toAddWeekly() {
       this.$router.push({
@@ -817,7 +887,7 @@ export default {
     .title {
       font-size: 14px;
 
-      min-width: 100px;
+      width: 160px;
       text-align: center;
     }
     .el-input {
