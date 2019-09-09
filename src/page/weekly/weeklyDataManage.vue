@@ -29,8 +29,6 @@
             ></el-date-picker>
           </div>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
         <el-col :span="8">
           <div class="bar">
             <div class="title">项目名称</div>
@@ -38,12 +36,14 @@
               <el-option
                 v-for="item in projectIdOptions"
                 :key="item.id"
-                :label="item.projectId"
+                :label="item.name"
                 :value="item.id"
               ></el-option>
             </el-select>
           </div>
         </el-col>
+      </el-row>
+      <el-row :gutter="20">
         <el-col :span="8">
           <div class="bar">
             <div class="title">建设管理单位</div>
@@ -51,7 +51,7 @@
               <el-option
                 v-for="item in adminOptions"
                 :key="item.id"
-                :label="item.adminId"
+                :label="item.name"
                 :value="item.id"
               ></el-option>
             </el-select>
@@ -63,15 +63,13 @@
             <el-select v-model="adminDept" clearable placeholder="请选择" style="min-width:200px">
               <el-option
                 v-for="item in adminDeptOptions"
-                :key="item.id"
+                :key="item.name"
                 :label="item.name"
-                :value="item.id"
+                :value="item.name"
               ></el-option>
             </el-select>
           </div>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
         <el-col :span="8">
           <div class="bar">
             <div class="title">下周是否有作业</div>
@@ -90,17 +88,19 @@
             </el-select>
           </div>
         </el-col>
+      </el-row>
+      <el-row :gutter="20">
         <el-col :span="8">
           <div class="bar">
             <div class="title">存在三级及以上风险</div>
             <el-select
-              v-model="hasThirdLevelPlusWork"
+              v-model="hasThreeLevelPlusWork"
               clearable
               placeholder="请选择"
               style="min-width:200px"
             >
               <el-option
-                v-for="item in hasThirdLevelPlusWorkOptions"
+                v-for="item in hasThreeLevelPlusWorkOptions"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"
@@ -110,7 +110,7 @@
         </el-col>
         <el-col :span="8">
           <div class="bar">
-            <el-button type="primary" style="margin-left: 20px" @click>搜索</el-button>
+            <el-button type="primary" style="margin-left: 20px" @click="searchWeekly">搜索</el-button>
           </div>
         </el-col>
       </el-row>
@@ -156,31 +156,40 @@
         id="out-table"
       >
         <el-table-column type="selection" width="50" align="center"></el-table-column>
-        <el-table-column width="300" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="300" prop="projectId" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="300" prop="adminId" label="建设管理单位" align="center"></el-table-column>
+        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+        <el-table-column width="300" prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="200" prop="adminName" label="建设管理单位" align="center"></el-table-column>
         <el-table-column width="300" prop="currentProgress" label="当前总体施工进度" align="center"></el-table-column>
         <el-table-column width="300" prop="workContentNextWeek" label="下周主要施工作业内容" align="center"></el-table-column>
         <el-table-column
           width="350"
-          prop="hasThirdLevelPlusWork"
+          prop="threePlusRiskWorkContent"
           label="下周的三级及以上风险作业安排、位置及内容"
           align="center"
         ></el-table-column>
-        <el-table-column width="350" prop="projectManagementDept" label="项管部门" align="center"></el-table-column>
-        <el-table-column width="300" prop="actualState" label="实际状态" align="center"></el-table-column>
-        <el-table-column width="300" prop="controlledState" label="管控内状态" align="center"></el-table-column>
-        <el-table-column width="300" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-        <el-table-column width="300" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
-        <el-table-column width="300" prop="supervision" label="督察情况" align="center"></el-table-column>
+        <el-table-column width="150" prop="adminDept" label="项管部门" align="center"></el-table-column>
+        <el-table-column width="80" prop="actualState" label="实际状态" align="center"></el-table-column>
+        <el-table-column width="80" prop="controlledState" label="管控内状态" align="center"></el-table-column>
+        <el-table-column width="80" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
+        <el-table-column width="100" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
+        <el-table-column width="80" prop="inspectState" label="督察情况" align="center"></el-table-column>
 
-        <el-table-column width="200" label="操作" align="center">
+        <el-table-column width="200" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text" @click="lookDetails">查看详情</el-button>
+            <el-button type="text" @click="lookDetails(scope.row)">查看详情</el-button>
             <el-button type="text" @click="updateWeekly(scope.row)">修改周报</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <br />
+
+      <el-pagination
+        :current-page="pagination.currentPage"
+        :page-sizes="pagination.pageSize"
+        :page-size="pagination.currentPageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pagination.totalNumber"
+      ></el-pagination>
     </el-card>
 
     <el-dialog title="提示" :visible.sync="dialogVisible" width="70%" :modal="false">
@@ -213,10 +222,10 @@
         </el-col>
       </el-row>
       <br />
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="projectId" label="项目名称" width="180"></el-table-column>
-        <el-table-column prop="adminId" label="建设管理单位" width="180"></el-table-column>
-        <el-table-column prop="supervisionId" label="监理单位" width="180"></el-table-column>
+      <el-table :data="tableDataA" border style="width: 100%">
+        <el-table-column prop="projectName" label="项目名称" width="300"></el-table-column>
+        <el-table-column prop="adminName" label="建设管理单位" width="180"></el-table-column>
+        <el-table-column prop="supervisionName" label="监理单位" width="180"></el-table-column>
         <el-table-column prop="constructDept" label="施工单位" width="180"></el-table-column>
         <el-table-column prop="districtId" label="项目所在区域" width="180"></el-table-column>
         <el-table-column prop="detailedAddress" label="详细地址" width="180"></el-table-column>
@@ -232,12 +241,12 @@
       <br />
       <br />
 
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table :data="tableDataA" border style="width: 100%">
         <el-table-column prop="adminDept" label="项管部门" width="180"></el-table-column>
-        <el-table-column prop="currentProgressId" label="当前总体施工进度" width="180"></el-table-column>
-        <el-table-column prop="hasWorkNextWeek" label="下周是否有作业" width="180"></el-table-column>
+        <el-table-column prop="currentProgress" label="当前总体施工进度" width="180"></el-table-column>
+        <el-table-column prop="hasWorkNextWeekStr" label="下周是否有作业" width="180"></el-table-column>
         <el-table-column prop="workContentNextWeek" label="下周主要施工作业内容" width="180"></el-table-column>
-        <el-table-column prop="hasThreePlusRiskWork" label="是否有三级以上风险" width="180"></el-table-column>
+        <el-table-column prop="hasThreePlusRiskWorkStr" label="是否有三级以上风险" width="180"></el-table-column>
         <el-table-column prop="actualState" label="实际状态" width="180"></el-table-column>
         <el-table-column prop="controlledState" label="管控内状态" width="180"></el-table-column>
         <el-table-column prop="inherentRisk" label="固有风险" width="180"></el-table-column>
@@ -250,12 +259,12 @@
       <br />
       <br />
 
-      <el-table ref="singleTable" :data="tableData" highlight-current-row style="width: 100%">
+      <el-table ref="singleTable" :data="tableDataB" highlight-current-row style="width: 100%">
         <el-table-column type="index" width="50"></el-table-column>
         <el-table-column property="riskLevel" label="作业风险等级" width="120"></el-table-column>
-        <el-table-column property="workContentNextWeek" label="下周作业安排、位置及内容" width="120"></el-table-column>
-        <el-table-column property="workStartTime" label="作业开始时间"></el-table-column>
-        <el-table-column property="workEndTime" label="作业结束时间"></el-table-column>
+        <el-table-column property="workContent" label="下周作业安排、位置及内容" width="250"></el-table-column>
+        <el-table-column property="workStartTime" label="作业开始时间" width="200"></el-table-column>
+        <el-table-column property="workEndTime" label="作业结束时间" width="200"></el-table-column>
       </el-table>
       <br />
       <br />
@@ -263,7 +272,7 @@
       <el-row :gutter="20">
         <el-col :span="20">
           <div class="bar">
-            <div class="title" style="margin-left:35%;font-size:18px">建设管理单位责任人信息</div>
+            <div class="title" style="margin-left:35%;font-size:18px;min-width:200px">建设管理单位责任人信息</div>
           </div>
         </el-col>
       </el-row>
@@ -356,7 +365,7 @@
       <el-row :gutter="20">
         <el-col :span="20">
           <div class="bar">
-            <div class="title" style="margin-left:35%;font-size:18px">监理单位责任人信息</div>
+            <div class="title" style="margin-left:35%;font-size:18px;min-width:200px">监理单位责任人信息</div>
           </div>
         </el-col>
       </el-row>
@@ -456,7 +465,17 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      tableTitle:"国网上海建设咨询公司2019年在建工程周报(2019-07-12~2019-07-19)",
+      tableDataA: [],
+      tableDataB: [],
+      pagination: {
+        totalNumber: 0,
+        currentPageSize: 25,
+        pageSize: [10, 25, 50, 100],
+        currentPage: 1
+      },
+
+      tableTitle:
+        "国网上海建设咨询公司2019年在建工程周报(2019-07-12~2019-07-19)",
       projectManagerIdOptions: [],
       safetyStaffIdOptions: [],
       qualityStaffIdOptions: [],
@@ -467,13 +486,14 @@ export default {
           id: 1,
           supervision: "啊啊啊",
           projectId: 2,
+          projectName: "123213213213213",
           adminId: 3,
           supervisionId: 4,
           constructDept: 5,
           isConstructDeptEnterprise: 6,
           projectLocation: 7,
           districtId: 8,
-          detailedAddress: 9,
+          detailedAddress: "123213213<br>213213",
           actualStartTime: 10,
           planCompletionTime: 11,
           projectScale: 12,
@@ -483,7 +503,7 @@ export default {
           hasWorkNextWeek: 16,
           workContentNextWeek: 17,
           hasTowerErectionNextWeek: 18,
-          hasThirdLevelPlusWork: 19,
+          hasThreeLevelPlusWork: 19,
           hasFourthLevelWork: 20,
           hasFifthLevelWork: 21,
           thirdLevelPlusWorkContent: 22,
@@ -521,7 +541,7 @@ export default {
           hasWorkNextWeek: 16,
           workContentNextWeek: 17,
           hasTowerErectionNextWeek: 18,
-          hasThirdLevelPlusWork: 19,
+          hasThreeLevelPlusWork: 19,
           hasFourthLevelWork: 20,
           hasFifthLevelWork: 21,
           thirdLevelPlusWorkContent: 22,
@@ -559,7 +579,7 @@ export default {
           hasWorkNextWeek: 16,
           workContentNextWeek: 17,
           hasTowerErectionNextWeek: 18,
-          hasThirdLevelPlusWork: 19,
+          hasThreeLevelPlusWork: 19,
           hasFourthLevelWork: 20,
           hasFifthLevelWork: 21,
           thirdLevelPlusWorkContent: 22,
@@ -584,8 +604,8 @@ export default {
       projectId: "",
       adminId: "",
       supervisionId: "",
-      hasThirdLevelPlusWork: "",
-      hasThirdLevelPlusWorkOptions: [
+      hasThreeLevelPlusWork: "",
+      hasThreeLevelPlusWorkOptions: [
         {
           id: 1,
           name: "是"
@@ -704,13 +724,47 @@ export default {
   created() {
     //初始化显示一周信息
     this.$axios
-      .get(`${window.$config.HOST}/baseInfoManagement/getAllProjectBaseInfo`)
+      .post(
+        `${window.$config.HOST}/projectWeeklyManagement/getProjectWeeklyByCondition`,
+        {
+          pageNumber: 0,
+          numberOfPage: 25
+        }
+      )
       .then(response => {
-        this.projectIdOptions = response.data;
+        this.tableData = response.data.returnList[0];
+        this.pagination.totalNumber = response.data.totalNumber;
+        this.$message({
+          message: response.data.returnBackInfo,
+          type: "success"
+        });
+
+        if (this.weeklyStartTime === "") {
+          this.weeklyStartTime = new Date();
+          this.weeklyChanged();
+          this.tableTitle =
+            "国网上海建设咨询公司" +
+            new Date(this.weeklyStartTime).getFullYear() +
+            "年在建工程周报(" +
+            this.weeklyStartTime +
+            "~" +
+            this.weeklyStartTime2 +
+            ")";
+        } else {
+          this.weeklyChanged();
+          this.tableTitle =
+            "国网上海建设咨询公司" +
+            new Date(this.weeklyStartTime).getFullYear() +
+            "年在建工程周报(" +
+            this.weeklyStartTime +
+            "~" +
+            this.weeklyStartTime2 +
+            ")";
+        }
       })
       .catch(error => {
         this.$message({
-          message: "获取项目信息失败！",
+          message: "获取周报数据失败！",
           type: "error"
         });
       });
@@ -719,7 +773,14 @@ export default {
     this.$axios
       .get(`${window.$config.HOST}/baseInfoManagement/getAllAdministrativeDept`)
       .then(response => {
-        this.adminOptions = response.data;
+        if (response.data.returnBackCode >= 0) {
+          this.adminOptions = response.data.returnList[0];
+        } else {
+          this.$message({
+            message: response.data.returnBackInfo,
+            type: "error"
+          });
+        }
       })
       .catch(error => {
         this.$message({
@@ -728,14 +789,110 @@ export default {
         });
       });
 
-    //获得项管部门下拉框（待定）
+    //获得项管部门下拉框
+    this.$axios
+      .get(
+        `${window.$config.HOST}/baseInfoManagement/getAllProjectAdminDeptEnum`
+      )
+      .then(response => {
+        if (response.data.returnBackCode >= 0) {
+          response.data.returnData.forEach(element => {
+            this.adminDeptOptions.push({
+              name: element
+            });
+          });
+        } else {
+          this.$message({
+            message: response.data.returnBackInfo,
+            type: "error"
+          });
+        }
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取项管部门信息失败！",
+          type: "error"
+        });
+      });
+    //获得项目名称
+    this.$axios
+      .get(`${window.$config.HOST}/projectWeeklyManagement/getAllProjectName`)
+      .then(response => {
+        if (response.data.returnBackCode >= 0) {
+          this.projectIdOptions = response.data.returnList[0];
+        } else {
+          this.$message({
+            message: response.data.returnBackInfo,
+            type: "error"
+          });
+        }
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取项目名称信息失败！",
+          type: "error"
+        });
+      });
   },
   methods: {
-    updateWeekly(row){
+    searchWeekly() {
+      this.$axios
+        .post(
+          `${window.$config.HOST}/projectWeeklyManagement/getProjectWeeklyByCondition`,
+          {
+            pageNumber: 0,
+            numberOfPage: 25,
+            weeklyStartTime: this.weeklyStartTime,
+            projectId: this.projectId,
+            adminId: this.adminId,
+            adminDept: this.adminDept,
+            hasWorkNextWeek: this.hasWorkNextWeek,
+            hasThreePlusRiskWork: this.hasThreePlusRiskWork
+          }
+        )
+        .then(response => {
+          this.tableData = response.data.returnList[0];
+          this.pagination.totalNumber = response.data.totalNumber;
+          this.$message({
+            message: response.data.returnBackInfo,
+            type: "success"
+          });
+
+          if (this.weeklyStartTime === "") {
+            this.weeklyStartTime = new Date();
+            this.weeklyChanged();
+            this.tableTitle =
+              "国网上海建设咨询公司" +
+              new Date(this.weeklyStartTime).getFullYear() +
+              "年在建工程周报(" +
+              this.weeklyStartTime +
+              "~" +
+              this.weeklyStartTime2 +
+              ")";
+          } else {
+            this.weeklyChanged();
+            this.tableTitle =
+              "国网上海建设咨询公司" +
+              new Date(this.weeklyStartTime).getFullYear() +
+              "年在建工程周报(" +
+              this.weeklyStartTime +
+              "~" +
+              this.weeklyStartTime2 +
+              ")";
+          }
+        })
+        .catch(error => {
+          this.$message({
+            message: "获取周报数据失败！",
+            type: "error"
+          });
+        });
+    },
+    updateWeekly(row) {
       this.$router.push({
         path: `/weekly/updateWeeklyData`,
         query: {
-          date:row
+          date: row
         }
       });
     },
@@ -797,7 +954,103 @@ export default {
       console.log(this.weeklyStartTime);
       console.log(this.weeklyStartTime2);
     },
-    lookDetails() {
+    lookDetails(row) {
+      this.$axios
+        .get(
+          `${window.$config.HOST}/projectWeeklyManagement/getProjectWeeklyDetailById`,
+          {
+            params: {
+              id: row.id
+            }
+          }
+        )
+        .then(response => {
+          if (
+            response.data.returnBackCodeMajor === 1 &&
+            response.data.returnBackCodeSecondary >= 0
+          ) {
+            this.$message({
+              message: response.data.returnBackInfo,
+              type: "success"
+            });
+            var list = response.data.returnListMajor[0];
+            this.tableDataA = list;
+            this.tableDataB = response.data.returnListSecondary[0];
+            this.ruleForm.currentMonth = this.tableDataA[0].monthStartTime.substring(
+              0,
+              7
+            );
+            this.ruleForm.weeklyStartTime = this.tableDataA[0].weeklyStartTime.substring(
+              0,
+              10
+            );
+            this.tableDataA[0].actualStartTime = this.tableDataA[0].actualStartTime.substring(
+              0,
+              10
+            );
+            this.tableDataA[0].planCompletionTime = this.tableDataA[0].planCompletionTime.substring(
+              0,
+              10
+            );
+     
+
+
+
+            console.log(this.tableDataA);
+            if (this.tableDataA[0].hasWorkNextWeek) {
+              this.tableDataA[0].hasWorkNextWeekStr = "是";
+            } else {
+              this.tableDataA[0].hasWorkNextWeekStr = "否";
+            }
+
+            if (this.tableDataA[0].hasThreePlusRiskWork) {
+              this.tableDataA[0].hasThreePlusRiskWorkStr = "是";
+            } else {
+              this.tableDataA[0].hasThreePlusRiskWorkStr = "否";
+            }
+          } else {
+            this.$message({
+              message: response.data.returnBackInfo,
+              type: "error"
+            });
+          }
+
+          this.tableData = response.data.returnList[0];
+          this.pagination.totalNumber = response.data.totalNumber;
+          this.$message({
+            message: response.data.returnBackInfo,
+            type: "success"
+          });
+
+          if (this.weeklyStartTime === "") {
+            this.weeklyStartTime = new Date();
+            this.weeklyChanged();
+            this.tableTitle =
+              "国网上海建设咨询公司" +
+              new Date(this.weeklyStartTime).getFullYear() +
+              "年在建工程周报(" +
+              this.weeklyStartTime +
+              "~" +
+              this.weeklyStartTime2 +
+              ")";
+          } else {
+            this.weeklyChanged();
+            this.tableTitle =
+              "国网上海建设咨询公司" +
+              new Date(this.weeklyStartTime).getFullYear() +
+              "年在建工程周报(" +
+              this.weeklyStartTime +
+              "~" +
+              this.weeklyStartTime2 +
+              ")";
+          }
+        })
+        .catch(error => {
+          this.$message({
+            message: "获取周报数据失败！",
+            type: "error"
+          });
+        });
       this.dialogVisible = true;
     },
     toAddWeekly() {
