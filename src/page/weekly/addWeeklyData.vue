@@ -1111,7 +1111,8 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 20px;
+    margin-top: 15px;
+    margin-bottom: -5px;
     .bar {
       display: flex;
       flex-direction: row;

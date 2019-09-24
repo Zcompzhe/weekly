@@ -90,9 +90,9 @@
         <el-menu-item index="/weekly/addWeeklyData">
           <i class="el-icon-document"></i>添加周报信息
         </el-menu-item>
-        <el-menu-item index="/weekly/importWeeklyData">
+        <!-- <el-menu-item index="/weekly/importWeeklyData">
           <i class="el-icon-document"></i>导入周报
-        </el-menu-item>
+        </el-menu-item> -->
       </el-submenu>
 
       <el-submenu index="back">
