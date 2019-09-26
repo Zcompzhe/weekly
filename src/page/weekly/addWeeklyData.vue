@@ -719,7 +719,10 @@ export default {
         ],
         adminDept: [
           { required: true, message: "请选择项管部门", trigger: "change" }
-        ]
+        ],
+        dept: [
+          { required: true, message: "请选择项管部门", trigger: "change" }
+        ],
       },
       ruleForm3: {},
       rules3: {
