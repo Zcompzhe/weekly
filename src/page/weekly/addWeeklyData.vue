@@ -58,7 +58,7 @@
                   :rows="1"
                   placeholder="请选择"
                   style="min-width:200px"
-                ></el-input> -->
+                ></el-input>-->
                 <el-select
                   v-model="ruleForm2.projectId"
                   clearable
@@ -394,7 +394,6 @@
         :model="ruleForm4"
         :rules="rules4"
         ref="ruleForm4"
-        
         label-width="150px"
         class="demo-ruleForm"
         label-position="left"
@@ -510,7 +509,6 @@
               type="primary"
               style="margin-right: 20px"
               @click="addOneLine"
-              disabled
             >添加条目</el-button>
             <el-button v-else type="primary" style="margin-right: 20px" @click="addOneLine">添加条目</el-button>
           </div>
@@ -600,9 +598,9 @@ import { POINT_CONVERSION_COMPRESSED } from "constants";
 export default {
   data() {
     return {
-      longitude:"",
-      latitude:"",
-      projectIdOptions:[],
+      longitude: "",
+      latitude: "",
+      projectIdOptions: [],
       flag: false,
       anyChanged: [],
       count: 1,
@@ -720,9 +718,7 @@ export default {
         adminDept: [
           { required: true, message: "请选择项管部门", trigger: "change" }
         ],
-        dept: [
-          { required: true, message: "请选择项管部门", trigger: "change" }
-        ],
+        dept: [{ required: true, message: "请选择项管部门", trigger: "change" }]
       },
       ruleForm3: {},
       rules3: {
@@ -774,15 +770,13 @@ export default {
     this.$axios
       .get(`${window.$config.HOST}/baseInfoManagement/getAllProjectName`)
       .then(response => {
-        if(response.data.returnBackCode>=0)
-        {
-         this.projectIdOptions=response.data.returnList
-        }
-        else{
+        if (response.data.returnBackCode >= 0) {
+          this.projectIdOptions = response.data.returnList;
+        } else {
           this.$message({
-          message: response.data.returnBackInfo,
-          type: "error"
-        });
+            message: response.data.returnBackInfo,
+            type: "error"
+          });
         }
       })
       .catch(error => {
@@ -792,8 +786,6 @@ export default {
         });
       });
 
-    
-    
     //获得建设管理单位
     this.$axios
       .get(`${window.$config.HOST}/baseInfoManagement/getAllAdministrativeDept`)
@@ -891,74 +883,79 @@ export default {
   },
 
   methods: {
-    projectNameChanged(){
+    projectNameChanged() {
       var name = "";
-      this.projectIdOptions.forEach(element=>{
-        if(element.id===this.projectId)
-        {
+      this.projectIdOptions.forEach(element => {
+        if (element.id === this.projectId) {
           name = element.name;
         }
-      })
-      this.$axios
-      .get(`${window.$config.HOST}/baseInfoManagement/getProjectInfoByProjectName`,
-      {
-        params:name
-      })
-      .then(response => {
-        if(response.data.returnBackCode>0)
-        {
-        this.ruleForm2.adminId=response.data.returnList.adminId;
-        this.ruleForm2.supervisionId=response.data.returnList.supervisionId;
-        this.ruleForm2.constructDept=response.data.returnList.constructDept;
-        this.ruleForm2.districtId=response.data.returnList.districtId;
-        this.ruleForm2.detailedAddress=response.data.returnList.detailedAddress;
-        this.ruleForm2.actualStartTime=response.data.returnList.actualStartTime;
-        this.ruleForm2.planCompletionTime=response.data.returnList.planCompletionTime;
-        this.latitude=response.data.returnList.latitude;
-        this.longitude=response.data.returnList.longitude;
-
-        this.ruleForm2.projectScale=response.data.returnList.projectScale;
-        this.ruleForm2.currentWorkerNum=response.data.returnList.currentWorkerNum;
-        this.ruleForm2.currentSubcontractorNum=response.data.returnList.currentSubcontractorNum;
-        this.ruleForm2.adminDept=response.data.returnList.adminDept;
-
-        this.ruleForm4.actualState=response.data.returnList.actualState;
-        this.ruleForm4.controlledState=response.data.returnList.controlledState;
-        this.ruleForm3.projectManagerId=response.data.returnList.projectManagerId;
-        this.ruleForm3.safetyStaffId=response.data.returnList.safetyStaffId;
-        this.ruleForm3.qualityStaffId=response.data.returnList.qualityStaffId;
-
-        this.ruleForm3.chiefInspectorId=response.data.returnList.chiefInspectorId;
-        this.ruleForm3.safetySupervisorId=response.data.returnList.safetySupervisorId;
-        this.ruleForm3.professionalSupervisorId=response.data.returnList.professionalSupervisorId;
-        // this.ruleForm3.createTime=response.data.returnList.createTime;
-
-
-
-   
-         
-
-        }
-        else if(response.data.returnBackCode==0){
-          this.$message({
-          message: response.data.returnBackInfo,
-          type: "warning"
-        });
-        }
-
-        else{
-          this.$message({
-          message: response.data.returnBackInfo,
-          type: "error"
-        });
-        }
-      })
-      .catch(error => {
-        this.$message({
-          message: "获取建设管理单位失败！",
-          type: "error"
-        });
       });
+      this.$axios
+        .get(
+          `${window.$config.HOST}/baseInfoManagement/getProjectInfoByProjectName`,
+          {
+            params: name
+          }
+        )
+        .then(response => {
+          if (response.data.returnBackCode > 0) {
+            this.ruleForm2.adminId = response.data.returnList.adminId;
+            this.ruleForm2.supervisionId =
+              response.data.returnList.supervisionId;
+            this.ruleForm2.constructDept =
+              response.data.returnList.constructDept;
+            this.ruleForm2.districtId = response.data.returnList.districtId;
+            this.ruleForm2.detailedAddress =
+              response.data.returnList.detailedAddress;
+            this.ruleForm2.actualStartTime =
+              response.data.returnList.actualStartTime;
+            this.ruleForm2.planCompletionTime =
+              response.data.returnList.planCompletionTime;
+            this.latitude = response.data.returnList.latitude;
+            this.longitude = response.data.returnList.longitude;
+
+            this.ruleForm2.projectScale = response.data.returnList.projectScale;
+            this.ruleForm2.currentWorkerNum =
+              response.data.returnList.currentWorkerNum;
+            this.ruleForm2.currentSubcontractorNum =
+              response.data.returnList.currentSubcontractorNum;
+            this.ruleForm2.adminDept = response.data.returnList.adminDept;
+
+            this.ruleForm4.actualState = response.data.returnList.actualState;
+            this.ruleForm4.controlledState =
+              response.data.returnList.controlledState;
+            this.ruleForm3.projectManagerId =
+              response.data.returnList.projectManagerId;
+            this.ruleForm3.safetyStaffId =
+              response.data.returnList.safetyStaffId;
+            this.ruleForm3.qualityStaffId =
+              response.data.returnList.qualityStaffId;
+
+            this.ruleForm3.chiefInspectorId =
+              response.data.returnList.chiefInspectorId;
+            this.ruleForm3.safetySupervisorId =
+              response.data.returnList.safetySupervisorId;
+            this.ruleForm3.professionalSupervisorId =
+              response.data.returnList.professionalSupervisorId;
+            // this.ruleForm3.createTime=response.data.returnList.createTime;
+          } else if (response.data.returnBackCode == 0) {
+            this.$message({
+              message: response.data.returnBackInfo,
+              type: "warning"
+            });
+          } else {
+            this.$message({
+              message: response.data.returnBackInfo,
+              type: "error"
+            });
+          }
+        })
+        .catch(error => {
+          this.$message({
+            message: "获取建设管理单位失败！",
+            type: "error"
+          });
+        });
     },
     workContentNextWeekChanged() {
       if (this.ruleForm.workContentNextWeek != "") {
@@ -985,7 +982,6 @@ export default {
     },
     //添加
     add() {
-
       let max = 0;
       this.tableData.forEach(element => {
         if (element.riskLevel > max) max = element.riskLevel;
@@ -1140,3 +1136,34 @@ export default {
   }
 }
 </style>
+
+
+  //delete  post  get
+
+  post:
+  {
+    a:this.,
+    b:this.,
+  }
+
+  get/delete:
+ {
+   params:
+   {
+
+   }
+ }
+      this.$axios    
+      .get(`${window.$config.HOST}/baseInfoManagement/getProjectInfoByProjectName`,
+      {
+        params:name
+      })
+      .then(response => {
+      
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取建设管理单位失败！",
+          type: "error"
+        });
+      });
