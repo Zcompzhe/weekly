@@ -21,7 +21,20 @@
                 ></el-date-picker>
               </el-form-item>
             </div>
+          </el-col>~
+          <el-col :span="10">
+            <div class="bar">
+              <el-form-item label="周报开始日期" prop="weeklyStartTime" placeholder="周报开始日期">
+                <el-date-picker
+                  v-model="ruleForm1.weeklyEndTime"
+                  type="date"
+                  placeholder="选择日期时间"
+                  style="min-width:300px"
+                ></el-date-picker>
+              </el-form-item>
+            </div>
           </el-col>
+
 
           <el-col :span="10">
             <div class="bar">
@@ -528,7 +541,7 @@
         :highlight-current-row="true"
         style="width: 100%; margin-top: 20px"
         id="out-table"
-      >
+       >
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="300" prop="riskLevel" label="风险等级" align="center">
