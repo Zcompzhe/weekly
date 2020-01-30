@@ -79,6 +79,23 @@
       <el-menu-item index="/quick">
         <i class="el-icon-message"></i>快速入门
       </el-menu-item>
+            <el-submenu index="project">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          项目信息管理
+        </template>
+
+        <el-menu-item index="/project/projectInfoMana">
+          <i class="el-icon-document"></i>项目信息管理
+        </el-menu-item>
+        <!-- <el-menu-item index="/project/addProjectInfo">
+          <i class="el-icon-document"></i>添加项目
+        </el-menu-item>
+        <el-menu-item index="/project/updateProjectInfo">
+          <i class="el-icon-document"></i>修改项目
+        </el-menu-item> -->
+
+      </el-submenu>
       <el-submenu index="base">
         <template slot="title">
           <i class="el-icon-message"></i>
@@ -133,23 +150,7 @@
 
       </el-submenu>
 
-      <el-submenu index="project">
-        <template slot="title">
-          <i class="el-icon-message"></i>
-          项目信息管理
-        </template>
 
-        <el-menu-item index="/project/projectInfoMana">
-          <i class="el-icon-document"></i>项目信息管理
-        </el-menu-item>
-        <el-menu-item index="/project/addProjectInfo">
-          <i class="el-icon-document"></i>添加项目
-        </el-menu-item>
-        <el-menu-item index="/project/updateProjectInfo">
-          <i class="el-icon-document"></i>修改项目
-        </el-menu-item>
-
-      </el-submenu>
 
 
       <el-submenu index="supervision">

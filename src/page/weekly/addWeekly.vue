@@ -10,14 +10,13 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="8" style="margin-left:-100px">
+          <el-col :span="8" style="margin-left:-130px">
             <div class="bar">
               <el-form-item label="~" prop="weeklyEndTime" placeholder="周报开始日期" label-width="5px">
                 <el-date-picker disabled v-model="addFormOne.weeklyEndTime" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
-
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="当前月份" prop="monthShowTime" placeholder="当前月份">
@@ -342,11 +341,13 @@
 <script>
 import { POINT_CONVERSION_COMPRESSED } from "constants";
 import * as api from "@/api/date.js";
-import * as getApi from "@/api/getSelection.js";
+import * as getApi from "@/api/getApi.js";
 import * as addApi from "@/api/addApi.js";
 export default {
   data() {
     return {
+      //跳转参数
+      backPath: "",
       //添加或修改的页面标记
       isCreate: true,
       isUpdate: false,
@@ -532,6 +533,9 @@ export default {
   },
 
   created: function () {
+    //其他页面跳转的数据
+    let data = this.$route.params;
+    this.backPath = data.backPath;
     //获取所有项目名称
     getApi.getAllProjectName().then(response => {
       this.addFormTwo.options.idOptions = response;
@@ -961,127 +965,22 @@ export default {
           weeklyRiskContentAddReqs: weeklyRiskContentAddReqs,
           weeklyWorkProgressAddReqs: weeklyWorkProgressAddReqs
         };
-        addApi.addProjectWeeklyInfo(list);
+        addApi.addProjectWeeklyInfo(list).then(response => {
+          this.goback();
+        });
       }
-
-
-
-      // this.$refs["addFormOne"].validate(valid => {
-      //   if (valid) {
-      //     this.$refs["addFormTwo"].validate(valid => {
-      //       if (valid) {
-      //         this.$refs["addFormThree"].validate(valid => {
-      //           if (valid) {
-      //             this.$refs["addFormFive"].validate(valid => {
-      //               if (valid) {
-      //                 let projectUpdateReq = {};
-      //                 let projectWeeklyAddReq;
-      //                 let weeklyConstructContentAddReqs;
-      //                 let weeklyRiskContentAddReqs;
-      //                 let weeklyWorkProgressAddReqs;
-      //                 //首先验证项目信息是否修改
-      //                 this.projectInfoUpdate();
-      //                 if (this.projectUpdateFlag) {
-      //                   projectUpdateReq = {
-      //                     id: this.addFormTwo.id,
-      //                     name: this.addFormTwo.name,
-      //                     adminId: this.addFormTwo.adminId,
-      //                     supervisionId: this.addFormTwo.supervisionId,
-      //                     constructDept: this.addFormTwo.constructDept,
-      //                     districtId: this.addFormTwo.districtId,
-      //                     detailedAddress: this.addFormTwo.detailedAddress,
-      //                     latitude: this.addFormTwo.latitude,
-      //                     longitude: this.addFormTwo.longitude,
-      //                     projectScale: this.addFormTwo.projectScale,
-      //                     currentWorkerNum: this.addFormTwo.currentWorkerNum,
-      //                     currentSubcontractorNum: this.addFormTwo.currentSubcontractorNum,
-      //                     adminDept: this.addFormTwo.adminDept,
-      //                     actualStartTime: api.changeDate(this.addFormTwo.actualStartTime),
-      //                     planCompletionTime: api.changeDate(this.addFormTwo.planCompletionTime),
-      //                     chiefInspectorId: this.addFormThree.chiefInspectorId,
-      //                     professionalSupervisorId: this.addFormThree.professionalSupervisorId,
-      //                     projectManagerId: this.addFormThree.projectManagerId,
-      //                     qualityStaffId: this.addFormThree.qualityStaffId,
-      //                     safetyStaffId: this.addFormThree.safetyStaffId,
-      //                     safetySupervisorId: this.addFormThree.safetySupervisorId,
-      //                   };
-      //                 }
-      //                 //加入周报信息
-      //                 projectWeeklyAddReq = {
-      //                   actualState: this.addFormFive.actualState,
-      //                   controlledState: this.addFormFive.controlledState,
-      //                   adminDept: this.addFormTwo.adminDept,
-      //                   adminId: this.addFormTwo.adminId,
-      //                   chiefInspectorId: this.addFormThree.chiefInspectorId,
-      //                   constructDept: this.addFormTwo.constructDept,
-      //                   detailedAddress: this.addFormTwo.detailedAddress,
-      //                   districtId: this.addFormTwo.districtId,
-      //                   hasThreePlusRiskWork: this.addFormFour.hasThreePlusRiskWork,
-      //                   hasWorkNextWeek: this.addFormFour.hasWorkNextWeek,
-      //                   latitude: this.addFormTwo.latitude,
-      //                   longitude: this.addFormTwo.longitude,
-      //                   monthStartTime: this.addFormOne.monthStartTime,
-      //                   professionalSupervisorId: this.addFormThree.professionalSupervisorId,
-      //                   projectId: this.addFormTwo.id,
-      //                   projectManagerId: this.addFormThree.projectManagerId,
-      //                   qualityStaffId: this.addFormThree.qualityStaffId,
-      //                   safetyStaffId: this.addFormThree.safetyStaffId,
-      //                   safetySupervisorId: this.addFormThree.safetySupervisorId,
-      //                   supervisionId: this.addFormTwo.supervisionId,
-      //                   currentSubcontractorNum: this.addFormTwo.currentSubcontractorNum,
-      //                   currentWorkerNum: this.addFormTwo.currentWorkerNum,
-      //                   projectScale: this.addFormTwo.projectScale,
-      //                   weeklyStartTime: api.changeDate(this.addFormOne.weeklyStartTime),
-      //                   actualStartTime: api.changeDate(this.addFormTwo.actualStartTime),
-      //                   planCompletionTime: api.changeDate(this.addFormTwo.planCompletionTime),
-      //                 };
-      //                 //主要施工内容信息
-      //                 weeklyConstructContentAddReqs = this.addFormFour.weeklyConstructContentAddReqs;
-      //                 //风险作业内容信息
-      //                 weeklyRiskContentAddReqs = this.addFormFour.weeklyRiskContentAddReqs;
-      //                 //施工进度信息
-      //                 weeklyWorkProgressAddReqs = this.addFormFour.weeklyWorkProgressAddReqs;
-      //                 //信息整合
-      //                 let list = {
-      //                   projectUpdateReq: projectUpdateReq,
-      //                   projectWeeklyAddReq: projectWeeklyAddReq,
-      //                   weeklyConstructContentAddReqs: weeklyConstructContentAddReqs,
-      //                   weeklyRiskContentAddReqs: weeklyRiskContentAddReqs,
-      //                   weeklyWorkProgressAddReqs: weeklyWorkProgressAddReqs
-      //                 };
-      //                 // addApi.addProjectWeeklyInfo(list);
-
-      //               } else {
-      //                 this.$message({
-      //                   message: "请填写所1有必填项!",
-      //                   type: "error"
-      //                 });
-      //               }
-      //             });
-      //           } else {
-      //             this.$message({
-      //               message: "请填写所2有必填项!",
-      //               type: "error"
-      //             });
-      //           }
-      //         });
-      //       } else {
-      //         this.$message({
-      //           message: "请填写所有3必填项!",
-      //           type: "error"
-      //         });
-      //       }
-      //     });
-      //   } else {
-      //     this.$message({
-      //       message: "请填写所有必4填项!",
-      //       type: "error"
-      //     });
-      //   }
-      // });
     },
     //取消
-    cancelAllInfo() { }
+    cancelAllInfo() {
+      this.$router.push({
+        name: this.backPath
+      })
+    },
+    goback() {
+      this.$router.push({
+        name: this.backPath
+      })
+    }
   }
 };
 </script>

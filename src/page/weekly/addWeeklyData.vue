@@ -1,537 +1,150 @@
 <template>
   <div class="body">
     <el-card class="box-card">
-      <el-form
-        :model="ruleForm1"
-        label-position="left"
-        :rules="rules1"
-        ref="ruleForm1"
-        label-width="140px"
-        class="demo-ruleForm"
-      >
-        <el-row :gutter="20">
-          <el-col :span="10">
-            <div class="bar">
-              <el-form-item label="周报开始日期" prop="weeklyStartTime" placeholder="周报开始日期">
-                <el-date-picker
-                  v-model="ruleForm1.weeklyStartTime"
-                  type="date"
-                  placeholder="选择日期时间"
-                  style="min-width:300px"
-                ></el-date-picker>
-              </el-form-item>
-            </div>
-          </el-col>~
-          <el-col :span="10">
-            <div class="bar">
-              <el-form-item label="周报开始日期" prop="weeklyStartTime" placeholder="周报开始日期">
-                <el-date-picker
-                  v-model="ruleForm1.weeklyEndTime"
-                  type="date"
-                  placeholder="选择日期时间"
-                  style="min-width:300px"
-                ></el-date-picker>
-              </el-form-item>
-            </div>
-          </el-col>
-
-
-          <el-col :span="10">
-            <div class="bar">
-              <el-form-item label="当前月份" prop="currentMonth" placeholder="当前月份">
-                <el-date-picker
-                  v-model="ruleForm1.currentMonth"
-                  type="month"
-                  placeholder="请选择当前月份"
-                  style="min-width:300px"
-                ></el-date-picker>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-      </el-form>
-    </el-card>
-
-    <el-card class="box-card">
-      <el-form
-        :model="ruleForm2"
-        :rules="rules2"
-        label-position="left"
-        ref="ruleForm2"
-        label-width="110px"
-        class="demo-ruleForm"
-      >
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="项目名称" prop="projectId" placeholder="请选择项目名称">
-                <!-- <el-input
-                  v-model="ruleForm2.projectId"
-                  clearable
-                  :rows="1"
-                  placeholder="请选择"
-                  style="min-width:200px"
-                ></el-input>-->
-                <el-select
-                  v-model="ruleForm2.projectId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                  @change="projectNameChanged"
-                >
-                  <el-option
-                    v-for="item in projectIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="建设管理单位" prop="adminId" placeholder="请选择建设管理单位">
-                <el-select
-                  v-model="ruleForm2.adminId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in adminIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="监理单位" prop="supervisionId" placeholder="请选择监理单位">
-                <el-select
-                  v-model="ruleForm2.supervisionId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in supervisionIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="施工单位" prop="constructDept" placeholder="请输入施工单位">
-                <el-input
-                  v-model="ruleForm2.constructDept"
-                  clearable
-                  :rows="1"
-                  placeholder="请选择"
-                  style="min-width:200px"
-                ></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="所在区域" prop="districtId" placeholder="请输入项目所在区域">
-                <el-select
-                  v-model="ruleForm2.districtId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in districtIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="详细地址" prop="detailedAddress" placeholder="请输入详细地址">
-                <el-input
-                  v-model="ruleForm2.detailedAddress"
-                  clearable
-                  :rows="1"
-                  placeholder="请选择"
-                  style="min-width:200px"
-                ></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="实际开工时间" prop="actualStartTime" placeholder="请选择实际开工时间">
-                <el-date-picker
-                  v-model="ruleForm2.actualStartTime"
-                  align="right"
-                  type="date"
-                  placeholder="选择日期"
-                  style="min-width:200px"
-                ></el-date-picker>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="计划竣工时间" prop="planCompletionTime" placeholder="请选择计划竣工时间">
-                <el-date-picker
-                  v-model="ruleForm2.planCompletionTime"
-                  align="right"
-                  type="date"
-                  placeholder="选择日期"
-                  style="min-width:200px"
-                ></el-date-picker>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="项目规模" prop="projectScale" placeholder="请输入项目规模">
-                <el-input
-                  v-model="ruleForm2.projectScale"
-                  clearable
-                  :rows="1"
-                  placeholder="请选择"
-                  style="min-width:200px"
-                ></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="一线作业人数" prop="currentWorkerNum" placeholder="请输入一线作业人数">
-                <el-input
-                  v-model="ruleForm2.currentWorkerNum"
-                  clearable
-                  :rows="1"
-                  placeholder="请选择"
-                  style="min-width:200px"
-                ></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="请输入当前分包人员数">
-                <el-input
-                  v-model="ruleForm2.currentSubcontractorNum"
-                  clearable
-                  :rows="1"
-                  placeholder="请选择"
-                  style="min-width:200px"
-                ></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="项管部门" prop="dept" placeholder="请选择实际状态">
-                <el-select
-                  v-model="ruleForm2.adminDept"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in adminDeptOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-      </el-form>
-    </el-card>
-
-    <el-card class="box-card">
-      <el-form
-        :model="ruleForm3"
-        :rules="rules3"
-        ref="ruleForm3"
-        label-position="left"
-        label-width="140px"
-        class="demo-ruleForm"
-      >
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="项目经理" prop="projectManagerId" placeholder="请选择">
-                <el-select
-                  v-model="ruleForm3.projectManagerId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in projectManagerIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="安全专职" prop="safetyStaffId" placeholder="请选择">
-                <el-select
-                  v-model="ruleForm3.safetyStaffId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in safetyStaffIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="质量专职" prop="qualityStaffId" placeholder="请选择">
-                <el-select
-                  v-model="ruleForm3.qualityStaffId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in qualityStaffIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="总监/总监代表" prop="chiefInspectorId" placeholder="请选择">
-                <el-select
-                  v-model="ruleForm3.chiefInspectorId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in chiefInspectorIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="安全监理" prop="safetySupervisorId" placeholder="请选择">
-                <el-select
-                  v-model="ruleForm3.safetySupervisorId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in safetySupervisorIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="专业监理" prop="professionalSupervisorId" placeholder="请选择">
-                <el-select
-                  v-model="ruleForm3.professionalSupervisorId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in professionalSupervisorIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-      </el-form>
-    </el-card>
-
-    <el-card class="box-card">
-      <el-form
-        :model="ruleForm4"
-        :rules="rules4"
-        ref="ruleForm4"
-        label-width="150px"
-        class="demo-ruleForm"
-        label-position="left"
-      >
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="当前总体施工进度" prop="currentProgressId" placeholder="请选择">
-                <el-select
-                  v-model="ruleForm4.currentProgressId"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:220px"
-                >
-                  <el-option
-                    v-for="item in currentProgressIdOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="实际状态" prop="actualState" placeholder="请选择">
-                <el-select
-                  v-model="ruleForm4.actualState"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:220px"
-                >
-                  <el-option
-                    v-for="item in actualStateOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="管控内状态" prop="controlledState" placeholder="请选择">
-                <el-select
-                  v-model="ruleForm4.controlledState"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:220px"
-                >
-                  <el-option
-                    v-for="item in controlledStateOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="下周是否有作业" prop="hasWorkNextWeek" placeholder="请选择">
-                <el-radio-group v-model="ruleForm4.hasWorkNextWeek" style="margin-left:30px">
-                  <el-radio :label="true">是</el-radio>
-                  <el-radio :label="false">否</el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="是否有三级以上风险" prop="hasThreePlusRiskWork" placeholder="请选择">
-                <el-radio-group v-model="ruleForm4.hasThreePlusRiskWork" style="margin-left:30px">
-                  <el-radio :label="true">是</el-radio>
-                  <el-radio :label="false">否</el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="下周主要施工内容" prop="workContentNextWeek" placeholder="请选择">
-                <el-input
-                  v-model="ruleForm4.workContentNextWeek"
-                  clearable
-                  type="textarea"
-                  :rows="5"
-                  placeholder="请选择"
-                  style="min-width:400px"
-                  @change="workContentNextWeekChanged"
-                ></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-      </el-form>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">周报开始时间</div>
+            <el-date-picker
+              v-model="weeklyStartTime"
+              type="date"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              @change="weeklyChanged"
+            ></el-date-picker>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title" style="margin-left:-50px;max-width:20px">~</div>
+            <el-date-picker
+              v-model="weeklyStartTime2"
+              type="date"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              style="margin-left:-30px"
+              :disabled="true"
+            ></el-date-picker>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">项目名称</div>
+            <el-select v-model="projectId" clearable placeholder="请选择" style="min-width:200px">
+              <el-option
+                v-for="item in projectIdOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">建设管理单位</div>
+            <el-select v-model="adminId" clearable placeholder="请选择" style="min-width:200px">
+              <el-option
+                v-for="item in adminOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">项管部门</div>
+            <el-select v-model="adminDept" clearable placeholder="请选择" style="min-width:200px">
+              <el-option
+                v-for="item in adminDeptOptions"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
+              ></el-option>
+            </el-select>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">下周是否有作业</div>
+            <el-select
+              v-model="hasWorkNextWeek"
+              clearable
+              placeholder="请选择"
+              style="min-width:200px"
+            >
+              <el-option
+                v-for="item in hasWorkNextWeekOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">存在三级及以上风险</div>
+            <el-select
+              v-model="hasThreeLevelPlusWork"
+              clearable
+              placeholder="请选择"
+              style="min-width:200px"
+            >
+              <el-option
+                v-for="item in hasThreeLevelPlusWorkOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <el-button type="primary" style="margin-left: 20px" @click="searchWeekly">搜索</el-button>
+          </div>
+        </el-col>
+      </el-row>
     </el-card>
 
     <el-card class="box-card">
       <el-row :gutter="20">
-        <el-col :span="3">
+        <el-col :span="20">
           <div class="bar">
-            <el-button
-              v-if="flag===false"
-              type="primary"
-              style="margin-right: 20px"
-              @click="addOneLine"
-            >添加条目</el-button>
-            <el-button v-else type="primary" style="margin-right: 20px" @click="addOneLine">添加条目</el-button>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <div class="bar">
-            <el-button type="primary" style="margin-right: 20px" @click="deleteLines">删除条目</el-button>
+            <div id="title">
+              <p
+                id="tableTitle"
+                style="min-width:1000px;font-size:18px;margin-left:380px"
+              >{{ tableTitle }}</p>
+            </div>
           </div>
         </el-col>
       </el-row>
+      <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+        <el-col :span="2">
+          <div class="bar">
+            <el-button type="primary" style="margin-right: 20px" @click="toAddWeekly">添加周报</el-button>
+          </div>
+        </el-col>
+        <el-col :offset="1" :span="2">
+          <div class="bar">
+            <el-button type="primary" style="margin-right: 20px" @click>删除周报</el-button>
+          </div>
+        </el-col>
+      </el-row>
+      <!-- <br />
+      <hr />
+      <br />-->
+
       <el-table
         :data="tableData"
         max-height="400"
@@ -541,250 +154,557 @@
         :highlight-current-row="true"
         style="width: 100%; margin-top: 20px"
         id="out-table"
-       >
+      >
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="300" prop="riskLevel" label="风险等级" align="center">
+        <el-table-column width="300" prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="200" prop="adminName" label="建设管理单位" align="center"></el-table-column>
+        <el-table-column width="300" prop="currentProgress" label="当前总体施工进度" align="center"></el-table-column>
+        <el-table-column width="300" prop="workContentNextWeek" label="下周主要施工作业内容" align="center"></el-table-column>
+        <el-table-column
+          width="350"
+          prop="threePlusRiskWorkContent"
+          label="下周的三级及以上风险作业安排、位置及内容"
+          align="center"
+        ></el-table-column>
+        <el-table-column width="150" prop="adminDept" label="备注" align="center"></el-table-column>
+        <el-table-column width="80" prop="actualState" label="实际状态" align="center"></el-table-column>
+        <el-table-column width="80" prop="controlledState" label="管控内状态" align="center"></el-table-column>
+        <!-- <el-table-column width="80" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
+        <el-table-column width="100" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
+        <el-table-column width="80" prop="inspectState" label="督察情况" align="center"></el-table-column> -->
+
+        <el-table-column width="200" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-select size="medium" v-model="scope.row.riskLevel">
-              <el-option
-                v-for="item in riskLevelOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </template>
-        </el-table-column>
-        <el-table-column width="500" prop="workContentNextWeek" label="下周作业安排、位置及内容" align="center">
-          <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.workContentNextWeek"
-              clearable
-              :rows="1"
-              placeholder="请输入"
-              style="min-width:400px"
-            ></el-input>
-          </template>
-        </el-table-column>
-        <el-table-column width="229" prop="workStartTime" label="作业开始时间" align="center">
-          <template slot-scope="scope">
-            <el-date-picker
-              v-model="scope.row.workStartTime"
-              type="date"
-              placeholder="选择日期时间"
-              style="width:180px"
-            ></el-date-picker>
-          </template>
-        </el-table-column>
-        <el-table-column width="230" prop="workEndTime" label="作业结束时间" align="center">
-          <template slot-scope="scope">
-            <el-date-picker
-              v-model="scope.row.workEndTime"
-              type="date"
-              placeholder="选择日期时间"
-              style="width:180px"
-            ></el-date-picker>
+            <el-button type="text" @click="lookDetails(scope.row)">查看详情</el-button>
+            <el-button type="text" @click="updateWeekly(scope.row)">修改周报</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-row :gutter="20" style="margin-top:30px">
-        <el-col :span="3" style="margin-left:40%">
+      <br />
+
+      <el-pagination
+        :current-page="pagination.currentPage"
+        :page-sizes="pagination.pageSize"
+        :page-size="pagination.currentPageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pagination.totalNumber"
+      ></el-pagination>
+    </el-card>
+
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="70%" :modal="false">
+      <el-row :gutter="20">
+        <el-col :span="8">
           <div class="bar">
-            <el-button type="primary" style="margin-right: 20px" @click="add">确认添加</el-button>
+            <div class="title">周报开始时间</div>
+            <el-input
+              v-model="ruleForm.weeklyStartTime"
+              clearable
+              :rows="1"
+              :disabled="true"
+              placeholder="请输入"
+              style="min-width:200px"
+            ></el-input>
           </div>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="8">
           <div class="bar">
-            <el-button type="primary" style="margin-right: 20px" @click>取消</el-button>
+            <div class="title">所属月份</div>
+            <el-input
+              v-model="ruleForm.currentMonth"
+              clearable
+              :rows="1"
+              :disabled="true"
+              placeholder="请输入"
+              style="min-width:200px"
+            ></el-input>
           </div>
         </el-col>
       </el-row>
-    </el-card>
+      <br />
+      <el-table :data="tableDataA" border style="width: 100%">
+        <el-table-column prop="projectName" label="项目名称" width="300"></el-table-column>
+        <el-table-column prop="adminName" label="建设管理单位" width="180"></el-table-column>
+        <el-table-column prop="supervisionName" label="监理单位" width="180"></el-table-column>
+        <el-table-column prop="constructDept" label="施工单位" width="180"></el-table-column>
+        <el-table-column prop="districtId" label="项目所在区域" width="180"></el-table-column>
+        <el-table-column prop="detailedAddress" label="详细地址" width="180"></el-table-column>
+        <el-table-column prop="actualStartTime" label="实际开工时间" width="180"></el-table-column>
+        <el-table-column prop="planCompletionTime" label="计划竣工时间" width="180"></el-table-column>
+        <el-table-column prop="projectScale" label="项目规模" width="180"></el-table-column>
+        <el-table-column prop="currentWorkerNum" label="一线作业人员数" width="180"></el-table-column>
+        <el-table-column prop="currentSubcontractorNum" label="当前分包人员数" width="180"></el-table-column>
+      </el-table>
 
-    <br />
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <el-table :data="tableDataA" border style="width: 100%">
+        <el-table-column prop="adminDept" label="项管部门" width="180"></el-table-column>
+        <el-table-column prop="currentProgress" label="当前总体施工进度" width="180"></el-table-column>
+        <el-table-column prop="hasWorkNextWeekStr" label="下周是否有作业" width="180"></el-table-column>
+        <el-table-column prop="workContentNextWeek" label="下周主要施工作业内容" width="180"></el-table-column>
+        <el-table-column prop="hasThreePlusRiskWorkStr" label="是否有三级以上风险" width="180"></el-table-column>
+        <el-table-column prop="actualState" label="实际状态" width="180"></el-table-column>
+        <el-table-column prop="controlledState" label="管控内状态" width="180"></el-table-column>
+        <el-table-column prop="inherentRisk" label="固有风险" width="180"></el-table-column>
+        <el-table-column prop="dynamicRisk" label="动态风险" width="180"></el-table-column>
+        <el-table-column prop="inspectState" label="督察情况" width="180"></el-table-column>
+      </el-table>
+
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <el-table ref="singleTable" :data="tableDataB" highlight-current-row style="width: 100%">
+        <el-table-column type="index" width="50"></el-table-column>
+        <el-table-column property="riskLevel" label="作业风险等级" width="120"></el-table-column>
+        <el-table-column property="workContent" label="下周作业安排、位置及内容" width="250"></el-table-column>
+        <el-table-column property="workStartTime" label="作业开始时间" width="200"></el-table-column>
+        <el-table-column property="workEndTime" label="作业结束时间" width="200"></el-table-column>
+      </el-table>
+      <br />
+      <br />
+      <br />
+      <el-row :gutter="20">
+        <el-col :span="20">
+          <div class="bar">
+            <div class="title" style="margin-left:35%;font-size:18px;min-width:200px">建设管理单位责任人信息</div>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">项目经理</div>
+            <el-input
+              v-model="ruleForm.projectManagerId"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">联系方式</div>
+            <el-input
+              v-model="ruleForm.contactInformation1"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">安全专职</div>
+            <el-input
+              v-model="ruleForm.safetyStaffIdOptions"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">联系方式</div>
+            <el-input
+              v-model="ruleForm.contactInformation2"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">质量专职</div>
+            <el-input
+              v-model="ruleForm.qualityStaffIdOptions"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">联系方式</div>
+            <el-input
+              v-model="ruleForm.contactInformation3"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="20">
+          <div class="bar">
+            <div class="title" style="margin-left:35%;font-size:18px;min-width:200px">监理单位责任人信息</div>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">总监/总监代表</div>
+            <el-input
+              v-model="ruleForm.chiefInspectorId"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">联系方式</div>
+            <el-input
+              v-model="ruleForm.contactInformation4"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">安全监理</div>
+
+            <el-input
+              v-model="ruleForm.safetySupervisorIdOptions"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">联系方式</div>
+            <el-input
+              v-model="ruleForm.contactInformation5"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">专业监理</div>
+            <el-input
+              v-model="ruleForm.professionalSupervisorIdOptions"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">联系方式</div>
+            <el-input
+              v-model="ruleForm.contactInformation6"
+              clearable
+              :disabled="true"
+              :rows="1"
+              placeholder="请选择"
+              style="min-width:200px"
+            ></el-input>
+          </div>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { POINT_CONVERSION_COMPRESSED } from "constants";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 export default {
   data() {
     return {
-      longitude: "",
-      latitude: "",
-      projectIdOptions: [],
-      flag: false,
-      anyChanged: [],
-      count: 1,
-      riskLevelOptions: [
+      tableDataA: [],
+      tableDataB: [],
+      pagination: {
+        totalNumber: 4,
+        currentPageSize: 25,
+        pageSize: [10, 25, 50, 100],
+        currentPage: 1
+      },
+
+      tableTitle:
+        "国网上海建设咨询公司2019年在建工程周报(2019-07-12~2019-07-19)",
+      projectManagerIdOptions: [],
+      safetyStaffIdOptions: [],
+      qualityStaffIdOptions: [],
+      ruleForm: [],
+      dialogVisible: false,
+      tableData: [
         {
           id: 1,
-          name: "一级风险"
+          projectName:"奉贤换流站调相机应用工程2x30万千乏调相机工程",
+          adminName: "国网上海建设咨询公司",
+          currentProgress: "厂房基础模板安装，拆除事故油地开挖",
+          workContentNextWeek:"7/15-7/21 南侧基础模板拆除",
+          threePlusRiskWorkContent: "7/15-7/21 南侧基础模板拆除",
+          adminDept: "项管一部",
+          actualState: "在建",
+          controlledState:"不纳入",
+         
         },
         {
           id: 2,
-          name: "二级风险"
+          projectName:"南桥500千伏变电站主要扩建工程",
+          adminName: "国网上海建设咨询公司",
+          currentProgress: "围墙施工",
+          workContentNextWeek:"7/15-7/21 临时围墙砌筑",
+          threePlusRiskWorkContent: "无",
+          adminDept: "项管一部",
+          actualState: "在建",
+          controlledState:"竣工",
         },
         {
           id: 3,
-          name: "三级风险"
+          projectName:"胜辛220千伏输变电工程（线路部分）",
+          adminName: "国网上海建设咨询公司",
+          currentProgress: "基础施工",
+          workContentNextWeek:"无",
+          threePlusRiskWorkContent: "无",
+          adminDept: "项管一部",
+          actualState: "停工",
+          controlledState:"停工",
+        },
+        {
+          id: 4,
+          projectName:"松江220千伏变电站改造工程",
+          adminName: "国网上海建设咨询公司",
+          currentProgress: "第一阶段完成",
+          workContentNextWeek:"无",
+          threePlusRiskWorkContent: "无",
+          adminDept: "项管一部",
+          actualState: "在建",
+          controlledState:"在建",
         }
       ],
-      adminIdOptions: [],
-      supervisionIdOptions: [],
-      districtIdOptions: [],
-      adminDeptOptions: [],
-      projectManagerIdOptions: [
+      beChanged: [],
+      weeklyStartTime2: "",
+      weeklyStartTime: "",
+      projectId: "",
+      adminId: "",
+      supervisionId: "",
+      hasThreeLevelPlusWork: "",
+      hasThreeLevelPlusWorkOptions: [
         {
           id: 1,
-          name: "经理A"
+          name: "是"
         },
         {
           id: 2,
-          name: "经理B"
+          name: "否"
         }
       ],
-      safetyStaffIdOptions: [
+      hasWorkNextWeek: "",
+      hasWorkNextWeekOptions: [
         {
           id: 1,
-          name: "安全专职A"
-        }
-      ],
-      qualityStaffIdOptions: [
+          name: "是"
+        },
         {
-          id: 1,
-          name: "质量专职A"
+          id: 2,
+          name: "否"
         }
       ],
-      chiefInspectorIdOptions: [
-        {
-          id: 1,
-          name: "总监A"
-        }
-      ],
-      safetySupervisorIdOptions: [
-        {
-          id: 1,
-          name: "安全监理A"
-        }
-      ],
-      professionalSupervisorIdOptions: [
-        {
-          id: 1,
-          name: "专业监理A"
-        }
-      ],
-      currentProgressIdOptions: [
-        {
-          id: 1,
-          name: "50%"
-        }
-      ],
+      adminDept: "",
+      adminDeptId: "",
+      adminDeptOptions: [],
+      actualState: "",
       actualStateOptions: [],
+      controlledState: "",
       controlledStateOptions: [],
-      tableData: [],
-      ruleForm1: {},
-      rules1: {
-        weeklyStartTime: [
-          { required: true, message: "请选择周报开始日期", trigger: "change" }
-        ],
-        currentMonth: [
-          { required: true, message: "请选择当前月份", trigger: "change" }
-        ]
-      },
-      ruleForm2: {},
-      rules2: {
-        projectId: [
-          { required: true, message: "请输入项目名称", trigger: "blur" }
-        ],
-        adminId: [
-          { required: true, message: "请选择建设管理单位", trigger: "change" }
-        ],
-        supervisionId: [
-          { required: true, message: "请选择监理单位", trigger: "change" }
-        ],
-        constructDept: [
-          { required: true, message: "请输入施工单位", trigger: "blur" }
-        ],
-        districtId: [
-          { required: true, message: "请选择所在区域", trigger: "change" }
-        ],
-        detailedAddress: [
-          { required: true, message: "请输入详细地址", trigger: "blur" }
-        ],
-        actualStartTime: [
-          { required: true, message: "请选择实际开工时间", trigger: "change" }
-        ],
-        planCompletionTime: [
-          { required: true, message: "请选择计划竣工时间", trigger: "change" }
-        ],
-        projectScale: [
-          { required: true, message: "请输入项目规模", trigger: "blur" }
-        ],
-        currentWorkerNum: [
-          { required: true, message: "请输入一线作业人数", trigger: "blur" }
-        ],
-        currentSubcontractorNum: [
-          { required: true, message: "请输入当前分包人数", trigger: "blur" }
-        ],
-        adminDept: [
-          { required: true, message: "请选择项管部门", trigger: "change" }
-        ],
-        dept: [{ required: true, message: "请选择项管部门", trigger: "change" }]
-      },
-      ruleForm3: {},
-      rules3: {
-        projectManagerId: [
-          { required: true, message: "请选择项目经理", trigger: "change" }
-        ],
-        safetyStaffId: [
-          { required: true, message: "请选择安全专职", trigger: "change" }
-        ],
-        qualityStaffId: [
-          { required: true, message: "请选择质量专职", trigger: "change" }
-        ],
-        chiefInspectorId: [
-          { required: true, message: "请选择总监/总监代表", trigger: "change" }
-        ],
-        safetySupervisorId: [
-          { required: true, message: "请选择安全监理", trigger: "change" }
-        ],
-        professionalSupervisorId: [
-          { required: true, message: "请选择专业监理", trigger: "change" }
-        ]
-      },
-      ruleForm4: {},
-      rules4: {
-        currentProgressId: [
-          { required: true, message: "请选择项目经理", trigger: "change" }
-        ],
-        actualState: [
-          { required: true, message: "请选择项目经理", trigger: "change" }
-        ],
-        controlledState: [
-          { required: true, message: "请选择项目经理", trigger: "change" }
-        ],
-        workContentNextWeek: [
-          { required: true, message: "请选择项目经理", trigger: "change" }
-        ],
-        hasWorkNextWeek: [
-          { required: true, message: "请选择项目经理", trigger: "change" }
-        ],
-        hasThreePlusRiskWork: [
-          { required: true, message: "请选择项目经理", trigger: "blur" }
+
+      projectIdOptions: [
+        {
+          id: 1,
+          projectId: "项目A"
+        },
+        {
+          id: 2,
+          projectId: "项目B"
+        },
+        {
+          id: 3,
+          projectId: "项目C"
+        },
+        {
+          id: 4,
+          projectId: "项目D"
+        }
+      ],
+      adminOptions: [
+        {
+          id: 1,
+          adminId: "建设管理单位A"
+        },
+        {
+          id: 2,
+          adminId: "建设管理单位B"
+        },
+        {
+          id: 3,
+          adminId: "建设管理单位C"
+        },
+        {
+          id: 4,
+          adminId: "建设管理单位D"
+        }
+      ],
+      supervisionOptions: [
+        {
+          id: 1,
+          supervisionId: "监理单位A"
+        },
+        {
+          id: 2,
+          supervisionId: "监理单位B"
+        },
+        {
+          id: 3,
+          supervisionId: "监理单位C"
+        },
+        {
+          id: 4,
+          supervisionId: "监理单位D"
+        }
+      ],
+
+      pickerOptions: {
+        // disabledDate(time) {
+        //   return time.getTime() > Date.now();
+        // },
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            }
+          },
+          {
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            }
+          },
+          {
+            text: "一周前",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            }
+          }
         ]
       }
     };
   },
 
   created() {
-    //获得项目名称（待做）
+    //初始化显示一周信息
     this.$axios
-      .get(`${window.$config.HOST}/baseInfoManagement/getAllProjectName`)
+      .post(
+        `${window.$config.HOST}/projectWeeklyManagement/getProjectWeeklyByCondition`,
+        {
+          pageNumber: 0,
+          numberOfPage: 25
+        }
+      )
+      .then(response => {
+        this.tableData = response.data.returnList[0];
+        this.pagination.totalNumber = response.data.totalNumber;
+        this.$message({
+          message: response.data.returnBackInfo,
+          type: "success"
+        });
+
+        if (this.weeklyStartTime === "") {
+          this.weeklyStartTime = new Date();
+          this.weeklyChanged();
+          this.tableTitle =
+            "国网上海建设咨询公司" +
+            new Date(this.weeklyStartTime).getFullYear() +
+            "年在建工程周报(" +
+            this.weeklyStartTime +
+            "~" +
+            this.weeklyStartTime2 +
+            ")";
+        } else {
+          this.weeklyChanged();
+          this.tableTitle =
+            "国网上海建设咨询公司" +
+            new Date(this.weeklyStartTime).getFullYear() +
+            "年在建工程周报(" +
+            this.weeklyStartTime +
+            "~" +
+            this.weeklyStartTime2 +
+            ")";
+        }
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取周报数据失败！",
+          type: "error"
+        });
+      });
+
+    //获得建设管理单位
+    this.$axios
+      .get(`${window.$config.HOST}/baseInfoManagement/getAllAdministrativeDept`)
       .then(response => {
         if (response.data.returnBackCode >= 0) {
-          this.projectIdOptions = response.data.returnList;
+          this.adminOptions = response.data.returnList[0];
         } else {
           this.$message({
             message: response.data.returnBackInfo,
@@ -799,287 +719,113 @@ export default {
         });
       });
 
-    //获得建设管理单位
-    this.$axios
-      .get(`${window.$config.HOST}/baseInfoManagement/getAllAdministrativeDept`)
-      .then(response => {
-        this.adminIdOptions = response.data;
-      })
-      .catch(error => {
-        this.$message({
-          message: "获取建设管理单位失败！",
-          type: "error"
-        });
-      });
-
-    //获得监理单位
-    this.$axios
-      .get(`${window.$config.HOST}/baseInfoManagement/getAllSupervisionDept`)
-      .then(response => {
-        this.supervisionIdOptions = response.data;
-      })
-      .catch(error => {
-        this.$message({
-          message: "获取监理单位失败！",
-          type: "error"
-        });
-      });
-
-    //获得区域信息
-    this.$axios
-      .get(`${window.$config.HOST}/baseInfoManagement/getAllDistrictName`)
-      .then(response => {
-        this.districtIdOptions = response.data;
-      })
-      .catch(error => {
-        this.$message({
-          message: "获取区域信息失败！",
-          type: "error"
-        });
-      });
-
-    //获取实际状态
-    this.$axios
-      .get(
-        `${window.$config.HOST}/baseInfoManagement/getAllProjectActualStateEnum`
-      )
-      .then(response => {
-        response.data.forEach(element => {
-          this.actualStateOptions.push({
-            name: element
-          });
-        });
-      })
-      .catch(error => {
-        this.$message({
-          message: "获取实际状态失败！",
-          type: "error"
-        });
-      });
-
-    //获取管控状态
-    this.$axios
-      .get(
-        `${window.$config.HOST}/baseInfoManagement/getAllProjectControlledStateEnum`
-      )
-      .then(response => {
-        response.data.forEach(element => {
-          this.controlledStateOptions.push({
-            name: element
-          });
-        });
-      })
-      .catch(error => {
-        this.$message({
-          message: "获取管控状态失败！",
-          type: "error"
-        });
-      });
-    //获取项管部门
+    //获得项管部门下拉框
     this.$axios
       .get(
         `${window.$config.HOST}/baseInfoManagement/getAllProjectAdminDeptEnum`
       )
       .then(response => {
-        response.data.forEach(element => {
-          this.adminDeptOptions.push({
-            name: element
+        if (response.data.returnBackCode >= 0) {
+          response.data.returnData.forEach(element => {
+            this.adminDeptOptions.push({
+              name: element
+            });
           });
-        });
+        } else {
+          this.$message({
+            message: response.data.returnBackInfo,
+            type: "error"
+          });
+        }
       })
       .catch(error => {
         this.$message({
-          message: "获取项管部门失败！",
+          message: "获取项管部门信息失败！",
+          type: "error"
+        });
+      });
+    //获得项目名称
+    this.$axios
+      .get(`${window.$config.HOST}/projectWeeklyManagement/getAllProjectName`)
+      .then(response => {
+        if (response.data.returnBackCode >= 0) {
+          this.projectIdOptions = response.data.returnList[0];
+        } else {
+          this.$message({
+            message: response.data.returnBackInfo,
+            type: "error"
+          });
+        }
+      })
+      .catch(error => {
+        this.$message({
+          message: "获取项目名称信息失败！",
           type: "error"
         });
       });
   },
-
   methods: {
-    projectNameChanged() {
-      var name = "";
-      this.projectIdOptions.forEach(element => {
-        if (element.id === this.projectId) {
-          name = element.name;
-        }
-      });
-      this.$axios
-        .get(
-          `${window.$config.HOST}/baseInfoManagement/getProjectInfoByProjectName`,
-          {
-            params: name
-          }
-        )
-        .then(response => {
-          if (response.data.returnBackCode > 0) {
-            this.ruleForm2.adminId = response.data.returnList.adminId;
-            this.ruleForm2.supervisionId =
-              response.data.returnList.supervisionId;
-            this.ruleForm2.constructDept =
-              response.data.returnList.constructDept;
-            this.ruleForm2.districtId = response.data.returnList.districtId;
-            this.ruleForm2.detailedAddress =
-              response.data.returnList.detailedAddress;
-            this.ruleForm2.actualStartTime =
-              response.data.returnList.actualStartTime;
-            this.ruleForm2.planCompletionTime =
-              response.data.returnList.planCompletionTime;
-            this.latitude = response.data.returnList.latitude;
-            this.longitude = response.data.returnList.longitude;
-
-            this.ruleForm2.projectScale = response.data.returnList.projectScale;
-            this.ruleForm2.currentWorkerNum =
-              response.data.returnList.currentWorkerNum;
-            this.ruleForm2.currentSubcontractorNum =
-              response.data.returnList.currentSubcontractorNum;
-            this.ruleForm2.adminDept = response.data.returnList.adminDept;
-
-            this.ruleForm4.actualState = response.data.returnList.actualState;
-            this.ruleForm4.controlledState =
-              response.data.returnList.controlledState;
-            this.ruleForm3.projectManagerId =
-              response.data.returnList.projectManagerId;
-            this.ruleForm3.safetyStaffId =
-              response.data.returnList.safetyStaffId;
-            this.ruleForm3.qualityStaffId =
-              response.data.returnList.qualityStaffId;
-
-            this.ruleForm3.chiefInspectorId =
-              response.data.returnList.chiefInspectorId;
-            this.ruleForm3.safetySupervisorId =
-              response.data.returnList.safetySupervisorId;
-            this.ruleForm3.professionalSupervisorId =
-              response.data.returnList.professionalSupervisorId;
-            // this.ruleForm3.createTime=response.data.returnList.createTime;
-          } else if (response.data.returnBackCode == 0) {
-            this.$message({
-              message: response.data.returnBackInfo,
-              type: "warning"
-            });
-          } else {
-            this.$message({
-              message: response.data.returnBackInfo,
-              type: "error"
-            });
-          }
-        })
-        .catch(error => {
-          this.$message({
-            message: "获取建设管理单位失败！",
-            type: "error"
-          });
-        });
-    },
-    workContentNextWeekChanged() {
-      if (this.ruleForm.workContentNextWeek != "") {
-        this.flag = true;
-      } else {
-        this.flag = false;
-      }
-    },
-    //删除条目
-    deleteLines() {
-      this.anyChanged.forEach(i => {
-        let index = 0;
-        this.tableData.forEach(j => {
-          if (i.indexNum === j.indexNum) {
-            this.tableData.splice(index, 1);
-          }
-          index = index + 1;
-        });
-      });
-    },
-    //选中
-    isChanged(val) {
-      this.anyChanged = val;
-    },
-    //添加
-    add() {
-      let max = 0;
-      this.tableData.forEach(element => {
-        if (element.riskLevel > max) max = element.riskLevel;
-      });
-      let list = {
-        adminId: this.ruleForm2.adminId,
-        supervisionId: this.ruleForm2.supervisionId,
-        constructDept: this.ruleForm2.constructDept,
-        districtId: this.ruleForm2.districtId,
-        detailedAddress: this.ruleForm2.detailedAddress,
-        actualStartTime: this.changeDate(this.ruleForm2.actualStartTime),
-        planCompletionTime: this.changeDate(this.ruleForm2.planCompletionTime),
-        projectScale: this.ruleForm2.projectScale,
-        currentWorkerNum: this.ruleForm2.currentWorkerNum,
-        currentSubcontractorNum: this.ruleForm2.currentSubcontractorNum,
-        adminDept: this.ruleForm2.adminDept,
-        currentProgressId: this.ruleForm4.currentProgressId,
-        hasWorkNextWeek: this.ruleForm4.hasWorkNextWeek,
-        workContentNextWeek: this.ruleForm4.workContentNextWeek,
-        hasThreePlusRiskWork: this.ruleForm4.hasThreePlusRiskWork,
-        actualState: this.ruleForm4.actualState,
-        controlledState: this.ruleForm4.controlledState,
-        monthStartTime: this.changeDate(this.ruleForm1.currentMonth),
-        weeklyStartTime: this.changeDate(this.ruleForm1.weeklyStartTime),
-        projectManagerId: this.ruleForm3.projectManagerId,
-        safetyStaffId: this.ruleForm3.safetyStaffId,
-        qualityStaffId: this.ruleForm3.qualityStaffId,
-        chiefInspectorId: this.ruleForm3.chiefInspectorId,
-        safetySupervisorId: this.ruleForm3.safetySupervisorId,
-        professionalSupervisorId: this.ruleForm3.professionalSupervisorId,
-        inherentRisk: max
-      };
-
-      console.log(list);
-
+    searchWeekly() {
       this.$axios
         .post(
-          `${window.$config.HOST}/projectWeeklyManagement/addProjectWeekly`,
-          list
+          `${window.$config.HOST}/projectWeeklyManagement/getProjectWeeklyByCondition`,
+          {
+            pageNumber: 0,
+            numberOfPage: 25,
+            weeklyStartTime: this.weeklyStartTime,
+            projectId: this.projectId,
+            adminId: this.adminId,
+            adminDept: this.adminDept,
+            hasWorkNextWeek: this.hasWorkNextWeek,
+            hasThreePlusRiskWork: this.hasThreePlusRiskWork
+          }
         )
         .then(response => {
-          if (response.data.returnBackCode === 1) {
-            this.$message({
-              message: response.data.returnBackInfo,
-              type: "success"
-            });
-          } else if (response.data.returnBackCode === 0) {
-            this.$message({
-              message: response.data.returnBackInfo,
-              type: "Warn"
-            });
+          this.tableData = response.data.returnList[0];
+          this.pagination.totalNumber = response.data.totalNumber;
+          this.$message({
+            message: response.data.returnBackInfo,
+            type: "success"
+          });
+
+          if (this.weeklyStartTime === "") {
+            this.weeklyStartTime = new Date();
+            this.weeklyChanged();
+            this.tableTitle =
+              "国网上海建设咨询公司" +
+              new Date(this.weeklyStartTime).getFullYear() +
+              "年在建工程周报(" +
+              this.weeklyStartTime +
+              "~" +
+              this.weeklyStartTime2 +
+              ")";
           } else {
-            this.$message({
-              message: response.data.returnBackInfo,
-              type: "error"
-            });
+            this.weeklyChanged();
+            this.tableTitle =
+              "国网上海建设咨询公司" +
+              new Date(this.weeklyStartTime).getFullYear() +
+              "年在建工程周报(" +
+              this.weeklyStartTime +
+              "~" +
+              this.weeklyStartTime2 +
+              ")";
           }
         })
         .catch(error => {
           this.$message({
-            message: "添加失败，出现了未知的错误！",
+            message: "获取周报数据失败！",
             type: "error"
           });
         });
     },
-    //添加条目
-    addOneLine() {
-      if (this.ruleForm.hasThreePlusRiskWork === false) {
-        this.riskLevelOptions = [
-          {
-            id: 1,
-            name: "一级风险"
-          },
-          {
-            id: 2,
-            name: "二级风险"
-          }
-        ];
-      }
-      this.tableData.push({
-        indexNum: this.count
+    updateWeekly(row) {
+      this.$router.push({
+        path: `/weekly/updateWeeklyData`,
+        query: {
+          date: row
+        }
       });
-      this.count = this.count + 1;
     },
-    // 改变日期格式
     changeDate(date) {
       if (!date) {
         return undefined;
@@ -1093,9 +839,185 @@ export default {
         return y + "-" + m + "-" + d;
       }
     },
-    goback() {
+    isChanged(val) {
+      this.beChanged = val;
+    },
+    weeklyChanged() {
+      //先求星期几
+      var c = this.changeDate(this.weeklyStartTime);
+      var b = new Date(Date.parse(c.replace(/\-/g, "/")));
+      console.log("选择的日期是星期", b.getDay());
+
+      //如果星期大于等于5
+      if (b.getDay() >= 5) {
+        //第一步，将截止日期求出来
+
+        this.weeklyStartTime2 = new Date(this.weeklyStartTime);
+        this.weeklyStartTime2.setDate(
+          this.weeklyStartTime2.getDate() - b.getDay() + 11
+        );
+        this.weeklyStartTime2 = this.changeDate(this.weeklyStartTime2);
+
+        //第二步，将起始日期求出来
+
+        this.weeklyStartTime.setDate(
+          this.weeklyStartTime.getDate() - b.getDay() + 5
+        );
+        this.weeklyStartTime = this.changeDate(this.weeklyStartTime);
+      } else {
+        //第一步，将截止日期求出来
+
+        this.weeklyStartTime2 = new Date(this.weeklyStartTime);
+        this.weeklyStartTime2.setDate(
+          this.weeklyStartTime2.getDate() - b.getDay() + 4
+        );
+        this.weeklyStartTime2 = this.changeDate(this.weeklyStartTime2);
+
+        //第二步，将起始日期求出来
+
+        this.weeklyStartTime.setDate(
+          this.weeklyStartTime.getDate() - b.getDay() - 2
+        );
+        this.weeklyStartTime = this.changeDate(this.weeklyStartTime);
+      }
+
+      console.log(this.weeklyStartTime);
+      console.log(this.weeklyStartTime2);
+    },
+    lookDetails(row) {
+      this.$axios
+        .get(
+          `${window.$config.HOST}/projectWeeklyManagement/getProjectWeeklyDetailById`,
+          {
+            params: {
+              id: row.id
+            }
+          }
+        )
+        .then(response => {
+          if (
+            response.data.returnBackCodeMajor === 1 &&
+            response.data.returnBackCodeSecondary >= 0
+          ) {
+            this.$message({
+              message: response.data.returnBackInfo,
+              type: "success"
+            });
+            var list = response.data.returnListMajor[0];
+            this.tableDataA = list;
+            this.tableDataB = response.data.returnListSecondary[0];
+            this.ruleForm.currentMonth = this.tableDataA[0].monthStartTime.substring(
+              0,
+              7
+            );
+            this.ruleForm.weeklyStartTime = this.tableDataA[0].weeklyStartTime.substring(
+              0,
+              10
+            );
+            this.tableDataA[0].actualStartTime = this.tableDataA[0].actualStartTime.substring(
+              0,
+              10
+            );
+            this.tableDataA[0].planCompletionTime = this.tableDataA[0].planCompletionTime.substring(
+              0,
+              10
+            );
+     
+
+
+
+            console.log(this.tableDataA);
+            if (this.tableDataA[0].hasWorkNextWeek) {
+              this.tableDataA[0].hasWorkNextWeekStr = "是";
+            } else {
+              this.tableDataA[0].hasWorkNextWeekStr = "否";
+            }
+
+            if (this.tableDataA[0].hasThreePlusRiskWork) {
+              this.tableDataA[0].hasThreePlusRiskWorkStr = "是";
+            } else {
+              this.tableDataA[0].hasThreePlusRiskWorkStr = "否";
+            }
+          } else {
+            this.$message({
+              message: response.data.returnBackInfo,
+              type: "error"
+            });
+          }
+
+          this.tableData = response.data.returnList[0];
+          this.pagination.totalNumber = response.data.totalNumber;
+          this.$message({
+            message: response.data.returnBackInfo,
+            type: "success"
+          });
+
+          if (this.weeklyStartTime === "") {
+            this.weeklyStartTime = new Date();
+            this.weeklyChanged();
+            this.tableTitle =
+              "国网上海建设咨询公司" +
+              new Date(this.weeklyStartTime).getFullYear() +
+              "年在建工程周报(" +
+              this.weeklyStartTime +
+              "~" +
+              this.weeklyStartTime2 +
+              ")";
+          } else {
+            this.weeklyChanged();
+            this.tableTitle =
+              "国网上海建设咨询公司" +
+              new Date(this.weeklyStartTime).getFullYear() +
+              "年在建工程周报(" +
+              this.weeklyStartTime +
+              "~" +
+              this.weeklyStartTime2 +
+              ")";
+          }
+        })
+        .catch(error => {
+          this.$message({
+            message: "获取周报数据失败！",
+            type: "error"
+          });
+        });
+      this.dialogVisible = true;
+    },
+    toAddWeekly() {
       this.$router.push({
-        path: `/weekly/weeklyDataManage`,
+        path: `/weekly/addWeeklyData`,
+        query: {}
+      });
+    },
+    exportExcel() {
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
+      /* get binary string as output */
+      var wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        bookSST: true,
+        type: "array"
+      });
+      try {
+        FileSaver.saveAs(
+          new Blob([wbout], { type: "application/octet-stream" }),
+          "周报信息.xlsx"
+        );
+      } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
+      }
+      return wbout;
+    },
+
+    addWeeklyData() {
+      this.$router.push({
+        path: `/weekly/addWeeklyData`,
+        query: {}
+      });
+    },
+    importWeeklyData() {
+      this.$router.push({
+        path: `/weekly/importWeeklyData`,
         query: {}
       });
     }
@@ -1104,17 +1026,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.title {
-  min-width: 100px;
-}
-.Mbutton {
-  margin-left: 45%;
-}
-.Mtitle {
-  align-content: center;
-  margin-left: 45%;
-  font-size: 2ch;
-}
 .box-card {
   width: 1400px;
   margin: 20px 50px;
@@ -1123,8 +1034,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 15px;
-    margin-bottom: -5px;
+    margin-bottom: 20px;
     .bar {
       display: flex;
       flex-direction: row;
@@ -1148,35 +1058,31 @@ export default {
     }
   }
 }
-</style>
+.el-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  .bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .title {
+      font-size: 14px;
 
-
-  //delete  post  get
-
-  post:
-  {
-    a:this.,
-    b:this.,
+      width: 160px;
+      text-align: center;
+    }
+    .el-input {
+      width: 70%;
+      min-width: 80px;
+      margin-left: 20px;
+    }
+    .el-select {
+      width: 70%;
+      min-width: 80px;
+      margin-left: 20px;
+    }
   }
-
-  get/delete:
- {
-   params:
-   {
-
-   }
- }
-      this.$axios    
-      .get(`${window.$config.HOST}/baseInfoManagement/getProjectInfoByProjectName`,
-      {
-        params:name
-      })
-      .then(response => {
-      
-      })
-      .catch(error => {
-        this.$message({
-          message: "获取建设管理单位失败！",
-          type: "error"
-        });
-      });
+}
+</style>

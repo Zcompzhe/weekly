@@ -62,3 +62,13 @@ export const getProjectInfoDetailPageShowRespById = (id) => {
     )
 }
 
+//根据周报ID获取周报详细信息
+export const getProjectWeeklyDetailById = (id) => {
+    return request.get(`/projectWeeklyManagement/getProjectWeeklyDetailById`,
+    {
+        params:{
+            id:id
+        }
+    }
+    )
+}

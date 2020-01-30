@@ -1,7 +1,7 @@
 <template>
   <div class="body">
     <el-card class="box-card" style="height:100px">
-      <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+      <!-- <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
         <el-col :span="8">
           <div class="bar">
             <div class="title">项目名称</div>
@@ -30,6 +30,35 @@
         <el-col :span="3">
           <el-button type="primary" style="margin-right: 20px" @click="search">搜索</el-button>
         </el-col>
+      </el-row> -->
+      <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">项管部门</div>
+            <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:200px">
+              <el-option v-for="item in searchTable.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+            </el-select>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">所在区域</div>
+            <el-select v-model="searchTable.districtId" clearable placeholder="请选择" style="min-width:200px">
+              <el-option v-for="item in searchTable.options.districtIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">当前是否运作</div>
+            <el-select v-model="searchTable.runningNow" clearable placeholder="请选择" style="min-width:200px">
+              <el-option v-for="item in searchTable.options.runningNowOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
+            </el-select>
+          </div>
+        </el-col>
+        <el-col :span="3">
+          <el-button type="primary" style="margin-right: 20px" @click="searchProject(1)">搜索</el-button>
+        </el-col>
       </el-row>
     </el-card>
 
@@ -40,53 +69,40 @@
             <el-button type="primary" style="margin-right: 20px" @click="addProject">添加项目</el-button>
           </div>
         </el-col>
-        <el-col :offset="1" :span="2">
+        <!-- <el-col :offset="1" :span="2">
           <div class="bar">
-            <el-button type="primary" style="margin-right: 20px" @click>删除项目</el-button>
+            <el-button type="primary" style="margin-right: 20px" @click="deleteSelectProject">删除项目</el-button>
           </div>
-        </el-col>
-        <el-col :offset="1" :span="2">
-          <div class="bar">
-            <el-button type="primary" style="margin-right: 20px" @click="toUpdateProject">修改项目信息</el-button>
-          </div>
-        </el-col>
+        </el-col> -->
       </el-row>
-      <!-- <br />
-      <hr />
-      <br />-->
 
-      <el-table
-        :data="tableData"
-        max-height="400"
-        border
-        @selection-change="isChanged"
-        :stripe="true"
-        :highlight-current-row="true"
-        style="width: 100%; margin-top: 20px"
-        id="out-table"
-      >
+      <el-table :data="projectInfo.tableData" max-height="400" border @selection-change="projectSelect" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="210" prop="projectId" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="210" prop="name" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminName" label="建设管理单位" align="center"></el-table-column>
         <el-table-column width="210" prop="constructDept" label="施工单位" align="center"></el-table-column>
-        <el-table-column width="210" prop="projectLocation" label="项目地点" align="center"></el-table-column>
-        <el-table-column width="210" prop="actualStartTime" label="实际开工时间" align="center"></el-table-column>
-        <el-table-column width="210" prop="planCompletionTime" label="计划竣工时间" align="center"></el-table-column>
-        <el-table-column width="350" label="操作" align="center" fixed="right">
+        <el-table-column width="210" prop="adminDept" label="项管部门" align="center"></el-table-column>
+        <el-table-column width="210" prop="districtName" label="所在区域" align="center"></el-table-column>
+        <el-table-column width="210" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
+        <el-table-column width="210" prop="runningNowStr" label="当前是否运作" align="center"></el-table-column>
+        <el-table-column width="250" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text" @click="lookDetails">查看详情</el-button>
-            <el-button type="text" @click="toAddWeekly(scope.row)">添加周报</el-button>
-            <el-button type="text" @click="showThisWeekly(scope.row)">查看周报</el-button>
-            <el-button type="text" @click="setProjectPerson(scope.row)">设置人员</el-button>
+            <el-button type="text" @click="detailProject(scope.row)">查看详情</el-button>
+            <el-button type="text" @click="updateProject(scope.row)">修改信息</el-button>
+            <el-button type="text" @click="deleteProject(scope.row)">删除信息</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <div class="block">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="pagination.currentPage" :page-sizes="pagination.pageSizes" :page-size="pagination.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination.total"></el-pagination>
+      </div>
       <br>
       <br>
       <br>
 
-      <el-table
-      v-if="showIt"
+      <!-- <el-table
+       v-if="showIt"
         :data="thisWeekly"
         max-height="400"
         border
@@ -95,7 +111,7 @@
         :highlight-current-row="true"
         style="width: 100%; margin-top: 20px"
         id="out-table"
-      >
+       >
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="projectId" label="项目名称" align="center"></el-table-column>
@@ -107,55 +123,151 @@
         <el-table-column width="210" prop="note" label="备注" align="center"></el-table-column>
         <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
         <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
-      </el-table>
+      </el-table>-->
 
-      <el-dialog title="详细信息" :visible.sync="dialogVisible" width="50%" :modal="false">
-        <el-table
-          :data="tableDataA"
-          max-height="400"
-          border
-          :stripe="true"
-          :highlight-current-row="true"
-          style="width: 100%; margin-top: 20px"
-          id="out-table"
-        >
-          <el-table-column type="selection" width="50" align="center"></el-table-column>
-          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-          <el-table-column width="210" prop="projectId" label="项目名称" align="center"></el-table-column>
-          <el-table-column width="210" prop="adminId" label="建设管理单位" align="center"></el-table-column>
-          <el-table-column width="210" prop="supervisionId" label="监理单位" align="center"></el-table-column>
-          <el-table-column width="210" prop="constructDept" label="施工单位" align="center"></el-table-column>
-          <el-table-column width="210" prop="districtId" label="项目所在区域" align="center"></el-table-column>
-          <el-table-column width="210" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
-          <el-table-column width="210" prop="actualStartTime" label="实际开工时间" align="center"></el-table-column>
-          <el-table-column width="210" prop="planCompletionTime" label="计划竣工时间" align="center"></el-table-column>
-          <el-table-column width="210" prop="projectScale" label="项目规模" align="center"></el-table-column>
-          <el-table-column width="210" prop="currentProgress" label="当前总体施工进度" align="center"></el-table-column>
-          <el-table-column
-            width="250"
-            prop="currentWorkerNum"
-            label="当前施工单位一线自有作业人员数"
-            align="center"
-          ></el-table-column>
-          <el-table-column
-            width="210"
-            prop="currentSubcontractorNum"
-            label="当前分包人员数"
-            align="center"
-          ></el-table-column>
-          <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
-          <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
-        </el-table>
+      <el-dialog title="详细信息" :visible.sync="detailPanelFlag" width="1400px" :modal="false">
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目名称</div>
+              <el-input disabled v-model="projectDetail.name" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">建设管理单位</div>
+              <el-input disabled v-model="projectDetail.adminName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">监理单位</div>
+              <el-input disabled v-model="projectDetail.supervisionName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">施工单位</div>
+              <el-input disabled v-model="projectDetail.constructDept" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">所在区域</div>
+              <el-input disabled v-model="projectDetail.districtName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">详细地址</div>
+              <el-input disabled v-model="projectDetail.detailedAddress" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">定位经度</div>
+              <el-input disabled v-model="projectDetail.longitude" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">定位纬度</div>
+              <el-input disabled v-model="projectDetail.latitude" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">实际开工时间</div>
+              <el-input disabled v-model="projectDetail.actualStartTime" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">计划竣工时间</div>
+              <el-input disabled v-model="projectDetail.planCompletionTime" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目规模</div>
+              <el-input disabled v-model="projectDetail.projectScale" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">一线作业人员数</div>
+              <el-input disabled v-model="projectDetail.currentWorkerNum" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">当前分包人员数</div>
+              <el-input disabled v-model="projectDetail.currentSubcontractorNum" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项管部门</div>
+              <el-input disabled v-model="projectDetail.adminDept" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">当前是否运作</div>
+              <el-input disabled v-model="projectDetail.runningNowStr" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+          </el-col>
+        </el-row>
         <br>
-        <br>
-        <br>
-
-        <el-table :data="tableDataB" style="width: 100%">
-          <el-table-column prop="date" label="所属单位类型" width="180"></el-table-column>
-          <el-table-column prop="name" label="职位" width="180"></el-table-column>
-          <el-table-column prop="address" label="人员"></el-table-column>
-          <el-table-column prop="address" label="联系方式"></el-table-column>
-        </el-table>
+        <hr><br>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目经理</div>
+              <el-input disabled v-model="projectDetail.projectManagerName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">安全专职</div>
+              <el-input disabled v-model="projectDetail.safetyStaffName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">质量专职</div>
+              <el-input disabled v-model="projectDetail.qualityStaffName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">总监/总监代表</div>
+              <el-input disabled v-model="projectDetail.chiefInspectorName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">安全监理</div>
+              <el-input disabled v-model="projectDetail.safetySupervisorName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">专业监理</div>
+              <el-input disabled v-model="projectDetail.professionalSupervisorName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
       </el-dialog>
     </el-card>
   </div>
@@ -164,193 +276,178 @@
 <script>
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
+import * as api from "@/api/date.js";
+import * as getApi from "@/api/getApi.js";
+import * as deleteApi from "@/api/deleteApi.js";
+import * as searchApi from "@/api/searchApi.js";
 export default {
   data() {
     return {
-      tableDataA:[],
-      tableDataB:[],
-      changedProject:[],
-      showIt:false,
-      dialogVisible: false,
-      tableData: [
-        {
-          id: 1,
-          projectId: 2,
-          adminId: 3,
-          supervisionId: 4,
-          constructDept: 5,
-          isConstructDeptEnterprise: 6,
-          projectLocation: 7,
-          districtId: 8,
-          detailedAddress: 9,
-          actualStartTime: 10,
-          planCompletionTime: 11,
-          projectScale: 12,
-          currentProgress: 13,
-          currentWorkerNum: 14,
-          currentSubcontractorNum: 15,
-          hasWorkNextWeek: 16,
-          workContentNextWeek: 17,
-          hasTowerErectionNextWeek: 18,
-          hasThirdLevelPlusWork: 19,
-          hasFourthLevelWork: 20,
-          hasFifthLevelWork: 21,
-          thirdLevelPlusWorkContent: 22,
-          contactPerson: 123,
-          isMajorProject: 124,
-          isSupervisedByProvincialCompany: 125,
-          note: 126,
-          actualState: 127,
-          controlledState: 128,
-          createTime: 129,
-          monthStartTime: 130,
-          weeklyStartTime: 131,
-          weekCount: 132,
-          inherentRisk: 133,
-          dynamicRisk: 134,
-          hasInspect: 135
-        },
-        {
-          id: 1,
-          projectId: 2,
-          adminId: 3,
-          supervisionId: 4,
-          constructDept: 5,
-          isConstructDeptEnterprise: 6,
-          projectLocation: 7,
-          districtId: 8,
-          detailedAddress: 9,
-          actualStartTime: 10,
-          planCompletionTime: 11,
-          projectScale: 12,
-          currentProgress: 13,
-          currentWorkerNum: 14,
-          currentSubcontractorNum: 15,
-          hasWorkNextWeek: 16,
-          workContentNextWeek: 17,
-          hasTowerErectionNextWeek: 18,
-          hasThirdLevelPlusWork: 19,
-          hasFourthLevelWork: 20,
-          hasFifthLevelWork: 21,
-          thirdLevelPlusWorkContent: 22,
-          contactPerson: 123,
-          isMajorProject: 124,
-          isSupervisedByProvincialCompany: 125,
-          note: 126,
-          actualState: 127,
-          controlledState: 128,
-          createTime: 129,
-          monthStartTime: 130,
-          weeklyStartTime: 131,
-          weekCount: 132,
-          inherentRisk: 133,
-          dynamicRisk: 134,
-          hasInspect: 135
-        },
-        {
-          id: 1,
-          projectId: 2,
-          adminId: 3,
-          supervisionId: 4,
-          constructDept: 5,
-          isConstructDeptEnterprise: 6,
-          projectLocation: 7,
-          districtId: 8,
-          detailedAddress: 9,
-          actualStartTime: 10,
-          planCompletionTime: 11,
-          projectScale: 12,
-          currentProgress: 13,
-          currentWorkerNum: 14,
-          currentSubcontractorNum: 15,
-          hasWorkNextWeek: 16,
-          workContentNextWeek: 17,
-          hasTowerErectionNextWeek: 18,
-          hasThirdLevelPlusWork: 19,
-          hasFourthLevelWork: 20,
-          hasFifthLevelWork: 21,
-          thirdLevelPlusWorkContent: 22,
-          contactPerson: 123,
-          isMajorProject: 124,
-          isSupervisedByProvincialCompany: 125,
-          note: 126,
-          actualState: 127,
-          controlledState: 128,
-          createTime: 129,
-          monthStartTime: 130,
-          weeklyStartTime: 131,
-          weekCount: 132,
-          inherentRisk: 133,
-          dynamicRisk: 134,
-          hasInspect: 135
+      //搜索条件数据
+      searchTable: {
+        adminDept: "",
+        districtId: "",
+        runningNow: "",
+        options: {
+          runningNowOptions: [{
+            value: true,
+            name: "是"
+          }, {
+            value: false,
+            name: "否"
+          }],
+          districtIdOptions: {},
+          adminDeptOpitons: {},
         }
-      ]
+      },
+      //项目信息部分
+      projectInfo: {
+        tableData: [],
+        multiSelection: [],
+      },
+      //页码部分
+      pagination: {
+        currentPage: 1,
+        pageSizes: [10, 25, 50, 100],
+        pageSize: 10,
+        total: 0
+      },
+      //查看详情弹窗控制
+      detailPanelFlag: false,
+      projectDetail: {
+        // name: "",
+        // adminName: "",
+        // supervisionName: "",
+        // constructDept: "",
+        // districtName: "",
+        // detailedAddress: "",
+        // longitude: "",
+        // latitude: "",
+        // actualStartTime: "",
+        // planCompletionTime: "",
+        // projectScale: "",
+        // currentWorkerNum: "",
+        // currentSubcontractorNum: "",
+        // adminDept: "",
+        // projectManagerName: "",
+        // safetyStaffName: "",
+        // qualityStaffName: "",
+        // chiefInspectorName: "",
+        // safetySupervisorName: "",
+        // professionalSupervisorName: "",
+        // runningNow: "",
+      },
+
+      
     };
   },
 
+  created: function () {
+    //获取所有项管部门
+    getApi.getAllProjectAdminDeptEnum().then(response => {
+      this.searchTable.options.adminDeptOptions = response;
+    });
+    //获取区域
+    getApi.getAllDistrictName().then(response => {
+      this.searchTable.options.districtIdOptions = response;
+    });
+    //空搜索获取信息
+    let list = {
+      numberOfPage: this.pagination.pageSize,
+      pageNumber: 0,
+    }
+    searchApi.getProjectInfoByCondition(list).then(response => {
+      this.projectInfo.tableData = response.returnList[0];
+      //转换运行状态为str
+      this.projectInfo.tableData.forEach(element => {
+        if (element.runningNow) element.runningNowStr = "是";
+        else element.runningNowStr = "否";
+      })
+      this.pagination.total = response.totalNumber;
+    })
+  },
+
   methods: {
-    toUpdateProject(){
-      console.log(this.changedProject),
+    //点击搜索按钮
+    searchProject(pageNum) {
+      console.log(this.pagination)
+      let list = {
+        numberOfPage: this.pagination.pageSize,
+        pageNumber: pageNum - 1,
+        adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
+        districtId: this.searchTable.districtId === "" ? undefined : this.searchTable.districtId,
+        runningNow: this.searchTable.runningNow === "" ? undefined : this.searchTable.runningNow
+      }
+      searchApi.getProjectInfoByCondition(list).then(response => {
+        this.projectInfo.tableData = response.returnList[0];
+        //转换运行状态为str
+        this.projectInfo.tableData.forEach(element => {
+          if (element.runningNow) element.runningNowStr = "是";
+          else element.runningNowStr = "否";
+        })
+        this.pagination.total = response.totalNumber;
+      })
+    },
+    //项目列表选中
+    projectSelect(val) {
+      this.projectInfo.multiSelection = val;
+    },
+    //页码操控部分
+    handleSizeChange(val) {
+      this.pagination.pageSize = val;
+      this.searchProject(1);
+    },
+    handleCurrentChange(val) {
+      this.pagination.currentPage = val;
+      this.searchProject(val);
+    },
+    //添加项目
+    addProject() {
       this.$router.push({
-        path: `/project/updateProjectInfo`,
-        query: {
-          date:this.changedProject
-        }
+        path: `/project/addProjectInfo`,
       });
     },
-    setProjectPerson(row){
-       this.$router.push({
-        path: `/project/projectPerson`,
-        query: {
-        }
-      });
+    //删除此条项目
+    deleteProject(row) {
+      this.$confirm("确认删除该条项目？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          deleteApi.deleteProjectInfoById(row.id).then(response => {
+            if (response > 0) this.searchProject(this.pagination.currentPage)
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
-    showThisWeekly(row){
-      this.showIt=true
+    //查看该条详情
+    detailProject(row) {
+      getApi.getProjectInfoDetailPageShowRespById(row.id).then(response => {
+        this.detailPanelFlag = true;
+        this.projectDetail = response[0];
+        if (this.projectDetail.runningNow) this.projectDetail.runningNowStr = "是";
+        else this.projectDetail.runningNowStr = "否";
+      })
+    },
+    showThisWeekly(row) {
+      this.showIt = true
 
     },
-    lookDetails(){
-      this.dialogVisible=true
+    lookDetails() {
+      this.dialogVisible = true
     },
-    toAddWeekly(row){
+    updateProject(row) {
       this.$router.push({
-        path: `/weekly/addWeeklyData`,
-        query: {
-           id: row.id,
-          projectId: row.projectId,
-          adminId:row.adminId,
-          supervisionId: row.supervisionId,
-          constructDept:row.constructDept,
-          isConstructDeptEnterprise:row.isConstructDeptEnterprise,
-          projectLocation: row.projectLocation,
-          districtId: row.districtId,
-          detailedAddress: row.detailedAddress,
-          actualStartTime: row.actualStartTime,
-          planCompletionTime: row.planCompletionTime,
-          projectScale: row.projectScale,
-          currentProgress: row.currentProgress,
-          currentWorkerNum: row.currentWorkerNum,
-          currentSubcontractorNum: row.currentSubcontractorNum,
-          hasWorkNextWeek: row.hasWorkNextWeek,
-          workContentNextWeek: row.workContentNextWeek,
-          hasTowerErectionNextWeek: row.hasTowerErectionNextWeek,
-          hasThirdLevelPlusWork:row.hasThirdLevelPlusWork,
-          hasFourthLevelWork:row.hasFourthLevelWork,
-          hasFifthLevelWork: row.hasFifthLevelWork,
-          thirdLevelPlusWorkContent: row.thirdLevelPlusWorkContent,
-          contactPerson: row.contactPerson,
-          isMajorProject: row.isMajorProject,
-          isSupervisedByProvincialCompany:row.isSupervisedByProvincialCompany,
-          note: row.note,
-          actualState: row.actualState,
-          controlledState: row.controlledState,
-          createTime: row.createTime,
-          monthStartTime: row.monthStartTime,
-          weeklyStartTime: row.weeklyStartTime,
-          weekCount: row.weekCount,
-          inherentRisk: row.inherentRisk,
-          dynamicRisk:row.dynamicRisk,
-          hasInspect: row.hasInspect
+        name: `updateProject`,
+        params: {
+          id: row.id,
+          backPath:"projectMana"
         }
       });
     },
@@ -377,8 +474,10 @@ export default {
 
     addProject() {
       this.$router.push({
-        path: `/project/addProjectInfo`,
-        query: {}
+        name: `addProject`,
+        params: {
+          backPath:"projectMana"
+        }
       });
     },
     importWeeklyData() {
@@ -392,6 +491,39 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.block {
+  padding: 30px 0;
+  text-align: center;
+}
+.el-dialog {
+  min-width: 1000px;
+  .el-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 15px;
+    .bar {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .title {
+        font-size: 14px;
+        min-width: 100px;
+        text-align: center;
+      }
+      .el-input {
+        width: 70%;
+        min-width: 80px;
+        margin-left: 20px;
+      }
+      .el-select {
+        width: 70%;
+        min-width: 80px;
+        margin-left: 20px;
+      }
+    }
+  }
+}
 .box-card {
   width: 1400px;
   margin: 20px 50px;
