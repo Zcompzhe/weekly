@@ -107,9 +107,9 @@
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="210" prop="adminName" label="建设管理单位" align="center"></el-table-column>
-        <el-table-column width="210" prop="workCurrentProgress" label="当前总体施工进度" align="center"></el-table-column>
-        <el-table-column width="210" prop="constructContentNextWeek" label="下周主要施工作业内容" align="center"></el-table-column>
-        <el-table-column width="210" prop="hasThreePlusRiskWorkStr" label="下周的三级及以上风险作业安排、位置及内容" align="center"></el-table-column>
+        <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="center"></el-table-column>
+        <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="center"></el-table-column>
+        <el-table-column width="350" prop="hasThreePlusRiskWorkStr" label="下周的三级及以上风险作业安排、位置及内容" align="center"></el-table-column>
         <el-table-column width="210" prop="adminDept" label="项管部门" align="center"></el-table-column>
         <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
         <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
@@ -448,9 +448,23 @@ export default {
 
   created: function () {
     //空搜索获取信息
+    let startDate = new Date();
+    let endDate = api.getThisWeekStart(startDate);
+    this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
+    this.searchTable.weeklyEndTime = new Date(endDate);
+
+    this.tableTitle =
+      "国网上海建设咨询公司" +
+      new Date().getFullYear() +
+      "年在建工程周报(" +
+      api.changeDate(startDate) +
+      "~" +
+      endDate +
+      ")";
     let list = {
       numberOfPage: this.pagination.pageSize,
       pageNumber: 0,
+      weeklyStartTime:api.changeDate(this.searchTable.weeklyStartTime)
     }
     searchApi.getProjectWeeklyByCondition(list).then(response => {
       this.weeklyInfo.tableData = response.returnList[0];
@@ -460,19 +474,7 @@ export default {
         else element.hasThreePlusRiskWorkStr = "否";
       })
       this.pagination.total = response.totalNumber;
-      let startDate = new Date();
-      let endDate = api.getThisWeekStart(startDate);
-      this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
-      this.searchTable.weeklyEndTime = new Date(endDate);
 
-      this.tableTitle =
-        "国网上海建设咨询公司" +
-        new Date().getFullYear() +
-        "年在建工程周报(" +
-        api.changeDate(startDate) +
-        "~" +
-        endDate +
-        ")";
     })
     //获取项管部门
     getApi.getAllProjectAdminDeptEnum().then(response => {
@@ -609,6 +611,11 @@ export default {
   }
 };
 </script>
+<style lang="less">
+  .el-table .cell {
+    white-space: pre-line;
+  }
+</style>
 
 
 <style lang="less" scoped>
