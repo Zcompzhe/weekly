@@ -107,9 +107,9 @@
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="210" prop="adminName" label="建设管理单位" align="center"></el-table-column>
-        <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="center"></el-table-column>
-        <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="center"></el-table-column>
-        <el-table-column width="350" prop="hasThreePlusRiskWorkStr" label="下周的三级及以上风险作业安排、位置及内容" align="center"></el-table-column>
+        <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
+        <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
+        <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
         <el-table-column width="210" prop="adminDept" label="项管部门" align="center"></el-table-column>
         <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
         <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
