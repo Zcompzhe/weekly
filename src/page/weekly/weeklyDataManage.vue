@@ -486,10 +486,10 @@ export default {
     detailWeekly(row) {
       getApi.getProjectWeeklyDetailById(row.id).then(response => {
         this.weeklyDetail = response[0];
-        if(this.weeklyDetail.hasWorkNextWeek) this.weeklyDetail.hasWorkNextWeekStr = "是";
-        else if(!this.weeklyDetail.hasWorkNextWeek) this.weeklyDetail.hasWorkNextWeekStr = "否";
-        if(this.weeklyDetail.hasThreePlusRiskWork) this.weeklyDetail.hasThreePlusRiskWorkStr = "是";
-        else if(!this.weeklyDetail.hasThreePlusRiskWork) this.weeklyDetail.hasThreePlusRiskWorkStr = "否";
+        if (this.weeklyDetail.hasWorkNextWeek) this.weeklyDetail.hasWorkNextWeekStr = "是";
+        else if (!this.weeklyDetail.hasWorkNextWeek) this.weeklyDetail.hasWorkNextWeekStr = "否";
+        if (this.weeklyDetail.hasThreePlusRiskWork) this.weeklyDetail.hasThreePlusRiskWorkStr = "是";
+        else if (!this.weeklyDetail.hasThreePlusRiskWork) this.weeklyDetail.hasThreePlusRiskWorkStr = "否";
         this.detailPanelFlag = true;
       })
     },
@@ -573,6 +573,15 @@ export default {
         }
       })
     },
+    updateWeekly(row) {
+      this.$router.push({
+        name: "updateWeekly",
+        params: {
+          backPath: "weeklyData",
+          id: row.id
+        }
+      })
+    }
   }
 };
 </script>

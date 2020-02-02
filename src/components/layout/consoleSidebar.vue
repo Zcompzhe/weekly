@@ -104,9 +104,9 @@
         <el-menu-item index="/weekly/weeklyDataManage">
           <i class="el-icon-document"></i>周报数据管理
         </el-menu-item>
-        <el-menu-item index="/weekly/addWeekly">
+        <!-- <el-menu-item index="/weekly/addWeekly">
           <i class="el-icon-document"></i>添加周报信息
-        </el-menu-item>
+        </el-menu-item> -->
         <!-- <el-menu-item index="/weekly/importWeeklyData">
           <i class="el-icon-document"></i>导入周报
         </el-menu-item> -->
