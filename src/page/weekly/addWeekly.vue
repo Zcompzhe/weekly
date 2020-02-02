@@ -43,7 +43,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="建设管理单位" prop="adminId" placeholder="当前月份">
-                <el-select v-model="addFormTwo.adminId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormTwo.adminId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -53,7 +53,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="监理单位" prop="supervisionId" placeholder="周报开始日期">
-                <el-select v-model="addFormTwo.supervisionId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormTwo.supervisionId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.supervisionIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -63,7 +63,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="施工单位" prop="constructDept" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.constructDept" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.constructDept" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -73,7 +73,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="所在区域" prop="districtId" placeholder="项目名称">
-                <el-select v-model="addFormTwo.districtId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormTwo.districtId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.districtIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -83,7 +83,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="详细地址" prop="detailedAddress" placeholder="当前月份">
-                <el-input v-model="addFormTwo.detailedAddress" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.detailedAddress" clearable  :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -91,7 +91,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="定位经度" prop="longitude" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.longitude" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.longitude" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -99,7 +99,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="定位纬度" prop="latitude" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.latitude" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.latitude" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -109,7 +109,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="实际开工时间" prop="actualStartTime" placeholder="项目名称">
-                <el-date-picker v-model="addFormTwo.actualStartTime" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
+                <el-date-picker v-model="addFormTwo.actualStartTime" :disabled="!addFormTwo.projectIdName" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
@@ -117,7 +117,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="计划竣工时间" prop="planCompletionTime" placeholder="当前月份">
-                <el-date-picker v-model="addFormTwo.planCompletionTime" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
+                <el-date-picker v-model="addFormTwo.planCompletionTime" :disabled="!addFormTwo.projectIdName" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
@@ -125,7 +125,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目规模" prop="projectScale" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.projectScale" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.projectScale" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -133,7 +133,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="一线作业人数" prop="currentWorkerNum" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.currentWorkerNum" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.currentWorkerNum" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -143,7 +143,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="项目名称">
-                <el-input v-model="addFormTwo.currentSubcontractorNum" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.currentSubcontractorNum" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -151,7 +151,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项管部门" prop="adminDept" placeholder="当前月份">
-                <el-select v-model="addFormTwo.adminDept" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormTwo.adminDept" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
@@ -168,7 +168,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目经理" prop="projectManagerId" placeholder="项目名称">
-                <el-select v-model="addFormThree.projectManagerId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormThree.projectManagerId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.projectManagerIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -178,7 +178,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全专责" prop="safetyStaffId" placeholder="当前月份">
-                <el-select v-model="addFormThree.safetyStaffId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormThree.safetyStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.safetyStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -188,7 +188,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="质量专责" prop="qualityStaffId" placeholder="周报开始日期">
-                <el-select v-model="addFormThree.qualityStaffId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormThree.qualityStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.qualityStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -199,7 +199,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="总监/总监代表" prop="chiefInspectorId" placeholder="项目名称">
-                <el-select v-model="addFormThree.chiefInspectorId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormThree.chiefInspectorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.chiefInspectorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -209,7 +209,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全监理" prop="safetySupervisorId" placeholder="当前月份">
-                <el-select v-model="addFormThree.safetySupervisorId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormThree.safetySupervisorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options
                       .safetySupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
@@ -220,7 +220,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="专业监理" prop="professionalSupervisorId" placeholder="周报开始日期">
-                <el-select v-model="addFormThree.professionalSupervisorId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormThree.professionalSupervisorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options
                       .professionalSupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
@@ -824,7 +824,7 @@ export default {
     //当某一行的工序值发生改变时，风险等级相应变化
     workProcessChanged(index, row) {
       row.workProcess = row.workProcessShow[row.workProcessShow.length - 1];
-      row.workProcessTotalList = "[" + row.workProcessShow.toString() + "]";
+      row.workProcessTotalList = row.workProcessShow.toString();
       this.findFlag = false;
       this.Traversal(
         this.addFormFour.options.workProcessOptions,
@@ -835,7 +835,7 @@ export default {
     //将工程编号设置为最后一列
     jobNumberChanged(index, row) {
       row.jobNumber = row.jobNumberShow[row.jobNumberShow.length - 1];
-      row.jobNumberTotalList = "[" + row.jobNumberShow.toString() + "]";
+      row.jobNumberTotalList = row.jobNumberShow.toString();
     },
     //遍历找到该值
     Traversal(T, data, row) {

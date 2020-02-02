@@ -238,9 +238,9 @@
       <el-table :data="updateFormFour.weeklyWorkProgressAddReqs" @selection-change="selectWeeklyWorkProgressAddReqs" border>
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="400" prop="jobNumber" label="工程编号" align="center">
+        <el-table-column width="400" prop="jobNumberShow" label="工程编号" align="center">
           <template slot-scope="scope">
-            <el-cascader v-model="scope.row.jobNumber" :options="updateFormFour.options.jobNumberOptions" @change="jobNumberChanged(scope.index, scope.row)" :props="optionPropsA" style="min-width:300px"></el-cascader>
+            <el-cascader v-model="scope.row.jobNumberShow" :options="updateFormFour.options.jobNumberOptions" @change="jobNumberChanged(scope.index, scope.row)" :props="optionPropsA" style="min-width:300px"></el-cascader>
           </template>
         </el-table-column>
         <el-table-column label="当前总体施工进度" align="center">
@@ -259,9 +259,9 @@
       <el-table :data="updateFormFour.weeklyConstructContentAddReqs" @selection-change="selectWeeklyConstructContentAddReqs" border>
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="400" prop="jobNumber" label="工程编号" align="center">
+        <el-table-column width="400" prop="jobNumberShow" label="工程编号" align="center">
           <template slot-scope="scope">
-            <el-cascader v-model="scope.row.jobNumber" :options="updateFormFour.options.jobNumberOptions" :props="optionPropsA" @change="jobNumberChanged(scope.index,scope.row)" style="min-width:300px"></el-cascader>
+            <el-cascader v-model="scope.row.jobNumberShow" :options="updateFormFour.options.jobNumberOptions" :props="optionPropsA" @change="jobNumberChanged(scope.index,scope.row)" style="min-width:300px"></el-cascader>
           </template>
         </el-table-column>
         <el-table-column label="下周主要施工内容" align="center">
@@ -280,9 +280,9 @@
       <el-table :data="updateFormFour.weeklyRiskContentAddReqs" @selection-change="selectWeeklyRiskContentAddReqs" border>
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="400" prop="workProcess" label="工序" align="center">
+        <el-table-column width="400" prop="workProcessShow" label="工序" align="center">
           <template slot-scope="scope">
-            <el-cascader v-model="scope.row.workProcess" :props="optionPropsB" :options="updateFormFour.options.workProcessOptions" @change="workProcessChanged(scope.index, scope.row)" style="min-width:350px"></el-cascader>
+            <el-cascader v-model="scope.row.workProcessShow" :props="optionPropsB" :options="updateFormFour.options.workProcessOptions" @change="workProcessChanged(scope.index, scope.row)" style="min-width:350px"></el-cascader>
           </template>
         </el-table-column>
         <el-table-column prop="riskLevel" label="风险等级" width="100px" align="center"></el-table-column>
@@ -342,12 +342,20 @@
 import { POINT_CONVERSION_COMPRESSED } from "constants";
 import * as api from "@/api/date.js";
 import * as getApi from "@/api/getApi.js";
+import * as updateApi from "@/api/updateApi.js";
 export default {
   data() {
     return {
       //跳转参数
       backPath: "",
       id: "",
+      //三个对比的list
+      weeklyWorkProgress: [],
+      weeklyConstructContent: [],
+      weeklyRiskContent: [],
+      deleteweeklyWorkProgressAddReqs: [],
+      deleteweeklyConstructContentAddReqs: [],
+      deleteweeklyRiskContentAddReqs: [],
       //项目修改标志
       projectUpdateFlag: false,
       beforeProjectInfo: {},
@@ -575,15 +583,44 @@ export default {
       this.updateFormFour.weeklyConstructContentAddReqs = res.weeklyConstructContentShowResps;
       this.updateFormFour.weeklyRiskContentAddReqs = res.weeklyRiskContentShowResps;
 
-      //TODO ：目前遇到问题，级联选择器必须是list
-      // this.updateFormFour.weeklyConstructContentAddReqs.forEach(element => {
-      //   element.jobNumber = ["土建工程","×××继保室*"];
-      // })
 
 
-
-
-
+      this.updateFormFour.weeklyWorkProgressAddReqs.forEach(ele => {
+        ele.jobNumberTotalList = ele.jobNumberTotalList.substr(0, ele.jobNumberTotalList.length - 1);
+        ele.jobNumberTotalList = ele.jobNumberTotalList.substr(1, ele.jobNumberTotalList.length - 1);
+        ele.jobNumberShow = ele.jobNumberTotalList.split(",");
+        ele.jobNumberTotalList = "[" + ele.jobNumberTotalList + "]";
+        this.weeklyWorkProgress.push({
+          currentProgress: ele.currentProgress,
+          id: ele.id,
+          jobNumberTotalList: ele.jobNumberTotalList
+        })
+      })
+      this.updateFormFour.weeklyConstructContentAddReqs.forEach(ele => {
+        ele.jobNumberTotalList = ele.jobNumberTotalList.substr(0, ele.jobNumberTotalList.length - 1);
+        ele.jobNumberTotalList = ele.jobNumberTotalList.substr(1, ele.jobNumberTotalList.length - 1);
+        ele.jobNumberShow = ele.jobNumberTotalList.split(",");
+        ele.jobNumberTotalList = "[" + ele.jobNumberTotalList + "]";
+        this.weeklyConstructContent.push({
+          constructContent: ele.constructContent,
+          id: ele.id,
+          jobNumberTotalList: ele.jobNumberTotalList
+        })
+      })
+      this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+        ele.workProcessTotalList = ele.workProcessTotalList.substr(0, ele.workProcessTotalList.length - 1);
+        ele.workProcessTotalList = ele.workProcessTotalList.substr(1, ele.workProcessTotalList.length - 1);
+        ele.workProcessShow = ele.workProcessTotalList.split(",");
+        ele.workProcessTotalList = "[" + ele.workProcessTotalList + "]";
+        this.weeklyRiskContent.push({
+          workStartTime: ele.workStartTime,
+          workEndTime: ele.workEndTime,
+          workContent: ele.workContent,
+          id: ele.id,
+          workProcessTotalList: ele.workProcessTotalList
+        })
+      })
+      console.log("最初的this.weeklyConstructContentAddReqs:", JSON.stringify(this.weeklyConstructContent));
     });
     //获取所有项目名称
     getApi.getAllProjectName().then(response => {
@@ -775,7 +812,9 @@ export default {
     addOneLineWeeklyWorkProgressAddReqs() {
       this.updateFormFour.weeklyWorkProgressAddReqs.push({
         jobNumber: "",
-        currentProgress: ""
+        currentProgress: "",
+        listUpdateOperation: "添加",
+        weeklyId: this.id
       });
     },
     //删除选中多行施工进度
@@ -790,6 +829,12 @@ export default {
             let i = 0;
             this.updateFormFour.weeklyWorkProgressAddReqs.forEach(ele => {
               if (ele === element) {
+                if (ele.id) {
+                  this.deleteweeklyWorkProgressAddReqs.push({
+                    listUpdateOperation: "删除",
+                    id: ele.id
+                  });
+                }
                 this.updateFormFour.weeklyWorkProgressAddReqs.splice(i, 1);
                 i--;
               }
@@ -808,7 +853,9 @@ export default {
     addOneLineWeeklyConstructContentAddReqs() {
       this.updateFormFour.weeklyConstructContentAddReqs.push({
         constructContent: "",
-        jobNumber: ""
+        jobNumber: "",
+        listUpdateOperation: "添加",
+        weeklyId: this.id
       });
     },
     //删除选中多行施工内容
@@ -823,6 +870,12 @@ export default {
             let i = 0;
             this.updateFormFour.weeklyConstructContentAddReqs.forEach(ele => {
               if (ele === element) {
+                if (ele.id) {
+                  this.deleteweeklyConstructContentAddReqs.push({
+                    listUpdateOperation: "删除",
+                    id: ele.id
+                  });
+                }
                 this.updateFormFour.weeklyConstructContentAddReqs.splice(i, 1);
                 i--;
               }
@@ -844,7 +897,9 @@ export default {
         workContent: "",
         workEndTime: "",
         workProcess: "",
-        workStartTime: ""
+        workStartTime: "",
+        listUpdateOperation: "添加",
+        weeklyId: this.id
       });
     },
     //删除选中多行风险
@@ -859,6 +914,13 @@ export default {
             let i = 0;
             this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
               if (ele === element) {
+                if (ele.id) {
+                  ele.listUpdateOperation = "删除";
+                  this.deleteweeklyRiskContentAddReqs.push({
+                    listUpdateOperation: "删除",
+                    id: ele.id
+                  });
+                }
                 this.updateFormFour.weeklyRiskContentAddReqs.splice(i, 1);
                 i--;
               }
@@ -875,20 +937,21 @@ export default {
     },
     //当某一行的工序值发生改变时，风险等级相应变化
     workProcessChanged(index, row) {
-      row.workProcess = row.workProcess[row.workProcess.length - 1];
-      console.log(row.workProcess)
+      row.workProcess = row.workProcessShow[row.workProcessShow.length - 1];
+      row.workProcessTotalList = "[" + row.workProcessShow.toString() + "]";
       this.findFlag = false;
       this.Traversal(
         this.updateFormFour.options.workProcessOptions,
         row.workProcess,
         row
       );
+      console.log(row);
     },
     //将工程编号设置为最后一列
     jobNumberChanged(index, row) {
-      console.log(row.jobNumber)
-      row.jobNumber = row.jobNumber[row.jobNumber.length - 1];
-
+      row.jobNumber = row.jobNumberShow[row.jobNumberShow.length - 1];
+      row.jobNumberTotalList = "[" + row.jobNumberShow.toString() + "]";
+      console.log(row);
     },
     //遍历找到该值
     Traversal(T, data, row) {
@@ -942,9 +1005,9 @@ export default {
       if (validNum === 4) {
         let projectUpdateReq = {};
         let projectWeeklyAddReq;
-        let weeklyConstructContentAddReqs;
-        let weeklyRiskContentAddReqs;
-        let weeklyWorkProgressAddReqs;
+        let weeklyConstructContentAddReqs = [];
+        let weeklyRiskContentAddReqs = [];
+        let weeklyWorkProgressAddReqs = [];
         //首先验证项目信息是否修改
         this.projectInfoUpdate();
         if (this.projectUpdateFlag) {
@@ -974,6 +1037,7 @@ export default {
         }
         //加入周报信息
         projectWeeklyAddReq = {
+          id: this.id,
           actualState: this.updateFormFive.actualState,
           controlledState: this.updateFormFive.controlledState,
           adminDept: this.updateFormTwo.adminDept,
@@ -1001,21 +1065,75 @@ export default {
           actualStartTime: api.changeDate(this.updateFormTwo.actualStartTime),
           planCompletionTime: api.changeDate(this.updateFormTwo.planCompletionTime),
         };
+
         //主要施工内容信息
-        weeklyConstructContentAddReqs = this.updateFormFour.weeklyConstructContentAddReqs;
+        this.updateFormFour.weeklyConstructContentAddReqs.forEach(element => {
+          if (element.id) {
+            this.weeklyConstructContent.forEach(ele => {
+              if (ele.id === element.id) {
+                if (ele.constructContent != element.constructContent || ele.jobNumberTotalList != element.jobNumberTotalList) {
+                  element.listUpdateOperation = "更新";
+                  weeklyConstructContentAddReqs.push(element);
+                }
+              }
+            })
+          } else {
+            weeklyConstructContentAddReqs.push(element);
+          }
+        })
+        this.deleteweeklyConstructContentAddReqs.forEach(element => {
+          weeklyConstructContentAddReqs.push(element);
+        })
+
         //风险作业内容信息
-        weeklyRiskContentAddReqs = this.updateFormFour.weeklyRiskContentAddReqs;
+        this.updateFormFour.weeklyRiskContentAddReqs.forEach(element => {
+          if (element.id) {
+            this.weeklyRiskContent.forEach(ele => {
+              console.log("element:", element);
+              console.log("ele:", ele);
+              if (ele.id === element.id) {
+                if (ele.workEndTime != element.workEndTime || ele.workStartTime != element.workStartTime || ele.workContent != element.workContent || ele.workProcessTotalList != element.workProcessTotalList) {
+                  element.listUpdateOperation = "更新";
+                  weeklyRiskContentAddReqs.push(element);
+                }
+              }
+            })
+          } else {
+            weeklyRiskContentAddReqs.push(element);
+          }
+        })
+        this.deleteweeklyRiskContentAddReqs.forEach(element => {
+          weeklyRiskContentAddReqs.push(element);
+        })
+
         //施工进度信息
-        weeklyWorkProgressAddReqs = this.updateFormFour.weeklyWorkProgressAddReqs;
+        this.updateFormFour.weeklyWorkProgressAddReqs.forEach(element => {
+          if (element.id) {
+            this.weeklyWorkProgress.forEach(ele => {
+              if (ele.id === element.id) {
+                if (ele.currentProgress != element.currentProgress || ele.jobNumberTotalList != element.jobNumberTotalList) {
+                  element.listUpdateOperation = "更新";
+                  weeklyWorkProgressAddReqs.push(element);
+                }
+              }
+            })
+          } else {
+            weeklyWorkProgressAddReqs.push(element);
+          }
+        })
+        this.deleteweeklyWorkProgressAddReqs.forEach(element => {
+          weeklyWorkProgressAddReqs.push(element);
+        })
+
         //信息整合
         let list = {
           projectUpdateReq: projectUpdateReq,
-          projectWeeklyAddReq: projectWeeklyAddReq,
-          weeklyConstructContentAddReqs: weeklyConstructContentAddReqs,
-          weeklyRiskContentAddReqs: weeklyRiskContentAddReqs,
-          weeklyWorkProgressAddReqs: weeklyWorkProgressAddReqs
+          projectWeeklyUpdateReq: projectWeeklyAddReq,
+          weeklyConstructContentUpdateReqs: weeklyConstructContentAddReqs,
+          weeklyRiskContentUpdateReqs: weeklyRiskContentAddReqs,
+          weeklyWorkProgressUpdateReqs: weeklyWorkProgressAddReqs
         };
-        addApi.addProjectWeeklyInfo(list).then(response => {
+        updateApi.updateProjectWeeklyInfo(list).then(response => {
           this.goback();
         });
       }

@@ -1,4 +1,4 @@
-import request from "./requestGet"
+import request from "./requestGetN"
 import * as cascader from"./dataChange"
 
 //获取所有项目名称

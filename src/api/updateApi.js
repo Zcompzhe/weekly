@@ -8,4 +8,11 @@ export const updateProject = (data) => {
 }
 
 
+//修改周报
+export const updateProjectWeeklyInfo = (data) => {
+    return request.post(`/projectWeeklyManagement/updateProjectWeeklyInfo`,
+        data
+    )
+}
+
 

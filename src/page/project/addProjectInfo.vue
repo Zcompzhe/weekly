@@ -362,7 +362,7 @@ export default {
   created() {
     //其他页面跳转的数据
     let data = this.$route.params;
-    this.backPath = data.backPath;
+    // this.backPath = data.backPath;
 
     //获取所有建设管理单位
     getApi.getAllAdministrativeDeptName().then(response => {

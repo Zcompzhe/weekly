@@ -271,7 +271,7 @@
           <el-col :span="12">
             <div class="bar">
               <div class="title">下周主要施工作业内容</div>
-              <el-input disabled type="textarea" :rows="4" placeholder="暂无信息" v-model="weeklyDetail.constructContent" style="margin-left: 26px;width:600px"></el-input>
+              <el-input disabled type="textarea" :rows="4" placeholder="暂无信息" v-model="weeklyDetail.constructContentNextWeek" style="margin-left: 26px;width:600px"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -431,7 +431,11 @@ export default {
           }],
         }
       },
-      searchTableRule: {},
+      searchTableRule: {
+        weeklyStartTime: [
+          { required: true, message: "请选择周报开始时间", trigger: "change" }
+        ],
+      },
       //页码部分
       pagination: {
         currentPage: 1,
@@ -458,6 +462,9 @@ export default {
       this.pagination.total = response.totalNumber;
       let startDate = new Date();
       let endDate = api.getThisWeekStart(startDate);
+      this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
+      this.searchTable.weeklyEndTime = new Date(endDate);
+
       this.tableTitle =
         "国网上海建设咨询公司" +
         new Date().getFullYear() +
@@ -514,25 +521,42 @@ export default {
     },
     //搜索
     searchWeekly(pageNum) {
-      let list = {
-        numberOfPage: this.pagination.pageSize,
-        pageNumber: pageNum - 1,
-        adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
-        adminId: this.searchTable.adminId === "" ? undefined : this.searchTable.adminId,
-        hasThreePlusRiskWork: this.searchTable.hasThreePlusRiskWork === "" ? undefined : this.searchTable.hasThreePlusRiskWork,
-        hasWorkNextWeek: this.searchTable.hasWorkNextWeek === "" ? undefined : this.searchTable.hasWorkNextWeek,
-        projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
-        weeklyStartTime: this.searchTable.weeklyStartTime === "" ? undefined : this.searchTable.weeklyStartTime
-      }
-      searchApi.getProjectWeeklyByCondition(list).then(response => {
-        this.weeklyInfo.tableData = response.returnList[0];
-        //转换下周是否有三级以上风险
-        this.weeklyInfo.tableData.forEach(element => {
-          if (element.hasThreePlusRiskWork) element.hasThreePlusRiskWorkStr = "是";
-          else element.hasThreePlusRiskWorkStr = "否";
-        })
-        this.pagination.total = response.totalNumber;
-      })
+      this.$refs["searchTable"].validate(valid => {
+        if (valid) {
+          let list = {
+            numberOfPage: this.pagination.pageSize,
+            pageNumber: pageNum - 1,
+            adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
+            adminId: this.searchTable.adminId === "" ? undefined : this.searchTable.adminId,
+            hasThreePlusRiskWork: this.searchTable.hasThreePlusRiskWork === "" ? undefined : this.searchTable.hasThreePlusRiskWork,
+            hasWorkNextWeek: this.searchTable.hasWorkNextWeek === "" ? undefined : this.searchTable.hasWorkNextWeek,
+            projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+            weeklyStartTime: this.searchTable.weeklyStartTime === "" ? undefined : api.changeDate(this.searchTable.weeklyStartTime)
+          }
+          searchApi.getProjectWeeklyByCondition(list).then(response => {
+            this.weeklyInfo.tableData = response.returnList[0];
+            //转换下周是否有三级以上风险
+            this.weeklyInfo.tableData.forEach(element => {
+              if (element.hasThreePlusRiskWork) element.hasThreePlusRiskWorkStr = "是";
+              else element.hasThreePlusRiskWorkStr = "否";
+            })
+            this.pagination.total = response.totalNumber;
+
+            //换算标题
+            let startDate = this.searchTable.weeklyStartTime;
+            let endDate = api.getThisWeekStart(startDate);
+
+            this.tableTitle =
+              "国网上海建设咨询公司" +
+              new Date().getFullYear() +
+              "年在建工程周报(" +
+              api.changeDate(startDate) +
+              "~" +
+              endDate +
+              ")";
+          })
+        }
+      });
     },
     //周报列表选中
     weeklySelect(val) {

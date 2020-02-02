@@ -76,8 +76,7 @@
         </el-col> -->
       </el-row>
 
-      <el-table :data="projectInfo.tableData" max-height="400" border @selection-change="projectSelect" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
-        <el-table-column type="selection" width="50" align="center"></el-table-column>
+      <el-table :data="projectInfo.tableData" max-height="800" border style="width: 100%; margin-top: 20px">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="name" label="项目名称" align="center"></el-table-column>
         <el-table-column width="210" prop="adminName" label="建设管理单位" align="center"></el-table-column>
@@ -338,7 +337,7 @@ export default {
         // runningNow: "",
       },
 
-      
+
     };
   },
 
@@ -447,7 +446,7 @@ export default {
         name: `updateProject`,
         params: {
           id: row.id,
-          backPath:"projectMana"
+          backPath: "projectMana"
         }
       });
     },
@@ -476,7 +475,7 @@ export default {
       this.$router.push({
         name: `addProject`,
         params: {
-          backPath:"projectMana"
+          backPath: "projectMana"
         }
       });
     },
