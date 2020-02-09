@@ -156,14 +156,14 @@
       <el-submenu index="supervision">
         <template slot="title">
           <i class="el-icon-message"></i>
-          督查方案
+          督查方案规划
         </template>
 
         <el-menu-item index="/supervision/supervisionMana">
-          <i class="el-icon-document"></i>督查方案管理
+          <i class="el-icon-document"></i>安全督查队督查方案管理
         </el-menu-item>
-        <el-menu-item index="/supervision/addSupervision">
-          <i class="el-icon-document"></i>添加督查方案
+        <el-menu-item index="/supervision/supervisionResult">
+          <i class="el-icon-document"></i>督查结果管理
         </el-menu-item>
         <el-menu-item index="/supervision/recommendation">
           <i class="el-icon-document"></i>督查方案推荐

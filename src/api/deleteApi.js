@@ -21,3 +21,15 @@ export const deleteProjectWeeklyInfoById = (id) => {
         }
     )
 }
+
+//取消安排督查
+export const cancelInspection = (id) => {
+    return request.get(`/inspectionManagement/cancelInspection`,
+        {
+            params:{
+                id:id
+            }
+        }
+    )
+}
+

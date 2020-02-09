@@ -41,6 +41,7 @@ const projectPerson = r => require.ensure([], () => r(require('../page/project/p
 const supervisionMana = r => require.ensure([], () => r(require('../page/supervision/supervisionMana')), 'supervisionMana');
 const recommendation = r => require.ensure([], () => r(require('../page/supervision/recommendation')), 'recommendation');
 const addSupervision = r => require.ensure([], () => r(require('../page/supervision/addSupervision')), 'addSupervision');
+const supervisionResult = r => require.ensure([], () => r(require('../page/supervision/supervisionResult')), 'supervisionResult');
 
 export default [{
   path: Config.route.login,
@@ -233,6 +234,15 @@ export default [{
     meta: {
       activePath: '/supervision/supervisionMana',
       bcrumd: ['督查方案管理'],
+    }
+  },
+  { // 督查方案管理
+    path: '/supervision/supervisionResult',
+    name: 'supervisionResult',
+    component: supervisionResult,
+    meta: {
+      activePath: '/supervision/supervisionResult',
+      bcrumd: ['督查结果查询'],
     }
   },
   { // 督查方案推荐

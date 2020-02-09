@@ -25,6 +25,7 @@ export const changeDateToSecond = date => {
   }
 };
 
+//获得本周五到下周五
 export const getThisWeekStart = weeklyStartTime => {
   //先求星期几
   var c = changeDate(weeklyStartTime);
@@ -57,4 +58,23 @@ export const getThisWeekStart = weeklyStartTime => {
   }
   return weeklyStartTime2;
 };
+//获得本周一到下周一
+export const getThisWeekStartTwo = weeklyStartTime => {
+  //先求星期几
+  var c = changeDate(weeklyStartTime);
+  var b = new Date(Date.parse(c.replace(/\-/g, "/")));
+  console.log("选择的日期是星期", b.getDay());
+  let weeklyStartTime2;
 
+  //第一步，将截止日期求出来
+  weeklyStartTime2 = new Date(weeklyStartTime);
+  weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 6);
+  weeklyStartTime2 = changeDate(weeklyStartTime2);
+
+  //第二步，将起始日期求出来
+
+  weeklyStartTime.setDate(weeklyStartTime.getDate() - b.getDay());
+  weeklyStartTime = changeDate(weeklyStartTime);
+
+  return weeklyStartTime2;
+};

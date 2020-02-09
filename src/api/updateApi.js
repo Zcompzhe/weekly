@@ -16,3 +16,9 @@ export const updateProjectWeeklyInfo = (data) => {
 }
 
 
+//完成督查
+export const updateProjectInspection = (data) => {
+    return request.post(`/inspectionManagement/updateProjectInspection`,
+        data
+    )
+}

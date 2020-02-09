@@ -15,4 +15,36 @@ export const addProjectInfo = (data) => {
     )
 }
 
+//安排督查
+export const arrangeInspection = (data) => {
+    return request.post(`/inspectionManagement/arrangeInspection`,
+        data
+    )
+}
+
+//给督察队分配任务
+export const setInspectTeam = (data) => {
+    return request.post(`/inspectionManagement/setInspectTeam`,
+        data
+    )
+}
+
+//添加督查发现问题的照片
+export const addInspectPhotos = (data) => {
+    return request.post(`/inspectionManagement/addInspectPhotos`,
+        data
+    )
+}
+
+//添加督查结果通知单所有信息
+export const addInspectionJobOrderInfo = (data) => {
+    return request.post(`/inspectionManagement/addInspectionJobOrderInfo`,
+        data
+    )
+}
+
+
+
+
+
 
