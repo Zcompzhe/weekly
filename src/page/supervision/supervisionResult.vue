@@ -105,15 +105,15 @@
           </el-col>
         </el-row>
       </el-form>
-      <el-table :data="problemForm.tableData" max-height="400" border style="width: 100%; margin-top: 20px" v-if="addProblemRow.jobOrderType==='口头警告'">
+      <el-table :data="problemForm.tableData" max-height="400" border style="width: 100%; margin-top: 20px" v-if="addProblemRow.jobOrderType==='口头警告通知单'">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column min-width="300" prop="problem" label="发现问题" align="center"></el-table-column>
         <el-table-column width="210" prop="responsibleDept" label="责任项目部" align="center"></el-table-column>
         <el-table-column width="300" prop="photoNumber" label="上传照片数量" align="center"></el-table-column>
         <el-table-column width="200" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text">上传照片</el-button>
-            <el-button type="text">查看照片</el-button>
+            <el-button type="text" @click="addPhotoPanel(scope.row)">上传照片</el-button>
+            <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -131,30 +131,51 @@
           </template>
         </el-table-column>
       </el-table>
+      <br><br>
+      <hr><br><br>
+
+      <el-table :data="photoTable" max-height="1000" border style="width: 100%; margin-top: 20px" v-if="photoShowFlag">
+        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+        <el-table-column min-width="300" prop="photoName" label="问题图片名称" align="center"></el-table-column>
+        <el-table-column width="200" label="操作" align="center" fixed="right">
+          <template slot-scope="scope">
+            <el-button type="text" @click="showThisPic(scope.$index,scope.row)">查看图片</el-button>
+            <el-button type="text" @click="deletePic(scope.row)">删除图片</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
 
       <!-- 图片预览部分 -->
-      <div class="demo-image" v-if="showPhotoFlag">
+      <el-dialog :visible.sync="isShowImageDialog" :modal="false">
+        <el-carousel indicator-position="outside" height="600px" :autoplay="false" arrow="never">
+          <el-carousel-item v-for="src in urlIndex" :key="src" :label="src">
+            <img :src="src" style="max-width: 100%;max-height: 100%;display: block; margin: 0 auto;" />
+          </el-carousel-item>
+        </el-carousel>
+      </el-dialog>
+      <!-- <div class="demo-image" v-if="showPhotoFlag">
         <div class="block" v-for="i in photoNumber" :key="i">
           <el-image style="width: 100px; height: 100px" :src="url[i]" fit="cover"></el-image>
         </div>
-      </div>
+      </div> -->
 
       <!-- 文件操作 -->
       <el-row :gutter="20" v-if="toAddPhotoPanelFlag">
-        <el-upload ref="upload" action :file-list="fileList" :http-request="sigleFileUploadAction" multiple style="margin-left:11%" :auto-upload="true">
+        <el-upload ref="upload" action :file-list="fileList" :http-request="sigleFileUploadAction" :show-file-list="false" multiple style="margin-left:11%" :auto-upload="true">
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
           <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
         </el-upload>
       </el-row>
     </el-card>
     <!-- 反馈检查问题 -->
+    <!-- 添加弹窗 -->
     <el-dialog title="反馈检查问题" :visible.sync="addInspectionProblemPanelFlag" width="1400px" :modal="false">
       <el-form :model="addCheckForm" ref="addCheckForm" label-position="left" :rules="addCheckFormRule" label-width="120px" class="demo-ruleForm">
         <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="通知单类型" prop="jobOrderType" placeholder="项目名称">
-                <el-select v-model="addCheckForm.jobOrderType" clearable placeholder="请选择" style="min-width:200px" @change="addCheckTypeChanged">
+                <el-select v-model="addCheckForm.jobOrderType" disabled placeholder="请选择" style="min-width:200px" @change="addCheckTypeChanged">
                   <el-option v-for="item in addCheckForm.options.jobOrderTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
@@ -244,8 +265,8 @@
         <hr>
         <br />
         <br />
-        <el-button type="primary" style="margin-right: 20px" @click="addCheckTableRow">添加条目</el-button>
-        <el-button type="primary" style="margin-right: 20px" @click="deleteSelectRow">删除条目</el-button>
+        <el-button type="primary" style="margin-right: 20px" @click="addAddCheckTableRow">添加条目</el-button>
+        <el-button type="primary" style="margin-right: 20px" @click="deleteAddSelectRow">删除条目</el-button>
         <br />
         <br />
         <el-table :data="addCheckForm.tableData" @selection-change="addCheckTableSelect" border v-if="addCheckForm.jobOrderType === '口头警告通知单'">
@@ -309,6 +330,168 @@
 
       </el-form>
     </el-dialog>
+    <!-- 修改弹窗 -->
+    <el-dialog title="反馈检查问题" :visible.sync="updateInspectionProblemPanelFlag" width="1400px" :modal="false">
+      <el-form :model="updateCheckForm" ref="updateCheckForm" label-position="left" :rules="updateCheckFormRule" label-width="120px" class="demo-ruleForm">
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="通知单类型" prop="jobOrderType" placeholder="项目名称">
+                <el-select v-model="updateCheckForm.jobOrderType" clearable placeholder="请选择" style="min-width:200px" @change="updateCheckTypeChanged">
+                  <el-option v-for="item in updateCheckForm.options.jobOrderTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+          </el-col>
+
+          <el-col :span="8">
+
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="被查项目" prop="projectId" placeholder="项目名称">
+                <el-select v-model="updateCheckForm.projectId" clearable disabled placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateCheckForm.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="被查地点" prop="inspectAddress" placeholder="当前月份">
+                <el-input v-model="updateCheckForm.inspectAddress" clearable :rows="1" placeholder="请选择" style="width:225px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="检查时间" prop="inspectDate" placeholder="周报开始日期">
+                <el-input v-model="updateCheckForm.inspectDate" clearable disabled :rows="1" placeholder="请选择" style="width:225px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="业主项目部" prop="ownerDeptId" placeholder="项目名称">
+                <el-select v-model="updateCheckForm.ownerDeptId" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateCheckForm.options.ownerDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="施工项目部" prop="constructDeptId" placeholder="当前月份">
+                <el-select v-model="updateCheckForm.constructDeptId" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateCheckForm.options.constructDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="监理项目部" prop="adminDeptId" placeholder="周报开始日期">
+                <el-select v-model="updateCheckForm.adminDeptId" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateCheckForm.options.adminDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="20">
+            <div class="bar">
+              <el-form-item label="检查范围和简要内容" label-width="150px" prop="checkRangeAndContent" placeholder="项目名称">
+                <el-input type="textarea" :rows="4" placeholder="暂无信息" v-model="updateCheckForm.checkRangeAndContent" style="margin-left:20px;width:1000px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <br />
+        <br />
+        <hr>
+        <br />
+        <br />
+        <el-button type="primary" style="margin-right: 20px" @click="addUpdateCheckTableRow">添加条目</el-button>
+        <el-button type="primary" style="margin-right: 20px" @click="deleteUpdateSelectRow">删除条目</el-button>
+        <br />
+        <br />
+        <el-table :data="updateCheckForm.tableData" @selection-change="updateCheckTableSelect" border v-if="updateCheckForm.jobOrderType === '口头警告通知单'">
+          <el-table-column type="selection" width="50" align="center"></el-table-column>
+          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+          <el-table-column width="500" label="发现问题" align="center">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.problem" :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column label="责任项目部" align="center">
+            <template slot-scope="scope">
+              <el-select v-model="scope.row.responsibleDept" clearable placeholder="请选择" style="min-width:200px">
+                <el-option v-for="item in updateCheckForm.options.responsibleDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <el-table :data="updateCheckForm.tableData" @selection-change="updateCheckTableSelect" border v-if="updateCheckForm.jobOrderType === '整改通知单' ||updateCheckForm.jobOrderType==='' ">
+          <el-table-column type="selection" width="50" align="center"></el-table-column>
+          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+          <el-table-column width="500" label="发现问题" align="center">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.problem" :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column width="500" label="违章性质" align="center">
+            <template slot-scope="scope">
+              <el-select v-model="scope.row.violationType" clearable placeholder="请选择" style="min-width:200px">
+                <el-option v-for="item in updateCheckForm.options.violationTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column label="责任项目部" align="center">
+            <template slot-scope="scope">
+              <el-select v-model="scope.row.responsibleDept" clearable placeholder="请选择" style="min-width:200px">
+                <el-option v-for="item in updateCheckForm.options.responsibleDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column label="整改要求" align="center">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.rectificationRequirement" :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
+            </template>
+          </el-table-column>
+        </el-table>
+        <br />
+        <br />
+        <br />
+        <el-row :gutter="20">
+
+          <el-col :span="8" align="right" style="margin-left:140px">
+            <el-button type="primary" @click="updateSubmitCheckForm">确认修改</el-button>
+          </el-col>
+          <el-col :span="8" align="center">
+            <el-button type="primary" @click="cancelCheckForm">取消</el-button>
+          </el-col>
+
+        </el-row>
+
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -323,8 +506,15 @@ import * as updateApi from "@/api/updateApi.js";
 export default {
   data() {
     return {
+      //显示照片
+      urlIndex: [],
+      photoShowFlag: false,
+      isShowImageDialog: false,
+      searchProblemRow: {},
+      photoTable: [],
       //反馈检查问题弹窗
       inspectionId: "",
+      //添加
       addInspectionProblemPanelFlag: false,
       addCheckForm: {
         jobOrderType: "",
@@ -337,7 +527,6 @@ export default {
         checkRangeAndContent: "",
         tableData: [],
         multiSelection: [],
-
         options: {
           jobOrderTypeOptions: [],
           projectIdOptions: [],
@@ -360,6 +549,69 @@ export default {
         }
       },
       addCheckFormRule: {
+        jobOrderType: [
+          { required: true, message: "请选择通知单类型", trigger: "change" }
+        ],
+        projectId: [
+          { required: true, message: "请选择项目名称", trigger: "change" }
+        ],
+        inspectAddress: [
+          { required: true, message: "请选择被查地点", trigger: "change" }
+        ],
+        inspectDate: [
+          { required: true, message: "请选择被查日期", trigger: "change" }
+        ],
+        adminDeptId: [
+          { required: true, message: "请选择监理项目部", trigger: "change" }
+        ],
+        ownerDeptId: [
+          { required: true, message: "请选择业主项目部", trigger: "change" }
+        ],
+        constructDeptId: [
+          { required: true, message: "请选择施工项目部", trigger: "change" }
+        ],
+        checkRangeAndContent: [
+          { required: true, message: "请输入检查范围和简要内容", trigger: "change" }
+        ],
+      },
+      //修改
+      updateInspectionProblemPanelFlag: false,
+      updateCheckForm: {
+        id: "",
+        jobOrderType: "",
+        projectId: "",
+        inspectAddress: "",
+        inspectDate: "",
+        adminDeptId: "",
+        ownerDeptId: "",
+        constructDeptId: "",
+        checkRangeAndContent: "",
+        firstTableData: [],
+        deleteTable: [],
+        tableData: [],
+        multiSelection: [],
+        options: {
+          jobOrderTypeOptions: [],
+          projectIdOptions: [],
+          ownerDeptIdOptions: [],
+          adminDeptIdOptions: [],
+          constructDeptIdOptions: [],
+          responsibleDeptOptions: [
+          ],
+          violationTypeOptions: [
+            {
+              name: "管理违章"
+            },
+            {
+              name: "装置性违章"
+            },
+            {
+              name: "行为违章"
+            },
+          ]
+        }
+      },
+      updateCheckFormRule: {
         jobOrderType: [
           { required: true, message: "请选择通知单类型", trigger: "change" }
         ],
@@ -448,34 +700,76 @@ export default {
     getApi.getAllProjectName().then(response => {
       this.searchTable.options.projectIdOptions = response;
       this.addCheckForm.options.projectIdOptions = response;
+      this.updateCheckForm.options.projectIdOptions = response;
     });
 
     //获取通知单类型
     getApi.getAllJobOrderTypeEnum().then(response => {
       this.addCheckForm.options.jobOrderTypeOptions = response;
+      this.updateCheckForm.options.jobOrderTypeOptions = response;
     });
 
     //获取业主项目部
     getApi.getAllOwnerProjectDeptName().then(response => {
       this.addCheckForm.options.ownerDeptIdOptions = response;
+      this.updateCheckForm.options.ownerDeptIdOptions = response;
     });
 
     //获取施工项目部
     getApi.getAllConstructProjectDeptName().then(response => {
       this.addCheckForm.options.constructDeptIdOptions = response;
+      this.updateCheckForm.options.constructDeptIdOptions = response;
     });
 
     //获取监理项目部
     getApi.getAllAdminProjectDeptName().then(response => {
       this.addCheckForm.options.adminDeptIdOptions = response;
+      this.updateCheckForm.options.adminDeptIdOptions = response;
     });
 
     //获取部门的枚举
     getApi.getAllResponsibleDeptEnum().then(response => {
       this.addCheckForm.options.responsibleDeptOptions = response;
+      this.updateCheckForm.options.responsibleDeptOptions = response;
     });
   },
   methods: {
+    //查看图片
+    showThisPic(index, row) {
+      console.log(index)
+      this.urlIndex = [];
+      this.urlIndex.push(this.url[index]);
+      this.isShowImageDialog = true;
+    },
+    //删除图片
+    deletePic(row) {
+      this.$confirm("确认删除该图片？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          deleteApi.deleteInspectPhotoPathByPathId({
+            jobOrderTypeName: this.addProblemRow.jobOrderType,
+            id: row.id
+          }).then(response => {
+            this.searchPhoto(this.searchProblemRow);
+            let list = {
+              inspectionId: this.addProblemRow.id,
+              jobOrderTypeName: this.addProblemRow.jobOrderType
+            }
+            searchApi.getInspectJobOrderInfoByInspectionId(list).then(response => {
+              this.problemForm.tableData = response.returnListSecondary[0];
+            })
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
     //确认添加问题
     addSubmitCheckForm() {
       this.$refs["addCheckForm"].validate(valid => {
@@ -515,18 +809,97 @@ export default {
         }
       });
     },
+    //确认修改问题
+    updateSubmitCheckForm() {
+      this.$refs["updateCheckForm"].validate(valid => {
+        if (valid) {
+          let inspectionJobOrderUpdateReq = {};
+          let inspectionOralWarningContentUpdateReqs = [];
+          let inspectionRectificationContentUpdateReqs = [];
+          inspectionJobOrderUpdateReq = {
+            id: this.updateCheckForm.id,
+            adminDeptId: this.updateCheckForm.adminDeptId,
+            checkRangeAndContent: this.updateCheckForm.checkRangeAndContent,
+            constructDeptId: this.updateCheckForm.constructDeptId,
+            inspectAddress: this.updateCheckForm.inspectAddress,
+            jobOrderType: this.updateCheckForm.jobOrderType,
+            ownerDeptId: this.updateCheckForm.ownerDeptId,
+          };
+          if (this.updateCheckForm.jobOrderType === "口头警告通知单") {
+            this.updateCheckForm.tableData.forEach(element => {
+              //先加入添加的
+              if (element.listUpdateOperation === "添加") {
+                inspectionOralWarningContentUpdateReqs.push(element);
+              }
+              //加入修改的
+              this.updateCheckForm.firstTableData.forEach(ele => {
+                if (ele.id === element.id) {
+                  console.log("element:", element);
+                  console.log("ele", ele);
+                  if (ele.problem != element.problem || ele.responsibleDept != element.responsibleDept) {
+                    element.listUpdateOperation = "更新";
+                    inspectionOralWarningContentUpdateReqs.push(element);
+                  }
+                }
+              })
+            })
+            //加入删除的
+            this.updateCheckForm.deleteTable.forEach(element => {
+              inspectionOralWarningContentUpdateReqs.push(element);
+            })
+          }
+          else if (this.updateCheckForm.jobOrderType === "整改通知单") {
+            this.updateCheckForm.tableData.forEach(element => {
+              //先加入添加的
+              if (element.listUpdateOperation === "添加") {
+                inspectionRectificationContentUpdateReqs.push(element);
+              }
+              //加入修改的
+              this.updateCheckForm.firstTableData.forEach(ele => {
+                if (ele.id === element.id) {
+                  if (ele.problem != element.problem || ele.responsibleDept != element.responsibleDept || ele.rectificationRequirement != element.rectificationRequirement || ele.violationType != element.violationType) {
+                    element.listUpdateOperation = "更新";
+                    inspectionRectificationContentUpdateReqs.push(element);
+                  }
+                }
+              })
+            })
+            //加入删除的
+            this.updateCheckForm.deleteTable.forEach(element => {
+              inspectionRectificationContentUpdateReqs.push(element);
+            })
+          }
+
+          let list = {
+            inspectionJobOrderUpdateReq,
+            inspectionOralWarningContentUpdateReqs,
+            inspectionRectificationContentUpdateReqs
+          };
+
+          updateApi.updateInspectionJobOrderInfo(list).then(response => {
+            this.updateInspectionProblemPanelFlag = false;
+          })
+        } else {
+          this.$message({
+            type: "error",
+            message: "请填写所以必填项!"
+          });
+        }
+      });
+    },
     //取消添加问题
     cancelCheckForm() {
       this.addInspectionProblemPanelFlag = false;
+      this.updateInspectionProblemPanelFlag = false;
     },
     //增加一行问题
-    addCheckTableRow() {
+    addAddCheckTableRow() {
       this.addCheckForm.tableData.push({
         problem: "",
       });
     },
     //删除选中多行问题
-    deleteSelectRow() {
+    deleteAddSelectRow() {
       this.$confirm("确认删除选中条目？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -551,12 +924,90 @@ export default {
           });
         });
     },
+    //增加一行问题
+    addUpdateCheckTableRow() {
+      this.updateCheckForm.tableData.push({
+        problem: "",
+        listUpdateOperation: "添加",
+        jobOrderId: this.updateCheckForm.id
+      });
+    },
+    //删除选中多行问题
+    deleteUpdateSelectRow() {
+      this.$confirm("确认删除选中条目？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.updateCheckForm.multiSelection.forEach(element => {
+            let i = 0;
+            this.updateCheckForm.tableData.forEach(ele => {
+              if (ele === element) {
+                if (ele.id) {
+                  ele.listUpdateOperation = "删除";
+                  this.updateCheckForm.deleteTable.push(ele);
+                }
+                this.updateCheckForm.tableData.splice(i, 1);
+                i--;
+              }
+              i++;
+            });
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
     //反馈检查问题点击
     openCheckPanel(row) {
       this.inspectionId = row.id;
 
       //添加面板打开判断
       if (row.jobOrderType === "口头警告通知单" || row.jobOrderType === "整改通知单") {
+        let list = {
+          inspectionId: row.id,
+          jobOrderTypeName: row.jobOrderType
+        }
+        searchApi.getInspectJobOrderInfoByInspectionId(list).then(response => {
+          let res = response.returnListMajor[0][0];
+          this.updateCheckForm.id = res.id;
+          this.updateCheckForm.jobOrderType = res.jobOrderType;
+          this.updateCheckForm.projectId = res.projectId;
+          this.updateCheckForm.inspectAddress = res.inspectAddress;
+          this.updateCheckForm.adminDeptId = res.adminDeptId;
+          this.updateCheckForm.ownerDeptId = res.ownerDeptId;
+          this.updateCheckForm.constructDeptId = res.constructDeptId;
+          this.updateCheckForm.inspectDate = res.inspectDate;
+          this.updateCheckForm.checkRangeAndContent = res.checkRangeAndContent;
+          this.updateCheckForm.tableData = response.returnListSecondary[0];
+          this.updateCheckForm.firstTableData = [];
+          if (this.updateCheckForm.jobOrderType === '整改通知单') {
+            this.updateCheckForm.tableData.forEach(ele => {
+              this.updateCheckForm.firstTableData.push({
+                violationType: ele.violationType,
+                id: ele.id,
+                responsibleDept: ele.responsibleDept,
+                rectificationRequirement: ele.rectificationRequirement,
+                problem: ele.problem
+              })
+            })
+          } else if (this.updateCheckForm.jobOrderType === '口头警告通知单') {
+            this.updateCheckForm.tableData.forEach(ele => {
+              this.updateCheckForm.firstTableData.push({
+                id: ele.id,
+                responsibleDept: ele.responsibleDept,
+                problem: ele.problem
+              })
+            })
+          }
+          this.updateInspectionProblemPanelFlag = true;
+        });
+
+
       } else {
         this.addCheckForm.projectId = row.projectId;
         this.addCheckForm.inspectDate = row.inspectDate;
@@ -568,10 +1019,17 @@ export default {
     addCheckTableSelect(val) {
       this.addCheckForm.multiSelection = val;
     },
+    updateCheckTableSelect(val) {
+      this.updateCheckForm.multiSelection = val;
+    },
     //添加的时候通知单类型改变
     addCheckTypeChanged() {
       this.addCheckForm.tableData = [];
       this.addCheckForm.multiSelection = [];
+    },
+    updateCheckTypeChanged() {
+      this.updateCheckForm.tableData = [];
+      this.updateCheckForm.multiSelection = [];
     },
     //搜索
     searchInspection() {
@@ -586,13 +1044,20 @@ export default {
     },
     //上传文件
     sigleFileUploadAction(item) {
-      this.formData.append("files", item.file);
+      if (item.file.type === "image/png" || item.file.type === "image/jpeg") {
+        this.formData.append("files", item.file);
+      } else {
+        this.$message({
+          type: "error",
+          message: "上传头像图片只能是 JPG 格式或 PNG 格式!"
+        });
+      }
     },
     submitUpload() {
       this.formData.append("id", this.problemRow.id);
       this.formData.append("jobOrderId", this.addProblemRow.jobOrderId);
       addApi.addInspectPhotos(this.formData).then(response => {
-        this.formData = [];
+        this.formData = new FormData();
         this.problemRow = {};
         this.toAddPhotoPanelFlag = false;
         this.problemForm.tableData = [];
@@ -637,8 +1102,10 @@ export default {
         contentId: row.id,
         jobOrderTypeName: this.addProblemRow.jobOrderType
       };
+      this.searchProblemRow = row;
       searchApi.getInspectPhotoResourceByContentId(list).then(response => {
-        this.photoNumber = response.returnList[0].length;
+        this.photoShowFlag = true;
+        this.photoTable = response.returnList[0];
         this.url = [];
         response.returnList[0].forEach(element => {
           this.url.push("http://localhost:8080" + element.photoResourceUrl);

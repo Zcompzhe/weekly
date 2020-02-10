@@ -22,3 +22,14 @@ export const updateProjectInspection = (data) => {
         data
     )
 }
+
+//更新督查结果通知单所有信息
+export const updateInspectionJobOrderInfo = (data) => {
+    return request.post(`/inspectionManagement/updateInspectionJobOrderInfo`,
+        data
+    )
+}
+
+
+
+
