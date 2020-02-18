@@ -37,24 +37,25 @@
     <el-card class="box-card">
       <el-table :data="inspection.tableData" max-height="400" border style="width: 100%; margin-top: 20px">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="210" prop="inspectDate" label="督查日期" align="center"></el-table-column>
-        <el-table-column width="210" prop="projectName" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="300" prop="teamName" label="督查队伍" align="center"></el-table-column>
+        <el-table-column width="110" prop="inspectDate" label="督查日期" align="center"></el-table-column>
+        <el-table-column width="250" prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="100" prop="teamName" label="督查队伍" align="center"></el-table-column>
         <el-table-column width="300" prop="inspectContent" label="督查内容" align="center">
           <template slot-scope="scope">
             <el-input v-model="scope.row.inspectContent" style="min-width:270px">
             </el-input>
           </template>
         </el-table-column>
-        <el-table-column width="350" prop="resultFeedBack" label="督查结果反馈情况" align="center"></el-table-column>
-        <el-table-column width="210" prop="jobOrderType" label="通知单类型" align="center"></el-table-column>
-        <el-table-column width="210" prop="problemCount" label="存在问题数" align="center"></el-table-column>
+        <el-table-column width="180" prop="resultFeedBack" label="督查结果反馈情况" align="center"></el-table-column>
+        <el-table-column width="180" prop="jobOrderType" label="通知单类型" align="center"></el-table-column>
+        <el-table-column width="80" prop="problemCount" label="存在问题数" align="center"></el-table-column>
+        <el-table-column width="80" prop="inspectionPlanState" label="督查情况" align="center"></el-table-column>
         <el-table-column width="400" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="completeInspection(scope.row)">完成督查</el-button>
             <el-button type="text" @click="openCheckPanel(scope.row)">反馈检查问题</el-button>
             <el-button type="text" :disabled="scope.row.resultFeedBack != '已上报'" @click="addProblemPic(scope.row)">添加问题照片</el-button>
-            <el-button type="text">删除通知单</el-button>
+            <el-button type="text" @click="deleteInspection(scope.row)">删除通知单</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -743,6 +744,25 @@ export default {
     });
   },
   methods: {
+    //删除通知单
+    deleteInspection(row) {
+      this.$confirm("确认删除该通知单？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          deleteApi.deleteInspectionJobOrderInfoById(row.id).then(response => {
+             this.searchInspection();
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
     //查看图片
     showThisPic(index, row) {
       console.log(index)

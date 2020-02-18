@@ -39,3 +39,14 @@ export const deleteInspectPhotoPathByPathId = list => {
     }
   );
 };
+//删除图片
+export const deleteInspectionJobOrderInfoById = id => {
+  return request.delete(
+    `/inspectionManagement/deleteInspectionJobOrderInfoById`,
+    {
+      params: {
+        id: id
+      }
+    }
+  );
+};

@@ -346,7 +346,7 @@
         <el-table-column width="300" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="200" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
         <el-table-column width="100" prop="inspectionPlanState" label="督查情况" align="center"></el-table-column>
-        <el-table-column width="350" prop="teamNumber" label="督查队伍" align="center">
+        <el-table-column width="350" prop="teamName" label="督查队伍" align="center">
           <template slot-scope="scope">
             <el-select v-model="scope.row.teamNumber" placeholder="请选择" style="min-width:300px" disabled v-if="scope.row.inspectionPlanState==='已督查'">
               <el-option v-for="item in arrange.teamNumberOption" :key="item.value" :label="item.name" :value="item.value"></el-option>
@@ -379,12 +379,12 @@
           <br><br>
           <el-table :data="inspectionTable.tableData[item-1]" max-height="400" border>
             <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-            <el-table-column width="300" prop="teamNumber" label="督查队伍" align="center"></el-table-column>
-            <el-table-column width="300" prop="inspectDate" label="督查日期" align="center"></el-table-column>
-            <el-table-column width="200" prop="projectName" label="项目名称" align="center"></el-table-column>
-            <el-table-column width="100" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
+            <el-table-column width="100" prop="teamName" label="督查队伍" align="center"></el-table-column>
+            <el-table-column width="100" prop="inspectDate" label="督查日期" align="center"></el-table-column>
+            <el-table-column width="280" prop="projectName" label="项目名称" align="center"></el-table-column>
+            <el-table-column width="200" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
             <el-table-column width="350" prop="threePlusRiskWorkContent" label="三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
-            <el-table-column width="100" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
+            <el-table-column width="280" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
             <el-table-column width="100" prop="inspectionPlanState" label="督查情况" align="center"></el-table-column>
             <!-- <el-table-column label="操作" align="center">
               <template slot-scope="scope">
