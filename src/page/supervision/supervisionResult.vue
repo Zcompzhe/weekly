@@ -752,7 +752,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          deleteApi.deleteInspectionJobOrderInfoById(row.id).then(response => {
+          deleteApi.deleteInspectionJobOrderInfoById(row.jobOrderId).then(response => {
              this.searchInspection();
           })
         })
