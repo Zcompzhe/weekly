@@ -586,8 +586,8 @@ export default {
 
 
       this.updateFormFour.weeklyWorkProgressAddReqs.forEach(ele => {
-        ele.jobNumberTotalList = ele.jobNumberTotalList.substr(0, ele.jobNumberTotalList.length - 1);
-        ele.jobNumberTotalList = ele.jobNumberTotalList.substr(1, ele.jobNumberTotalList.length - 1);
+        // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(0, ele.jobNumberTotalList.length - 1);
+        // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(1, ele.jobNumberTotalList.length - 1);
         ele.jobNumberShow = ele.jobNumberTotalList.split(",");
         ele.jobNumberTotalList = "[" + ele.jobNumberTotalList + "]";
         this.weeklyWorkProgress.push({
@@ -597,8 +597,8 @@ export default {
         })
       })
       this.updateFormFour.weeklyConstructContentAddReqs.forEach(ele => {
-        ele.jobNumberTotalList = ele.jobNumberTotalList.substr(0, ele.jobNumberTotalList.length - 1);
-        ele.jobNumberTotalList = ele.jobNumberTotalList.substr(1, ele.jobNumberTotalList.length - 1);
+        // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(0, ele.jobNumberTotalList.length - 1);
+        // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(1, ele.jobNumberTotalList.length - 1);
         ele.jobNumberShow = ele.jobNumberTotalList.split(",");
         ele.jobNumberTotalList = "[" + ele.jobNumberTotalList + "]";
         this.weeklyConstructContent.push({
@@ -608,8 +608,8 @@ export default {
         })
       })
       this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
-        ele.workProcessTotalList = ele.workProcessTotalList.substr(0, ele.workProcessTotalList.length - 1);
-        ele.workProcessTotalList = ele.workProcessTotalList.substr(1, ele.workProcessTotalList.length - 1);
+        // ele.workProcessTotalList = ele.workProcessTotalList.substr(0, ele.workProcessTotalList.length - 1);
+        // ele.workProcessTotalList = ele.workProcessTotalList.substr(1, ele.workProcessTotalList.length - 1);
         ele.workProcessShow = ele.workProcessTotalList.split(",");
         ele.workProcessTotalList = "[" + ele.workProcessTotalList + "]";
         this.weeklyRiskContent.push({
@@ -619,8 +619,9 @@ export default {
           id: ele.id,
           workProcessTotalList: ele.workProcessTotalList
         })
+
       })
-      console.log("最初的this.weeklyConstructContentAddReqs:", JSON.stringify(this.weeklyConstructContent));
+      console.log(this.updateFormFour)
     });
     //获取所有项目名称
     getApi.getAllProjectName().then(response => {

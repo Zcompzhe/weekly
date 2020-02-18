@@ -166,6 +166,11 @@
           <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
         </el-upload>
       </el-row>
+      <el-table :data="photo.tableData" max-height="1000" border style="width: 100%; margin-top: 20px" v-if="toAddPhotoPanelFlag">
+        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+        <el-table-column min-width="300" prop="name" label="图片名称" align="center"></el-table-column>
+      </el-table>
+
     </el-card>
     <!-- 反馈检查问题 -->
     <!-- 添加弹窗 -->
@@ -175,7 +180,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="通知单类型" prop="jobOrderType" placeholder="项目名称">
-                <el-select v-model="addCheckForm.jobOrderType" disabled placeholder="请选择" style="min-width:200px" @change="addCheckTypeChanged">
+                <el-select v-model="addCheckForm.jobOrderType" placeholder="请选择" style="min-width:200px" @change="addCheckTypeChanged">
                   <el-option v-for="item in addCheckForm.options.jobOrderTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
@@ -337,7 +342,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="通知单类型" prop="jobOrderType" placeholder="项目名称">
-                <el-select v-model="updateCheckForm.jobOrderType" clearable placeholder="请选择" style="min-width:200px" @change="updateCheckTypeChanged">
+                <el-select v-model="updateCheckForm.jobOrderType" disabled placeholder="请选择" style="min-width:200px" @change="updateCheckTypeChanged">
                   <el-option v-for="item in updateCheckForm.options.jobOrderTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
@@ -512,6 +517,9 @@ export default {
       isShowImageDialog: false,
       searchProblemRow: {},
       photoTable: [],
+      photo: {
+        tableData: []
+      },
       //反馈检查问题弹窗
       inspectionId: "",
       //添加
@@ -695,6 +703,7 @@ export default {
     let endDate = api.getThisWeekStartTwo(startDate);
     this.searchTable.inspectStartDate = new Date(api.changeDate(startDate));
     this.searchTable.inspectEndDate = new Date(endDate);
+    this.searchInspection();
 
     //获取项目列表
     getApi.getAllProjectName().then(response => {
@@ -800,6 +809,7 @@ export default {
 
           addApi.addInspectionJobOrderInfo(list).then(response => {
             this.addInspectionProblemPanelFlag = false;
+            this.searchInspection();
           })
         } else {
           this.$message({
@@ -1046,6 +1056,8 @@ export default {
     sigleFileUploadAction(item) {
       if (item.file.type === "image/png" || item.file.type === "image/jpeg") {
         this.formData.append("files", item.file);
+        this.photo.tableData.push({ name: item.file.name })
+        console.log(this.photo.tableData)
       } else {
         this.$message({
           type: "error",
@@ -1053,6 +1065,7 @@ export default {
         });
       }
     },
+
     submitUpload() {
       this.formData.append("id", this.problemRow.id);
       this.formData.append("jobOrderId", this.addProblemRow.jobOrderId);
@@ -1075,6 +1088,8 @@ export default {
     addPhotoPanel(row) {
       this.toAddPhotoPanelFlag = true;
       this.problemRow = row;
+      this.photo.tableData = [];
+      this.formData = new FormData();
     },
     //完成督查
     completeInspection(row) {

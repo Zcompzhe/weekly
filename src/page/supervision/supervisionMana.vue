@@ -6,7 +6,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="查岗队伍数" prop="inspectTeamCount" placeholder="查岗队伍数">
-                <el-input :disabled="hasInspectionData" @change="teamChanged" v-model="inspectionForm.inspectTeamCount" clearable :rows="1" placeholder="请选择" style="min-width:300px"></el-input>
+                <el-input :disabled="hasInspectionData" v-model.number="inspectionForm.inspectTeamCount" clearable :rows="1" placeholder="请选择" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -48,8 +48,8 @@
         <el-table-column width="210" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
         <el-table-column width="80" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
         <el-table-column width="80" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-        <el-table-column width="250" prop="workCurrentProgress" label="当前总体施工进度" align="center"></el-table-column>
-        <el-table-column width="250" prop="constructContentNextWeek" label="主要施工内容" align="center"></el-table-column>
+        <el-table-column width="250" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
+        <el-table-column width="250" prop="constructContentNextWeek" label="主要施工内容" align="left"></el-table-column>
         <el-table-column width="350" prop="threePlusRiskWorkContent" label="三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
         <el-table-column width="210" prop="adminName" label="建设管理单位" align="center"></el-table-column>
         <el-table-column width="210" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
@@ -342,50 +342,57 @@
 
       <el-table :data="arrange.tableData" max-height="400" border>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="300" prop="projectName" label="督查日期" align="center"></el-table-column>
+        <el-table-column width="300" prop="inspectDate" label="督查日期" align="center"></el-table-column>
         <el-table-column width="300" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="200" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
         <el-table-column width="100" prop="inspectionPlanState" label="督查情况" align="center"></el-table-column>
         <el-table-column width="350" prop="teamNumber" label="督查队伍" align="center">
           <template slot-scope="scope">
-            <el-select v-model="scope.row.teamNumber" placeholder="请选择" style="min-width:300px">
+            <el-select v-model="scope.row.teamNumber" placeholder="请选择" style="min-width:300px" disabled v-if="scope.row.inspectionPlanState==='已督查'">
+              <el-option v-for="item in arrange.teamNumberOption" :key="item.value" :label="item.name" :value="item.value"></el-option>
+            </el-select>
+            <el-select v-model="scope.row.teamNumber" placeholder="请选择" style="min-width:300px" v-else>
               <el-option v-for="item in arrange.teamNumberOption" :key="item.value" :label="item.name" :value="item.value"></el-option>
             </el-select>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button type="text" @click="cancelArrange(scope.row)">取消安排</el-button>
+            <el-button type="text" disabled @click="cancelArrange(scope.row)" v-if="scope.row.inspectionPlanState==='已督查'">取消安排</el-button>
+            <el-button type="text" @click="cancelArrange(scope.row)" v-else>取消安排</el-button>
+
           </template>
         </el-table-column>
       </el-table>
       <br><br><br>
-      <div v-for="item in inspectionForm.inspectTeamCount" :key="item">
-        <el-row :gutter="20">
-          <el-col :span="20">
-            <div class="bar">
-              <div id="title">
-                <span style="font-size:18px">安监队{{item}}本周督查项目</span>
+      <div v-for="item in teamNum" :key="item">
+        <div>
+          <el-row :gutter="20">
+            <el-col :span="20">
+              <div class="bar">
+                <div id="title">
+                  <span style="font-size:18px">安监队{{item}}本周督查项目</span>
+                </div>
               </div>
-            </div>
-          </el-col>
-        </el-row>
-        <br><br>
-        <el-table :data="inspectionTable.tableData[item-1]" max-height="400" border>
-          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-          <el-table-column width="300" prop="projectName" label="督查队伍" align="center"></el-table-column>
-          <el-table-column width="300" prop="projectName" label="督查日期" align="center"></el-table-column>
-          <el-table-column width="200" prop="weeklyTime" label="项目名称" align="center"></el-table-column>
-          <el-table-column width="100" prop="inspectionPlanState" label="周报日期" align="center"></el-table-column>
-          <el-table-column width="350" prop="threePlusRiskWorkContent" label="三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
-          <el-table-column width="100" prop="inspectionPlanState" label="详细地址" align="center"></el-table-column>
-          <el-table-column width="100" prop="inspectionPlanState" label="督查情况" align="center"></el-table-column>
-          <el-table-column label="操作" align="center">
-            <template slot-scope="scope">
-              <el-button type="text">一键导航</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+            </el-col>
+          </el-row>
+          <br><br>
+          <el-table :data="inspectionTable.tableData[item-1]" max-height="400" border>
+            <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+            <el-table-column width="300" prop="teamNumber" label="督查队伍" align="center"></el-table-column>
+            <el-table-column width="300" prop="inspectDate" label="督查日期" align="center"></el-table-column>
+            <el-table-column width="200" prop="projectName" label="项目名称" align="center"></el-table-column>
+            <el-table-column width="100" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
+            <el-table-column width="350" prop="threePlusRiskWorkContent" label="三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
+            <el-table-column width="100" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
+            <el-table-column width="100" prop="inspectionPlanState" label="督查情况" align="center"></el-table-column>
+            <!-- <el-table-column label="操作" align="center">
+              <template slot-scope="scope">
+                <el-button type="text">一键导航</el-button>
+              </template>
+            </el-table-column> -->
+          </el-table>
+        </div>
       </div>
     </el-card>
     <br />
@@ -424,6 +431,14 @@ export default {
         }
       },
       inspectionFormRule: {
+        inspectTeamCount: [
+          {
+            required: true,
+            message: "请输入大于0的数字！",
+            trigger: "change"
+          },
+          { type: "number", message: "请输入大于0的数字！" }
+        ],
       },
       //周报详情
       detailPanelFlag: false,
@@ -462,6 +477,7 @@ export default {
         this.hasInspectionData = res.hasInspectionData;
         this.inspectionForm.inspectTeamCount = res.inspectTeamCount;
         this.teamChanged();
+
         if (this.inspectionForm.inspectTeamCount > 0 && this.inspectionForm.inspectTeamCount) {
           this.searchWeekInspect();
           this.inspectionByCondition();
@@ -472,7 +488,11 @@ export default {
   methods: {
     //给督察队分配任务
     setInspectTeam() {
-      addApi.setInspectTeam(this.arrange.tableData).then(response => {
+      let list =[];
+      this.arrange.tableData.forEach(ele=>{
+        if(ele.inspectionPlanState!="已督查")  list.push(ele)
+      })
+      addApi.setInspectTeam(list).then(response => {
         this.inspectionByCondition();
       })
     },
@@ -499,6 +519,7 @@ export default {
     },
     //安监队设置
     teamChanged() {
+      this.teamNum = this.inspectionForm.inspectTeamCount;
       if (this.inspectionForm.inspectTeamCount > 0) {
         this.arrange.teamNumberOption = [];
         for (let i = 1; i <= parseInt(this.inspectionForm.inspectTeamCount); i++) {
@@ -520,24 +541,29 @@ export default {
         });
         return;
       }
-      //获取初始督查周报
-      let list = {
-        inspectTeamCount: this.inspectionForm.inspectTeamCount,
-        numberOfPage: this.pagination.pageSize,
-        orderByDynamicRisk: this.inspectionForm.orderByDynamicRisk,
-        pageNumber: pageNum - 1
-      };
-      searchApi.getProjectWeeklyInspectionPageShowRespWithOrder(list).then(response => {
-        this.weeklyInfo.tableData = response.returnList[0];
-        this.pagination.total = response.totalNumber;
-        this.weeklyInfo.tableData.forEach(element => {
-          if (element.hasInspectThisMonth) element.hasInspectThisMonthStr = "是";
-          else if (element.hasInspectThisMonth === false) element.hasInspectThisMonthStr = "否";
+      this.$refs["inspectionForm"].validate(valid => {
+        if (valid) {
+          let list = {
+            inspectTeamCount: this.inspectionForm.inspectTeamCount,
+            numberOfPage: this.pagination.pageSize,
+            orderByDynamicRisk: this.inspectionForm.orderByDynamicRisk,
+            pageNumber: pageNum - 1
+          };
+          searchApi.getProjectWeeklyInspectionPageShowRespWithOrder(list).then(response => {
+            this.weeklyInfo.tableData = response.returnList[0];
+            this.pagination.total = response.totalNumber;
+            this.teamChanged();
+            this.weeklyInfo.tableData.forEach(element => {
+              if (element.hasInspectThisMonth) element.hasInspectThisMonthStr = "是";
+              else if (element.hasInspectThisMonth === false) element.hasInspectThisMonthStr = "否";
 
-          if (element.hasInspectThisWeek) element.hasInspectThisWeekStr = "是";
-          else if (element.hasInspectThisWeek === false) element.hasInspectThisWeekStr = "否";
-        })
-      })
+              if (element.hasInspectThisWeek) element.hasInspectThisWeekStr = "是";
+              else if (element.hasInspectThisWeek === false) element.hasInspectThisWeekStr = "否";
+
+            })
+          })
+        }
+      });
     },
     //各个安监队督查情况
     inspectionByCondition() {
