@@ -63,7 +63,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="施工单位" prop="constructDeptId" placeholder="周报开始日期">
-                <el-select disabled v-model="updateFormTwo.constructDeptId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="updateFormTwo.constructDeptId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormTwo.options.constructDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
