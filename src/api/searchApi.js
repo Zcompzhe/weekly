@@ -70,5 +70,43 @@ export const getInspectPhotoResourceByContentId = list => {
   );
 };
 
+//获取天气值
+export const getWeeklyWeatherDynamicCoefficient = id => {
+  return request.get(
+    `/externalRiskManagement/getWeeklyWeatherDynamicCoefficient`,
+    {
+      params: {
+        weeklyId: id
+      }
+    }
+  );
+};
 
+//计算风险
+export const calculateExternalRisk = (data) => {
+  return request.post(`/externalRiskManagement/calculateExternalRisk`,
+      data
+  )
+}
+
+//计算风险
+export const getWeeklyAccuracyShowRespByCondition = (data) => {
+  return request.post(`/weeklyAccuracyManagement/getWeeklyAccuracyShowRespByCondition`,
+      data
+  )
+}
+
+//根据条件搜索日工作内容检验数据
+export const getWeeklyDayWorkCheckShowByCondition = (data) => {
+  return request.post(`/weeklyAccuracyManagement/getWeeklyDayWorkCheckShowByCondition`,
+      data
+  )
+}
+
+//根据条件搜索督查问题责任人设置展示信息
+export const getProblemResponsibleSetShowRespByCondition = (data) => {
+  return request.post(`/assessmentManagement/getProblemResponsibleSetShowRespByCondition`,
+      data
+  )
+}
 

@@ -66,20 +66,12 @@
 </style>
 <template>
   <div class="console-sidebar">
-    <el-menu
-      :unique-opened="true"
-      :router="true"
-      :default-active="defaultActive"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-      class="sidebar-content"
-    >
+    <el-menu :unique-opened="true" :router="true" :default-active="defaultActive" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" class="sidebar-content">
       <div class="sidebar-fold">版本1.0.0</div>
       <el-menu-item index="/quick">
         <i class="el-icon-message"></i>快速入门
       </el-menu-item>
-            <el-submenu index="project">
+      <el-submenu index="project">
         <template slot="title">
           <i class="el-icon-message"></i>
           项目信息管理
@@ -121,11 +113,11 @@
         <el-menu-item index="/back/projectMana">
           <i class="el-icon-document"></i>项目信息管理
         </el-menu-item>
-        
+
         <el-menu-item index="/back/adminMana">
           <i class="el-icon-document"></i>建设管理单位管理
         </el-menu-item>
-        
+
         <el-menu-item index="/back/supervisionMana">
           <i class="el-icon-document"></i>监理单位管理
         </el-menu-item>
@@ -144,14 +136,20 @@
         <el-menu-item index="/risk/externalRiskMana">
           <i class="el-icon-document"></i>外部风险管理
         </el-menu-item>
-        <el-menu-item index="/risk/dynamicRisk">
-          <i class="el-icon-document"></i>计算动态风险
-        </el-menu-item>
-
       </el-submenu>
 
-
-
+      <el-submenu index="approve">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          周报信息核准
+        </template>
+        <el-menu-item index="/weeklyCheck/weeklyApproved">
+          <i class="el-icon-document"></i>周报信息准确度管理
+        </el-menu-item>
+        <el-menu-item index="/weeklyCheck/dayWorkCheck">
+          <i class="el-icon-document"></i>当日作业进度核准
+        </el-menu-item>
+      </el-submenu>
 
       <el-submenu index="supervision">
         <template slot="title">
@@ -169,10 +167,23 @@
           <i class="el-icon-document"></i>督查方案推荐
         </el-menu-item>
 
-
       </el-submenu>
-      
-、
+
+      <el-submenu index="safetyResponsibility">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          问题责任量化考核
+        </template>
+
+        <el-menu-item index="/safetyResponsibility/personCharge">
+          <i class="el-icon-document"></i>问题责任人设置
+        </el-menu-item>
+        <el-menu-item index="/safetyResponsibility/quantitative">
+          <i class="el-icon-document"></i>量化考核排名
+        </el-menu-item>
+      </el-submenu>
+
+      、
     </el-menu>
   </div>
 </template>
@@ -180,7 +191,7 @@
 export default {
   components: {},
   computed: {
-    defaultActive: function() {
+    defaultActive: function () {
       const that = this;
       console.log(that);
       console.log(

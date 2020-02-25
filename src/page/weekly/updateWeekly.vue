@@ -62,8 +62,10 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="施工单位" prop="constructDept" placeholder="周报开始日期">
-                <el-input v-model="updateFormTwo.constructDept" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+              <el-form-item label="施工单位" prop="constructDeptId" placeholder="周报开始日期">
+                <el-select disabled v-model="updateFormTwo.constructDeptId" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormTwo.options.constructDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
               </el-form-item>
             </div>
           </el-col>
@@ -395,7 +397,7 @@ export default {
         projectIdName: "",
         adminId: "",
         supervisionId: "",
-        constructDept: "",
+        constructDeptId: "",
         districtId: "",
         detailedAddress: "",
         latitude: "",
@@ -411,6 +413,7 @@ export default {
           idOptions: {},
           adminIdOptions: {},
           supervisionIdOptions: {},
+          constructDeptIdOptions: {},
           districtIdOptions: {},
           adminDeptOptions: {}
         }
@@ -425,7 +428,7 @@ export default {
         adminId: [
           { required: true, message: "请选择建设管理单位", trigger: "change" }
         ],
-        constructDept: [
+        constructDeptId: [
           { required: true, message: "请输入施工单位", trigger: "change" }
         ],
         detailedAddress: [
@@ -552,7 +555,7 @@ export default {
       this.updateFormTwo.name = res.projectWeeklyShowResp.projectName;
       this.updateFormTwo.adminId = res.projectWeeklyShowResp.adminId;
       this.updateFormTwo.supervisionId = res.projectWeeklyShowResp.supervisionId;
-      this.updateFormTwo.constructDept = res.projectWeeklyShowResp.constructDept;
+      this.updateFormTwo.constructDeptId = res.projectWeeklyShowResp.constructDeptId;
       this.updateFormTwo.districtId = res.projectWeeklyShowResp.districtId;
       this.updateFormTwo.detailedAddress = res.projectWeeklyShowResp.detailedAddress;
       this.updateFormTwo.longitude = res.projectWeeklyShowResp.longitude;
@@ -672,7 +675,7 @@ export default {
       this.projectUpdateFlag = false;
       if (this.updateFormTwo.adminId != data.adminId) this.projectUpdateFlag = true;
       if (this.updateFormTwo.supervisionId != data.supervisionId) this.projectUpdateFlag = true;
-      if (this.updateFormTwo.constructDept != data.constructDept) this.projectUpdateFlag = true;
+      if (this.updateFormTwo.constructDeptId != data.constructDeptId) this.projectUpdateFlag = true;
       if (this.updateFormTwo.districtId != data.districtId) this.projectUpdateFlag = true;
       if (this.updateFormTwo.detailedAddress != data.detailedAddress)
         this.projectUpdateFlag = true;
@@ -727,7 +730,7 @@ export default {
       if (this.updateFormTwo.id === "") {
         this.updateFormTwo.adminId = "";
         this.updateFormTwo.supervisionId = "";
-        this.updateFormTwo.constructDept = "";
+        this.updateFormTwo.constructDeptId = "";
         this.updateFormTwo.districtId = "";
         this.updateFormTwo.detailedAddress = "";
         this.updateFormTwo.latitude = "";
@@ -755,7 +758,7 @@ export default {
             this.beforeProjectInfo = data;
             this.updateFormTwo.adminId = data.adminId;
             this.updateFormTwo.supervisionId = data.supervisionId;
-            this.updateFormTwo.constructDept = data.constructDept;
+            this.updateFormTwo.constructDeptId = data.constructDeptId;
             this.updateFormTwo.districtId = data.districtId;
             this.updateFormTwo.detailedAddress = data.detailedAddress;
             this.updateFormTwo.latitude = data.latitude;
@@ -1017,7 +1020,7 @@ export default {
             name: this.updateFormTwo.name,
             adminId: this.updateFormTwo.adminId,
             supervisionId: this.updateFormTwo.supervisionId,
-            constructDept: this.updateFormTwo.constructDept,
+            constructDeptId: this.updateFormTwo.constructDeptId,
             districtId: this.updateFormTwo.districtId,
             detailedAddress: this.updateFormTwo.detailedAddress,
             latitude: this.updateFormTwo.latitude,
@@ -1044,7 +1047,7 @@ export default {
           adminDept: this.updateFormTwo.adminDept,
           adminId: this.updateFormTwo.adminId,
           chiefInspectorId: this.updateFormThree.chiefInspectorId,
-          constructDept: this.updateFormTwo.constructDept,
+          constructDeptId: this.updateFormTwo.constructDeptId,
           detailedAddress: this.updateFormTwo.detailedAddress,
           districtId: this.updateFormTwo.districtId,
           hasThreePlusRiskWork: this.updateFormFour.hasThreePlusRiskWork,

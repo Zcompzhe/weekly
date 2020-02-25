@@ -39,8 +39,10 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="施工单位" prop="constructDept" placeholder="请输入施工单位">
-                <el-input v-model="projectForm.constructDept" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+              <el-form-item label="施工单位" prop="constructDeptId" placeholder="请输入施工单位">
+                <el-select v-model="projectForm.constructDeptId" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.constructDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
               </el-form-item>
             </div>
           </el-col>
@@ -256,7 +258,7 @@ export default {
         name: "",
         adminId: "",
         supervisionId: "",
-        constructDept: "",
+        constructDeptId: "",
         districtId: "",
         detailedAddress: "",
         longitude: "",
@@ -273,6 +275,7 @@ export default {
           supervisionIdOptions: {},
           districtIdOptions: {},
           adminDeptOptions: {},
+          constructDeptIdOptions: {},
           runningNowOptions: [{
             value: true,
             name: "是"
@@ -289,7 +292,7 @@ export default {
         adminId: [
           { required: true, message: "请选择建设管理单位", trigger: "change" }
         ],
-        constructDept: [
+        constructDeptId: [
           { required: true, message: "请输入施工单位", trigger: "change" }
         ],
         detailedAddress: [
@@ -382,6 +385,10 @@ export default {
     getApi.getAllStaffName().then(response => {
       this.personForm.options.personOptions = response;
     });
+    //获取施工单位
+    getApi.getAllConstructDeptName().then(response => {
+      this.projectForm.options.constructDeptIdOptions = response;
+    });
 
     //其他页面跳转的数据
     let data = this.$route.params;
@@ -392,7 +399,7 @@ export default {
       this.projectForm.name = response.name;
       this.projectForm.adminId = response.adminId;
       this.projectForm.supervisionId = response.supervisionId;
-      this.projectForm.constructDept = response.constructDept;
+      this.projectForm.constructDeptId = response.constructDeptId;
       this.projectForm.districtId = response.districtId;
       this.projectForm.detailedAddress = response.detailedAddress;
       this.projectForm.longitude = response.longitude;
@@ -435,7 +442,7 @@ export default {
           adminDept: this.projectForm.adminDept,
           adminId: this.projectForm.adminId,
           chiefInspectorId: this.personForm.chiefInspectorId,
-          constructDept: this.projectForm.constructDept,
+          constructDeptId: this.projectForm.constructDeptId,
           detailedAddress: this.projectForm.detailedAddress,
           districtId: this.projectForm.districtId,
           latitude: this.projectForm.latitude,

@@ -16,8 +16,12 @@ const addWeekly = r => require.ensure([], () => r(require('../page/weekly/addWee
 const updateWeekly = r => require.ensure([], () => r(require('../page/weekly/updateWeekly')), 'updateWeekly');
 
 //周报数据管理
-const importWeekly = r => require.ensure([], () => r(require('../page/weekly/importWeeklyData')), 'importWeeklyData');
-const weeklyApproved = r => require.ensure([], () => r(require('../page/weekly/weeklyApproved')), 'weeklyApproved');
+const weeklyApproved = r => require.ensure([], () => r(require('../page/weeklyCheck/weeklyApproved')), 'weeklyApproved');
+const dayWorkCheck = r => require.ensure([], () => r(require('../page/weeklyCheck/dayWorkCheck')), 'dayWorkCheck');
+
+//周报数据管理
+const personCharge = r => require.ensure([], () => r(require('../page/safetyResponsibility/personCharge')), 'personCharge');
+const quantitative = r => require.ensure([], () => r(require('../page/safetyResponsibility/quantitative')), 'quantitative');
 
 
 //基本信息管理
@@ -70,6 +74,25 @@ export default [{
     }
   },
 
+  { // 量化考核
+    path: '/safetyResponsibility/quantitative',
+    name: 'quantitative',
+    component: quantitative,
+    meta: {
+      activePath: '/safetyResponsibility/quantitative',
+      bcrumd: [ '量化考核排名'],
+    }
+  },
+  { // 量化考核
+    path: '/safetyResponsibility/personCharge',
+    name: 'personCharge',
+    component: personCharge,
+    meta: {
+      activePath: '/safetyResponsibility/personCharge',
+      bcrumd: [ '问题责任人设置'],
+    }
+  },
+
 
   // { // 添加周报信息
   //   path: '/weekly/addWeeklyData',
@@ -100,26 +123,26 @@ export default [{
     }
   },
 
-    { // 添加周报信息
-    path: '/weekly/weeklyApproved',
+  { // 添加周报信息
+    path: '/weeklyCheck/weeklyApproved',
     name: 'weeklyApproved',
     component: weeklyApproved,
     meta: {
-      activePath: '/weekly/weeklyApproved',
+      activePath: '/weeklyCheck/weeklyApproved',
       bcrumd: ['周报管理', '周报信息核准'],
     }
   },
-
-
-  { // 导入周报数据
-    path: '/weekly/importWeeklyData',
-    name: 'importWeekly',
-    component: importWeekly,
+  { // 添加周报信息
+    path: '/weeklyCheck/dayWorkCheck',
+    name: 'dayWorkCheck',
+    component: dayWorkCheck,
     meta: {
-      activePath: '/weekly/importWeeklyData',
-      bcrumd: ['周报管理', '导入周报'],
+      activePath: '/weeklyCheck/dayWorkCheck',
+      bcrumd: ['当日作业进度核准'],
     }
   },
+
+
 
   { // 导入周报数据
     path: '/back/projectMana',

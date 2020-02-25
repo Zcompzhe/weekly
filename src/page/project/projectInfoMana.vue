@@ -1,36 +1,6 @@
 <template>
   <div class="body">
     <el-card class="box-card" style="height:100px">
-      <!-- <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
-        <el-col :span="8">
-          <div class="bar">
-            <div class="title">项目名称</div>
-            <el-input
-              v-model="projectName"
-              clearable
-              :rows="1"
-              placeholder="请选择"
-              style="min-width:200px"
-            ></el-input>
-          </div>
-        </el-col>
-        <el-col :span="8">
-          <div class="bar">
-            <div class="title">施工单位</div>
-            <el-select v-model="constructDept" clearable placeholder="请选择" style="min-width:200px">
-              <el-option
-                v-for="item in constructDeptOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <el-button type="primary" style="margin-right: 20px" @click="search">搜索</el-button>
-        </el-col>
-      </el-row> -->
       <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
         <el-col :span="8">
           <div class="bar">
@@ -69,18 +39,13 @@
             <el-button type="primary" style="margin-right: 20px" @click="addProject">添加项目</el-button>
           </div>
         </el-col>
-        <!-- <el-col :offset="1" :span="2">
-          <div class="bar">
-            <el-button type="primary" style="margin-right: 20px" @click="deleteSelectProject">删除项目</el-button>
-          </div>
-        </el-col> -->
       </el-row>
 
       <el-table :data="projectInfo.tableData" max-height="800" border style="width: 100%; margin-top: 20px">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="name" label="项目名称" align="center"></el-table-column>
         <el-table-column width="210" prop="adminName" label="建设管理单位" align="center"></el-table-column>
-        <el-table-column width="210" prop="constructDept" label="施工单位" align="center"></el-table-column>
+        <el-table-column width="210" prop="constructDeptName" label="施工单位" align="center"></el-table-column>
         <el-table-column width="210" prop="adminDept" label="项管部门" align="center"></el-table-column>
         <el-table-column width="210" prop="districtName" label="所在区域" align="center"></el-table-column>
         <el-table-column width="210" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
@@ -147,7 +112,7 @@
           <el-col :span="8">
             <div class="bar">
               <div class="title">施工单位</div>
-              <el-input disabled v-model="projectDetail.constructDept" disabled style="min-width:200px"></el-input>
+              <el-input disabled v-model="projectDetail.constructDeptName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>

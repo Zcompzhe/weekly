@@ -131,4 +131,7 @@ export const getAllResponsibleDeptEnum = () => {
   return request.get(`/baseInfoManagement/getAllResponsibleDeptEnum`);
 };
 
-
+//获取施工单位
+export const getAllConstructDeptName = () => {
+  return request.get(`/baseInfoManagement/getAllConstructDeptName`);
+};

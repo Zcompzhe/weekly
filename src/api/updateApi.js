@@ -30,6 +30,13 @@ export const updateInspectionJobOrderInfo = (data) => {
     )
 }
 
+//更新日工作内容检验数据
+export const updateWeeklyDayWorkCheck = (data) => {
+    return request.post(`/weeklyAccuracyManagement/updateWeeklyDayWorkCheck`,
+        data
+    )
+}
+
 
 
 

@@ -62,8 +62,10 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="施工单位" prop="constructDept" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.constructDept" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+              <el-form-item label="施工单位" prop="constructDeptId" placeholder="周报开始日期">
+                <el-select v-model="addFormTwo.constructDeptId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in addFormTwo.options.constructDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
               </el-form-item>
             </div>
           </el-col>
@@ -83,7 +85,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="详细地址" prop="detailedAddress" placeholder="当前月份">
-                <el-input v-model="addFormTwo.detailedAddress" clearable  :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.detailedAddress" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -387,7 +389,7 @@ export default {
         projectIdName: "",
         adminId: "",
         supervisionId: "",
-        constructDept: "",
+        constructDeptId: "",
         districtId: "",
         detailedAddress: "",
         latitude: "",
@@ -403,6 +405,7 @@ export default {
           idOptions: {},
           adminIdOptions: {},
           supervisionIdOptions: {},
+          constructDeptIdOptions:{},
           districtIdOptions: {},
           adminDeptOptions: {}
         }
@@ -417,7 +420,7 @@ export default {
         adminId: [
           { required: true, message: "请选择建设管理单位", trigger: "change" }
         ],
-        constructDept: [
+        constructDeptId: [
           { required: true, message: "请输入施工单位", trigger: "change" }
         ],
         detailedAddress: [
@@ -561,6 +564,11 @@ export default {
     getApi.getAllProjectActualStateEnum().then(response => {
       this.addFormFive.options.actualStateOptions = response;
     });
+    //获取施工单位
+    getApi.getAllConstructDeptName().then(response => {
+      this.addFormTwo.options.constructDeptIdOptions = response;
+    });
+
     //获取所有人员信息
     getApi.getAllStaffName().then(response => {
       this.addFormThree.options.projectManagerIdOptions = response;
@@ -582,7 +590,7 @@ export default {
       this.projectUpdateFlag = false;
       if (this.addFormTwo.adminId != data.adminId) this.projectUpdateFlag = true;
       if (this.addFormTwo.supervisionId != data.supervisionId) this.projectUpdateFlag = true;
-      if (this.addFormTwo.constructDept != data.constructDept) this.projectUpdateFlag = true;
+      if (this.addFormTwo.constructDeptId != data.constructDeptId) this.projectUpdateFlag = true;
       if (this.addFormTwo.districtId != data.districtId) this.projectUpdateFlag = true;
       if (this.addFormTwo.detailedAddress != data.detailedAddress)
         this.projectUpdateFlag = true;
@@ -637,7 +645,7 @@ export default {
       if (this.addFormTwo.id === "") {
         this.addFormTwo.adminId = "";
         this.addFormTwo.supervisionId = "";
-        this.addFormTwo.constructDept = "";
+        this.addFormTwo.constructDeptId = "";
         this.addFormTwo.districtId = "";
         this.addFormTwo.detailedAddress = "";
         this.addFormTwo.latitude = "";
@@ -665,7 +673,7 @@ export default {
             this.beforeProjectInfo = data;
             this.addFormTwo.adminId = data.adminId;
             this.addFormTwo.supervisionId = data.supervisionId;
-            this.addFormTwo.constructDept = data.constructDept;
+            this.addFormTwo.constructDeptId = data.constructDeptId;
             this.addFormTwo.districtId = data.districtId;
             this.addFormTwo.detailedAddress = data.detailedAddress;
             this.addFormTwo.latitude = data.latitude;
@@ -900,7 +908,7 @@ export default {
             name: this.addFormTwo.name,
             adminId: this.addFormTwo.adminId,
             supervisionId: this.addFormTwo.supervisionId,
-            constructDept: this.addFormTwo.constructDept,
+            constructDeptId: this.addFormTwo.constructDeptId,
             districtId: this.addFormTwo.districtId,
             detailedAddress: this.addFormTwo.detailedAddress,
             latitude: this.addFormTwo.latitude,
@@ -926,7 +934,7 @@ export default {
           adminDept: this.addFormTwo.adminDept,
           adminId: this.addFormTwo.adminId,
           chiefInspectorId: this.addFormThree.chiefInspectorId,
-          constructDept: this.addFormTwo.constructDept,
+          constructDeptId: this.addFormTwo.constructDeptId,
           detailedAddress: this.addFormTwo.detailedAddress,
           districtId: this.addFormTwo.districtId,
           hasThreePlusRiskWork: this.addFormFour.hasThreePlusRiskWork,

@@ -2,7 +2,7 @@
   <div class="body">
     <el-card class="box-card">
       <el-form :model="searchTable" label-position="left" ref="searchTable" :rules="searchTableRule" label-width="140px" class="demo-ruleForm">
-        <el-row :gutter="20">
+        <el-row :gutter="20" style="margin-top:20px;margin-bottom:-10px">
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="周报日期" prop="weeklyStartTime" placeholder="周报开始日期">
@@ -10,125 +10,56 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="6" style="margin-left:-12px">
+          <el-col :span="6">
             <div class="bar">
               <el-form-item label="~" prop="weeklyEndTime" placeholder="周报开始日期" label-width="5px">
-                <el-date-picker disabled v-model="searchTable.weeklyEndTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker>
+                <el-date-picker v-model="searchTable.weeklyEndTime" disabled type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="8" style="margin-left:-32px">
+          <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
-                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="2" style="margin-left:80px;margin-bottom:20px">
             <div class="bar">
-              <el-form-item label="建设管理单位" prop="adminId" placeholder="项目名称">
-                <el-select v-model="searchTable.adminId" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in searchTable.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <div class="bar">
-              <el-form-item label="项管部门" prop="adminDept" placeholder="项目名称">
-                <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:400px;margin-left:0px">
-                  <el-option v-for="item in searchTable.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="下周是否有作业" prop="hasWorkNextWeek" placeholder="项目名称">
-                <el-select v-model="searchTable.hasWorkNextWeek" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in searchTable.options.hasWorkNextWeekOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="存在三级及以上风险" prop="hasThreePlusRiskWork" placeholder="项目名称">
-                <el-select v-model="searchTable.hasThreePlusRiskWork" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in searchTable.options.hasThreePlusRiskWorkOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20" style="margin-bottom:10px">
-          <el-col :span="8">
-            <div class="bar">
-              <el-button type="primary" style="margin-right: 20px" @click="searchWeekly(1)">搜索</el-button>
+              <el-button type="primary" @click="searchWeekly(1)">搜索</el-button>
             </div>
           </el-col>
         </el-row>
       </el-form>
     </el-card>
-    <el-card class="box-card">
-      <el-row :gutter="20">
-        <el-col :span="20">
-          <div class="bar">
-            <div id="title">
-              <p id="tableTitle" style="min-width:1000px;font-size:18px;margin-left:380px">{{ tableTitle }}</p>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20" style="margin-top: 30px; margin-bottom: 5px;">
-        <el-col :span="2">
-          <div class="bar">
-            <el-button type="primary" style="margin-right: 20px" @click="addWeeklyPage">添加周报</el-button>
-          </div>
-        </el-col>
-        <!-- <el-col :offset="1" :span="2">
-          <div class="bar">
-            <el-button type="primary" style="margin-right: 20px">删除周报</el-button>
-          </div>
-        </el-col> -->
-        <el-col :offset="1" :span="2">
-          <div class="bar">
-            <el-button type="primary" style="margin-right: 20px">导出周报</el-button>
-          </div>
-        </el-col>
-      </el-row>
 
-      <el-table :data="weeklyInfo.tableData" max-height="400" border @selection-change="weeklySelect" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
+    <el-card class="box-card">
+      <el-table :data="tableData" max-height="400" border @selection-change="weeklyChange" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="210" prop="projectName" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="210" prop="adminName" label="建设管理单位" align="center"></el-table-column>
-        <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
-        <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
+        <el-table-column width="300" prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="200" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
+        <el-table-column width="250" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
         <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
-        <el-table-column width="210" prop="adminDept" label="项管部门" align="center"></el-table-column>
-        <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
-        <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
-        <el-table-column width="210" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-        <el-table-column width="210" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
-        <el-table-column width="250" label="操作" align="center" fixed="right">
+        <el-table-column width="100" prop="totalWorkDayCount" label="总作业数" align="center"></el-table-column>
+        <el-table-column width="150" prop="hasCheckDayCount" label="已核对作业数" align="center"></el-table-column>
+        <el-table-column width="400" prop="accuracyValue" label="周报准确度" align="center">
+          <template slot-scope="scope">
+            <el-progress :text-inside="true" :stroke-width="24" :percentage="scope.row.accuracyValue*100" :status="getColor(scope.row.accuracyValue*100)"></el-progress>
+          </template>
+        </el-table-column>
+        <el-table-column width="100" label="操作" align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="detailWeekly(scope.row)">查看详情</el-button>
-            <el-button type="text" @click="updateWeekly(scope.row)">修改信息</el-button>
-            <el-button type="text" @click="deleteWeekly(scope.row)">删除信息</el-button>
           </template>
         </el-table-column>
       </el-table>
-
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="pagination.currentPage" :page-sizes="pagination.pageSizes" :page-size="pagination.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination.total"></el-pagination>
       </div>
-
-      <el-dialog title="详细信息" :visible.sync="detailPanelFlag" width="1400px" :modal="false">
+      <el-dialog title="详细信息" :visible.sync="detailPanelFlag" width="1500px" :modal="false">
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
@@ -151,7 +82,7 @@
           <el-col :span="8">
             <div class="bar">
               <div class="title">施工单位</div>
-              <el-input disabled v-model="weeklyDetail.constructDeptName" disabled style="min-width:200px"></el-input>
+              <el-input disabled v-model="weeklyDetail.constructDept" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -383,11 +314,13 @@
         </el-row>
       </el-dialog>
     </el-card>
+
   </div>
 </template>
 
 <script>
-import { POINT_CONVERSION_COMPRESSED } from "constants";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 import * as api from "@/api/date.js";
 import * as getApi from "@/api/getApi.js";
 import * as addApi from "@/api/addApi.js";
@@ -400,42 +333,19 @@ export default {
       detailPanelFlag: false,
       weeklyDetail: {
       },
-      //表格数据控制
-      tableTitle: "",
-      weeklyInfo: {
-        tableData: [],
-        multiSelection: [],
-      },
-      //搜索条件数据
+      //表格数据
+      tableData: [],
+      multiSelection: [],
+      //搜索数据
       searchTable: {
+        projectId: "",
         weeklyStartTime: "",
         weeklyEndTime: "",
-        projectId: "",
         options: {
-          projectIdOptions: {},
-          adminIdOptions: {},
-          adminDeptOptions: {},
-          hasWorkNextWeekOptions: [{
-            value: true,
-            name: "是"
-          }, {
-            value: false,
-            name: "否"
-          }],
-          hasThreePlusRiskWorkOptions: [{
-            value: true,
-            name: "是"
-          }, {
-            value: false,
-            name: "否"
-          }],
+          projectIdOptions: [],
         }
       },
-      searchTableRule: {
-        weeklyStartTime: [
-          { required: true, message: "请选择周报开始时间", trigger: "change" }
-        ],
-      },
+      searchTableRule: {},
       //页码部分
       pagination: {
         currentPage: 1,
@@ -445,52 +355,35 @@ export default {
       },
     };
   },
-
   created: function () {
-    //空搜索获取信息
     let startDate = new Date();
     let endDate = api.getThisWeekStart(startDate);
     this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
     this.searchTable.weeklyEndTime = new Date(endDate);
 
-    this.tableTitle =
-      "国网上海建设咨询公司" +
-      new Date().getFullYear() +
-      "年在建工程周报(" +
-      api.changeDate(startDate) +
-      "~" +
-      endDate +
-      ")";
+    //获取项目列表
+    getApi.getAllProjectName().then(response => {
+      this.searchTable.options.projectIdOptions = response;
+    });
+    //空搜索
     let list = {
       numberOfPage: this.pagination.pageSize,
       pageNumber: 0,
       weeklyStartTime: api.changeDate(this.searchTable.weeklyStartTime)
     }
-    searchApi.getProjectWeeklyByCondition(list).then(response => {
-      this.weeklyInfo.tableData = response.returnList[0];
-      //转换下周是否有三级以上风险
-      this.weeklyInfo.tableData.forEach(element => {
-        if (element.hasThreePlusRiskWork) element.hasThreePlusRiskWorkStr = "是";
-        else element.hasThreePlusRiskWorkStr = "否";
-      })
+    searchApi.getWeeklyAccuracyShowRespByCondition(list).then(response => {
+      this.tableData = response.returnList[0];
       this.pagination.total = response.totalNumber;
-
     })
-    //获取项管部门
-    getApi.getAllProjectAdminDeptEnum().then(response => {
-      this.searchTable.options.adminDeptOptions = response;
-    });
-    //获取项目列表
-    getApi.getAllProjectName().then(response => {
-      this.searchTable.options.projectIdOptions = response;
-    });
-    //获取建设管理单位
-    getApi.getAllAdministrativeDeptName().then(response => {
-      this.searchTable.options.adminIdOptions = response;
-    });
-
   },
   methods: {
+    //获取不同颜色进度条
+    getColor(value) {
+      if (value === 100) return "success";
+      else if (value >= 75) return "success";
+      else if (value >= 50) return "warning";
+      else return "exception";
+    },
     //查看详情
     detailWeekly(row) {
       getApi.getProjectWeeklyDetailById(row.id).then(response => {
@@ -502,85 +395,34 @@ export default {
         this.detailPanelFlag = true;
       })
     },
-    //删除选中行的周报
-    deleteWeekly(row) {
-      this.$confirm("确认删除该条项目？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          deleteApi.deleteProjectWeeklyInfoById(row.id).then(response => {
-            if (response > 0) this.searchWeekly(this.pagination.currentPage)
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
+    //表格选中
+    weeklyChange(val) {
+      this.multiSelection = val;
     },
-    //搜索
-    searchWeekly(pageNum) {
-      this.$refs["searchTable"].validate(valid => {
-        if (valid) {
-          let list = {
-            numberOfPage: this.pagination.pageSize,
-            pageNumber: pageNum - 1,
-            adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
-            adminId: this.searchTable.adminId === "" ? undefined : this.searchTable.adminId,
-            hasThreePlusRiskWork: this.searchTable.hasThreePlusRiskWork === "" ? undefined : this.searchTable.hasThreePlusRiskWork,
-            hasWorkNextWeek: this.searchTable.hasWorkNextWeek === "" ? undefined : this.searchTable.hasWorkNextWeek,
-            projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
-            weeklyStartTime: this.searchTable.weeklyStartTime === "" ? undefined : api.changeDate(this.searchTable.weeklyStartTime)
-          }
-          searchApi.getProjectWeeklyByCondition(list).then(response => {
-            this.weeklyInfo.tableData = response.returnList[0];
-            //转换下周是否有三级以上风险
-            this.weeklyInfo.tableData.forEach(element => {
-              if (element.hasThreePlusRiskWork) element.hasThreePlusRiskWorkStr = "是";
-              else element.hasThreePlusRiskWorkStr = "否";
-            })
-            this.pagination.total = response.totalNumber;
-
-            //换算标题
-            let startDate = this.searchTable.weeklyStartTime;
-            let endDate = api.getThisWeekStart(startDate);
-
-            this.tableTitle =
-              "国网上海建设咨询公司" +
-              new Date().getFullYear() +
-              "年在建工程周报(" +
-              api.changeDate(startDate) +
-              "~" +
-              endDate +
-              ")";
-          })
-        }
-      });
-    },
-    //周报列表选中
-    weeklySelect(val) {
-      this.weeklyInfo.multiSelection = val;
-    },
-    //周报开始日期改变，自动获取月份，周数，周次
+    //周报开始日期改变
     weeklyStartTimeChanged() {
       if (this.searchTable.weeklyStartTime == null) {
         this.searchTable.weeklyStartTime = "";
         this.searchTable.weeklyEndTime = "";
-        this.searchTable.monthShowTime = "";
-        this.searchTable.monthStartTime = "";
         return;
       }
       this.searchTable.weeklyEndTime = api.getThisWeekStart(
         this.searchTable.weeklyStartTime
       );
-      this.searchTable.monthShowTime = api
-        .changeDate(this.searchTable.weeklyStartTime)
-        .substring(0, 7);
-      this.searchTable.monthStartTime =
-        api.changeDate(this.searchTable.weeklyStartTime).substring(0, 7) + "-01";
+    },
+    //搜索
+    searchWeekly(pageNum) {
+      let list = {
+        numberOfPage: this.pagination.pageSize,
+        pageNumber: pageNum - 1,
+        projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+        weeklyStartTime: this.searchTable.weeklyStartTime === "" ? undefined : api.changeDate(this.searchTable.weeklyStartTime)
+      }
+      searchApi.getWeeklyAccuracyShowRespByCondition(list).then(response => {
+        this.tableData = response.returnList[0];
+        this.pagination.total = response.totalNumber;
+
+      })
     },
     //页码操控部分
     handleSizeChange(val) {
@@ -591,23 +433,6 @@ export default {
       this.pagination.currentPage = val;
       this.searchWeekly(val);
     },
-    addWeeklyPage() {
-      this.$router.push({
-        name: "addWeekly",
-        params: {
-          backPath: "weeklyData",
-        }
-      })
-    },
-    updateWeekly(row) {
-      this.$router.push({
-        name: "updateWeekly",
-        params: {
-          backPath: "weeklyData",
-          id: row.id
-        }
-      })
-    }
   }
 };
 </script>

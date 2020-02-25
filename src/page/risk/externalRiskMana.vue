@@ -1,190 +1,60 @@
 <template>
   <div class="body">
     <el-card class="box-card">
-      <el-row :gutter="20">
-        <el-col :span="8">
-          <div class="bar">
-            <div class="title">项目名称</div>
-            <el-select v-model="projectId" clearable placeholder="请选择" style="min-width:200px">
-              <el-option
-                v-for="item in projectIdOptions"
-                :key="item.id"
-                :label="item.projectId"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </div>
-        </el-col>
-        <el-col :span="8">
-          <div class="bar">
-            <div class="title">施工单位</div>
-            <el-select
-              v-model="constructDeptId"
-              clearable
-              placeholder="请选择"
-              style="min-width:200px"
-            >
-              <el-option
-                v-for="item in constructDeptOptions"
-                :key="item.id"
-                :label="item.constructDeptId"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </div>
-        </el-col>
-        <el-col :span="8" style="margin-left:80px">
-          <div class="bar">
-            <el-button type="primary">搜索</el-button>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="8">
-          <div class="bar">
-            <div class="title">计划开始时间</div>
-            <el-date-picker
-              v-model="date1"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              style="min-width:400px;margin-left:20px"
-            ></el-date-picker>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="8">
-          <div class="bar">
-            <div class="title">计划竣工时间</div>
-            <el-date-picker
-              v-model="date2"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              style="min-width:400px;margin-left:20px"
-            ></el-date-picker>
-          </div>
-        </el-col>
-      </el-row>
+      <el-form :model="searchTable" label-position="left" ref="searchTable" :rules="searchTableRule" label-width="140px" class="demo-ruleForm">
+        <el-row :gutter="20" style="margin-top:20px;margin-bottom:-10px">
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="周报日期" prop="weeklyStartTime" placeholder="周报开始日期">
+                <el-date-picker v-model="searchTable.weeklyStartTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px" @change="weeklyStartTimeChanged"></el-date-picker>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="~" prop="weeklyEndTime" placeholder="周报开始日期" label-width="5px">
+                <el-date-picker v-model="searchTable.weeklyEndTime" disabled type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
+                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:300px">
+                  <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="2" style="margin-left:80px;margin-bottom:20px">
+            <div class="bar">
+              <el-button type="primary" @click="searchWeekly(1)">搜索</el-button>
+            </div>
+          </el-col>
+        </el-row>
+      </el-form>
     </el-card>
 
     <el-card class="box-card">
-      <el-table
-        :data="tableData"
-        max-height="400"
-        border
-        @selection-change="isChanged"
-        :stripe="true"
-        :highlight-current-row="true"
-        style="width: 100%; margin-top: 20px"
-        id="out-table"
-      >
+      <el-table :data="tableData" max-height="400" border @selection-change="weeklyChange" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
-        <el-table-column width="100" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="308" prop="projectId" label="项目名称" align="center"></el-table-column>
-        <!-- <el-table-column width="300" prop="adminId" label="建设管理单位" align="center"></el-table-column>
-        <el-table-column width="300" prop="supervisionId" label="监理单位" align="center"></el-table-column>-->
-        <el-table-column width="300" prop="constructDept" label="施工单位" align="center"></el-table-column>
-        <!-- <el-table-column
-          width="300"
-          prop="isConstructDeptEnterprise"
-          label="施工单位是否为系统内集体企业"
-          align="center"
-        ></el-table-column>-->
-        <!-- <el-table-column width="300" prop="projectLocation" label="项目地点" align="center"></el-table-column>
-        <el-table-column width="300" prop="detailedAddress" label="详细地址" align="center"></el-table-column>-->
-        <el-table-column width="250" prop="actualStartTime" label="实际开工时间" align="center"></el-table-column>
-        <el-table-column width="250" prop="planCompletionTime" label="计划竣工时间" align="center"></el-table-column>
-        <!-- <el-table-column width="300" prop="projectScale" label="项目规模" align="center"></el-table-column>
-        <el-table-column width="300" prop="currentProgress" label="当前总体施工进度" align="center"></el-table-column>
-        <el-table-column width="300" prop="currentWorkerNum" label="当前施工单位一线自有作业人员数" align="center"></el-table-column>
-        <el-table-column width="300" prop="currentSubcontractorNum" label="当前分包人员数" align="center"></el-table-column>
-        <el-table-column width="300" prop="hasWorkNextWeek" label="下周是否有作业" align="center"></el-table-column>
-        <el-table-column width="300" prop="workContentNextWeek" label="下周主要施工作业内容" align="center"></el-table-column>
-        <el-table-column
-          width="300"
-          prop="hasTowerErectionNextWeek"
-          label="下周是否有组塔作业"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          width="350"
-          prop="hasThirdLevelPlusWork"
-          label="下周的三级及以上风险作业安排、位置及内容"
-          align="center"
-        ></el-table-column>
-        <el-table-column width="300" prop="contactPerson" label="建设管理单位联系人" align="center"></el-table-column>
-        <el-table-column width="300" prop="isMajorProject" label="是否重点工程" align="center"></el-table-column>
-        <el-table-column
-          width="300"
-          prop="isSupervisedByProvincialCompany"
-          label="本周省公司已督导项目"
-          align="center"
-        ></el-table-column>
-        <el-table-column width="300" prop="note" label="备注" align="center"></el-table-column>
-        <el-table-column width="300" prop="actualState" label="实际状态" align="center"></el-table-column>
-        <el-table-column width="300" prop="controlledState" label="管控内状态" align="center"></el-table-column>
-        <el-table-column width="300" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-        <el-table-column width="300" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
-
-        <!-- 下面两个没有-->
-        <!-- <el-table-column width="300" prop="index" label="本月该项目是否安排督查" align="center"></el-table-column>
-        <el-table-column width="300" prop="index" label="下周作业是否安排督查" align="center"></el-table-column>-->
-
+        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+        <el-table-column width="300" prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="200" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
+        <el-table-column width="250" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
+        <el-table-column width="250" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
+        <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
+        <el-table-column width="100" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
+        <el-table-column width="100" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
         <el-table-column width="100" label="操作" align="center">
           <template slot-scope="scope">
-            <el-button type="text" @click>查看周报</el-button>
+            <el-button type="text" @click="calculateDynamicRisk(scope.row)">计算动态风险</el-button>
           </template>
         </el-table-column>
       </el-table>
-    </el-card>
-
-    <el-card class="box-card">
-      <el-table
-        :data="tableData1"
-        max-height="400"
-        border
-        @selection-change="isChanged1"
-        :stripe="true"
-        :highlight-current-row="true"
-        style="width: 100%; margin-top: 20px"
-        id="out-table"
-      >
-        <el-table-column type="selection" width="50" align="center"></el-table-column>
-        <el-table-column width="100" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="308" prop="projectId" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="300" prop="adminId" label="建设管理单位" align="center"></el-table-column>
-
-        <el-table-column width="300" prop="currentProgress" label="当前总体施工进度" align="center"></el-table-column>
-        <el-table-column width="300" prop="workContentNextWeek" label="下周主要施工作业内容" align="center"></el-table-column>
-        <el-table-column
-          width="350"
-          prop="hasThirdLevelPlusWork"
-          label="三级风险作业安排、位置及内容"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          width="350"
-          prop="hasThirdLevelPlusWork"
-          label="四级风险作业安排、位置及内容"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          width="350"
-          prop="hasThirdLevelPlusWork"
-          label="五级风险作业安排、位置及内容"
-          align="center"
-        ></el-table-column>
-        <el-table-column width="300" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-        <el-table-column width="100" label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button type="text" @click>计算动态风险</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <div class="block">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="pagination.currentPage" :page-sizes="pagination.pageSizes" :page-size="pagination.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination.total"></el-pagination>
+      </div>
     </el-card>
   </div>
 </template>
@@ -192,256 +62,120 @@
 <script>
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
+import * as api from "@/api/date.js";
+import * as getApi from "@/api/getApi.js";
+import * as addApi from "@/api/addApi.js";
+import * as deleteApi from "@/api/deleteApi.js";
+import * as searchApi from "@/api/searchApi.js";
 export default {
   data() {
     return {
-      date1: "",
-      date2: "",
-      tableData: [
-        {
-          id: 1,
-          projectId: 2,
-          adminId: 3,
-          supervisionId: 4,
-          constructDept: 5,
-          isConstructDeptEnterprise: 6,
-          projectLocation: 7,
-          districtId: 8,
-          detailedAddress: 9,
-          actualStartTime: 10,
-          planCompletionTime: 11,
-          projectScale: 12,
-          currentProgress: 13,
-          currentWorkerNum: 14,
-          currentSubcontractorNum: 15,
-          hasWorkNextWeek: 16,
-          workContentNextWeek: 17,
-          hasTowerErectionNextWeek: 18,
-          hasThirdLevelPlusWork: 19,
-          hasFourthLevelWork: 20,
-          hasFifthLevelWork: 21,
-          thirdLevelPlusWorkContent: 22,
-          contactPerson: 123,
-          isMajorProject: 124,
-          isSupervisedByProvincialCompany: 125,
-          note: 126,
-          actualState: 127,
-          controlledState: 128,
-          createTime: 129,
-          monthStartTime: 130,
-          weeklyStartTime: 131,
-          weekCount: 132,
-          inherentRisk: 133,
-          dynamicRisk: 134,
-          hasInspect: 135
-        },
-        {
-          id: 1,
-          projectId: 2,
-          adminId: 3,
-          supervisionId: 4,
-          constructDept: 5,
-          isConstructDeptEnterprise: 6,
-          projectLocation: 7,
-          districtId: 8,
-          detailedAddress: 9,
-          actualStartTime: 10,
-          planCompletionTime: 11,
-          projectScale: 12,
-          currentProgress: 13,
-          currentWorkerNum: 14,
-          currentSubcontractorNum: 15,
-          hasWorkNextWeek: 16,
-          workContentNextWeek: 17,
-          hasTowerErectionNextWeek: 18,
-          hasThirdLevelPlusWork: 19,
-          hasFourthLevelWork: 20,
-          hasFifthLevelWork: 21,
-          thirdLevelPlusWorkContent: 22,
-          contactPerson: 123,
-          isMajorProject: 124,
-          isSupervisedByProvincialCompany: 125,
-          note: 126,
-          actualState: 127,
-          controlledState: 128,
-          createTime: 129,
-          monthStartTime: 130,
-          weeklyStartTime: 131,
-          weekCount: 132,
-          inherentRisk: 133,
-          dynamicRisk: 134,
-          hasInspect: 135
-        },
-        {
-          id: 1,
-          projectId: 2,
-          adminId: 3,
-          supervisionId: 4,
-          constructDept: 5,
-          isConstructDeptEnterprise: 6,
-          projectLocation: 7,
-          districtId: 8,
-          detailedAddress: 9,
-          actualStartTime: 10,
-          planCompletionTime: 11,
-          projectScale: 12,
-          currentProgress: 13,
-          currentWorkerNum: 14,
-          currentSubcontractorNum: 15,
-          hasWorkNextWeek: 16,
-          workContentNextWeek: 17,
-          hasTowerErectionNextWeek: 18,
-          hasThirdLevelPlusWork: 19,
-          hasFourthLevelWork: 20,
-          hasFifthLevelWork: 21,
-          thirdLevelPlusWorkContent: 22,
-          contactPerson: 123,
-          isMajorProject: 124,
-          isSupervisedByProvincialCompany: 125,
-          note: 126,
-          actualState: 127,
-          controlledState: 128,
-          createTime: 129,
-          monthStartTime: 130,
-          weeklyStartTime: 131,
-          weekCount: 132,
-          inherentRisk: 133,
-          dynamicRisk: 134,
-          hasInspect: 135
+      //表格数据
+      tableData: [],
+      multiSelection: [],
+      //搜索数据
+      searchTable: {
+        projectId: "",
+        weeklyStartTime: "",
+        weeklyEndTime: "",
+        options: {
+          projectIdOptions: [],
         }
-      ],
-      constructDeptId: "",
-      constructDeptOptions: [],
-      weeklyStartTime: "",
-      projectId: "",
-      adminId: "",
-      supervisionId: "",
-
-      projectIdOptions: [
-        {
-          id: 1,
-          projectId: "项目A"
-        },
-        {
-          id: 2,
-          projectId: "项目B"
-        },
-        {
-          id: 3,
-          projectId: "项目C"
-        },
-        {
-          id: 4,
-          projectId: "项目D"
-        }
-      ],
-      adminOptions: [
-        {
-          id: 1,
-          adminId: "建设管理单位A"
-        },
-        {
-          id: 2,
-          adminId: "建设管理单位B"
-        },
-        {
-          id: 3,
-          adminId: "建设管理单位C"
-        },
-        {
-          id: 4,
-          adminId: "建设管理单位D"
-        }
-      ],
-      supervisionOptions: [
-        {
-          id: 1,
-          supervisionId: "监理单位A"
-        },
-        {
-          id: 2,
-          supervisionId: "监理单位B"
-        },
-        {
-          id: 3,
-          supervisionId: "监理单位C"
-        },
-        {
-          id: 4,
-          supervisionId: "监理单位D"
-        }
-      ],
-
-      pickerOptions: {
-        // disabledDate(time) {
-        //   return time.getTime() > Date.now();
-        // },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
-      }
+      },
+      searchTableRule: {},
+      //页码部分
+      pagination: {
+        currentPage: 1,
+        pageSizes: [10, 25, 50, 100],
+        pageSize: 10,
+        total: 0
+      },
     };
   },
+  created: function () {
+    let startDate = new Date();
+    let endDate = api.getThisWeekStart(startDate);
+    this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
+    this.searchTable.weeklyEndTime = new Date(endDate);
 
-  methods: {
-    exportExcel() {
-      /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
-      /* get binary string as output */
-      var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
-        bookSST: true,
-        type: "array"
-      });
-      try {
-        FileSaver.saveAs(
-          new Blob([wbout], { type: "application/octet-stream" }),
-          "周报信息.xlsx"
-        );
-      } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
-      }
-      return wbout;
-    },
-
-    addWeeklyData() {
-      this.$router.push({
-        path: `/weekly/addWeeklyData`,
-        query: {}
-      });
-    },
-    importWeeklyData() {
-      this.$router.push({
-        path: `/weekly/importWeeklyData`,
-        query: {}
-      });
+    //获取项目列表
+    getApi.getAllProjectName().then(response => {
+      this.searchTable.options.projectIdOptions = response;
+    });
+    //空搜索
+    let list = {
+      numberOfPage: this.pagination.pageSize,
+      pageNumber: 0,
+      weeklyStartTime: api.changeDate(this.searchTable.weeklyStartTime)
     }
+    searchApi.getProjectWeeklyByCondition(list).then(response => {
+      this.tableData = response.returnList[0];
+      this.pagination.total = response.totalNumber;
+    })
+  },
+  methods: {
+    //计算动态风险跳转
+    calculateDynamicRisk(row) {
+      this.$router.push({
+        name: "dynamicRisk",
+        params: {
+          backPath: "riskMana",
+          row: row
+        }
+      })
+    },
+    //表格选中
+    weeklyChange(val) {
+      this.multiSelection = val;
+    },
+    //周报开始日期改变
+    weeklyStartTimeChanged() {
+      if (this.searchTable.weeklyStartTime == null) {
+        this.searchTable.weeklyStartTime = "";
+        this.searchTable.weeklyEndTime = "";
+        return;
+      }
+      this.searchTable.weeklyEndTime = api.getThisWeekStart(
+        this.searchTable.weeklyStartTime
+      );
+    },
+    //搜索
+    searchWeekly(pageNum) {
+      let list = {
+        numberOfPage: this.pagination.pageSize,
+        pageNumber: pageNum - 1,
+        projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+        weeklyStartTime: this.searchTable.weeklyStartTime === "" ? undefined : api.changeDate(this.searchTable.weeklyStartTime)
+      }
+      searchApi.getProjectWeeklyByCondition(list).then(response => {
+        this.tableData = response.returnList[0];
+        this.pagination.total = response.totalNumber;
+
+      })
+    },
+    //页码操控部分
+    handleSizeChange(val) {
+      this.pagination.pageSize = val;
+      this.searchWeekly(1);
+    },
+    handleCurrentChange(val) {
+      this.pagination.currentPage = val;
+      this.searchWeekly(val);
+    },
   }
 };
 </script>
+<style lang="less">
+.el-table .cell {
+  white-space: pre-line;
+}
+</style>
 
 <style lang="less" scoped>
+.block {
+  padding: 30px 0;
+  text-align: center;
+}
 .box-card {
   width: 1400px;
   margin: 20px 50px;
