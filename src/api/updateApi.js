@@ -37,6 +37,13 @@ export const updateWeeklyDayWorkCheck = (data) => {
     )
 }
 
+//添加督查问题责任人
+export const updateProblemResponsiblePerson = (data) => {
+    return request.post(`/assessmentManagement/updateProblemResponsiblePerson`,
+        data
+    )
+}
+
 
 
 

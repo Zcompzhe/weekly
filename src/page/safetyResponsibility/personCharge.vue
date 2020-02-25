@@ -65,23 +65,23 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="主要责任单位" prop="responsibleCompany" placeholder="请选择项目名称">
-                <el-select v-model="setResponsibility.responsibleCompany" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in setResponsibility.options.responsibleCompanyOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                <el-select v-model="setResponsibility.responsibleCompany" clearable placeholder="请选择" style="min-width:200px" @change="responsibleCompanyChange">
+                  <el-option v-for="item in setResponsibility.options.responsibleCompanyOptions" :key="item.index" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="10">
             <div class="bar">
               <el-form-item label="责任人" prop="responsiblePerson" placeholder="请选择项目名称">
-                <el-select v-model="setResponsibility.responsiblePerson" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in setResponsibility.options.responsiblePersonOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                <el-select v-model="setResponsibility.responsiblePerson" multiple clearable placeholder="请选择" style="min-width:600px">
+                  <el-option v-for="item in setResponsibility.options.responsiblePersonOptions" :key="item.index" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="6" style="margin-top:-23px">
-            <el-button type="primary">信息保存</el-button>
+          <el-col :span="2" style="margin-top:-23px;margin-left:150px">
+            <el-button type="primary" @click="saveSetResponsibility">保存</el-button>
           </el-col>
         </el-row>
       </el-form>
@@ -101,25 +101,32 @@ export default {
   data() {
     return {
       //设置责任人数据
-      setResponsibilityFlag: true,
+      setResponsibilityFlag: false,
+      updateResponsibilityFlag: false,
+      updateTable: [],
       setResponsibility: {
         problemResponsibleSetId: "",
         responsibleCompany: "",
-        responsiblePerson: "",
+        responsiblePerson: [],
         options: {
           responsibleCompanyOptions: [],
           responsiblePersonOptions: [],
         }
       },
       setResponsibilityRule: {
-
+        responsibleCompany: [
+          { required: true, message: "请选择责任单位", trigger: "change" }
+        ],
+        responsiblePerson: [
+          { required: true, message: "请选择责任人", trigger: "change" }
+        ],
       },
       //搜索条件数据
       searchTable: {
         inspectStartDate: "",
         inspectEndDate: "",
         projectId: "",
-        hasSetResponsible: true,
+        hasSetResponsible: "",
         options: {
           projectIdOptions: {},
           hasSetResponsibleOptions: [
@@ -161,15 +168,109 @@ export default {
     //获取项目列表
     getApi.getAllProjectName().then(response => {
       this.searchTable.options.projectIdOptions = response;
-      this.addCheckForm.options.projectIdOptions = response;
-      this.updateCheckForm.options.projectIdOptions = response;
     });
+    //获取责任单位
+    getApi.getAllResponsibleCompany().then(response => {
+      this.setResponsibility.options.responsibleCompanyOptions = response;
+    });
+
   },
   methods: {
+    //提交责任人
+    saveSetResponsibility() {
+      this.$refs["setResponsibility"].validate(valid => {
+        if (valid) {
+          let list = [];
+          if (!this.updateResponsibilityFlag) {
+            this.setResponsibility.responsiblePerson.forEach(ele => {
+              list.push({
+                problemResponsibleSetId: this.setResponsibility.problemResponsibleSetId,
+                responsibleCompany: this.setResponsibility.responsibleCompany,
+                responsiblePerson: ele
+              });
+            })
+            addApi.addProblemResponsiblePerson(list).then(response => {
+              this.searchResponsibleSet(this.pagination.currentPage);
+              this.setResponsibilityFlag = false;
+            })
+          } else {
+            this.updateTable.forEach(ele => {
+              //先看删除的
+              if (!this.setResponsibility.responsiblePerson.includes(ele.responsiblePerson)) {
+                list.push({
+                  problemResponsibleSetId: this.setResponsibility.problemResponsibleSetId,
+                  responsibleCompany: this.setResponsibility.responsibleCompany,
+                  responsiblePerson: ele.responsiblePerson,
+                  id: ele.id,
+                  listUpdateOperation: "删除"
+                });
+              }
+            })
+            //再看添加的
+            this.setResponsibility.responsiblePerson.forEach(ele => {
+              let flag = 0;
+              this.updateTable.forEach(element => {
+                if (element.responsiblePerson === ele) {
+                  flag = 1;
+                }
+              })
+              if (flag === 0) {
+                list.push({
+                  problemResponsibleSetId: this.setResponsibility.problemResponsibleSetId,
+                  responsibleCompany: this.setResponsibility.responsibleCompany,
+                  responsiblePerson: ele,
+                  listUpdateOperation: "添加"
+                });
+              }
+            })
+            if (list.length === 0) {
+              this.$message({
+                type: "error",
+                message: "请至少修改一个信息！"
+              });
+              return;
+            }
+            updateApi.updateProblemResponsiblePerson(list).then(response => {
+              this.searchResponsibleSet(this.pagination.currentPage);
+              this.setResponsibilityFlag = false;
+              this.updateResponsibilityFlag = false;
+            })
+          }
+        }
+      });
+    },
+    //责任单位变化
+    responsibleCompanyChange() {
+      this.setResponsibility.responsiblePerson = "";
+      this.setResponsibility.options.responsiblePersonOptions = [];
+      if (this.setResponsibility.responsibleCompany != "") {
+        //获取项目列表
+        getApi.getResponsiblePersonByResponsibleCompany(this.setResponsibility.responsibleCompany).then(response => {
+          this.setResponsibility.options.responsiblePersonOptions = response;
+        });
+      }
+    },
     //设置责任人
     setPerson(row) {
       this.setResponsibilityFlag = true;
-      this.problemResponsibleSetId = row.id;
+      this.setResponsibility.problemResponsibleSetId = row.id;
+      getApi.getProblemResponsiblePersonByProblemResponsibleSetId(row.id).then(response => {
+        if (response.length > 0) {
+          this.updateResponsibilityFlag = true;
+          this.setResponsibility.responsibleCompany = response[0].responsibleCompany;
+          this.responsibleCompanyChange();
+          this.setResponsibility.responsiblePerson = [];
+          this.updateTable = response;
+          response.forEach(ele => {
+            this.setResponsibility.responsiblePerson.push(ele.responsiblePerson);
+          })
+        }
+        else {
+          this.updateResponsibilityFlag = false;
+          this.setResponsibility.responsibleCompany = "";
+          this.setResponsibility.responsiblePerson = [];
+        }
+      })
     },
     //搜索
     searchResponsibleSet(num) {

@@ -135,3 +135,31 @@ export const getAllResponsibleDeptEnum = () => {
 export const getAllConstructDeptName = () => {
   return request.get(`/baseInfoManagement/getAllConstructDeptName`);
 };
+
+//获取责任单位名称
+export const getAllResponsibleCompany = () => {
+  return request.get(`/baseInfoManagement/getAllResponsibleCompany`);
+};
+//获取责任人
+export const getResponsiblePersonByResponsibleCompany = name => {
+  return request.get(
+    `/baseInfoManagement/getResponsiblePersonByResponsibleCompany`,
+    {
+      params: {
+        responsibleCompanyName: name
+      }
+    }
+  );
+};
+
+//获取责任人
+export const getProblemResponsiblePersonByProblemResponsibleSetId = id => {
+  return request.get(
+    `/assessmentManagement/getProblemResponsiblePersonByProblemResponsibleSetId`,
+    {
+      params: {
+        problemResponsibleSetId: id
+      }
+    }
+  );
+};

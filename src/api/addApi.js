@@ -43,6 +43,12 @@ export const addInspectionJobOrderInfo = (data) => {
     )
 }
 
+//添加督查问题责任人
+export const addProblemResponsiblePerson = (data) => {
+    return request.post(`/assessmentManagement/addProblemResponsiblePerson`,
+        data
+    )
+}
 
 
 

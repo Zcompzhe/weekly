@@ -650,6 +650,10 @@ export default {
     getApi.getAllProjectControlledStateEnum().then(response => {
       this.updateFormFive.options.controlledStateOptions = response;
     });
+    //获取施工单位
+    getApi.getAllConstructDeptName().then(response => {
+      this.updateFormTwo.options.constructDeptIdOptions = response;
+    });
     //获取所有实际状态
     getApi.getAllProjectActualStateEnum().then(response => {
       this.updateFormFive.options.actualStateOptions = response;
