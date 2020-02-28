@@ -126,6 +126,11 @@ export const getAllAdminProjectDeptName = () => {
   return request.get(`/baseInfoManagement/getAllAdminProjectDeptName`);
 };
 
+//获取整改项目部
+export const getAllRectification = () => {
+  return request.get(`/baseInfoManagement/getAllRectification`);
+};
+
 //获取部门枚举
 export const getAllResponsibleDeptEnum = () => {
   return request.get(`/baseInfoManagement/getAllResponsibleDeptEnum`);
@@ -159,6 +164,29 @@ export const getProblemResponsiblePersonByProblemResponsibleSetId = id => {
     {
       params: {
         problemResponsibleSetId: id
+      }
+    }
+  );
+};
+//获取天气值
+export const getRectificationAddFeedbackShowRespByJobOrderId = id => {
+  return request.get(
+    `/rectificationManagement/getRectificationAddFeedbackShowRespByJobOrderId`,
+    {
+      params: {
+        jobOrderId: id
+      }
+    }
+  );
+};
+
+//根据jobOrderId获取整改反馈内容展示模型
+export const getRectificationFeedbackShowRespByJobOrderId = id => {
+  return request.get(
+    `/rectificationManagement/getRectificationFeedbackShowRespByJobOrderId`,
+    {
+      params: {
+        jobOrderId: id
       }
     }
   );

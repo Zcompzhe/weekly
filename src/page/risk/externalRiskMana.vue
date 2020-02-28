@@ -45,7 +45,7 @@
         <el-table-column width="250" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
         <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
         <el-table-column width="100" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-        <el-table-column width="100" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
+
         <el-table-column width="100" label="操作" align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="calculateDynamicRisk(scope.row)">计算动态风险</el-button>

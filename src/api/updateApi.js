@@ -43,7 +43,12 @@ export const updateProblemResponsiblePerson = (data) => {
         data
     )
 }
-
+//添加督查问题责任人
+export const updateRectificationFeedbackList = (data) => {
+    return request.post(`/rectificationManagement/updateRectificationFeedbackList`,
+        data
+    )
+}
 
 
 

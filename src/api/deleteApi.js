@@ -50,3 +50,93 @@ export const deleteInspectionJobOrderInfoById = id => {
     }
   );
 };
+
+//根据id删除监理项目部
+export const deleteAdminProjectDeptById = id => {
+  return request.delete(`/baseInfoManagement/deleteAdminProjectDeptById`, {
+    params: {
+      id: id
+    }
+  });
+};
+//根据id删除建设管理单位
+export const deleteAdministrativeDeptById = id => {
+  return request.delete(`/baseInfoManagement/deleteAdministrativeDeptById`, {
+    params: {
+      id: id
+    }
+  });
+};
+//根据id删除施工单位
+export const deleteConstructDeptById = id => {
+  return request.delete(`/baseInfoManagement/deleteConstructDeptById`, {
+    params: {
+      id: id
+    }
+  });
+};
+//根据id删除施工项目部
+export const deleteConstructProjectDeptById = id => {
+  return request.delete(`/baseInfoManagement/deleteConstructProjectDeptById`, {
+    params: {
+      id: id
+    }
+  });
+};
+//根据id删除区域名称
+export const deleteDistrictById = id => {
+  return request.delete(`/baseInfoManagement/deleteDistrictById`, {
+    params: {
+      id: id
+    }
+  });
+};
+
+//根据id删除业主项目部
+export const deleteOwnerProjectDeptById = id => {
+  return request.delete(`/baseInfoManagement/deleteOwnerProjectDeptById`, {
+    params: {
+      id: id
+    }
+  });
+};
+
+//根据id删除监理单位
+export const deleteSupervisionDeptById = id => {
+  return request.delete(`/baseInfoManagement/deleteSupervisionDeptById`, {
+    params: {
+      id: id
+    }
+  });
+};
+
+//根据id删除人员信息
+export const deleteStaffInfoById = id => {
+  return request.delete(`/baseInfoManagement/deleteStaffInfoById`, {
+    params: {
+      id: id
+    }
+  });
+};
+//根据id删除人员信息
+export const deleteRectificationFeedbackInfoById = id => {
+  return request.delete(
+    `/rectificationManagement/deleteRectificationFeedbackInfoById`,
+    {
+      params: {
+        id: id
+      }
+    }
+  );
+};
+//删除图片
+export const deleteRectificationPhotoPathByPathId = id => {
+  return request.delete(
+    `/rectificationManagement/deleteRectificationPhotoPathByPathId`,
+    {
+      params: {
+        id: id
+      }
+    }
+  );
+};

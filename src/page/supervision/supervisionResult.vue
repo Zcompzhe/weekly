@@ -300,7 +300,7 @@
               <el-input v-model="scope.row.problem" :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
             </template>
           </el-table-column>
-          <el-table-column width="500" label="违章性质" align="center">
+          <el-table-column width="300" label="违章性质" align="center">
             <template slot-scope="scope">
               <el-select v-model="scope.row.violationType" clearable placeholder="请选择" style="min-width:200px">
                 <el-option v-for="item in addCheckForm.options.violationTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
@@ -462,7 +462,7 @@
               <el-input v-model="scope.row.problem" :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
             </template>
           </el-table-column>
-          <el-table-column width="500" label="违章性质" align="center">
+          <el-table-column width="300" label="违章性质" align="center">
             <template slot-scope="scope">
               <el-select v-model="scope.row.violationType" clearable placeholder="请选择" style="min-width:200px">
                 <el-option v-for="item in updateCheckForm.options.violationTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
@@ -647,6 +647,7 @@ export default {
         ],
       },
       //图片个数
+      searchPic: [],
       showPhotoFlag: true,
       photoNumber: 0,
       url: [],
@@ -753,7 +754,7 @@ export default {
       })
         .then(() => {
           deleteApi.deleteInspectionJobOrderInfoById(row.jobOrderId).then(response => {
-             this.searchInspection();
+            this.searchInspection();
           })
         })
         .catch(() => {
@@ -765,7 +766,6 @@ export default {
     },
     //查看图片
     showThisPic(index, row) {
-      console.log(index)
       this.urlIndex = [];
       this.urlIndex.push(this.url[index]);
       this.isShowImageDialog = true;
@@ -1100,6 +1100,9 @@ export default {
         }
         searchApi.getInspectJobOrderInfoByInspectionId(list).then(response => {
           this.problemForm.tableData = response.returnListSecondary[0];
+          if (this.photoShowFlag) {
+            this.searchPhoto(this.searchPic);
+          }
         })
       });
 
@@ -1133,6 +1136,7 @@ export default {
     },
     //查看问题照片
     searchPhoto(row) {
+      this.searchPic = row;
       let list = {
         contentId: row.id,
         jobOrderTypeName: this.addProblemRow.jobOrderType

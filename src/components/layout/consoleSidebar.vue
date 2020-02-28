@@ -80,12 +80,6 @@
         <el-menu-item index="/project/projectInfoMana">
           <i class="el-icon-document"></i>项目信息管理
         </el-menu-item>
-        <!-- <el-menu-item index="/project/addProjectInfo">
-          <i class="el-icon-document"></i>添加项目
-        </el-menu-item>
-        <el-menu-item index="/project/updateProjectInfo">
-          <i class="el-icon-document"></i>修改项目
-        </el-menu-item> -->
 
       </el-submenu>
       <el-submenu index="base">
@@ -96,12 +90,6 @@
         <el-menu-item index="/weekly/weeklyDataManage">
           <i class="el-icon-document"></i>周报数据管理
         </el-menu-item>
-        <!-- <el-menu-item index="/weekly/addWeekly">
-          <i class="el-icon-document"></i>添加周报信息
-        </el-menu-item> -->
-        <!-- <el-menu-item index="/weekly/importWeeklyData">
-          <i class="el-icon-document"></i>导入周报
-        </el-menu-item> -->
       </el-submenu>
 
       <el-submenu index="back">
@@ -110,18 +98,9 @@
           后台管理
         </template>
 
-        <el-menu-item index="/back/projectMana">
-          <i class="el-icon-document"></i>项目信息管理
+        <el-menu-item index="/back/infoMana">
+          <i class="el-icon-document"></i>单位/部门信息管理
         </el-menu-item>
-
-        <el-menu-item index="/back/adminMana">
-          <i class="el-icon-document"></i>建设管理单位管理
-        </el-menu-item>
-
-        <el-menu-item index="/back/supervisionMana">
-          <i class="el-icon-document"></i>监理单位管理
-        </el-menu-item>
-
         <el-menu-item index="/back/personInfoMana">
           <i class="el-icon-document"></i>人员信息管理
         </el-menu-item>
@@ -163,8 +142,16 @@
         <el-menu-item index="/supervision/supervisionResult">
           <i class="el-icon-document"></i>督查结果管理
         </el-menu-item>
-        <el-menu-item index="/supervision/recommendation">
-          <i class="el-icon-document"></i>督查方案推荐
+      </el-submenu>
+
+      <el-submenu index="rectificationFeedback">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          督查整改反馈
+        </template>
+
+        <el-menu-item index="/rectification/rectificationFeedback">
+          <i class="el-icon-document"></i>整改反馈通知
         </el-menu-item>
 
       </el-submenu>

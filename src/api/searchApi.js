@@ -29,8 +29,10 @@ export const getProjectWeeklyInspectionPageShowRespWithOrder = list => {
 
 //获取督查队伍数和动态风险
 export const getCurrentInspectWeekInspectionTeamCount = () => {
-  return request.get(`/inspectionManagement/getCurrentInspectWeekInspectionTeamCount`)
-}
+  return request.get(
+    `/inspectionManagement/getCurrentInspectWeekInspectionTeamCount`
+  );
+};
 
 //获取安监队项目
 export const getThisWeekInspectTeamProjectInspectionByCondition = list => {
@@ -48,7 +50,6 @@ export const getProjectInspectionResultByCondition = list => {
   );
 };
 
-
 //根据督查信息id获取通知单内容
 export const getInspectJobOrderInfoByInspectionId = list => {
   return request.get(
@@ -58,7 +59,6 @@ export const getInspectJobOrderInfoByInspectionId = list => {
     }
   );
 };
-
 
 //根据通知单内容id获取照片资源
 export const getInspectPhotoResourceByContentId = list => {
@@ -83,30 +83,57 @@ export const getWeeklyWeatherDynamicCoefficient = id => {
 };
 
 //计算风险
-export const calculateExternalRisk = (data) => {
-  return request.post(`/externalRiskManagement/calculateExternalRisk`,
-      data
-  )
-}
+export const calculateExternalRisk = data => {
+  return request.post(`/externalRiskManagement/calculateExternalRisk`, data);
+};
 
 //计算风险
-export const getWeeklyAccuracyShowRespByCondition = (data) => {
-  return request.post(`/weeklyAccuracyManagement/getWeeklyAccuracyShowRespByCondition`,
-      data
-  )
-}
+export const getWeeklyAccuracyShowRespByCondition = data => {
+  return request.post(
+    `/weeklyAccuracyManagement/getWeeklyAccuracyShowRespByCondition`,
+    data
+  );
+};
 
 //根据条件搜索日工作内容检验数据
-export const getWeeklyDayWorkCheckShowByCondition = (data) => {
-  return request.post(`/weeklyAccuracyManagement/getWeeklyDayWorkCheckShowByCondition`,
-      data
-  )
-}
+export const getWeeklyDayWorkCheckShowByCondition = data => {
+  return request.post(
+    `/weeklyAccuracyManagement/getWeeklyDayWorkCheckShowByCondition`,
+    data
+  );
+};
 
 //根据条件搜索督查问题责任人设置展示信息
-export const getProblemResponsibleSetShowRespByCondition = (data) => {
-  return request.post(`/assessmentManagement/getProblemResponsibleSetShowRespByCondition`,
-      data
-  )
-}
+export const getProblemResponsibleSetShowRespByCondition = data => {
+  return request.post(
+    `/assessmentManagement/getProblemResponsibleSetShowRespByCondition`,
+    data
+  );
+};
 
+//根据条件搜索考核成绩展示信息
+export const getAssessScoreShowRespByCondition = data => {
+  return request.post(
+    `/assessmentManagement/getAssessScoreShowRespByCondition`,
+    data
+  );
+};
+//根据条件搜索考核成绩展示信息
+export const getRectificationFeedbackInspectionByCondition = data => {
+  return request.post(
+    `/inspectionManagement/getRectificationFeedbackInspectionByCondition`,
+    data
+  );
+};
+
+//根据通知单内容id获取照片资源
+export const getRectificationPhotoResourceByFeedbackId = id => {
+  return request.get(
+    `/rectificationManagement/getRectificationPhotoResourceByFeedbackId`,
+    {
+      params: {
+        rectificationFeedbackId: id
+      }
+    }
+  );
+};

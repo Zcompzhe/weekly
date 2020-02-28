@@ -163,7 +163,7 @@ export default {
     let endDate = api.getThisWeekStartTwo(startDate);
     this.searchTable.inspectStartDate = new Date(api.changeDate(startDate));
     this.searchTable.inspectEndDate = new Date(endDate);
-    this.searchResponsibleSet();
+    this.searchResponsibleSet(1);
 
     //获取项目列表
     getApi.getAllProjectName().then(response => {
@@ -291,6 +291,8 @@ export default {
       }
       searchApi.getProblemResponsibleSetShowRespByCondition(list).then(response => {
         this.responsible.tableData = response.returnList[0];
+        this.pagination.total = response.totalNumber;
+        this.pagination.currentPage = num;
         this.responsible.tableData.forEach(ele => {
           if (ele.hasSetResponsible)
             ele.hasSetResponsibleStr = "是";

@@ -44,6 +44,14 @@
             <el-button type="primary" @click="updateWeeklyDayWorkCheck()">上报核对结果</el-button>
           </div>
         </el-col>
+
+        <el-col :span="10">
+          <div class="bar">
+            <div id="title">
+              <p id="tableTitle" style="min-width:1000px;font-size:24px;margin-left:80px;margin-bottom:20px">{{ tableTitle }}</p>
+            </div>
+          </div>
+        </el-col>
       </el-row>
       <el-table :data="tableData" border @selection-change="selectChange" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
@@ -82,6 +90,7 @@ export default {
   data() {
     return {
       //表格数据
+      tableTitle: "",
       copyTableData: [],
       tableData: [],
       multiSelection: [],
@@ -123,24 +132,7 @@ export default {
     getApi.getAllProjectName().then(response => {
       this.searchTable.options.projectIdOptions = response;
     });
-    //空搜索
-    let list = {
-      numberOfPage: this.pagination.pageSize,
-      pageNumber: 0,
-      workDate: api.changeDate(this.searchTable.workDate)
-    }
-    searchApi.getWeeklyDayWorkCheckShowByCondition(list).then(response => {
-      this.tableData = response.returnList[0];
-      this.pagination.total = response.totalNumber;
-      this.tableData.forEach(ele => {
-        if (ele.checkExist) ele.checkExistStr = "是";
-        else ele.checkExistStr = "否";
-        this.copyTableData.push({
-          id: ele.id,
-          checkExist: ele.checkExist
-        })
-      })
-    })
+    this.searchWeeklyDayWorkCheck(1);
   },
   methods: {
     //上报核准结果
@@ -176,9 +168,10 @@ export default {
         this.tableData = response.returnList[0];
         this.pagination.total = response.totalNumber;
         this.copyTableData = [];
+        this.tableTitle = api.changeDate(this.searchTable.workDate) + "风险作业安排";
         this.tableData.forEach(ele => {
-          if (ele.checkExist) ele.checkExistStr = "是";
-          else ele.checkExistStr = "否";
+          if (ele.hasCheck) ele.hasCheckStr = "是";
+          else ele.hasCheckStr = "否";
           this.copyTableData.push({
             id: ele.id,
             checkExist: ele.checkExist

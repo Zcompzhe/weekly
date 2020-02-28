@@ -386,7 +386,7 @@ export default {
     },
     //查看详情
     detailWeekly(row) {
-      getApi.getProjectWeeklyDetailById(row.id).then(response => {
+      getApi.getProjectWeeklyDetailById(row.weeklyId).then(response => {
         this.weeklyDetail = response[0];
         if (this.weeklyDetail.hasWorkNextWeek) this.weeklyDetail.hasWorkNextWeekStr = "是";
         else if (!this.weeklyDetail.hasWorkNextWeek) this.weeklyDetail.hasWorkNextWeekStr = "否";
