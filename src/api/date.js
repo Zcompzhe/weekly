@@ -65,16 +65,26 @@ export const getThisWeekStartTwo = weeklyStartTime => {
   var b = new Date(Date.parse(c.replace(/\-/g, "/")));
   console.log("选择的日期是星期", b.getDay());
   let weeklyStartTime2;
-
   //第一步，将截止日期求出来
   weeklyStartTime2 = new Date(weeklyStartTime);
-  weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() );
-  weeklyStartTime2 = changeDate(weeklyStartTime2);
+  console.log(weeklyStartTime2.getDate());
+  if (b.getDay() > 0) {
+    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 7);
+    weeklyStartTime2 = changeDate(weeklyStartTime2);
 
-  //第二步，将起始日期求出来
+    //第二步，将起始日期求出来
 
-  weeklyStartTime.setDate(weeklyStartTime.getDate() - b.getDay() - 6);
-  weeklyStartTime = changeDate(weeklyStartTime);
+    weeklyStartTime.setDate(weeklyStartTime.getDate() - b.getDay() + 1);
+    weeklyStartTime = changeDate(weeklyStartTime);
+  } else {
+    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay());
+    weeklyStartTime2 = changeDate(weeklyStartTime2);
+
+    //第二步，将起始日期求出来
+
+    weeklyStartTime.setDate(weeklyStartTime.getDate() - b.getDay() -6);
+    weeklyStartTime = changeDate(weeklyStartTime);
+  }
 
   return weeklyStartTime2;
 };
