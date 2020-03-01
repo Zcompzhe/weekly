@@ -157,7 +157,7 @@
           <i class="el-icon-document"></i>单位/部门信息管理
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="personMana">
+      <el-submenu index="personMana" v-if="false">
         <template slot="title">
           <i class="el-icon-message"></i>
           人员信息管理
@@ -168,7 +168,7 @@
         </el-menu-item>
       </el-submenu>
 
-      <el-submenu index="exception">
+      <el-submenu index="exception" v-if="false">
         <template slot="title">
           <i class="el-icon-message"></i>
           系统运行状态
