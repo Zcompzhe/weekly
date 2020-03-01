@@ -274,7 +274,7 @@
       </el-table>
     </el-card>
     <el-card class="box-card">
-      <el-checkbox v-model="updateFormFour.hasThreePlusRiskWork" style="margin-left:20px">是否有三级以上风险</el-checkbox>
+      <el-checkbox v-model="updateFormFour.hasThreePlusRiskWork" disabled style="margin-left:20px">是否有三级以上风险</el-checkbox>
       <el-button type="primary" style="margin-left:50px;margin-right: 20px" @click="addOneLineWeeklyRiskContentAddReqs">添加条目</el-button>
       <el-button type="primary" style="margin-right: 20px" @click="deleteLinesWeeklyRiskContentAddReqs">删除条目</el-button>
       <br />
@@ -946,7 +946,7 @@ export default {
     //当某一行的工序值发生改变时，风险等级相应变化
     workProcessChanged(index, row) {
       row.workProcess = row.workProcessShow[row.workProcessShow.length - 1];
-      row.workProcessTotalList = "[" + row.workProcessShow.toString() + "]";
+      row.workProcessTotalList = row.workProcessShow.toString();
       this.findFlag = false;
       this.Traversal(
         this.updateFormFour.options.workProcessOptions,
@@ -954,18 +954,18 @@ export default {
         row
       );
       let num = 0;
-      this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+      this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
         if (ele.riskLevel >= 3)
           num = 1;
       })
       if (num === 1) {
-        this.addFormFour.hasThreePlusRiskWork = true;
-      } else if (num === 0) this.addFormFour.hasThreePlusRiskWork = false;
+        this.updateFormFour.hasThreePlusRiskWork = true;
+      } else if (num === 0) this.updateFormFour.hasThreePlusRiskWork = false;
     },
     //将工程编号设置为最后一列
     jobNumberChanged(index, row) {
       row.jobNumber = row.jobNumberShow[row.jobNumberShow.length - 1];
-      row.jobNumberTotalList = "[" + row.jobNumberShow.toString() + "]";
+      row.jobNumberTotalList = row.jobNumberShow.toString();
       console.log(row);
     },
     //遍历找到该值
