@@ -45,12 +45,12 @@
         <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
         <el-table-column width="100" prop="totalWorkDayCount" label="总作业数" align="center"></el-table-column>
         <el-table-column width="150" prop="hasCheckDayCount" label="已核对作业数" align="center"></el-table-column>
-        <el-table-column width="400" prop="accuracyValue" label="周报准确度" align="center">
+        <el-table-column width="200" prop="accuracyValue" label="周报准确度"   fixed="right" align="center">
           <template slot-scope="scope">
             <el-progress :text-inside="true" :stroke-width="24" :percentage="scope.row.accuracyValue*100" :status="getColor(scope.row.accuracyValue*100)"></el-progress>
           </template>
         </el-table-column>
-        <el-table-column width="100" label="操作" align="center">
+        <el-table-column width="100" label="操作"  fixed="right" align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="detailWeekly(scope.row)">查看详情</el-button>
           </template>

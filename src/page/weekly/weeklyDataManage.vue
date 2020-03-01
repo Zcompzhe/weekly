@@ -19,15 +19,6 @@
           </el-col>
           <el-col :span="8" style="margin-left:-32px">
             <div class="bar">
-              <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
-                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="bar">
               <el-form-item label="建设管理单位" prop="adminId" placeholder="项目名称">
                 <el-select v-model="searchTable.adminId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in searchTable.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
@@ -35,17 +26,28 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="8">
             <div class="bar">
               <el-form-item label="项管部门" prop="adminDept" placeholder="项目名称">
-                <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:400px;margin-left:0px">
+                <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in searchTable.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
           </el-col>
+
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div class="bar">
+              <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
+                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:422px;margin-left:0px">
+                  <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="下周是否有作业" prop="hasWorkNextWeek" placeholder="项目名称">

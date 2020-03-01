@@ -953,7 +953,14 @@ export default {
         row.workProcess,
         row
       );
-      console.log(row);
+      let num = 0;
+      this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+        if (ele.riskLevel >= 3)
+          num = 1;
+      })
+      if (num === 1) {
+        this.addFormFour.hasThreePlusRiskWork = true;
+      } else if (num === 0) this.addFormFour.hasThreePlusRiskWork = false;
     },
     //将工程编号设置为最后一列
     jobNumberChanged(index, row) {

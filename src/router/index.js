@@ -28,6 +28,14 @@ const updateWeekly = r =>
     "updateWeekly"
   );
 
+//异常管理
+const exception = r =>
+  require.ensure(
+    [],
+    () => r(require("../page/exception/exception")),
+    "exception"
+  );
+
 //周报数据管理
 const weeklyApproved = r =>
   require.ensure(
@@ -179,6 +187,16 @@ export default [
         meta: {
           activePath: "/rectification/rectificationFeedback",
           bcrumd: ["整改通知反馈"]
+        }
+      },
+      {
+        // 周报数据管理
+        path: "/exception/exception",
+        name: "exception",
+        component: exception,
+        meta: {
+          activePath: "/exception/exception",
+          bcrumd: ["异常反馈"]
         }
       },
 

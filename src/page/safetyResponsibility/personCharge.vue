@@ -115,10 +115,10 @@ export default {
       },
       setResponsibilityRule: {
         responsibleCompany: [
-          { required: true, message: "请选择责任单位", trigger: "change" }
+          { required: false, message: "请选择责任单位", trigger: "change" }
         ],
         responsiblePerson: [
-          { required: true, message: "请选择责任人", trigger: "change" }
+          { required: false, message: "请选择责任人", trigger: "change" }
         ],
       },
       //搜索条件数据
@@ -178,66 +178,93 @@ export default {
   methods: {
     //提交责任人
     saveSetResponsibility() {
-      this.$refs["setResponsibility"].validate(valid => {
-        if (valid) {
-          let list = [];
-          if (!this.updateResponsibilityFlag) {
-            this.setResponsibility.responsiblePerson.forEach(ele => {
+      if ((this.setResponsibility.responsibleCompany != "" && this.setResponsibility.responsibleCompany != null) && (this.setResponsibility.responsiblePerson != "" && this.setResponsibility.responsiblePerson != null)
+      ) {
+        let list = [];
+        if (!this.updateResponsibilityFlag) {
+          this.setResponsibility.responsiblePerson.forEach(ele => {
+            list.push({
+              problemResponsibleSetId: this.setResponsibility.problemResponsibleSetId,
+              responsibleCompany: this.setResponsibility.responsibleCompany,
+              responsiblePerson: ele
+            });
+          })
+          addApi.addProblemResponsiblePerson(list).then(response => {
+            this.searchResponsibleSet(this.pagination.currentPage);
+            this.setResponsibilityFlag = false;
+          })
+        } else {
+          this.updateTable.forEach(ele => {
+            //先看删除的
+            if (!this.setResponsibility.responsiblePerson.includes(ele.responsiblePerson)) {
               list.push({
                 problemResponsibleSetId: this.setResponsibility.problemResponsibleSetId,
                 responsibleCompany: this.setResponsibility.responsibleCompany,
-                responsiblePerson: ele
+                responsiblePerson: ele.responsiblePerson,
+                id: ele.id,
+                listUpdateOperation: "删除"
               });
-            })
-            addApi.addProblemResponsiblePerson(list).then(response => {
-              this.searchResponsibleSet(this.pagination.currentPage);
-              this.setResponsibilityFlag = false;
-            })
-          } else {
-            this.updateTable.forEach(ele => {
-              //先看删除的
-              if (!this.setResponsibility.responsiblePerson.includes(ele.responsiblePerson)) {
-                list.push({
-                  problemResponsibleSetId: this.setResponsibility.problemResponsibleSetId,
-                  responsibleCompany: this.setResponsibility.responsibleCompany,
-                  responsiblePerson: ele.responsiblePerson,
-                  id: ele.id,
-                  listUpdateOperation: "删除"
-                });
-              }
-            })
-            //再看添加的
-            this.setResponsibility.responsiblePerson.forEach(ele => {
-              let flag = 0;
-              this.updateTable.forEach(element => {
-                if (element.responsiblePerson === ele) {
-                  flag = 1;
-                }
-              })
-              if (flag === 0) {
-                list.push({
-                  problemResponsibleSetId: this.setResponsibility.problemResponsibleSetId,
-                  responsibleCompany: this.setResponsibility.responsibleCompany,
-                  responsiblePerson: ele,
-                  listUpdateOperation: "添加"
-                });
-              }
-            })
-            if (list.length === 0) {
-              this.$message({
-                type: "error",
-                message: "请至少修改一个信息！"
-              });
-              return;
             }
-            updateApi.updateProblemResponsiblePerson(list).then(response => {
-              this.searchResponsibleSet(this.pagination.currentPage);
-              this.setResponsibilityFlag = false;
-              this.updateResponsibilityFlag = false;
+          })
+          //再看添加的
+          this.setResponsibility.responsiblePerson.forEach(ele => {
+            let flag = 0;
+            this.updateTable.forEach(element => {
+              if (element.responsiblePerson === ele) {
+                flag = 1;
+              }
             })
+            if (flag === 0) {
+              list.push({
+                problemResponsibleSetId: this.setResponsibility.problemResponsibleSetId,
+                responsibleCompany: this.setResponsibility.responsibleCompany,
+                responsiblePerson: ele,
+                listUpdateOperation: "添加"
+              });
+            }
+          })
+          if (list.length === 0) {
+            this.$message({
+              type: "error",
+              message: "请至少修改一个信息！"
+            });
+            return;
           }
+          updateApi.updateProblemResponsiblePerson(list).then(response => {
+            this.searchResponsibleSet(this.pagination.currentPage);
+            this.setResponsibilityFlag = false;
+            this.updateResponsibilityFlag = false;
+          })
         }
-      });
+      } else if ((this.setResponsibility.responsibleCompany === "" || this.setResponsibility.responsibleCompany === null) && (this.setResponsibility.responsiblePerson === "" || this.setResponsibility.responsiblePerson === null)) {
+        let list = [];
+        this.updateTable.forEach(ele => {
+          list.push({
+            id: ele.id,
+            listUpdateOperation: "删除"
+          });
+        })
+        if (list.length === 0) {
+          this.$message({
+            type: "error",
+            message: "请至少修改一个信息！"
+          });
+          return;
+        }
+        updateApi.updateProblemResponsiblePerson(list).then(response => {
+          this.searchResponsibleSet(this.pagination.currentPage);
+          this.setResponsibilityFlag = false;
+          this.updateResponsibilityFlag = false;
+        })
+      }
+      else {
+        this.$message({
+          type: "error",
+          message: "必须均填写或均不填写！"
+        });
+        this.updateResponsibilityFlag = false;
+        return;
+      }
     },
     //责任单位变化
     responsibleCompanyChange() {

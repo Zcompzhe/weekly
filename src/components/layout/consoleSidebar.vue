@@ -170,7 +170,18 @@
         </el-menu-item>
       </el-submenu>
 
-      、
+      <el-submenu index="exception">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          系统运行状态
+        </template>
+
+        <el-menu-item index="/exception/exception">
+          <i class="el-icon-document"></i>系统当前运行状态
+        </el-menu-item>
+      </el-submenu>
+
+      
     </el-menu>
   </div>
 </template>

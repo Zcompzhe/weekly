@@ -61,118 +61,120 @@
       </el-table>
     </el-card>
 
-    <el-card class="box-card" v-if="addPhotoPanelFlag">
-      <el-form :model="problemForm" ref="problemForm" label-position="left" :rules="problemFormRule" label-width="120px" class="demo-ruleForm">
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="业主项目部" prop="ownerDeptName" placeholder="项目名称">
-                <el-input v-model="problemForm.ownerDeptName" disabled :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
+    <div v-if="addPhotoPanelFlag">
+      <el-card class="box-card" v-if="addPhotoPanelFlag">
+        <el-form :model="problemForm" ref="problemForm" label-position="left" :rules="problemFormRule" label-width="120px" class="demo-ruleForm">
+          <el-row :gutter="20">
+            <el-col :span="8">
+              <div class="bar">
+                <el-form-item label="业主项目部" prop="ownerDeptName" placeholder="项目名称">
+                  <el-input v-model="problemForm.ownerDeptName" disabled :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
 
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="施工项目部" prop="constructDeptName" placeholder="当前月份">
-                <el-input v-model="problemForm.constructDeptName" disabled :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
+            <el-col :span="8">
+              <div class="bar">
+                <el-form-item label="施工项目部" prop="constructDeptName" placeholder="当前月份">
+                  <el-input v-model="problemForm.constructDeptName" disabled :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
 
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="监理项目部" prop="adminDeptName" placeholder="周报开始日期">
-                <el-input v-model="problemForm.adminDeptName" disabled :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
+            <el-col :span="8">
+              <div class="bar">
+                <el-form-item label="监理项目部" prop="adminDeptName" placeholder="周报开始日期">
+                  <el-input v-model="problemForm.adminDeptName" disabled :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
 
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="被查地点" prop="inspectAddress" placeholder="周报开始日期">
-                <el-input v-model="problemForm.inspectAddress" disabled :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="20">
-            <div class="bar">
-              <el-form-item label="检查范围和简要内容" label-width="150px" prop="checkRangeAndContent" placeholder="项目名称">
-                <el-input type="textarea" disabled :rows="4" placeholder="暂无信息" v-model="problemForm.checkRangeAndContent" style="margin-left:20px;width:1000px"></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-      </el-form>
-      <el-table :data="problemForm.tableData" max-height="400" border style="width: 100%; margin-top: 20px" v-if="addProblemRow.jobOrderType==='口头警告通知单'">
-        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column min-width="300" prop="problem" label="发现问题" align="center"></el-table-column>
-        <el-table-column width="210" prop="responsibleDept" label="责任项目部" align="center"></el-table-column>
-        <el-table-column width="300" prop="photoNumber" label="上传照片数量" align="center"></el-table-column>
-        <el-table-column width="200" label="操作" align="center" fixed="right">
-          <template slot-scope="scope">
-            <el-button type="text" @click="addPhotoPanel(scope.row)">上传照片</el-button>
-            <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-table :data="problemForm.tableData" max-height="400" border style="width: 100%; margin-top: 20px" v-if="addProblemRow.jobOrderType==='整改通知单'">
-        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column min-width="300" prop="problem" label="发现问题" align="center"></el-table-column>
-        <el-table-column width="210" prop="violationType" label="违章性质" align="center"></el-table-column>
-        <el-table-column width="300" prop="responsibleDept" label="责任项目部" align="center"></el-table-column>
-        <el-table-column width="300" prop="rectificationRequirement" label="整改要求" align="center"></el-table-column>
-        <el-table-column width="300" prop="photoNumber" label="上传照片数量" align="center"></el-table-column>
-        <el-table-column width="200" label="操作" align="center" fixed="right">
-          <template slot-scope="scope">
-            <el-button type="text" @click="addPhotoPanel(scope.row)">上传照片</el-button>
-            <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <br><br>
-      <hr><br><br>
+            <el-col :span="8">
+              <div class="bar">
+                <el-form-item label="被查地点" prop="inspectAddress" placeholder="周报开始日期">
+                  <el-input v-model="problemForm.inspectAddress" disabled :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="20">
+              <div class="bar">
+                <el-form-item label="检查范围和简要内容" label-width="150px" prop="checkRangeAndContent" placeholder="项目名称">
+                  <el-input type="textarea" disabled :rows="4" placeholder="暂无信息" v-model="problemForm.checkRangeAndContent" style="margin-left:20px;width:1000px"></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+        </el-form>
+        <el-table :data="problemForm.tableData" max-height="400" border style="width: 100%; margin-top: 20px" v-if="addProblemRow.jobOrderType==='口头警告通知单'">
+          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+          <el-table-column min-width="300" prop="problem" label="发现问题" align="center"></el-table-column>
+          <el-table-column width="210" prop="responsibleDept" label="责任项目部" align="center"></el-table-column>
+          <el-table-column width="300" prop="photoNumber" label="上传照片数量" align="center"></el-table-column>
+          <el-table-column width="200" label="操作" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button type="text" @click="addPhotoPanel(scope.row)">上传照片</el-button>
+              <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-table :data="problemForm.tableData" max-height="400" border style="width: 100%; margin-top: 20px" v-if="addProblemRow.jobOrderType==='整改通知单'">
+          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+          <el-table-column min-width="300" prop="problem" label="发现问题" align="center"></el-table-column>
+          <el-table-column width="210" prop="violationType" label="违章性质" align="center"></el-table-column>
+          <el-table-column width="300" prop="responsibleDept" label="责任项目部" align="center"></el-table-column>
+          <el-table-column width="300" prop="rectificationRequirement" label="整改要求" align="center"></el-table-column>
+          <el-table-column width="300" prop="photoNumber" label="上传照片数量" align="center"></el-table-column>
+          <el-table-column width="200" label="操作" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button type="text" @click="addPhotoPanel(scope.row)">上传照片</el-button>
+              <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <br><br>
+        <hr><br><br>
 
-      <el-table :data="photoTable" max-height="1000" border style="width: 100%; margin-top: 20px" v-if="photoShowFlag">
-        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column min-width="300" prop="photoName" label="问题图片名称" align="center"></el-table-column>
-        <el-table-column width="200" label="操作" align="center" fixed="right">
-          <template slot-scope="scope">
-            <el-button type="text" @click="showThisPic(scope.$index,scope.row)">查看图片</el-button>
-            <el-button type="text" @click="deletePic(scope.row)">删除图片</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+        <el-table :data="photoTable" max-height="1000" border style="width: 100%; margin-top: 20px" v-if="photoShowFlag">
+          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+          <el-table-column min-width="300" prop="photoName" label="问题图片名称" align="center"></el-table-column>
+          <el-table-column width="200" label="操作" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button type="text" @click="showThisPic(scope.$index,scope.row)">查看图片</el-button>
+              <el-button type="text" @click="deletePic(scope.row)">删除图片</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
 
-      <!-- 图片预览部分 -->
-      <el-dialog :visible.sync="isShowImageDialog" :modal="false">
-        <el-carousel indicator-position="outside" height="600px" :autoplay="false" arrow="never">
-          <el-carousel-item v-for="src in urlIndex" :key="src" :label="src">
-            <img :src="src" style="max-width: 100%;max-height: 100%;display: block; margin: 0 auto;" />
-          </el-carousel-item>
-        </el-carousel>
-      </el-dialog>
-      <!-- <div class="demo-image" v-if="showPhotoFlag">
+        <!-- 图片预览部分 -->
+        <el-dialog :visible.sync="isShowImageDialog" :modal="false">
+          <el-carousel indicator-position="outside" height="600px" :autoplay="false" arrow="never">
+            <el-carousel-item v-for="src in urlIndex" :key="src" :label="src">
+              <img :src="src" style="max-width: 100%;max-height: 100%;display: block; margin: 0 auto;" />
+            </el-carousel-item>
+          </el-carousel>
+        </el-dialog>
+        <!-- <div class="demo-image" v-if="showPhotoFlag">
         <div class="block" v-for="i in photoNumber" :key="i">
           <el-image style="width: 100px; height: 100px" :src="url[i]" fit="cover"></el-image>
         </div>
       </div> -->
 
-      <!-- 文件操作 -->
-      <el-row :gutter="20" v-if="toAddPhotoPanelFlag">
-        <el-upload ref="upload" action :file-list="fileList" :http-request="sigleFileUploadAction" :show-file-list="false" multiple style="margin-left:11%" :auto-upload="true">
-          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-          <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-        </el-upload>
-      </el-row>
-      <el-table :data="photo.tableData" max-height="1000" border style="width: 100%; margin-top: 20px" v-if="toAddPhotoPanelFlag">
-        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column min-width="300" prop="name" label="图片名称" align="center"></el-table-column>
-      </el-table>
+        <!-- 文件操作 -->
+        <el-row :gutter="20" v-if="toAddPhotoPanelFlag">
+          <el-upload ref="upload" action :file-list="fileList" :http-request="sigleFileUploadAction" :show-file-list="false" multiple style="margin-left:11%" :auto-upload="true">
+            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+          </el-upload>
+        </el-row>
+        <el-table :data="photo.tableData" max-height="1000" border style="width: 100%; margin-top: 20px" v-if="toAddPhotoPanelFlag">
+          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+          <el-table-column min-width="300" prop="name" label="图片名称" align="center"></el-table-column>
+        </el-table>
 
-    </el-card>
+      </el-card>
+    </div>
     <!-- 反馈检查问题 -->
     <!-- 添加弹窗 -->
     <el-dialog title="反馈检查问题" :visible.sync="addInspectionProblemPanelFlag" width="1400px" :modal="false">
@@ -755,6 +757,8 @@ export default {
         .then(() => {
           deleteApi.deleteInspectionJobOrderInfoById(row.jobOrderId).then(response => {
             this.searchInspection();
+            if (this.addProblemRow.id === row.id)
+              this.addPhotoPanelFlag = false;
           })
         })
         .catch(() => {

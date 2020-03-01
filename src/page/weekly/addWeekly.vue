@@ -274,7 +274,7 @@
       </el-table>
     </el-card>
     <el-card class="box-card">
-      <el-checkbox v-model="addFormFour.hasThreePlusRiskWork" style="margin-left:20px">是否有三级以上风险</el-checkbox>
+      <el-checkbox v-model="addFormFour.hasThreePlusRiskWork" disabled style="margin-left:20px">是否有三级及以上风险</el-checkbox>
       <el-button type="primary" style="margin-left:50px;margin-right: 20px" @click="addOneLineWeeklyRiskContentAddReqs">添加条目</el-button>
       <el-button type="primary" style="margin-right: 20px" @click="deleteLinesWeeklyRiskContentAddReqs">删除条目</el-button>
       <br />
@@ -405,7 +405,7 @@ export default {
           idOptions: {},
           adminIdOptions: {},
           supervisionIdOptions: {},
-          constructDeptIdOptions:{},
+          constructDeptIdOptions: {},
           districtIdOptions: {},
           adminDeptOptions: {}
         }
@@ -839,6 +839,14 @@ export default {
         row.workProcess,
         row
       );
+      let num = 0;
+      this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+        if (ele.riskLevel >= 3)
+          num = 1;
+      })
+      if (num === 1) {
+        this.addFormFour.hasThreePlusRiskWork = true;
+      } else if (num === 0) this.addFormFour.hasThreePlusRiskWork = false;
     },
     //将工程编号设置为最后一列
     jobNumberChanged(index, row) {
@@ -855,6 +863,7 @@ export default {
         if (T[i].value === data) {
           this.findFlag = true;
           row.riskLevel = T[i].riskLevel;
+
           return;
         }
         this.Traversal(T[i].children, data, row);

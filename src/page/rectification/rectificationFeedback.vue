@@ -17,18 +17,6 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="8" style="margin-left:-32px">
-            <div class="bar">
-              <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
-                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:300px">
-                  <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-
-        </el-row>
-        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="周报日期" prop="weeklyStartTime" placeholder="周报开始日期">
@@ -43,7 +31,19 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="8" style="margin-top:-20px">
+
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
+                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:430px;margin-left:0px">
+                  <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8" style="margin-top:-20px;margin-left:400px">
             <div class="bar">
               <el-button type="primary" style="margin-left: -40px" @click="searchInspection()">搜索</el-button>
             </div>
@@ -473,8 +473,6 @@ export default {
     let endDate = api.getThisWeekStartTwo(startDate);
     this.searchTable.inspectStartDate = new Date(api.changeDate(startDate));
     this.searchTable.inspectEndDate = new Date(endDate);
-    this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
-    this.weeklyStartTimeChanged();
     this.searchInspection();
     //获取项目列表
     getApi.getAllProjectName().then(response => {
@@ -664,6 +662,8 @@ export default {
         this.isUpdate = false;
         this.firstTable = [];
         for (let i = 0; i < this.problemNum; i++) {
+          // if (this.inspectionRectificationAddFeedbackShowResps[i].rectificationDept === null || this.inspectionRectificationAddFeedbackShowResps[i].rectificationDept === "")
+          //   this.inspectionRectificationAddFeedbackShowResps[i].rectificationDept = this.inspectionRectificationAddFeedbackShowResps[i].responsibleDept;
           if (this.inspectionRectificationAddFeedbackShowResps[i].hasFeedback) {
             this.firstTable.push({
               id: this.inspectionRectificationAddFeedbackShowResps[i].id,
