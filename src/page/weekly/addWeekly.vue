@@ -821,6 +821,14 @@ export default {
               i++;
             });
           });
+          let num = 0;
+          this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+            if (ele.riskLevel >= 3)
+              num = 1;
+          })
+          if (num === 1) {
+            this.addFormFour.hasThreePlusRiskWork = true;
+          } else if (num === 0) this.addFormFour.hasThreePlusRiskWork = false;
         })
         .catch(() => {
           this.$message({

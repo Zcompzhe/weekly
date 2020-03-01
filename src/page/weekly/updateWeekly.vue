@@ -930,11 +930,20 @@ export default {
                   });
                 }
                 this.updateFormFour.weeklyRiskContentAddReqs.splice(i, 1);
+
                 i--;
               }
               i++;
             });
           });
+          let num = 0;
+          this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+            if (ele.riskLevel >= 3)
+              num = 1;
+          })
+          if (num === 1) {
+            this.updateFormFour.hasThreePlusRiskWork = true;
+          } else if (num === 0) this.updateFormFour.hasThreePlusRiskWork = false;
         })
         .catch(() => {
           this.$message({
