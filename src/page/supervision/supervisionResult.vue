@@ -1151,7 +1151,7 @@ export default {
         this.photoTable = response.returnList[0];
         this.url = [];
         response.returnList[0].forEach(element => {
-          this.url.push("http://localhost:8080" + element.photoResourceUrl);
+          this.url.push(`${window.$config.PIC}` + element.photoResourceUrl);
         })
       })
     },
