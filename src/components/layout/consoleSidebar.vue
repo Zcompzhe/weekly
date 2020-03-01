@@ -74,59 +74,14 @@
       <el-submenu index="project">
         <template slot="title">
           <i class="el-icon-message"></i>
-          项目信息管理
+          工程项目数据管理
         </template>
 
         <el-menu-item index="/project/projectInfoMana">
           <i class="el-icon-document"></i>项目信息管理
         </el-menu-item>
-
-      </el-submenu>
-      <el-submenu index="base">
-        <template slot="title">
-          <i class="el-icon-message"></i>
-          周报管理
-        </template>
         <el-menu-item index="/weekly/weeklyDataManage">
           <i class="el-icon-document"></i>周报数据管理
-        </el-menu-item>
-      </el-submenu>
-
-      <el-submenu index="back">
-        <template slot="title">
-          <i class="el-icon-message"></i>
-          后台管理
-        </template>
-
-        <el-menu-item index="/back/infoMana">
-          <i class="el-icon-document"></i>单位/部门信息管理
-        </el-menu-item>
-        <el-menu-item index="/back/personInfoMana">
-          <i class="el-icon-document"></i>人员信息管理
-        </el-menu-item>
-      </el-submenu>
-
-      <el-submenu index="risk">
-        <template slot="title">
-          <i class="el-icon-message"></i>
-          风险管理
-        </template>
-
-        <el-menu-item index="/risk/externalRiskMana">
-          <i class="el-icon-document"></i>外部风险管理
-        </el-menu-item>
-      </el-submenu>
-
-      <el-submenu index="approve">
-        <template slot="title">
-          <i class="el-icon-message"></i>
-          周报信息核准
-        </template>
-        <el-menu-item index="/weeklyCheck/weeklyApproved">
-          <i class="el-icon-document"></i>周报信息准确度管理
-        </el-menu-item>
-        <el-menu-item index="/weeklyCheck/dayWorkCheck">
-          <i class="el-icon-document"></i>当日作业进度核准
         </el-menu-item>
       </el-submenu>
 
@@ -156,10 +111,33 @@
 
       </el-submenu>
 
+      <el-submenu index="risk">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          工程风险管理
+        </template>
+
+        <el-menu-item index="/risk/externalRiskMana">
+          <i class="el-icon-document"></i>工程外部风险管理
+        </el-menu-item>
+      </el-submenu>
+      <el-submenu index="approve">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          周报信息核准
+        </template>
+        <el-menu-item index="/weeklyCheck/weeklyApproved">
+          <i class="el-icon-document"></i>周报信息准确度管理
+        </el-menu-item>
+        <el-menu-item index="/weeklyCheck/dayWorkCheck">
+          <i class="el-icon-document"></i>当日作业进度核准
+        </el-menu-item>
+      </el-submenu>
+
       <el-submenu index="safetyResponsibility">
         <template slot="title">
           <i class="el-icon-message"></i>
-          问题责任量化考核
+          安全责任量化考核
         </template>
 
         <el-menu-item index="/safetyResponsibility/personCharge">
@@ -167,6 +145,26 @@
         </el-menu-item>
         <el-menu-item index="/safetyResponsibility/quantitative">
           <i class="el-icon-document"></i>量化考核排名
+        </el-menu-item>
+      </el-submenu>
+      <el-submenu index="back">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          基本信息管理
+        </template>
+
+        <el-menu-item index="/back/infoMana">
+          <i class="el-icon-document"></i>单位/部门信息管理
+        </el-menu-item>
+      </el-submenu>
+      <el-submenu index="personMana">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          人员信息管理
+        </template>
+
+        <el-menu-item index="/back/personInfoMana">
+          <i class="el-icon-document"></i>人员信息管理
         </el-menu-item>
       </el-submenu>
 
@@ -181,7 +179,6 @@
         </el-menu-item>
       </el-submenu>
 
-      
     </el-menu>
   </div>
 </template>
