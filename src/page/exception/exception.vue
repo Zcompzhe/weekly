@@ -1,36 +1,43 @@
 <template>
   <div class="body">
     <el-card class="box-card">
-      <el-form :model="searchTable" label-position="left" ref="searchTable" :rules="searchTableRule" label-width="120px" class="demo-ruleForm">
+      <el-form :model="searchTable" label-position="left" ref="searchTable" :rules="searchTableRule" label-width="140px" class="demo-ruleForm">
         <el-row :gutter="20" style="margin-top:20px;margin-bottom:-10px">
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="作业日期" prop="workDate" placeholder="周报开始日期">
-                <el-date-picker v-model="searchTable.workDate" :clearable="false" type="date" placeholder="选择日期时间" style="min-width:300px;margin-left:0px"></el-date-picker>
+              <el-form-item label="当前日期" prop="currentDate" placeholder="周报开始日期">
+                <el-input v-model="searchTable.currentDate" disabled :rows="1" placeholder="暂无信息" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
-                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:300px">
-                  <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+              <el-form-item label="当前运行状态" prop="runState" placeholder="项目名称">
+                <el-input v-model="searchTable.runState" disabled :rows="1" placeholder="暂无信息" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="是否核准" prop="hasCheck" placeholder="是否核准">
-                <el-select v-model="searchTable.hasCheck" clearable placeholder="请选择" style="min-width:300px">
-                  <el-option v-for="item in searchTable.options.hasCheckOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
-                </el-select>
+              <el-form-item label="最高异常等级" prop="maxExceptionLevel" placeholder="是否核准">
+                <el-input v-model="searchTable.maxExceptionLevel" disabled :rows="1" placeholder="暂无信息" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="2" style="margin-left:20px;margin-bottom:20px">
+        </el-row>
+        <el-row :gutter="20" style="margin-top:20px;margin-bottom:-10px">
+          <el-col :span="8">
             <div class="bar">
-              <el-button type="primary" @click="searchWeeklyDayWorkCheck(1)">搜索</el-button>
+              <el-form-item label="今日待处理异常个数" prop="todayUntreatedExceptionCount" placeholder="周报开始日期">
+                <el-input v-model="searchTable.todayUntreatedExceptionCount" disabled :rows="1" placeholder="暂无信息" style="min-width:300px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="历史待处理异常个数" prop="historicalUntreatedExceptionCount" placeholder="项目名称">
+                <el-input v-model="searchTable.historicalUntreatedExceptionCount" disabled :rows="1" placeholder="暂无信息" style="min-width:300px"></el-input>
+              </el-form-item>
             </div>
           </el-col>
         </el-row>
@@ -38,41 +45,68 @@
     </el-card>
 
     <el-card class="box-card">
-      <el-row :gutter="20" style="margin-top:20px;margin-bottom:-10px">
-        <el-col :span="8">
-          <div class="bar">
-            <el-button type="primary" @click="updateWeeklyDayWorkCheck()">上报核对结果</el-button>
-          </div>
-        </el-col>
-
+      <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
         <el-col :span="10">
           <div class="bar">
             <div id="title">
-              <p id="tableTitle" style="min-width:1000px;font-size:24px;margin-left:80px;margin-bottom:20px">{{ tableTitle }}</p>
+              <p id="tableTitle" style="min-width:1000px;font-size:24px;margin-left:580px;margin-top:20px;">历史未处理异常信息</p>
             </div>
           </div>
         </el-col>
       </el-row>
-      <el-table :data="tableData" border @selection-change="selectChange" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
-        <el-table-column type="selection" width="50" align="center"></el-table-column>
+      <el-table :data="tableData" max-height="800" border style="width: 100%; margin-top: 20px">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="200" prop="workDate" label="作业日期" align="center"></el-table-column>
-        <el-table-column width="350" prop="projectName" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="120" prop="riskLevel" label="作业风险等级" align="center"></el-table-column>
-        <el-table-column prop="workContent" label="作业安排、位置及内容" align="center"></el-table-column>
-        <el-table-column width="100" prop="hasCheckStr" label="是否核准" align="center"></el-table-column>
-        <el-table-column width="250" prop="checkExist" label="实际作业是否存在" align="center">
+        <el-table-column width="200" prop="exceptionLevel" label="异常等级" align="center"></el-table-column>
+        <el-table-column width="200" prop="createTime" label="出现时间" align="center"></el-table-column>
+        <el-table-column prop="title" label="异常信息" align="center"></el-table-column>
+        <el-table-column width="200" prop="hasDealStr" label="是否处理" align="center"></el-table-column>
+        <el-table-column width="200" prop="suggestion" label="处理建议" align="center"></el-table-column>
+        <el-table-column width="250" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-radio-group v-model="scope.row.checkExist">
-              <el-radio :label="true" style="width:40px">是</el-radio>
-              <el-radio :label="false" style="width:40px">否</el-radio>
-            </el-radio-group>
+            <el-button type="text" @click="detailException(scope.row)">查看详情</el-button>
+            <el-button type="text" @click="completeException(scope.row)">完成处理</el-button>
           </template>
         </el-table-column>
+
       </el-table>
-      <div class="block">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="pagination.currentPage" :page-sizes="pagination.pageSizes" :page-size="pagination.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination.total"></el-pagination>
-      </div>
+      <el-dialog title="详细信息" :visible.sync="detailPanelFlag" width="1400px" :modal="false">
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">异常等级</div>
+              <el-input disabled v-model="exceptionDetail.exceptionLevel" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">出现时间</div>
+              <el-input disabled v-model="exceptionDetail.createTime" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">异常信息</div>
+              <el-input disabled v-model="exceptionDetail.title" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 30px; margin-bottom: 5px;margin-left:-18px">
+          <el-col :span="20">
+            <div class="bar">
+              <div class="title">异常详情</div>
+              <el-input disabled type="textarea" :rows="4" placeholder="暂无信息" v-model="exceptionDetail.detailDescription" style="margin-left: 26px;width:1000px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 30px; margin-bottom: 5px;margin-left:-18px">
+          <el-col :span="20">
+            <div class="bar">
+              <div class="title">处理建议</div>
+              <el-input disabled type="textarea" :rows="4" placeholder="暂无信息" v-model="exceptionDetail.suggestion" style="margin-left: 26px;width:1000px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+      </el-dialog>
     </el-card>
 
   </div>
@@ -90,104 +124,69 @@ export default {
   data() {
     return {
       //表格数据
-      tableTitle: "",
-      copyTableData: [],
       tableData: [],
-      multiSelection: [],
+      //详情信息
+      detailPanelFlag: false,
+      exceptionDetail: {
+
+      },
       //搜索数据
       searchTable: {
-        projectId: "",
-        workDate: "",
-        hasCheck: "",
-        options: {
-          projectIdOptions: [],
-          hasCheckOptions: [
-            {
-              value: true,
-              name: "是"
-            },
-            {
-              value: false,
-              name: "否"
-            }
-          ]
-
-        }
+        historicalUntreatedExceptionCount: "",
+        maxExceptionLevel: "",
+        todayUntreatedExceptionCount: "",
+        runState: "",
+        currentDate: "",
       },
       searchTableRule: {},
-      //页码部分
-      pagination: {
-        currentPage: 1,
-        pageSizes: [10, 25, 50, 100],
-        pageSize: 10,
-        total: 0
-      },
     };
   },
   created: function () {
-    let startDate = new Date();
-    this.searchTable.workDate = new Date(api.changeDate(startDate));
-
-    //获取项目列表
-    getApi.getAllProjectName().then(response => {
-      this.searchTable.options.projectIdOptions = response;
-    });
-    this.searchWeeklyDayWorkCheck(1);
+    this.getInfo();
   },
   methods: {
-    //上报核准结果
-    updateWeeklyDayWorkCheck() {
-      let list = [];
-      console.log(this.copyTableData)
-      for (let i = 0; i < this.tableData.length; i++) {
-        if (this.tableData[i].checkExist != this.copyTableData[i].checkExist) {
-          list.push({
-            id: this.tableData[i].id,
-            checkExist: this.tableData[i].checkExist
-          })
-        }
-      }
-      updateApi.updateWeeklyDayWorkCheck(list).then(response => {
-        this.searchWeeklyDayWorkCheck(this.pagination.currentPage)
-      })
-
+    detailException(row) {
+      this.detailPanelFlag = true;
+      this.exceptionDetail = row;
     },
-    //表格选中
-    selectChange(val) {
-      this.multiSelection = val;
-    },
-    //搜索
-    searchWeeklyDayWorkCheck(pageNum) {
-      let list = {
-        numberOfPage: this.pagination.pageSize,
-        pageNumber: pageNum - 1,
-        projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
-        workDate: this.searchTable.workDate === "" ? undefined : api.changeDate(this.searchTable.workDate)
-      }
-      searchApi.getWeeklyDayWorkCheckShowByCondition(list).then(response => {
-        this.tableData = response.returnList[0];
-        this.pagination.total = response.totalNumber;
-        this.copyTableData = [];
-        this.tableTitle = api.changeDate(this.searchTable.workDate) + "风险作业安排";
+    getInfo() {
+      //获取今日异常信息
+      getApi.getTodayExceptionInfoStatistics().then(res => {
+        this.searchTable.historicalUntreatedExceptionCount = res.historicalUntreatedExceptionCount;
+        this.searchTable.maxExceptionLevel = res.maxExceptionLevel;
+        this.searchTable.todayUntreatedExceptionCount = res.todayUntreatedExceptionCount;
+        this.searchTable.runState = res.runState;
+        this.searchTable.currentDate = res.currentDate;
+        this.tableData = res.exceptionInfoShowResps;
         this.tableData.forEach(ele => {
-          if (ele.hasCheck) ele.hasCheckStr = "是";
-          else ele.hasCheckStr = "否";
-          this.copyTableData.push({
-            id: ele.id,
-            checkExist: ele.checkExist
-          })
+          if (ele.hasDeal) ele.hasDealStr = "是";
+          else if (!ele.hasDeal) ele.hasDealStr = "否"
         })
-
       })
     },
-    //页码操控部分
-    handleSizeChange(val) {
-      this.pagination.pageSize = val;
-      this.searchWeeklyDayWorkCheck(1);
-    },
-    handleCurrentChange(val) {
-      this.pagination.currentPage = val;
-      this.searchWeeklyDayWorkCheck(val);
+    //完成处理
+    completeException(row) {
+      this.$confirm("是否确认完成该异常处理！", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          let list = {
+            id: row.id,
+            hasDeal: true
+          }
+          updateApi.updateExceptionInfo(list).then(res => {
+            this.getInfo();
+          })
+
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作！"
+          });
+        });
     },
   }
 };

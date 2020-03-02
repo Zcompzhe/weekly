@@ -168,7 +168,7 @@
         </el-menu-item>
       </el-submenu>
 
-      <el-submenu index="exception" v-if="false">
+      <el-submenu index="exception">
         <template slot="title">
           <i class="el-icon-message"></i>
           系统运行状态

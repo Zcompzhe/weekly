@@ -64,6 +64,7 @@ window.$config = {};
 
 //dev
 window.$config.PIC = 'http://139.224.25.25:8080';
+// window.$config.PIC = 'http://localhost:8080';
 //dev
 window.$config.HOST = 'http://127.0.0.1:8080'
 

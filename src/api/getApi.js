@@ -191,3 +191,8 @@ export const getRectificationFeedbackShowRespByJobOrderId = id => {
     }
   );
 };
+
+//获取今日异常
+export const getTodayExceptionInfoStatistics = () => {
+  return request.get(`/baseInfoManagement/getTodayExceptionInfoStatistics`);
+};
