@@ -850,8 +850,6 @@ export default {
         });
         return;
       }
-
-      console.log(this.searchTable)
       let list = {
         inspectEndDate: this.searchTable.inspectEndDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectEndDate)),
         inspectStartDate: this.searchTable.inspectStartDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectStartDate)),
