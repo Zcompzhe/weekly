@@ -747,7 +747,7 @@ export default {
         this.photoTable = response.returnList[0];
         this.url = [];
         response.returnList[0].forEach(element => {
-          this.url.push(`${window.$config.PIC}`+ element.photoResourceUrl);
+          this.url.push(`${window.$config.PIC}` + element.photoResourceUrl);
         })
       })
     },
@@ -850,9 +850,11 @@ export default {
         });
         return;
       }
+
+      console.log(this.searchTable)
       let list = {
-        inspectEndDate: this.searchTable.inspectEndDate === null ? undefined : api.changeDate(this.searchTable.inspectEndDate),
-        inspectStartDate: this.searchTable.inspectStartDate === null ? undefined : api.changeDate(this.searchTable.inspectStartDate),
+        inspectEndDate: this.searchTable.inspectEndDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectEndDate)),
+        inspectStartDate: this.searchTable.inspectStartDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectStartDate)),
         projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
         weeklyStartTime: this.searchTable.weeklyStartTime === null ? undefined : api.changeDate(this.searchTable.weeklyStartTime),
       }
