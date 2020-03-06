@@ -51,7 +51,7 @@
         <el-table-column width="250" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
         <el-table-column width="250" prop="constructContentNextWeek" label="主要施工内容" align="left"></el-table-column>
         <el-table-column width="350" prop="threePlusRiskWorkContent" label="三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
-        <el-table-column width="210" prop="adminName" label="所属建设管理单位" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminName" label="所属建管单位" align="center"></el-table-column>
         <el-table-column width="210" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
         <el-table-column width="80" prop="hasInspectThisWeekStr" label="本周是否督查" align="center"></el-table-column>
         <el-table-column width="80" prop="hasInspectThisMonthStr" label="本月是否督查" align="center"></el-table-column>
@@ -77,7 +77,7 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">所属建设管理单位</div>
+              <div class="title">所属建管单位</div>
               <el-input disabled v-model="weeklyDetail.adminName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
@@ -229,7 +229,7 @@
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
-              <div class="title" style="margin-left:50%;font-size:18px">所属建设管理单位责任人信息</div>
+              <div class="title" style="margin-left:50%;font-size:18px">所属建管单位责任人信息</div>
             </div>
           </el-col>
         </el-row>

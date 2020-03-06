@@ -69,7 +69,7 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">所属建设管理单位</div>
+              <div class="title">所属建管单位</div>
               <el-input disabled v-model="weeklyDetail.adminName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
@@ -221,7 +221,7 @@
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
-              <div class="title" style="margin-left:50%;font-size:18px">所属建设管理单位责任人信息</div>
+              <div class="title" style="margin-left:50%;font-size:18px">所属建管单位责任人信息</div>
             </div>
           </el-col>
         </el-row>

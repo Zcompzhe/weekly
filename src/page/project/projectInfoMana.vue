@@ -4,7 +4,7 @@
       <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
         <el-col :span="12">
           <div class="bar">
-            <div class="title">所属所属建设管理单位</div>
+            <div class="title">所属所属建管单位</div>
             <el-select v-model="searchTable.adminId" clearable placeholder="请选择" style="min-width:200px">
               <el-option v-for="item in searchTable.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
             </el-select>
@@ -56,7 +56,7 @@
       <el-table :data="projectInfo.tableData" max-height="800" border style="width: 100%; margin-top: 20px">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="name" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="210" prop="adminName" label="所属建设管理单位" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminName" label="所属建管单位" align="center"></el-table-column>
         <el-table-column width="210" prop="constructDeptName" label="施工单位" align="center"></el-table-column>
         <el-table-column width="210" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="210" prop="districtName" label="所在区域" align="center"></el-table-column>
@@ -91,7 +91,7 @@
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="projectId" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="210" prop="adminId" label="所属建设管理单位" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminId" label="所属建管单位" align="center"></el-table-column>
         <el-table-column width="210" prop="currentProgress" label="当前总体施工进度" align="center"></el-table-column>
         <el-table-column width="210" prop="weeklyStartTime" label="周报开始日期" align="center"></el-table-column>
         <el-table-column width="210" prop="workContentNextWeek" label="主要施工作业内容" align="center"></el-table-column>
@@ -111,7 +111,7 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">所属建设管理单位</div>
+              <div class="title">所属建管单位</div>
               <el-input disabled v-model="projectDetail.adminName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
@@ -321,7 +321,7 @@ export default {
   },
 
   created: function () {
-    //获取所有所属建设管理单位
+    //获取所有所属建管单位
     getApi.getAllAdministrativeDeptName().then(response => {
       this.searchTable.options.adminIdOptions = response;
     });

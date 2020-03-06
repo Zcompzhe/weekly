@@ -42,7 +42,7 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="所属建设管理单位" prop="adminId" placeholder="当前月份">
+              <el-form-item label="所属建管单位" prop="adminId" placeholder="当前月份">
                 <el-select v-model="addFormTwo.adminId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
@@ -415,7 +415,7 @@ export default {
           { required: true, message: "请选择所属部门", trigger: "change" }
         ],
         adminId: [
-          { required: true, message: "请选择所属建设管理单位", trigger: "change" }
+          { required: true, message: "请选择所属建管单位", trigger: "change" }
         ],
         constructDept: [
           { required: true, message: "请输入施工单位", trigger: "change" }
@@ -537,7 +537,7 @@ export default {
     getApi.getAllProjectName().then(response => {
       this.addFormTwo.options.idOptions = response;
     });
-    //获取所有所属建设管理单位
+    //获取所有所属建管单位
     getApi.getAllAdministrativeDeptName().then(response => {
       this.addFormTwo.options.adminIdOptions = response;
     });

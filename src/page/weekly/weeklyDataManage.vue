@@ -19,7 +19,7 @@
           </el-col>
           <el-col :span="8" style="margin-left:-32px">
             <div class="bar">
-              <el-form-item label="所属建设管理单位" prop="adminId" placeholder="项目名称">
+              <el-form-item label="所属建管单位" prop="adminId" placeholder="项目名称">
                 <el-select v-model="searchTable.adminId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in searchTable.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
@@ -108,7 +108,7 @@
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="projectName" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="210" prop="adminName" label="所属建设管理单位" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminName" label="所属建管单位" align="center"></el-table-column>
         <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
         <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
         <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
@@ -150,7 +150,7 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">所属建设管理单位</div>
+              <div class="title">所属建管单位</div>
               <el-input disabled v-model="weeklyDetail.adminName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
@@ -428,7 +428,7 @@
         <el-table :data="historicalData.tableData" max-height="800" border style="width: 100%; margin-top: 20px">
           <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
           <el-table-column width="210" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
-          <el-table-column width="210" prop="adminName" label="所属建设管理单位" align="center"></el-table-column>
+          <el-table-column width="210" prop="adminName" label="所属建管单位" align="center"></el-table-column>
           <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
           <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
           <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>

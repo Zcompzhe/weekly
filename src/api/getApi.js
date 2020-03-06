@@ -8,7 +8,7 @@ export const getAllProjectName = () => {
   return request.get(`/projectWeeklyManagement/getAllProjectName`);
 };
 
-//获取所有所属建设管理单位
+//获取所有所属建管单位
 export const getAllAdministrativeDeptName = () => {
   return request.get(`/baseInfoManagement/getAllAdministrativeDeptName`);
 };

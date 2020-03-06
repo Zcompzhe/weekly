@@ -29,7 +29,7 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="所属建设管理单位" prop="adminId" placeholder="请选择所属建设管理单位">
+              <el-form-item label="所属建管单位" prop="adminId" placeholder="请选择所属建管单位">
                 <el-select v-model="projectForm.adminId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in projectForm.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
@@ -167,7 +167,7 @@
         <!-- <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
-              <div class="title" style="margin-left:54%;font-size:18px">所属建设管理单位责任人信息</div>
+              <div class="title" style="margin-left:54%;font-size:18px">所属建管单位责任人信息</div>
             </div>
           </el-col>
         </el-row> -->
@@ -306,7 +306,7 @@ export default {
           { required: true, message: "请选择所属部门", trigger: "change" }
         ],
         adminId: [
-          { required: true, message: "请选择所属建设管理单位", trigger: "change" }
+          { required: true, message: "请选择所属建管单位", trigger: "change" }
         ],
         constructDeptId: [
           { required: true, message: "请输入施工单位", trigger: "change" }
@@ -388,7 +388,7 @@ export default {
     getApi.getAllProjectStateEnum().then(response => {
       this.projectForm.options.runningNowOptions = response;
     });
-    //获取所有所属建设管理单位
+    //获取所有所属建管单位
     getApi.getAllAdministrativeDeptName().then(response => {
       this.projectForm.options.adminIdOptions = response;
     });
