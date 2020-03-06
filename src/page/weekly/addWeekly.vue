@@ -60,7 +60,7 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="所属建设管理单位" prop="adminId" placeholder="当前月份">
+              <el-form-item label="建设管理单位" prop="adminId" placeholder="当前月份">
                 <el-select v-model="addFormTwo.adminId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
