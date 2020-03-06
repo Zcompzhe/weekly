@@ -11,7 +11,7 @@
   overflow-y: auto;
   .console-main {
     position: relative;
-    padding: 50px 0px 0px 180px;
+    padding: 50px 0px 0px 240px;
     width: auto;
     height: 100%;
     &.console-main-full {

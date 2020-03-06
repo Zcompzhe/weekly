@@ -41,16 +41,16 @@
   overflow-x: hidden;
   overflow-y: auto;
   height: auto;
-  width: 180px;
+  width: 240px;
   .sidebar-content {
-    width: 200px;
+    width: 260px;
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     background: #293038;
     .sidebar-fold {
       height: 30px;
-      width: 140px;
+      width: 200px;
       background: #394555;
       color: #aeb9c2;
       text-align: left;
@@ -81,7 +81,7 @@
           <i class="el-icon-document"></i>项目信息管理
         </el-menu-item>
         <el-menu-item index="/weekly/weeklyDataManage">
-          <i class="el-icon-document"></i>周报数据管理
+          <i class="el-icon-document"></i>周计划（周报）数据管理
         </el-menu-item>
       </el-submenu>
 

@@ -6,7 +6,7 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="周报日期" prop="weeklyStartTime" placeholder="周报开始日期">
-                <el-date-picker v-model="searchTable.weeklyStartTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px" @change="weeklyStartTimeChanged"></el-date-picker>
+                <el-date-picker v-model="searchTable.weeklyStartTime" :clearable="false" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px" @change="weeklyStartTimeChanged"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
@@ -19,7 +19,7 @@
           </el-col>
           <el-col :span="8" style="margin-left:-32px">
             <div class="bar">
-              <el-form-item label="建设管理单位" prop="adminId" placeholder="项目名称">
+              <el-form-item label="所属建设管理单位" prop="adminId" placeholder="项目名称">
                 <el-select v-model="searchTable.adminId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in searchTable.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
@@ -28,7 +28,7 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="项管部门" prop="adminDept" placeholder="项目名称">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="项目名称">
                 <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in searchTable.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
@@ -50,7 +50,7 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="下周是否有作业" prop="hasWorkNextWeek" placeholder="项目名称">
+              <el-form-item label="是否有作业" prop="hasWorkNextWeek" placeholder="项目名称">
                 <el-select v-model="searchTable.hasWorkNextWeek" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in searchTable.options.hasWorkNextWeekOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
                 </el-select>
@@ -108,20 +108,21 @@
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="projectName" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="210" prop="adminName" label="建设管理单位" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminName" label="所属建设管理单位" align="center"></el-table-column>
         <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
         <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
         <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
-        <el-table-column width="210" prop="adminDept" label="项管部门" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
         <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
         <el-table-column width="210" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
         <el-table-column width="210" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
-        <el-table-column width="250" label="操作" align="center" fixed="right">
+        <el-table-column width="300" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="detailWeekly(scope.row)">查看详情</el-button>
             <el-button type="text" @click="updateWeekly(scope.row)">修改信息</el-button>
             <el-button type="text" @click="deleteWeekly(scope.row)">删除信息</el-button>
+            <el-button type="text" @click="historicalInfo(scope.row)">历史数据</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -131,6 +132,15 @@
       </div>
 
       <el-dialog title="详细信息" :visible.sync="detailPanelFlag" width="1400px" :modal="false">
+        <el-row :gutter="20">
+          <el-col :span="20">
+            <div class="bar">
+              <div id="title">
+                <p id="tableTitle" style="min-width:1000px;font-size:22px;margin-left:645px;margin-bottom:30px">项目信息</p>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
@@ -140,7 +150,7 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">建设管理单位</div>
+              <div class="title">所属建设管理单位</div>
               <el-input disabled v-model="weeklyDetail.adminName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
@@ -218,7 +228,7 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">项管部门</div>
+              <div class="title">所属部门</div>
               <el-input disabled v-model="weeklyDetail.adminDept" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
@@ -263,17 +273,28 @@
         </el-row>
         <br>
         <hr><br>
-        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
-          <el-col :span="12">
+        <el-row :gutter="20">
+          <el-col :span="20">
             <div class="bar">
-              <div class="title">当前总体施工进度</div>
-              <el-input disabled type="textarea" :rows="4" placeholder="暂无信息" v-model="weeklyDetail.workCurrentProgress" style="margin-left: 26px;width:600px"></el-input>
+              <div id="title">
+                <p id="tableTitle" style="min-width:1000px;font-size:22px;margin-left:645px;margin-bottom:30px">项目动态</p>
+              </div>
             </div>
           </el-col>
-          <el-col :span="12">
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="23">
             <div class="bar">
-              <div class="title">下周主要施工作业内容</div>
-              <el-input disabled type="textarea" :rows="4" placeholder="暂无信息" v-model="weeklyDetail.constructContentNextWeek" style="margin-left: 26px;width:600px"></el-input>
+              <div class="title" style="width:129px">当前总体施工进度</div>
+              <el-input disabled type="textarea" :rows="2" placeholder="暂无信息" v-model="weeklyDetail.workCurrentProgress" style="margin-left: 26px;width:1400px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="23">
+            <div class="bar">
+              <div class="title" style="width:129px">下周主要施工作业内容</div>
+              <el-input disabled type="textarea" :rows="2" placeholder="暂无信息" v-model="weeklyDetail.constructContentNextWeek" style="margin-left: 26px;width:1400px"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -281,8 +302,8 @@
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="23">
             <div class="bar">
-              <div class="title">三级及以上风险作业安排、位置及内容</div>
-              <el-input disabled type="textarea" :rows="4" placeholder="暂无信息" v-model="weeklyDetail.threePlusRiskWorkContent" style="margin-left: 26px;width:1000px"></el-input>
+              <div class="title" style="width:129px">三级及以上风险作业安排、位置及内容</div>
+              <el-input disabled type="textarea" :rows="2" placeholder="暂无信息" v-model="weeklyDetail.threePlusRiskWorkContent" style="margin-left: 26px;width:1400px"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -292,7 +313,16 @@
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
-              <div class="title" style="margin-left:50%;font-size:18px">建设管理单位责任人信息</div>
+              <div id="title">
+                <p id="tableTitle" style="min-width:1000px;font-size:22px;margin-left:625px;margin-bottom:30px">项目管理人员</p>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="20">
+            <div class="bar">
+              <div class="title" style="margin-left:53%;font-size:18px">建设管理单位责任人信息</div>
             </div>
           </el-col>
         </el-row>
@@ -339,7 +369,7 @@
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
-              <div class="title" style="margin-left:52%;font-size:18px">监理单位责任人信息</div>
+              <div class="title" style="margin-left:55%;font-size:18px">监理单位责任人信息</div>
             </div>
           </el-col>
         </el-row>
@@ -383,6 +413,35 @@
             </div>
           </el-col>
         </el-row>
+      </el-dialog>
+
+      <el-dialog title="历史数据" :visible.sync="historicalPanelFlag" width="1400px" :modal="false">
+        <el-row :gutter="20">
+          <el-col :span="20">
+            <div class="bar">
+              <div id="title">
+                <p id="tableTitle" style="min-width:1000px;font-size:22px;margin-left:25px;margin-bottom:30px">{{historicalData.projectName}}历史周计划（周报）信息</p>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-table :data="historicalData.tableData" max-height="800" border style="width: 100%; margin-top: 20px">
+          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+          <el-table-column width="210" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
+          <el-table-column width="210" prop="adminName" label="所属建设管理单位" align="center"></el-table-column>
+          <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
+          <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
+          <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
+          <el-table-column width="210" prop="adminDept" label="所属部门" align="center"></el-table-column>
+          <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
+          <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
+          <el-table-column width="210" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
+          <el-table-column width="210" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
+        </el-table>
+        <div class="block">
+          <el-pagination @size-change="handleSizeChangeA" @current-change="handleCurrentChangeA" :current-page.sync="pagination2.currentPage" :page-sizes="pagination2.pageSizes" :page-size="pagination2.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination2.total"></el-pagination>
+        </div>
+
       </el-dialog>
     </el-card>
   </div>
@@ -445,6 +504,19 @@ export default {
         pageSize: 10,
         total: 0
       },
+      //历史数据
+      historicalPanelFlag: false,
+      historicalBackup: [],
+      historicalData: {
+        projectName: "未知项目",
+        tableData: [],
+      },
+      pagination2: {
+        currentPage: 1,
+        pageSizes: [10, 25, 50, 100],
+        pageSize: 10,
+        total: 0
+      },
     };
   },
 
@@ -478,7 +550,7 @@ export default {
       this.pagination.total = response.totalNumber;
 
     })
-    //获取项管部门
+    //获取所属部门
     getApi.getAllProjectAdminDeptEnum().then(response => {
       this.searchTable.options.adminDeptOptions = response;
     });
@@ -493,6 +565,22 @@ export default {
 
   },
   methods: {
+    //历史信息
+    historicalInfo(row) {
+      this.historicalBackup = row;
+      searchApi.getProjectWeeklyByCondition({
+        projectId: row.projectId,
+        orderByIdDesc: true,
+        pageNumber: this.pagination2.currentPage-1,
+        numberOfPage: this.pagination2.pageSize
+      }).then(res => {
+        this.historicalPanelFlag = true;
+        this.historicalData.projectName = row.projectName;
+        this.historicalData.tableData = res.returnList[0];
+        this.pagination2.currentPage = 1;
+        this.pagination2.total = res.totalNumber;
+      })
+    },
     //查看详情
     detailWeekly(row) {
       getApi.getProjectWeeklyDetailById(row.id).then(response => {
@@ -592,6 +680,15 @@ export default {
     handleCurrentChange(val) {
       this.pagination.currentPage = val;
       this.searchWeekly(val);
+    },
+    //历史数据页码变化
+    handleSizeChangeA(val) {
+      this.pagination.pageSize = val;
+      this.historicalInfo(this.historicalBackup);
+    },
+    handleCurrentChangeA(val) {
+      this.pagination.currentPage = val;
+      this.historicalInfo(this.historicalBackup);
     },
     addWeeklyPage() {
       this.$router.push({

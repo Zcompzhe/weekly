@@ -47,7 +47,7 @@ export const addAdminProjectDept = name => {
   });
 };
 
-//添加新的建设管理单位
+//添加新的所属建设管理单位
 export const addAdministrativeDept = name => {
     return request.get(`/baseInfoManagement/addAdministrativeDept`, {
       params: {

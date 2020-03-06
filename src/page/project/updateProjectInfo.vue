@@ -2,10 +2,19 @@
   <div class="body">
     <el-card class="box-card">
       <el-form :model="projectForm" :rules="projectFormRule" ref="projectForm" label-width="120px" class="demo-ruleForm">
-        <el-row :gutter="20">
+        <!-- <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
               <div class="title" style="margin-left:54%;font-size:22px">修改项目信息</div>
+            </div>
+          </el-col>
+        </el-row> -->
+        <el-row :gutter="20">
+          <el-col :span="20">
+            <div class="bar">
+              <div id="title">
+                <p id="tableTitle" style="min-width:1000px;font-size:28px;margin-left:620px;margin-top:30px">项目基本信息</p>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -20,7 +29,7 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="建设管理单位" prop="adminId" placeholder="请选择建设管理单位">
+              <el-form-item label="所属建设管理单位" prop="adminId" placeholder="请选择所属建设管理单位">
                 <el-select v-model="projectForm.adminId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in projectForm.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
@@ -122,7 +131,7 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="项管部门" prop="adminDept" placeholder="请选择实际状态">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="请选择实际状态">
                 <el-select v-model="projectForm.adminDept" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in projectForm.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
@@ -131,9 +140,9 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="当前是否运作" prop="runningNow" placeholder="管控内状态">
+              <el-form-item label="项目状态" prop="runningNow" placeholder="管控内状态">
                 <el-select v-model="projectForm.runningNow" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in projectForm.options.runningNowOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
+                  <el-option v-for="item in projectForm.options.runningNowOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -149,10 +158,19 @@
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
-              <div class="title" style="margin-left:50%;font-size:18px">建设管理单位责任人信息</div>
+              <div id="title">
+                <p id="tableTitle" style="min-width:1000px;font-size:28px;margin-left:620px;margin-top:30px">项目人员信息</p>
+              </div>
             </div>
           </el-col>
         </el-row>
+        <!-- <el-row :gutter="20">
+          <el-col :span="20">
+            <div class="bar">
+              <div class="title" style="margin-left:50%;font-size:18px">所属建设管理单位责任人信息</div>
+            </div>
+          </el-col>
+        </el-row> -->
 
         <el-row :gutter="20">
           <el-col :span="8">
@@ -166,8 +184,8 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="安全专职" prop="safetyStaffId" placeholder="请选择安全专职">
-                <el-select v-model="personForm.safetyStaffId" clearable placeholder="请选择" style="min-width:300px">
+              <el-form-item label="质量专责" prop="qualityStaffId" placeholder="请选择质量专责">
+                <el-select v-model="personForm.qualityStaffId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -175,8 +193,8 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="质量专职" prop="qualityStaffId" placeholder="请选择质量专职">
-                <el-select v-model="personForm.qualityStaffId" clearable placeholder="请选择" style="min-width:300px">
+              <el-form-item label="安全专责" prop="safetyStaffId" placeholder="请选择安全专责">
+                <el-select v-model="personForm.safetyStaffId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -184,13 +202,13 @@
           </el-col>
         </el-row>
 
-        <el-row :gutter="20">
+        <!-- <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
               <div class="title" style="margin-left:52%;font-size:18px">监理单位责任人信息</div>
             </div>
           </el-col>
-        </el-row>
+        </el-row> -->
 
         <el-row :gutter="20">
           <el-col :span="8">
@@ -287,10 +305,10 @@ export default {
       },
       projectFormRule: {
         adminDept: [
-          { required: true, message: "请选择项管部门", trigger: "change" }
+          { required: true, message: "请选择所属部门", trigger: "change" }
         ],
         adminId: [
-          { required: true, message: "请选择建设管理单位", trigger: "change" }
+          { required: true, message: "请选择所属建设管理单位", trigger: "change" }
         ],
         constructDeptId: [
           { required: true, message: "请输入施工单位", trigger: "change" }
@@ -311,7 +329,7 @@ export default {
           { required: true, message: "请输入项目名称", trigger: "change" }
         ],
         runningNow: [
-          { required: true, message: "请选择当前是否运作", trigger: "change" }
+          { required: true, message: "请选择项目状态", trigger: "change" }
         ],
         actualStartTime: [
           { required: false, message: "请选择实际开工时间", trigger: "change" }
@@ -352,10 +370,10 @@ export default {
           { required: true, message: "请选择项目经理", trigger: "change" }
         ],
         qualityStaffId: [
-          { required: true, message: "请选择质量专职", trigger: "change" }
+          { required: true, message: "请选择质量专责", trigger: "change" }
         ],
         safetyStaffId: [
-          { required: true, message: "请选择安全专职", trigger: "change" }
+          { required: true, message: "请选择安全专责", trigger: "change" }
         ],
         safetySupervisorId: [
           { required: true, message: "请选择安全监理", trigger: "change" }
@@ -365,7 +383,11 @@ export default {
   },
 
   created() {
-    //获取所有建设管理单位
+    //获取运行状态
+    getApi.getAllProjectStateEnum().then(response => {
+      this.projectForm.options.runningNowOptions = response;
+    });
+    //获取所有所属建设管理单位
     getApi.getAllAdministrativeDeptName().then(response => {
       this.projectForm.options.adminIdOptions = response;
     });
@@ -377,7 +399,7 @@ export default {
     getApi.getAllDistrictName().then(response => {
       this.projectForm.options.districtIdOptions = response;
     });
-    //获取所有项管部门
+    //获取所有所属部门
     getApi.getAllProjectAdminDeptEnum().then(response => {
       this.projectForm.options.adminDeptOptions = response;
     });

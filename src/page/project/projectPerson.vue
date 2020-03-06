@@ -11,7 +11,7 @@
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
-              <div class="title" style="margin-left:49%;font-size:18px">建设管理单位责任人信息</div>
+              <div class="title" style="margin-left:49%;font-size:18px">所属建设管理单位责任人信息</div>
             </div>
           </el-col>
         </el-row>

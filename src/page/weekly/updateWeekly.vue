@@ -3,6 +3,15 @@
     <el-card class="box-card">
       <el-form :model="updateFormOne" label-position="left" ref="updateFormOne" :rules="updateFormOneRule" label-width="120px" class="demo-ruleForm">
         <el-row :gutter="20">
+          <el-col :span="20">
+            <div class="bar">
+              <div id="title">
+                <p id="tableTitle" style="min-width:1000px;font-size:28px;margin-left:620px;">周计划(周报)时间</p>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="周报开始日期" prop="weeklyStartTime" placeholder="周报开始日期">
@@ -30,6 +39,15 @@
     <el-card class="box-card">
       <el-form :model="updateFormTwo" ref="updateFormTwo" label-position="left" :rules="updateFormTwoRule" label-width="120px" class="demo-ruleForm">
         <el-row :gutter="20">
+          <el-col :span="20">
+            <div class="bar">
+              <div id="title">
+                <p id="tableTitle" style="min-width:1000px;font-size:28px;margin-left:650px;">项目基本信息</p>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目名称" prop="projectIdName" placeholder="项目名称">
@@ -42,7 +60,7 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="建设管理单位" prop="adminId" placeholder="当前月份">
+              <el-form-item label="所属建设管理单位" prop="adminId" placeholder="当前月份">
                 <el-select disabled v-model="updateFormTwo.adminId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormTwo.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
@@ -152,7 +170,7 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="项管部门" prop="adminDept" placeholder="当前月份">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="当前月份">
                 <el-select v-model="updateFormTwo.adminDept" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormTwo.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
@@ -166,6 +184,15 @@
     </el-card>
     <el-card class="box-card">
       <el-form :model="updateFormThree" ref="updateFormThree" label-position="left" :rules="updateFormThreeRule" label-width="120px" class="demo-ruleForm">
+        <el-row :gutter="20">
+          <el-col :span="20">
+            <div class="bar">
+              <div id="title">
+                <p id="tableTitle" style="min-width:1000px;font-size:28px;margin-left:650px;">项目人员信息</p>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
@@ -233,6 +260,15 @@
       </el-form>
     </el-card>
     <el-card class="box-card">
+      <el-row :gutter="20">
+        <el-col :span="20">
+          <div class="bar">
+            <div id="title">
+              <p id="tableTitle" style="min-width:1000px;font-size:28px;margin-left:595px;">当前总体施工进度详情</p>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
       <el-button type="primary" style="margin-right: 20px" @click="addOneLineWeeklyWorkProgressAddReqs">添加条目</el-button>
       <el-button type="primary" style="margin-right: 20px" @click="deleteLinesWeeklyWorkProgressAddReqs">删除条目</el-button>
       <br />
@@ -240,12 +276,12 @@
       <el-table :data="updateFormFour.weeklyWorkProgressAddReqs" @selection-change="selectWeeklyWorkProgressAddReqs" border>
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="400" prop="jobNumberShow" label="工程编号" align="center">
+        <el-table-column width="400" prop="jobNumberShow" label="分部分项工程" align="center">
           <template slot-scope="scope">
             <el-cascader v-model="scope.row.jobNumberShow" :options="updateFormFour.options.jobNumberOptions" @change="jobNumberChanged(scope.index, scope.row)" :props="optionPropsA" style="min-width:300px"></el-cascader>
           </template>
         </el-table-column>
-        <el-table-column label="当前总体施工进度" align="center">
+        <el-table-column label="当前总体施工进度详情" align="center">
           <template slot-scope="scope">
             <el-input v-model="scope.row.currentProgress" clearable :rows="1" placeholder="请选择"></el-input>
           </template>
@@ -253,44 +289,45 @@
       </el-table>
     </el-card>
     <el-card class="box-card">
+      <el-row :gutter="20">
+        <el-col :span="20">
+          <div class="bar">
+            <div id="title">
+              <p id="tableTitle" style="min-width:1000px;font-size:28px;margin-left:655px;margin-bottom:30px">下周作业安排</p>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
       <el-checkbox v-model="updateFormFour.hasWorkNextWeek" style="margin-left:20px">下周是否有作业</el-checkbox>
-      <el-button type="primary" style="margin-left:50px;margin-right: 20px" @click="addOneLineWeeklyConstructContentAddReqs" :disabled="!updateFormFour.hasWorkNextWeek">添加条目</el-button>
-      <el-button type="primary" style="margin-right: 20px" @click="deleteLinesWeeklyConstructContentAddReqs">删除条目</el-button>
-      <br />
-      <br />
-      <el-table :data="updateFormFour.weeklyConstructContentAddReqs" @selection-change="selectWeeklyConstructContentAddReqs" border>
-        <el-table-column type="selection" width="50" align="center"></el-table-column>
-        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="400" prop="jobNumberShow" label="工程编号" align="center">
-          <template slot-scope="scope">
-            <el-cascader v-model="scope.row.jobNumberShow" :options="updateFormFour.options.jobNumberOptions" :props="optionPropsA" @change="jobNumberChanged(scope.index,scope.row)" style="min-width:300px"></el-cascader>
-          </template>
-        </el-table-column>
-        <el-table-column label="下周主要施工内容" align="center">
-          <template slot-scope="scope">
-            <el-input v-model="scope.row.constructContent" clearable :rows="1" placeholder="请选择"></el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
-    <el-card class="box-card">
-      <el-checkbox v-model="updateFormFour.hasThreePlusRiskWork" disabled style="margin-left:20px">是否有三级以上风险</el-checkbox>
-      <el-button type="primary" style="margin-left:50px;margin-right: 20px" @click="addOneLineWeeklyRiskContentAddReqs">添加条目</el-button>
+      <el-button type="primary" style="margin-left:50px;margin-right: 20px" @click="addOneLineWeeklyRiskContentAddReqs" :disabled="!updateFormFour.hasWorkNextWeek">添加条目</el-button>
       <el-button type="primary" style="margin-right: 20px" @click="deleteLinesWeeklyRiskContentAddReqs">删除条目</el-button>
+      <el-checkbox v-model="updateFormFour.hasThreePlusRiskWork" disabled style="margin-left:20px">是否有三级及以上风险</el-checkbox>
       <br />
       <br />
       <el-table :data="updateFormFour.weeklyRiskContentAddReqs" @selection-change="selectWeeklyRiskContentAddReqs" border>
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="400" prop="workProcessShow" label="工序" align="center">
+        <el-table-column width="400" prop="workProcessShow" label="分部分项工程" align="center">
           <template slot-scope="scope">
             <el-cascader v-model="scope.row.workProcessShow" :props="optionPropsB" :options="updateFormFour.options.workProcessOptions" @change="workProcessChanged(scope.index, scope.row)" style="min-width:350px"></el-cascader>
           </template>
         </el-table-column>
-        <el-table-column prop="riskLevel" label="风险等级" width="100px" align="center"></el-table-column>
+        <el-table-column prop="riskLevel" label="风险等级" width="100px" align="center">
+          <template slot-scope="scope">
+            <span v-if="scope.row.riskAdd" style="color:red">{{ scope.row.riskLevel }}</span>
+            <span v-else>{{ scope.row.riskLevel }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="workContent" label="下周作业安排、位置及内容" align="center">
           <template slot-scope="scope">
             <el-input v-model="scope.row.workContent" clearable :rows="1" placeholder="请选择"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="riskAdd" label="是否风险升级管理" align="center">
+          <template slot-scope="scope">
+            <el-select v-model="scope.row.riskAdd" clearable placeholder="请选择" style="min-width:200px" @change="updateFlagChange(scope.index,scope.row)">
+              <el-option v-for="item in updateFormFour.options.riskAddOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
+            </el-select>
           </template>
         </el-table-column>
         <el-table-column prop="workStartTime" width="180px" label="作业开始时间" align="center">
@@ -330,7 +367,7 @@
         </el-row>
       </el-form>
 
-      <div style="margin-left:30%;margin-top:30px;margin-bottom:10px">
+      <div style="margin-left:35%;margin-top:30px;margin-bottom:10px">
         <el-button type="primary" style="margin-right: 80px" @click="saveAllInfo">信息保存</el-button>
         <el-button type="primary" style="margin-right: 80px" @click="submitProjectWeeklyInfo">信息上报</el-button>
         <el-button type="primary" style="margin-right: 80px" @click="cancelAllInfo">取消</el-button>
@@ -423,7 +460,7 @@ export default {
           { required: true, message: "请选择项目名称", trigger: "change" }
         ],
         adminDept: [
-          { required: true, message: "请选择项管部门", trigger: "change" }
+          { required: true, message: "请选择所属部门", trigger: "change" }
         ],
         adminId: [
           { required: true, message: "请选择建设管理单位", trigger: "change" }
@@ -517,7 +554,17 @@ export default {
         weeklyRiskContentAddReqs: [],
         options: {
           workProcessOptions: [],
-          jobNumberOptions: []
+          jobNumberOptions: [],
+          riskAddOptions: [
+            {
+              value: true,
+              name: "是"
+            },
+            {
+              value: false,
+              name: "否"
+            },
+          ]
         }
       },
       //状态值
@@ -583,7 +630,7 @@ export default {
 
       //表格
       this.updateFormFour.weeklyWorkProgressAddReqs = res.weeklyWorkProgressShowResps;
-      this.updateFormFour.weeklyConstructContentAddReqs = res.weeklyConstructContentShowResps;
+      // this.updateFormFour.weeklyConstructContentAddReqs = res.weeklyConstructContentShowResps;
       this.updateFormFour.weeklyRiskContentAddReqs = res.weeklyRiskContentShowResps;
 
 
@@ -599,17 +646,17 @@ export default {
           jobNumberTotalList: ele.jobNumberTotalList
         })
       })
-      this.updateFormFour.weeklyConstructContentAddReqs.forEach(ele => {
-        // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(0, ele.jobNumberTotalList.length - 1);
-        // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(1, ele.jobNumberTotalList.length - 1);
-        ele.jobNumberShow = ele.jobNumberTotalList.split(",");
-        ele.jobNumberTotalList = "[" + ele.jobNumberTotalList + "]";
-        this.weeklyConstructContent.push({
-          constructContent: ele.constructContent,
-          id: ele.id,
-          jobNumberTotalList: ele.jobNumberTotalList
-        })
-      })
+      // this.updateFormFour.weeklyConstructContentAddReqs.forEach(ele => {
+      //   // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(0, ele.jobNumberTotalList.length - 1);
+      //   // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(1, ele.jobNumberTotalList.length - 1);
+      //   ele.jobNumberShow = ele.jobNumberTotalList.split(",");
+      //   ele.jobNumberTotalList = "[" + ele.jobNumberTotalList + "]";
+      //   this.weeklyConstructContent.push({
+      //     constructContent: ele.constructContent,
+      //     id: ele.id,
+      //     jobNumberTotalList: ele.jobNumberTotalList
+      //   })
+      // })
       this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
         // ele.workProcessTotalList = ele.workProcessTotalList.substr(0, ele.workProcessTotalList.length - 1);
         // ele.workProcessTotalList = ele.workProcessTotalList.substr(1, ele.workProcessTotalList.length - 1);
@@ -619,6 +666,7 @@ export default {
           workStartTime: ele.workStartTime,
           workEndTime: ele.workEndTime,
           workContent: ele.workContent,
+          riskAdd: ele.riskAdd,
           id: ele.id,
           workProcessTotalList: ele.workProcessTotalList
         })
@@ -642,7 +690,7 @@ export default {
     getApi.getAllDistrictName().then(response => {
       this.updateFormTwo.options.districtIdOptions = response;
     });
-    //获取所有项管部门
+    //获取所有所属部门
     getApi.getAllProjectAdminDeptEnum().then(response => {
       this.updateFormTwo.options.adminDeptOptions = response;
     });
@@ -667,12 +715,17 @@ export default {
       this.updateFormThree.options.safetySupervisorIdOptions = response;
       this.updateFormThree.options.professionalSupervisorIdOptions = response;
     });
-    //获取工程编号
+    //获取分部分项工程
     this.updateFormFour.options.jobNumberOptions = getApi.getJobNumber();
-    //获取工序
+    //获取分部分项工程
     this.updateFormFour.options.workProcessOptions = getApi.getWorkProcess();
   },
   methods: {
+    //升级后，变化
+    updateFlagChange(index, row) {
+      if (row.workProcessShow === "" || row.workProcessShow === undefined) return;
+      this.workProcessChangedA(index, row);
+    },
     //判断是否修改过项目信息
     projectInfoUpdate() {
       var data = this.beforeProjectInfo;
@@ -952,8 +1005,7 @@ export default {
           });
         });
     },
-    //当某一行的工序值发生改变时，风险等级相应变化
-    workProcessChanged(index, row) {
+    workProcessChangedA(index, row) {
       row.workProcess = row.workProcessShow[row.workProcessShow.length - 1];
       row.workProcessTotalList = row.workProcessShow.toString();
       this.findFlag = false;
@@ -971,7 +1023,27 @@ export default {
         this.updateFormFour.hasThreePlusRiskWork = true;
       } else if (num === 0) this.updateFormFour.hasThreePlusRiskWork = false;
     },
-    //将工程编号设置为最后一列
+    //当某一行的分部分项工程值发生改变时，风险等级相应变化
+    workProcessChanged(index, row) {
+      row.workProcess = row.workProcessShow[row.workProcessShow.length - 1];
+      row.workProcessTotalList = row.workProcessShow.toString();
+      this.findFlag = false;
+      row.riskAdd = false;
+      this.Traversal(
+        this.updateFormFour.options.workProcessOptions,
+        row.workProcess,
+        row
+      );
+      let num = 0;
+      this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+        if (ele.riskLevel >= 3)
+          num = 1;
+      })
+      if (num === 1) {
+        this.updateFormFour.hasThreePlusRiskWork = true;
+      } else if (num === 0) this.updateFormFour.hasThreePlusRiskWork = false;
+    },
+    //将分部分项工程设置为最后一列
     jobNumberChanged(index, row) {
       row.jobNumber = row.jobNumberShow[row.jobNumberShow.length - 1];
       row.jobNumberTotalList = row.jobNumberShow.toString();
@@ -987,6 +1059,7 @@ export default {
         if (T[i].value === data) {
           this.findFlag = true;
           row.riskLevel = T[i].riskLevel;
+          if (row.riskAdd) row.riskLevel++;
           return;
         }
         this.Traversal(T[i].children, data, row);
@@ -1029,7 +1102,7 @@ export default {
       if (validNum === 4) {
         let projectUpdateReq = {};
         let projectWeeklyAddReq;
-        let weeklyConstructContentAddReqs = [];
+        // let weeklyConstructContentAddReqs = [];
         let weeklyRiskContentAddReqs = [];
         let weeklyWorkProgressAddReqs = [];
         //首先验证项目信息是否修改
@@ -1091,23 +1164,23 @@ export default {
         };
 
         //主要施工内容信息
-        this.updateFormFour.weeklyConstructContentAddReqs.forEach(element => {
-          if (element.id) {
-            this.weeklyConstructContent.forEach(ele => {
-              if (ele.id === element.id) {
-                if (ele.constructContent != element.constructContent || ele.jobNumberTotalList != element.jobNumberTotalList) {
-                  element.listUpdateOperation = "更新";
-                  weeklyConstructContentAddReqs.push(element);
-                }
-              }
-            })
-          } else {
-            weeklyConstructContentAddReqs.push(element);
-          }
-        })
-        this.deleteweeklyConstructContentAddReqs.forEach(element => {
-          weeklyConstructContentAddReqs.push(element);
-        })
+        // this.updateFormFour.weeklyConstructContentAddReqs.forEach(element => {
+        //   if (element.id) {
+        //     this.weeklyConstructContent.forEach(ele => {
+        //       if (ele.id === element.id) {
+        //         if (ele.constructContent != element.constructContent || ele.jobNumberTotalList != element.jobNumberTotalList) {
+        //           element.listUpdateOperation = "更新";
+        //           weeklyConstructContentAddReqs.push(element);
+        //         }
+        //       }
+        //     })
+        //   } else {
+        //     weeklyConstructContentAddReqs.push(element);
+        //   }
+        // })
+        // this.deleteweeklyConstructContentAddReqs.forEach(element => {
+        //   weeklyConstructContentAddReqs.push(element);
+        // })
 
         //风险作业内容信息
         this.updateFormFour.weeklyRiskContentAddReqs.forEach(element => {
@@ -1116,7 +1189,7 @@ export default {
               console.log("element:", element);
               console.log("ele:", ele);
               if (ele.id === element.id) {
-                if (ele.workEndTime != element.workEndTime || ele.workStartTime != element.workStartTime || ele.workContent != element.workContent || ele.workProcessTotalList != element.workProcessTotalList) {
+                if (ele.riskAdd != element.riskAdd || ele.workEndTime != element.workEndTime || ele.workStartTime != element.workStartTime || ele.workContent != element.workContent || ele.workProcessTotalList != element.workProcessTotalList) {
                   element.listUpdateOperation = "更新";
                   weeklyRiskContentAddReqs.push(element);
                 }
@@ -1153,7 +1226,7 @@ export default {
         let list = {
           projectUpdateReq: projectUpdateReq,
           projectWeeklyUpdateReq: projectWeeklyAddReq,
-          weeklyConstructContentUpdateReqs: weeklyConstructContentAddReqs,
+          // weeklyConstructContentUpdateReqs: weeklyConstructContentAddReqs,
           weeklyRiskContentUpdateReqs: weeklyRiskContentAddReqs,
           weeklyWorkProgressUpdateReqs: weeklyWorkProgressAddReqs
         };

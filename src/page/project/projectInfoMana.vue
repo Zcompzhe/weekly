@@ -1,28 +1,40 @@
 <template>
   <div class="body">
-    <el-card class="box-card" style="height:100px">
+    <el-card class="box-card">
       <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
-        <el-col :span="8">
+        <el-col :span="12">
           <div class="bar">
-            <div class="title">项管部门</div>
+            <div class="title">所属所属建设管理单位</div>
+            <el-select v-model="searchTable.adminId" clearable placeholder="请选择" style="min-width:200px">
+              <el-option v-for="item in searchTable.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="bar">
+            <div class="title">所属部门</div>
             <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:200px">
               <el-option v-for="item in searchTable.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
             </el-select>
           </div>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="3">
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" style="margin-top: 20px; margin-bottom: 5px;">
+        <el-col :span="12">
           <div class="bar">
             <div class="title">所在区域</div>
-            <el-select v-model="searchTable.districtId" clearable placeholder="请选择" style="min-width:200px">
+            <el-select v-model="searchTable.districtId" clearable placeholder="请选择" style="min-width:200px;margin-left:32px">
               <el-option v-for="item in searchTable.options.districtIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
             </el-select>
           </div>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="12">
           <div class="bar">
-            <div class="title">当前是否运作</div>
+            <div class="title">项目状态</div>
             <el-select v-model="searchTable.runningNow" clearable placeholder="请选择" style="min-width:200px">
-              <el-option v-for="item in searchTable.options.runningNowOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
+              <el-option v-for="item in searchTable.options.runningNowOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
             </el-select>
           </div>
         </el-col>
@@ -44,12 +56,12 @@
       <el-table :data="projectInfo.tableData" max-height="800" border style="width: 100%; margin-top: 20px">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="name" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="210" prop="adminName" label="建设管理单位" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminName" label="所属建设管理单位" align="center"></el-table-column>
         <el-table-column width="210" prop="constructDeptName" label="施工单位" align="center"></el-table-column>
-        <el-table-column width="210" prop="adminDept" label="项管部门" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="210" prop="districtName" label="所在区域" align="center"></el-table-column>
         <el-table-column width="210" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
-        <el-table-column width="210" prop="runningNowStr" label="当前是否运作" align="center"></el-table-column>
+        <el-table-column width="210" prop="runningNow" label="项目状态" align="center"></el-table-column>
         <el-table-column width="250" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="detailProject(scope.row)">查看详情</el-button>
@@ -79,7 +91,7 @@
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="projectId" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="210" prop="adminId" label="建设管理单位" align="center"></el-table-column>
+        <el-table-column width="210" prop="adminId" label="所属建设管理单位" align="center"></el-table-column>
         <el-table-column width="210" prop="currentProgress" label="当前总体施工进度" align="center"></el-table-column>
         <el-table-column width="210" prop="weeklyStartTime" label="周报开始日期" align="center"></el-table-column>
         <el-table-column width="210" prop="workContentNextWeek" label="主要施工作业内容" align="center"></el-table-column>
@@ -99,7 +111,7 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">建设管理单位</div>
+              <div class="title">所属建设管理单位</div>
               <el-input disabled v-model="projectDetail.adminName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
@@ -177,14 +189,14 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">项管部门</div>
+              <div class="title">所属部门</div>
               <el-input disabled v-model="projectDetail.adminDept" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">当前是否运作</div>
-              <el-input disabled v-model="projectDetail.runningNowStr" disabled style="min-width:200px"></el-input>
+              <div class="title">项目状态</div>
+              <el-input disabled v-model="projectDetail.runningNow" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           <el-col :span="8">
@@ -249,10 +261,12 @@ export default {
     return {
       //搜索条件数据
       searchTable: {
+        adminId: "",
         adminDept: "",
         districtId: "",
         runningNow: "",
         options: {
+          adminIdOptions: [],
           runningNowOptions: [{
             value: true,
             name: "是"
@@ -307,9 +321,17 @@ export default {
   },
 
   created: function () {
-    //获取所有项管部门
+    //获取所有所属建设管理单位
+    getApi.getAllAdministrativeDeptName().then(response => {
+      this.searchTable.options.adminIdOptions = response;
+    });
+    //获取所有所属部门
     getApi.getAllProjectAdminDeptEnum().then(response => {
       this.searchTable.options.adminDeptOptions = response;
+    });
+    //获取运行状态
+    getApi.getAllProjectStateEnum().then(response => {
+      this.searchTable.options.runningNowOptions = response;
     });
     //获取区域
     getApi.getAllDistrictName().then(response => {
@@ -340,6 +362,7 @@ export default {
         pageNumber: pageNum - 1,
         adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
         districtId: this.searchTable.districtId === "" ? undefined : this.searchTable.districtId,
+        adminId: this.searchTable.adminId === "" ? undefined : this.searchTable.adminId,
         runningNow: this.searchTable.runningNow === "" ? undefined : this.searchTable.runningNow
       }
       searchApi.getProjectInfoByCondition(list).then(response => {

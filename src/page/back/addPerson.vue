@@ -47,7 +47,7 @@
         </el-col>
         <el-col :span="8">
           <div class="bar">
-            <div class="title">建设管理单位</div>
+            <div class="title">所属建设管理单位</div>
             <el-select v-model="adminId" clearable placeholder="请选择" style="min-width:200px">
               <el-option
                 v-for="item in adminOptions"
@@ -115,7 +115,7 @@
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="300" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="300" prop="projectId" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="300" prop="adminId" label="建设管理单位" align="center"></el-table-column>
+        <el-table-column width="300" prop="adminId" label="所属建设管理单位" align="center"></el-table-column>
         <el-table-column width="300" prop="supervisionId" label="监理单位" align="center"></el-table-column>
         <el-table-column width="300" prop="constructDept" label="施工单位" align="center"></el-table-column>
         <el-table-column
@@ -146,7 +146,7 @@
           label="下周的三级及以上风险作业安排、位置及内容"
           align="center"
         ></el-table-column>
-        <el-table-column width="300" prop="contactPerson" label="建设管理单位联系人" align="center"></el-table-column>
+        <el-table-column width="300" prop="contactPerson" label="所属建设管理单位联系人" align="center"></el-table-column>
         <el-table-column width="300" prop="isMajorProject" label="是否重点工程" align="center"></el-table-column>
         <el-table-column
           width="300"
@@ -321,19 +321,19 @@ export default {
       adminOptions: [
         {
           id: 1,
-          adminId: "建设管理单位A"
+          adminId: "所属建设管理单位A"
         },
         {
           id: 2,
-          adminId: "建设管理单位B"
+          adminId: "所属建设管理单位B"
         },
         {
           id: 3,
-          adminId: "建设管理单位C"
+          adminId: "所属建设管理单位C"
         },
         {
           id: 4,
-          adminId: "建设管理单位D"
+          adminId: "所属建设管理单位D"
         }
       ],
       supervisionOptions: [

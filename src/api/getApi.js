@@ -8,7 +8,7 @@ export const getAllProjectName = () => {
   return request.get(`/projectWeeklyManagement/getAllProjectName`);
 };
 
-//获取所有建设管理单位
+//获取所有所属建设管理单位
 export const getAllAdministrativeDeptName = () => {
   return request.get(`/baseInfoManagement/getAllAdministrativeDeptName`);
 };
@@ -23,7 +23,7 @@ export const getAllDistrictName = () => {
   return request.get(`/baseInfoManagement/getAllDistrictName`);
 };
 
-//获取所有项管部门
+//获取所有所属部门
 export const getAllProjectAdminDeptEnum = () => {
   return request.get(`/baseInfoManagement/getAllProjectAdminDeptEnum`);
 };
@@ -195,4 +195,9 @@ export const getRectificationFeedbackShowRespByJobOrderId = id => {
 //获取今日异常
 export const getTodayExceptionInfoStatistics = () => {
   return request.get(`/baseInfoManagement/getTodayExceptionInfoStatistics`);
+};
+
+//获取运行状态
+export const getAllProjectStateEnum = () => {
+  return request.get(`/baseInfoManagement/getAllProjectStateEnum`);
 };

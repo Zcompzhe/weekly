@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <el-tabs v-model="viewname" class="cardTab" :tab-click="viewChange()">
-      <el-tab-pane label="建设管理单位" name="one" class="tabPane">
+      <el-tab-pane label="所属建设管理单位" name="one" class="tabPane">
         <el-container class="paneContainer">
           <el-header clas="containerHeader">
             <el-row :gutter="20">
@@ -22,7 +22,7 @@
             <el-table ref="multipleTable" :data="tableData" border tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
               <el-table-column type="selection" width="55"></el-table-column>
               <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-              <el-table-column prop="name" label="建设管理单位" align="center"></el-table-column>
+              <el-table-column prop="name" label="所属建设管理单位" align="center"></el-table-column>
               <el-table-column width="100" label="操作" align="center">
                 <template slot-scope="scope">
                   <el-button type="text" @click="deleteOneLine(scope.row)">删除</el-button>

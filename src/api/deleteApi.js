@@ -59,7 +59,7 @@ export const deleteAdminProjectDeptById = id => {
     }
   });
 };
-//根据id删除建设管理单位
+//根据id删除所属建设管理单位
 export const deleteAdministrativeDeptById = id => {
   return request.delete(`/baseInfoManagement/deleteAdministrativeDeptById`, {
     params: {

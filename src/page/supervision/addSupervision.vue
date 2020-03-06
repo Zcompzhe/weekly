@@ -42,7 +42,7 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="建设管理单位" prop="adminId" placeholder="当前月份">
+              <el-form-item label="所属建设管理单位" prop="adminId" placeholder="当前月份">
                 <el-select v-model="addFormTwo.adminId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
@@ -150,7 +150,7 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="项管部门" prop="adminDept" placeholder="当前月份">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="当前月份">
                 <el-select v-model="addFormTwo.adminDept" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
@@ -412,10 +412,10 @@ export default {
           { required: true, message: "请选择项目名称", trigger: "change" }
         ],
         adminDept: [
-          { required: true, message: "请选择项管部门", trigger: "change" }
+          { required: true, message: "请选择所属部门", trigger: "change" }
         ],
         adminId: [
-          { required: true, message: "请选择建设管理单位", trigger: "change" }
+          { required: true, message: "请选择所属建设管理单位", trigger: "change" }
         ],
         constructDept: [
           { required: true, message: "请输入施工单位", trigger: "change" }
@@ -537,7 +537,7 @@ export default {
     getApi.getAllProjectName().then(response => {
       this.addFormTwo.options.idOptions = response;
     });
-    //获取所有建设管理单位
+    //获取所有所属建设管理单位
     getApi.getAllAdministrativeDeptName().then(response => {
       this.addFormTwo.options.adminIdOptions = response;
     });
@@ -549,7 +549,7 @@ export default {
     getApi.getAllDistrictName().then(response => {
       this.addFormTwo.options.districtIdOptions = response;
     });
-    //获取所有项管部门
+    //获取所有所属部门
     getApi.getAllProjectAdminDeptEnum().then(response => {
       this.addFormTwo.options.adminDeptOptions = response;
     });
