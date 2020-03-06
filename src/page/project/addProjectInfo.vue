@@ -140,9 +140,9 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="项目状态" prop="runningNow" placeholder="管控内状态">
-                <el-select v-model="projectForm.runningNow" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in projectForm.options.runningNowOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+              <el-form-item label="项目状态" prop="projectState" placeholder="管控内状态">
+                <el-select v-model="projectForm.projectState" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.projectStateOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -285,14 +285,14 @@ export default {
         currentWorkerNum: "",
         currentSubcontractorNum: "",
         adminDept: "",
-        runningNow: "",
+        projectState: "",
         options: {
           adminIdOptions: {},
           supervisionIdOptions: {},
           districtIdOptions: {},
           adminDeptOptions: {},
           constructDeptIdOptions: {},
-          runningNowOptions: [{
+          projectStateOptions: [{
             value: true,
             name: "是"
           }, {
@@ -326,7 +326,7 @@ export default {
         name: [
           { required: true, message: "请输入项目名称", trigger: "change" }
         ],
-        runningNow: [
+        projectState: [
           { required: true, message: "请选择项目状态", trigger: "change" }
         ],
         actualStartTime: [
@@ -386,7 +386,7 @@ export default {
     // this.backPath = data.backPath;
     //获取运行状态
     getApi.getAllProjectStateEnum().then(response => {
-      this.projectForm.options.runningNowOptions = response;
+      this.projectForm.options.projectStateOptions = response;
     });
     //获取所有所属建管单位
     getApi.getAllAdministrativeDeptName().then(response => {
@@ -443,7 +443,7 @@ export default {
           professionalSupervisorId: this.personForm.professionalSupervisorId,
           projectManagerId: this.personForm.projectManagerId,
           qualityStaffId: this.personForm.qualityStaffId,
-          runningNow: this.projectForm.runningNow,
+          projectState: this.projectForm.projectState,
           safetyStaffId: this.personForm.safetyStaffId,
           safetySupervisorId: this.personForm.safetySupervisorId,
           supervisionId: this.projectForm.supervisionId,

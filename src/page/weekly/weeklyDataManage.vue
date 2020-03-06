@@ -109,14 +109,14 @@
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="210" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="210" prop="adminName" label="所属建管单位" align="center"></el-table-column>
-        <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
-        <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
-        <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
-        <el-table-column width="210" prop="adminDept" label="所属部门" align="center"></el-table-column>
-        <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
-        <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
-        <el-table-column width="210" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-        <el-table-column width="210" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
+        <el-table-column width="450" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
+        <el-table-column width="450" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
+        <el-table-column width="450" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
+        <el-table-column width="120" prop="adminDept" label="所属部门" align="center"></el-table-column>
+        <el-table-column width="80" prop="actualState" label="实际状态" align="center"></el-table-column>
+        <el-table-column width="110" prop="controlledState" label="管控内状态" align="center"></el-table-column>
+        <el-table-column width="80" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
+        <el-table-column width="80" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
         <el-table-column width="300" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="detailWeekly(scope.row)">查看详情</el-button>
@@ -285,7 +285,7 @@
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="23">
             <div class="bar">
-              <div class="title" style="width:129px">当前总体施工进度</div>
+              <div class="title" style="width:229px">当前总体施工进度</div>
               <el-input disabled type="textarea" :rows="2" placeholder="暂无信息" v-model="weeklyDetail.workCurrentProgress" style="margin-left: 26px;width:1400px"></el-input>
             </div>
           </el-col>
@@ -293,7 +293,7 @@
         <el-row :gutter="20">
           <el-col :span="23">
             <div class="bar">
-              <div class="title" style="width:129px">下周主要施工作业内容</div>
+              <div class="title" style="width:229px">下周主要施工作业内容</div>
               <el-input disabled type="textarea" :rows="2" placeholder="暂无信息" v-model="weeklyDetail.constructContentNextWeek" style="margin-left: 26px;width:1400px"></el-input>
             </div>
           </el-col>
@@ -302,7 +302,7 @@
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="23">
             <div class="bar">
-              <div class="title" style="width:129px">三级及以上风险作业安排、位置及内容</div>
+              <div class="title" style="width:229px">三级及以上风险作业安排、位置及内容</div>
               <el-input disabled type="textarea" :rows="2" placeholder="暂无信息" v-model="weeklyDetail.threePlusRiskWorkContent" style="margin-left: 26px;width:1400px"></el-input>
             </div>
           </el-col>
@@ -429,14 +429,14 @@
           <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
           <el-table-column width="210" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
           <el-table-column width="210" prop="adminName" label="所属建管单位" align="center"></el-table-column>
-          <el-table-column width="300" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
-          <el-table-column width="300" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
-          <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
-          <el-table-column width="210" prop="adminDept" label="所属部门" align="center"></el-table-column>
-          <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
-          <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
-          <el-table-column width="210" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-          <el-table-column width="210" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
+          <el-table-column width="450" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
+          <el-table-column width="450" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
+          <el-table-column width="450" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
+          <el-table-column width="100" prop="adminDept" label="所属部门" align="center"></el-table-column>
+          <el-table-column width="80" prop="actualState" label="实际状态" align="center"></el-table-column>
+          <el-table-column width="110" prop="controlledState" label="管控内状态" align="center"></el-table-column>
+          <el-table-column width="80" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
+          <el-table-column width="80" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
         </el-table>
         <div class="block">
           <el-pagination @size-change="handleSizeChangeA" @current-change="handleCurrentChangeA" :current-page.sync="pagination2.currentPage" :page-sizes="pagination2.pageSizes" :page-size="pagination2.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination2.total"></el-pagination>

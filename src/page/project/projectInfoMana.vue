@@ -33,8 +33,8 @@
         <el-col :span="12">
           <div class="bar">
             <div class="title">项目状态</div>
-            <el-select v-model="searchTable.runningNow" clearable placeholder="请选择" style="min-width:200px">
-              <el-option v-for="item in searchTable.options.runningNowOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+            <el-select v-model="searchTable.projectState" clearable placeholder="请选择" style="min-width:200px">
+              <el-option v-for="item in searchTable.options.projectStateOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
             </el-select>
           </div>
         </el-col>
@@ -61,7 +61,7 @@
         <el-table-column width="210" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="210" prop="districtName" label="所在区域" align="center"></el-table-column>
         <el-table-column width="210" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
-        <el-table-column width="210" prop="runningNow" label="项目状态" align="center"></el-table-column>
+        <el-table-column width="210" prop="projectState" label="项目状态" align="center"></el-table-column>
         <el-table-column width="250" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="detailProject(scope.row)">查看详情</el-button>
@@ -196,7 +196,7 @@
           <el-col :span="8">
             <div class="bar">
               <div class="title">项目状态</div>
-              <el-input disabled v-model="projectDetail.runningNow" disabled style="min-width:200px"></el-input>
+              <el-input disabled v-model="projectDetail.projectState" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           <el-col :span="8">
@@ -264,10 +264,10 @@ export default {
         adminId: "",
         adminDept: "",
         districtId: "",
-        runningNow: "",
+        projectState: "",
         options: {
           adminIdOptions: [],
-          runningNowOptions: [{
+          projectStateOptions: [{
             value: true,
             name: "是"
           }, {
@@ -313,7 +313,7 @@ export default {
         // chiefInspectorName: "",
         // safetySupervisorName: "",
         // professionalSupervisorName: "",
-        // runningNow: "",
+        // projectState: "",
       },
 
 
@@ -331,7 +331,7 @@ export default {
     });
     //获取运行状态
     getApi.getAllProjectStateEnum().then(response => {
-      this.searchTable.options.runningNowOptions = response;
+      this.searchTable.options.projectStateOptions = response;
     });
     //获取区域
     getApi.getAllDistrictName().then(response => {
@@ -344,11 +344,6 @@ export default {
     }
     searchApi.getProjectInfoByCondition(list).then(response => {
       this.projectInfo.tableData = response.returnList[0];
-      //转换运行状态为str
-      this.projectInfo.tableData.forEach(element => {
-        if (element.runningNow) element.runningNowStr = "是";
-        else element.runningNowStr = "否";
-      })
       this.pagination.total = response.totalNumber;
     })
   },
@@ -363,15 +358,10 @@ export default {
         adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
         districtId: this.searchTable.districtId === "" ? undefined : this.searchTable.districtId,
         adminId: this.searchTable.adminId === "" ? undefined : this.searchTable.adminId,
-        runningNow: this.searchTable.runningNow === "" ? undefined : this.searchTable.runningNow
+        projectState: this.searchTable.projectState === "" ? undefined : this.searchTable.projectState
       }
       searchApi.getProjectInfoByCondition(list).then(response => {
         this.projectInfo.tableData = response.returnList[0];
-        //转换运行状态为str
-        this.projectInfo.tableData.forEach(element => {
-          if (element.runningNow) element.runningNowStr = "是";
-          else element.runningNowStr = "否";
-        })
         this.pagination.total = response.totalNumber;
       })
     },
@@ -418,8 +408,6 @@ export default {
       getApi.getProjectInfoDetailPageShowRespById(row.id).then(response => {
         this.detailPanelFlag = true;
         this.projectDetail = response[0];
-        if (this.projectDetail.runningNow) this.projectDetail.runningNowStr = "是";
-        else this.projectDetail.runningNowStr = "否";
       })
     },
     showThisWeekly(row) {
