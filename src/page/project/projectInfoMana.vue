@@ -4,7 +4,7 @@
       <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
         <el-col :span="12">
           <div class="bar">
-            <div class="title">所属所属建管单位</div>
+            <div class="title">所属建管单位</div>
             <el-select v-model="searchTable.adminId" clearable placeholder="请选择" style="min-width:200px">
               <el-option v-for="item in searchTable.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
             </el-select>
