@@ -584,7 +584,7 @@ export default {
     let data = this.$route.params;
     this.backPath = data.backPath;
     //获取所有项目名称
-    getApi.getAllProjectName().then(response => {
+    getApi.getAllRunningProjectName().then(response => {
       this.addFormTwo.options.idOptions = response;
     });
     //获取所有建设管理单位

@@ -675,7 +675,7 @@ export default {
       console.log(this.updateFormFour)
     });
     //获取所有项目名称
-    getApi.getAllProjectName().then(response => {
+    getApi.getAllRunningProjectName().then(response => {
       this.updateFormTwo.options.idOptions = response;
     });
     //获取所有建设管理单位

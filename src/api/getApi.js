@@ -201,3 +201,8 @@ export const getTodayExceptionInfoStatistics = () => {
 export const getAllProjectStateEnum = () => {
   return request.get(`/baseInfoManagement/getAllProjectStateEnum`);
 };
+
+//获取所有未竣工的项目名称
+export const getAllRunningProjectName = () => {
+  return request.get(`/projectWeeklyManagement/getAllRunningProjectName`);
+};
