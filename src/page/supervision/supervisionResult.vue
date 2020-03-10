@@ -40,21 +40,16 @@
         <el-table-column width="110" prop="inspectDate" label="督查日期" align="center"></el-table-column>
         <el-table-column width="250" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="100" prop="teamName" label="督查队伍" align="center"></el-table-column>
-        <el-table-column width="300" prop="inspectContent" label="督查内容" align="center">
-          <template slot-scope="scope">
-            <el-input v-model="scope.row.inspectContent" style="min-width:270px">
-            </el-input>
-          </template>
-        </el-table-column>
-        <el-table-column width="180" prop="resultFeedBack" label="督查结果反馈情况" align="center"></el-table-column>
+        <el-table-column width="300" prop="inspectContent" label="检查范围和简要内容" align="center"></el-table-column>
+        <el-table-column width="180" prop="resultFeedBack" label="督查结果通知情况" align="center"></el-table-column>
         <el-table-column width="180" prop="jobOrderType" label="通知单类型" align="center"></el-table-column>
-        <el-table-column width="80" prop="problemCount" label="存在问题数" align="center"></el-table-column>
+        <el-table-column width="100" prop="problemCount" label="存在问题数" align="center"></el-table-column>
         <el-table-column width="80" prop="inspectionPlanState" label="督查情况" align="center"></el-table-column>
-        <el-table-column width="400" label="操作" align="center" fixed="right">
+        <el-table-column width="300" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="completeInspection(scope.row)">完成督查</el-button>
-            <el-button type="text" @click="openCheckPanel(scope.row)">反馈检查问题</el-button>
-            <el-button type="text" :disabled="scope.row.resultFeedBack != '已上报'" @click="addProblemPic(scope.row)">添加问题照片</el-button>
+            <el-button type="text" @click="openCheckPanel(scope.row)">添加督查通知单</el-button>
+            <!-- <el-button type="text" :disabled="scope.row.resultFeedBack != '已上报'" @click="addProblemPic(scope.row)">添加问题照片</el-button> -->
             <el-button type="text" @click="deleteInspection(scope.row)">删除通知单</el-button>
           </template>
         </el-table-column>
@@ -230,30 +225,33 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="业主项目部" prop="ownerDeptId" placeholder="项目名称">
-                <el-select v-model="addCheckForm.ownerDeptId" clearable placeholder="请选择" style="min-width:200px">
+              <el-form-item label="业主项目部" prop="ownerDeptName" placeholder="项目名称">
+                <!-- <el-select v-model="addCheckForm.ownerDeptId" disabled placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addCheckForm.options.ownerDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-input v-model="addCheckForm.ownerDeptName" clearable disabled :rows="1" placeholder="请选择" style="width:225px"></el-input>
               </el-form-item>
             </div>
           </el-col>
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="施工项目部" prop="constructDeptId" placeholder="当前月份">
-                <el-select v-model="addCheckForm.constructDeptId" clearable placeholder="请选择" style="min-width:200px">
+              <el-form-item label="施工项目部" prop="constructDeptName" placeholder="当前月份">
+                <!-- <el-select v-model="addCheckForm.constructDeptId" disabled placeholder="请选择" style="min-width:228px">
                   <el-option v-for="item in addCheckForm.options.constructDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-input v-model="addCheckForm.constructDeptName" clearable disabled :rows="1" placeholder="请选择" style="width:225px"></el-input>
               </el-form-item>
             </div>
           </el-col>
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="监理项目部" prop="adminDeptId" placeholder="周报开始日期">
-                <el-select v-model="addCheckForm.adminDeptId" clearable placeholder="请选择" style="min-width:200px">
+              <el-form-item label="监理项目部" prop="adminDeptName" placeholder="周报开始日期">
+                <!-- <el-select v-model="addCheckForm.adminDeptId" disabled placeholder="请选择" style="min-width:228px">
                   <el-option v-for="item in addCheckForm.options.adminDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-input v-model="addCheckForm.adminDeptName" clearable disabled :rows="1" placeholder="请选择" style="width:225px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -392,30 +390,33 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="业主项目部" prop="ownerDeptId" placeholder="项目名称">
-                <el-select v-model="updateCheckForm.ownerDeptId" clearable placeholder="请选择" style="min-width:200px">
+              <el-form-item label="业主项目部" prop="ownerDeptName" placeholder="项目名称">
+                <!-- <el-select v-model="updateCheckForm.ownerDeptId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateCheckForm.options.ownerDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-input v-model="addCheckForm.ownerDeptName" clearable disabled :rows="1" placeholder="请选择" style="width:225px"></el-input>
               </el-form-item>
             </div>
           </el-col>
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="施工项目部" prop="constructDeptId" placeholder="当前月份">
-                <el-select v-model="updateCheckForm.constructDeptId" clearable placeholder="请选择" style="min-width:200px">
+              <el-form-item label="施工项目部" prop="constructDeptName" placeholder="当前月份">
+                <!-- <el-select v-model="updateCheckForm.constructDeptId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateCheckForm.options.constructDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-input v-model="addCheckForm.constructDeptName" clearable disabled :rows="1" placeholder="请选择" style="width:225px"></el-input>
               </el-form-item>
             </div>
           </el-col>
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="监理项目部" prop="adminDeptId" placeholder="周报开始日期">
-                <el-select v-model="updateCheckForm.adminDeptId" clearable placeholder="请选择" style="min-width:200px">
+              <el-form-item label="监理项目部" prop="adminDeptName" placeholder="周报开始日期">
+                <!-- <el-select v-model="updateCheckForm.adminDeptId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateCheckForm.options.adminDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-input v-model="addCheckForm.adminDeptName" clearable disabled :rows="1" placeholder="请选择" style="width:225px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -535,6 +536,9 @@ export default {
         adminDeptId: "",
         ownerDeptId: "",
         constructDeptId: "",
+        adminDeptName: "",
+        ownerDeptName: "",
+        constructDeptName: "",
         checkRangeAndContent: "",
         tableData: [],
         multiSelection: [],
@@ -596,6 +600,9 @@ export default {
         adminDeptId: "",
         ownerDeptId: "",
         constructDeptId: "",
+        adminDeptName: "",
+        ownerDeptName: "",
+        constructDeptName: "",
         checkRangeAndContent: "",
         firstTableData: [],
         deleteTable: [],
@@ -723,19 +730,19 @@ export default {
     });
 
     //获取业主项目部
-    getApi.getAllOwnerProjectDeptName().then(response => {
+    getApi.getAllAdminProjectDeptName().then(response => {
       this.addCheckForm.options.ownerDeptIdOptions = response;
       this.updateCheckForm.options.ownerDeptIdOptions = response;
     });
 
     //获取施工项目部
-    getApi.getAllConstructProjectDeptName().then(response => {
+    getApi.getAllConstructDeptName().then(response => {
       this.addCheckForm.options.constructDeptIdOptions = response;
       this.updateCheckForm.options.constructDeptIdOptions = response;
     });
 
     //获取监理项目部
-    getApi.getAllAdminProjectDeptName().then(response => {
+    getApi.getAllSupervisionDeptName().then(response => {
       this.addCheckForm.options.adminDeptIdOptions = response;
       this.updateCheckForm.options.adminDeptIdOptions = response;
     });
@@ -1043,8 +1050,17 @@ export default {
 
 
       } else {
+        this.addCheckForm.jobOrderType = "";
+        this.addCheckForm.checkRangeAndContent = "";
         this.addCheckForm.projectId = row.projectId;
         this.addCheckForm.inspectDate = row.inspectDate;
+        this.addCheckForm.inspectAddress = row.detailedAddress;
+        this.addCheckForm.ownerDeptId = row.adminId;
+        this.addCheckForm.ownerDeptName = row.adminName;
+        this.addCheckForm.constructDeptId = row.constructDeptId;
+        this.addCheckForm.constructDeptName = row.constructDeptName;
+        this.addCheckForm.adminDeptId = row.supervisionId;
+        this.addCheckForm.adminDeptName = row.supervisionName;
         this.addInspectionProblemPanelFlag = true;
 
       }

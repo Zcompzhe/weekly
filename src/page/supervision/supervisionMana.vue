@@ -42,20 +42,17 @@
       </el-row>
 
       <el-table :data="weeklyInfo.tableData" max-height="400" border @selection-change="weeklySelect" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
-        <el-table-column type="selection" width="50" align="center"></el-table-column>
-        <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="210" prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column type="selection" width="50" align="center" fixed="left"></el-table-column>
+        <el-table-column width="50" type="index" label="序号" align="center" fixed="left"></el-table-column>
+        <el-table-column width="210" prop="projectName" label="项目名称" align="center" fixed="left"></el-table-column>
         <el-table-column width="210" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
-        <el-table-column width="80" prop="dynamicRisk" label="动态风险" align="center"></el-table-column>
-        <el-table-column width="80" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-        <el-table-column width="250" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
-        <el-table-column width="250" prop="constructContentNextWeek" label="主要施工内容" align="left"></el-table-column>
-        <el-table-column width="350" prop="threePlusRiskWorkContent" label="三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
-        <el-table-column width="210" prop="adminName" label="所属建管单位" align="center"></el-table-column>
-        <el-table-column width="210" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
-        <el-table-column width="80" prop="hasInspectThisWeekStr" label="本周是否督查" align="center"></el-table-column>
-        <el-table-column width="80" prop="hasInspectThisMonthStr" label="本月是否督查" align="center"></el-table-column>
-        <el-table-column width="210" prop="lastInspectTime" label="上次查岗日期" align="center"></el-table-column>
+        <el-table-column width="210" prop="dynamicRisk" label="今日作业最大动态风险" align="center"></el-table-column>
+        <el-table-column width="210" prop="inherentRisk" label="今日作业最大固有风险" align="center"></el-table-column>
+        <el-table-column width="410" prop="workArrangement" label="作业安排" align="left"></el-table-column>
+        <el-table-column width="250" prop="adminName" label="所属建设管理单位" align="center"></el-table-column>
+        <el-table-column width="120" prop="hasInspectThisWeekStr" label="本周是否督查" align="center"></el-table-column>
+        <el-table-column width="120" prop="hasInspectThisMonthStr" label="本月是否督查" align="center"></el-table-column>
+        <el-table-column width="160" prop="lastInspectTime" label="上次查岗日期" align="center"></el-table-column>
         <el-table-column width="250" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="detailWeekly(scope.row)">查看详情</el-button>

@@ -88,11 +88,11 @@
       <el-submenu index="supervision">
         <template slot="title">
           <i class="el-icon-message"></i>
-          督查方案规划
+          安监督查管理
         </template>
 
         <el-menu-item index="/supervision/supervisionMana">
-          <i class="el-icon-document"></i>安全督查队督查方案管理
+          <i class="el-icon-document"></i>督查方案设计
         </el-menu-item>
         <el-menu-item index="/supervision/supervisionResult">
           <i class="el-icon-document"></i>督查结果管理
