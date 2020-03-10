@@ -25,10 +25,6 @@ export const addInspectPhotos = data => {
   return request.post(`/inspectionManagement/addInspectPhotos`, data);
 };
 
-//添加督查结果通知单所有信息
-export const addInspectionJobOrderInfo = data => {
-  return request.post(`/inspectionManagement/addInspectionJobOrderInfo`, data);
-};
 
 //添加督查问题责任人
 export const addProblemResponsiblePerson = data => {

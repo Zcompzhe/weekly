@@ -45,6 +45,18 @@
         <el-table-column width="180" prop="jobOrderType" label="通知单类型" align="center"></el-table-column>
         <el-table-column width="100" prop="problemCount" label="存在问题数" align="center"></el-table-column>
         <el-table-column width="80" prop="inspectionPlanState" label="督查情况" align="center"></el-table-column>
+        <!-- <el-table-column prop="file_name" lable="文件名称">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.file_name" placeholder="请输入文件名称"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column>
+          <template slot-scope="scope">
+            <el-upload ref="upload" :data="uploadData" :show-file-list="false" action="uploadUrl" :on-success="handleSucess" :on-error="handleError" :auto-upload="true">
+              <el-button size="small" type="primary" @click="curRowIndex=scope.$index">点击上传</el-button>
+            </el-upload>
+          </template>
+        </el-table-column> -->
         <el-table-column width="300" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="completeInspection(scope.row)">完成督查</el-button>
@@ -271,8 +283,20 @@
         <hr>
         <br />
         <br />
-        <el-button type="primary" style="margin-right: 20px" @click="addAddCheckTableRow">添加条目</el-button>
-        <el-button type="primary" style="margin-right: 20px" @click="deleteAddSelectRow">删除条目</el-button>
+        <el-row :gutter="20">
+          <el-col :span="3">
+            <el-button type="primary" style="margin-right: 20px" @click="addAddCheckTableRow">添加条目</el-button>
+          </el-col>
+          <el-col :span="3">
+            <el-button type="primary" style="margin-right: 20px" @click="deleteAddSelectRow">删除条目</el-button>
+          </el-col>
+          <el-col :span="3">
+            <el-upload ref="upload" action :file-list="fileList" :http-request="sigleFileUploadAction" :show-file-list="false" multiple style="margin-left:11px" :auto-upload="true">
+              <el-button slot="trigger" size="primary" :disabled="addCheckForm.multiSelection.length !=1" type="primary" @click="uploadJudge">选取文件</el-button>
+              <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
+            </el-upload>
+          </el-col>
+        </el-row>
         <br />
         <br />
         <el-table :data="addCheckForm.tableData" @selection-change="addCheckTableSelect" border v-if="addCheckForm.jobOrderType === '口头警告通知单'">
@@ -290,17 +314,18 @@
               </el-select>
             </template>
           </el-table-column>
+          <el-table-column width="500" prop="hasPhoto" label="上传照片" align="center"></el-table-column>
         </el-table>
 
         <el-table :data="addCheckForm.tableData" @selection-change="addCheckTableSelect" border v-if="addCheckForm.jobOrderType === '整改通知单' ||addCheckForm.jobOrderType==='' ">
           <el-table-column type="selection" width="50" align="center"></el-table-column>
           <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-          <el-table-column width="500" label="发现问题" align="center">
+          <el-table-column width="400" label="发现问题" align="center">
             <template slot-scope="scope">
               <el-input v-model="scope.row.problem" :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
             </template>
           </el-table-column>
-          <el-table-column width="300" label="违章性质" align="center">
+          <el-table-column width="230" label="违章性质" align="center">
             <template slot-scope="scope">
               <el-select v-model="scope.row.violationType" clearable placeholder="请选择" style="min-width:200px">
                 <el-option v-for="item in addCheckForm.options.violationTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
@@ -319,6 +344,7 @@
               <el-input v-model="scope.row.rectificationRequirement" :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
             </template>
           </el-table-column>
+          <el-table-column width="180" prop="hasPhoto" label="上传照片" align="center"></el-table-column>
         </el-table>
         <br />
         <br />
@@ -436,8 +462,20 @@
         <hr>
         <br />
         <br />
-        <el-button type="primary" style="margin-right: 20px" @click="addUpdateCheckTableRow">添加条目</el-button>
-        <el-button type="primary" style="margin-right: 20px" @click="deleteUpdateSelectRow">删除条目</el-button>
+        <el-row :gutter="20">
+          <el-col :span="3">
+            <el-button type="primary" style="margin-right: 20px" @click="addUpdateCheckTableRow">添加条目</el-button>
+          </el-col>
+          <el-col :span="3">
+            <el-button type="primary" style="margin-right: 20px" @click="deleteUpdateSelectRow">删除条目</el-button>
+          </el-col>
+          <el-col :span="3">
+            <el-upload ref="upload" action :file-list="fileListA" :http-request="sigleFileUploadActionA" :show-file-list="false" multiple style="margin-left:11px" :auto-upload="true">
+              <el-button slot="trigger" size="primary" :disabled="updateCheckForm.multiSelection.length !=1" type="primary" @click="uploadJudgeA">选取文件</el-button>
+              <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
+            </el-upload>
+          </el-col>
+        </el-row>
         <br />
         <br />
         <el-table :data="updateCheckForm.tableData" @selection-change="updateCheckTableSelect" border v-if="updateCheckForm.jobOrderType === '口头警告通知单'">
@@ -455,36 +493,71 @@
               </el-select>
             </template>
           </el-table-column>
+          <el-table-column width="120" prop="photoNumber" label="上传照片数量" align="center"></el-table-column>
+          <el-table-column width="180" prop="hasPhoto" label="新上传照片" align="center"></el-table-column>
+          <el-table-column width="200" label="操作" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
+            </template>
+          </el-table-column>
         </el-table>
 
         <el-table :data="updateCheckForm.tableData" @selection-change="updateCheckTableSelect" border v-if="updateCheckForm.jobOrderType === '整改通知单' ||updateCheckForm.jobOrderType==='' ">
           <el-table-column type="selection" width="50" align="center"></el-table-column>
           <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-          <el-table-column width="500" label="发现问题" align="center">
+          <el-table-column width="350" label="发现问题" align="center">
             <template slot-scope="scope">
               <el-input v-model="scope.row.problem" :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
             </template>
           </el-table-column>
-          <el-table-column width="300" label="违章性质" align="center">
+          <el-table-column width="190" label="违章性质" align="center">
             <template slot-scope="scope">
-              <el-select v-model="scope.row.violationType" clearable placeholder="请选择" style="min-width:200px">
+              <el-select v-model="scope.row.violationType" clearable placeholder="请选择" style="width:150px">
                 <el-option v-for="item in updateCheckForm.options.violationTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="责任项目部" align="center">
+          <el-table-column width="190" label="责任项目部" align="center">
             <template slot-scope="scope">
-              <el-select v-model="scope.row.responsibleDept" clearable placeholder="请选择" style="min-width:200px">
+              <el-select v-model="scope.row.responsibleDept" clearable placeholder="请选择" style="width:150px">
                 <el-option v-for="item in updateCheckForm.options.responsibleDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="整改要求" align="center">
+          <el-table-column width="240" label="整改要求" align="center">
             <template slot-scope="scope">
               <el-input v-model="scope.row.rectificationRequirement" :rows="1" placeholder="暂无信息" style="min-width:200px"></el-input>
             </template>
           </el-table-column>
+          <el-table-column width="120" prop="photoNumber" label="上传照片数量" align="center"></el-table-column>
+          <el-table-column width="180" prop="hasPhoto" label="新上传照片" align="center"></el-table-column>
+          <el-table-column width="200" label="操作" align="center" fixed="right">
+            <template slot-scope="scope">
+
+              <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
+            </template>
+          </el-table-column>
         </el-table>
+        <div v-if="showPicFlag">
+          <el-row :gutter="20" style="margin-top:20px">
+            <el-col :span="2">
+              <el-button type="text" size="small" @click="closeCheckPanelA()">关闭该栏</el-button>
+            </el-col>
+            <el-col :span="2">
+              <el-button type="text" size="small" style="margin-left:540px" @click="deletePic">删除图片</el-button>
+            </el-col>
+          </el-row>
+          <el-carousel indicator-position="outside" height="400px" :autoplay="false" arrow="never">
+            <el-carousel-item v-for="src in urlIndex" :key="src" :label="src">
+              <img :src="src" style="max-width: 100%;max-height: 100%;display: block; margin: 0 auto;" />
+            </el-carousel-item>
+          </el-carousel>
+          <!-- <el-row :gutter="20">
+            <el-col :span="8" align="right" style="margin-left:280px">
+              <el-button type="primary" @click="deletePic">删除图片</el-button>
+            </el-col>
+          </el-row> -->
+        </div>
         <br />
         <br />
         <br />
@@ -515,6 +588,19 @@ import * as updateApi from "@/api/updateApi.js";
 export default {
   data() {
     return {
+
+      //用于标志添加照片的行index
+      showPicFlag: false,
+      index: 1,
+      fileListA: [],
+      fileListAdd: [],
+      //行内上传
+      // uploadData: {
+      //   file_key: 'file',
+      //   business_id: '',
+      // },
+      // uploadUrl: '',
+      // curRowIndex: null,
       //显示照片
       urlIndex: [],
       photoShowFlag: false,
@@ -754,6 +840,63 @@ export default {
     });
   },
   methods: {
+    //关闭查看照片
+    closeCheckPanelA() {
+      this.showPicFlag = false;
+    },
+    //上传判断
+    uploadJudgeA() {
+      console.log(this.updateCheckForm.multiSelection)
+      if (this.updateCheckForm.multiSelection.length === 0) {
+        this.$message({
+          type: "error",
+          message: "请选择一项再进行添加照片!"
+        });
+        return false;
+
+      } else if (this.updateCheckForm.multiSelection.length > 1) {
+        this.$message({
+          type: "error",
+          message: "只能选择一项进行添加照片!"
+        });
+        return false;
+      } else if (this.updateCheckForm.multiSelection[0].photoNumber > 0) {
+        this.$message({
+          type: "error",
+          message: "该问题已添加照片!"
+        });
+        return false;
+      } else {
+        return true;
+      }
+
+    },
+    uploadJudge() {
+      console.log(this.addCheckForm.multiSelection)
+      if (this.addCheckForm.multiSelection.length === 0) {
+        this.$message({
+          type: "error",
+          message: "请选择一项再进行添加照片!"
+        });
+        return false;
+
+      } else if (this.addCheckForm.multiSelection.length > 1) {
+        this.$message({
+          type: "error",
+          message: "只能选择一项进行添加照片!"
+        });
+        return false;
+      } else if (this.addCheckForm.multiSelection[0].hasPhoto === "是") {
+        this.$message({
+          type: "error",
+          message: "该问题已添加照片!"
+        });
+        return false;
+      } else {
+        return true;
+      }
+
+    },
     //删除通知单
     deleteInspection(row) {
       this.$confirm("确认删除该通知单？", "提示", {
@@ -782,8 +925,8 @@ export default {
       this.isShowImageDialog = true;
     },
     //删除图片
-    deletePic(row) {
-      this.$confirm("确认删除该图片？", "提示", {
+    deletePic() {
+      this.$confirm("此操作会丢失督察通知单中未保存的数据，是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -791,16 +934,9 @@ export default {
         .then(() => {
           deleteApi.deleteInspectPhotoPathByPathId({
             jobOrderTypeName: this.addProblemRow.jobOrderType,
-            id: row.id
+            id: this.photoTable[0].id
           }).then(response => {
-            this.searchPhoto(this.searchProblemRow);
-            let list = {
-              inspectionId: this.addProblemRow.id,
-              jobOrderTypeName: this.addProblemRow.jobOrderType
-            }
-            searchApi.getInspectJobOrderInfoByInspectionId(list).then(response => {
-              this.problemForm.tableData = response.returnListSecondary[0];
-            })
+            this.cancelCheckForm();
           })
         })
         .catch(() => {
@@ -810,6 +946,34 @@ export default {
           });
         });
     },
+    // deletePic(row) {
+    //   this.$confirm("确认删除该图片？", "提示", {
+    //     confirmButtonText: "确定",
+    //     cancelButtonText: "取消",
+    //     type: "warning"
+    //   })
+    //     .then(() => {
+    //       deleteApi.deleteInspectPhotoPathByPathId({
+    //         jobOrderTypeName: this.addProblemRow.jobOrderType,
+    //         id: row.id
+    //       }).then(response => {
+    //         this.searchPhoto(this.searchProblemRow);
+    //         let list = {
+    //           inspectionId: this.addProblemRow.id,
+    //           jobOrderTypeName: this.addProblemRow.jobOrderType
+    //         }
+    //         searchApi.getInspectJobOrderInfoByInspectionId(list).then(response => {
+    //           this.problemForm.tableData = response.returnListSecondary[0];
+    //         })
+    //       })
+    //     })
+    //     .catch(() => {
+    //       this.$message({
+    //         type: "info",
+    //         message: "已取消删除"
+    //       });
+    //     });
+    // },
     //确认添加问题
     addSubmitCheckForm() {
       this.$refs["addCheckForm"].validate(valid => {
@@ -838,14 +1002,45 @@ export default {
             inspectionRectificationContentAddReqs
           };
 
-          addApi.addInspectionJobOrderInfo(list).then(response => {
-            this.addInspectionProblemPanelFlag = false;
-            this.searchInspection();
+          searchApi.addInspectionJobOrderInfo(list).then(response => {
+            //下面开始添加文件
+            let idList = response.idList;
+            let i = 0;
+            let num = 0;
+            this.addCheckForm.tableData.forEach(element => {
+              this.fileList.forEach(ele => {
+                if (ele.id === element.index) {
+                  this.formData.append("files", ele.file);
+                  this.formData.append("ids", idList[i]);
+                  num++;
+                }
+              })
+              i++;
+            })
+            this.formData.append("jobOrderId", response.majorId);
+            if (num > 0) {
+              addApi.addInspectPhotos(this.formData).then(response => {
+                this.addInspectionProblemPanelFlag = false;
+                this.searchInspection();
+                this.formData = new FormData();
+                this.addProblemRow = [];
+                this.fileList = [];
+              });
+            }
+            else {
+              this.addInspectionProblemPanelFlag = false;
+              this.searchInspection();
+              this.formData = new FormData();
+              this.addProblemRow = [];
+              this.fileList = [];
+            }
+
+
           })
         } else {
           this.$message({
             type: "error",
-            message: "请填写所以必填项!"
+            message: "请填写所有必填项!"
           });
         }
       });
@@ -917,8 +1112,46 @@ export default {
             inspectionRectificationContentUpdateReqs
           };
 
-          updateApi.updateInspectionJobOrderInfo(list).then(response => {
-            this.updateInspectionProblemPanelFlag = false;
+          searchApi.updateInspectionJobOrderInfo(list).then(response => {
+            //下面开始添加文件
+            let idList = response.operateList;
+            let i = 0;
+            //先把新增的append
+            let num = 0;
+            this.updateCheckForm.tableData.forEach(element => {
+              if (element.index > 0) {
+                this.fileListAdd.forEach(ele => {
+                  if (ele.id === element.index) {
+                    this.formData.append("files", ele.file);
+                    this.formData.append("ids", idList[i]);
+                    num++;
+                  }
+                })
+                i++;
+              }
+            })
+            //再把修改的append
+            this.fileListA.forEach(ele => {
+              this.formData.append("files", ele.file);
+              this.formData.append("ids", ele.id);
+              num++;
+            })
+            this.formData.append("jobOrderId", this.addProblemRow.jobOrderId);
+            if (num > 0) {
+              addApi.addInspectPhotos(this.formData).then(response => {
+                this.searchInspection();
+                this.formData = new FormData();
+                this.fileListA = [];
+                this.fileListAdd = [];
+                this.updateInspectionProblemPanelFlag = false;
+              });
+            } else {
+              this.searchInspection();
+              this.formData = new FormData();
+              this.fileListA = [];
+              this.fileListAdd = [];
+              this.updateInspectionProblemPanelFlag = false;
+            }
           })
         } else {
           this.$message({
@@ -932,12 +1165,16 @@ export default {
     cancelCheckForm() {
       this.addInspectionProblemPanelFlag = false;
       this.updateInspectionProblemPanelFlag = false;
+      this.showPicFlag = false;
     },
     //增加一行问题
     addAddCheckTableRow() {
       this.addCheckForm.tableData.push({
         problem: "",
+        hasPhoto: "无",
+        index: this.index
       });
+      this.index++;
     },
     //删除选中多行问题
     deleteAddSelectRow() {
@@ -970,8 +1207,12 @@ export default {
       this.updateCheckForm.tableData.push({
         problem: "",
         listUpdateOperation: "添加",
-        jobOrderId: this.updateCheckForm.id
+        jobOrderId: this.updateCheckForm.id,
+        photoNumber: 0,
+        index: this.index,
+        hasPhoto: "无"
       });
+      this.index++;
     },
     //删除选中多行问题
     deleteUpdateSelectRow() {
@@ -1006,7 +1247,7 @@ export default {
     //反馈检查问题点击
     openCheckPanel(row) {
       this.inspectionId = row.id;
-
+      this.addProblemRow = row;
       //添加面板打开判断
       if (row.jobOrderType === "口头警告通知单" || row.jobOrderType === "整改通知单") {
         let list = {
@@ -1015,6 +1256,11 @@ export default {
         }
         searchApi.getInspectJobOrderInfoByInspectionId(list).then(response => {
           let res = response.returnListMajor[0][0];
+          this.fileListA = [];
+          this.fileListAdd = [];
+          this.index = 1;
+          this.updateCheckForm.deleteTable = [];
+
           this.updateCheckForm.id = res.id;
           this.updateCheckForm.jobOrderType = res.jobOrderType;
           this.updateCheckForm.projectId = res.projectId;
@@ -1033,7 +1279,8 @@ export default {
                 id: ele.id,
                 responsibleDept: ele.responsibleDept,
                 rectificationRequirement: ele.rectificationRequirement,
-                problem: ele.problem
+                problem: ele.problem,
+                hasPhoto: "",
               })
             })
           } else if (this.updateCheckForm.jobOrderType === '口头警告通知单') {
@@ -1041,10 +1288,12 @@ export default {
               this.updateCheckForm.firstTableData.push({
                 id: ele.id,
                 responsibleDept: ele.responsibleDept,
-                problem: ele.problem
+                problem: ele.problem,
+                hasPhoto: ""
               })
             })
           }
+          this.showPicFlag = false;
           this.updateInspectionProblemPanelFlag = true;
         });
 
@@ -1061,8 +1310,9 @@ export default {
         this.addCheckForm.constructDeptName = row.constructDeptName;
         this.addCheckForm.adminDeptId = row.supervisionId;
         this.addCheckForm.adminDeptName = row.supervisionName;
+        this.index = 1;
+        this.fileList = [];
         this.addInspectionProblemPanelFlag = true;
-
       }
     },
     //检查问题表格选中
@@ -1093,9 +1343,71 @@ export default {
       })
     },
     //上传文件
-    sigleFileUploadAction(item) {
+    sigleFileUploadActionA(item) {
+      console.log(this.updateCheckForm.tableData)
+      if (!this.uploadJudgeA()) return;
       if (item.file.type === "image/png" || item.file.type === "image/jpeg") {
-        this.formData.append("files", item.file);
+        //第一种情况：如果原来就有的数据，即无index，只有id
+        if (this.updateCheckForm.multiSelection[0].id != "" && this.updateCheckForm.multiSelection[0].id != null && this.updateCheckForm.multiSelection[0].id != undefined) {
+          let has = false;
+          //如果之前上传过，则修改其上传的文件
+          this.fileListA.forEach(ele => {
+            if (ele.id === this.updateCheckForm.multiSelection[0].id) {
+              has = true;
+              ele.file = item.file;
+            }
+          })
+          //如果之前没有上传过，则上传
+          if (has === false) {
+            this.fileListA.push({
+              id: this.updateCheckForm.multiSelection[0].id,
+              file: item.file
+            });
+          }
+        }
+        else {
+          //第二种情况，之前没有的条目
+          let has = false;
+          //之前已经上传过了
+          this.fileListAdd.forEach(ele => {
+            if (ele.id === this.updateCheckForm.multiSelection[0].index) {
+              ele.file = item.file;
+              has = true;
+            }
+          })
+          if (has === false) {
+            this.fileListAdd.push({
+              id: this.updateCheckForm.multiSelection[0].index,
+              file: item.file
+            });
+          }
+        }
+        this.updateCheckForm.multiSelection[0].hasPhoto = item.file.name;
+      } else {
+        this.$message({
+          type: "error",
+          message: "上传头像图片只能是 JPG 格式或 PNG 格式!"
+        });
+      }
+    },
+    //更新的时候上传照片
+    sigleFileUploadAction(item) {
+      if (!this.uploadJudge()) return;
+      if (item.file.type === "image/png" || item.file.type === "image/jpeg") {
+        if (this.addCheckForm.multiSelection[0].hasPhoto != "无") {
+          this.fileList.forEach(ele => {
+            if (ele.id === this.addCheckForm.multiSelection[0].index) {
+              ele.file = item.file;
+            }
+          })
+        } else {
+          this.fileList.push({
+            id: this.addCheckForm.multiSelection[0].index,
+            file: item.file
+          });
+        }
+        this.addCheckForm.multiSelection[0].hasPhoto = item.file.name;
+        console.log("filelist:", this.fileList)
         this.photo.tableData.push({ name: item.file.name })
         console.log(this.photo.tableData)
       } else {
@@ -1105,6 +1417,18 @@ export default {
         });
       }
     },
+    // sigleFileUploadAction(item) {
+    //   if (item.file.type === "image/png" || item.file.type === "image/jpeg") {
+    //     this.formData.append("files", item.file);
+    //     this.photo.tableData.push({ name: item.file.name })
+    //     console.log(this.photo.tableData)
+    //   } else {
+    //     this.$message({
+    //       type: "error",
+    //       message: "上传头像图片只能是 JPG 格式或 PNG 格式!"
+    //     });
+    //   }
+    // },
 
     submitUpload() {
       this.formData.append("id", this.problemRow.id);
@@ -1155,6 +1479,22 @@ export default {
         });
     },
     //查看问题照片
+    // searchPhoto(row) {
+    //   this.searchPic = row;
+    //   let list = {
+    //     contentId: row.id,
+    //     jobOrderTypeName: this.addProblemRow.jobOrderType
+    //   };
+    //   this.searchProblemRow = row;
+    //   searchApi.getInspectPhotoResourceByContentId(list).then(response => {
+    //     this.photoShowFlag = true;
+    //     this.photoTable = response.returnList[0];
+    //     this.url = [];
+    //     response.returnList[0].forEach(element => {
+    //       this.url.push(`${window.$config.PIC}` + element.photoResourceUrl);
+    //     })
+    //   })
+    // },
     searchPhoto(row) {
       this.searchPic = row;
       let list = {
@@ -1163,11 +1503,14 @@ export default {
       };
       this.searchProblemRow = row;
       searchApi.getInspectPhotoResourceByContentId(list).then(response => {
-        this.photoShowFlag = true;
+        // this.photoShowFlag = true;
         this.photoTable = response.returnList[0];
         this.url = [];
+        this.urlIndex = [];
         response.returnList[0].forEach(element => {
           this.url.push(`${window.$config.PIC}` + element.photoResourceUrl);
+          this.urlIndex.push(this.url[0]);
+          this.showPicFlag = true;
         })
       })
     },
