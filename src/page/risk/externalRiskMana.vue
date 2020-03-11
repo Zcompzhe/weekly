@@ -5,15 +5,16 @@
         <el-row :gutter="20" style="margin-top:20px;margin-bottom:-10px">
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="周报日期" prop="weeklyStartTime" placeholder="周报开始日期">
-                <el-date-picker v-model="searchTable.weeklyStartTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px" @change="weeklyStartTimeChanged"></el-date-picker>
+              <el-form-item label="作业日期" prop="weeklyStartTime" placeholder="周报开始日期">
+                <!-- <el-date-picker v-model="searchTable.weeklyStartTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px" @change="weeklyStartTimeChanged"></el-date-picker> -->
+                <el-date-picker v-model="searchTable.weeklyStartTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="~" prop="weeklyEndTime" placeholder="周报开始日期" label-width="5px">
-                <el-date-picker v-model="searchTable.weeklyEndTime" disabled type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker>
+                <el-date-picker v-model="searchTable.weeklyEndTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
@@ -39,14 +40,12 @@
       <el-table :data="tableData" max-height="400" border @selection-change="weeklyChange" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="300" prop="projectName" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="200" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
-        <el-table-column width="250" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
-        <el-table-column width="250" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
-        <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
-        <el-table-column width="100" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
-
-        <el-table-column width="100" label="操作"  fixed="right" align="center">
+        <el-table-column prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="300" prop="workArrangement" label="作业安排" align="center"></el-table-column>
+        <el-table-column width="250" prop="workTime" label="作业日期" align="center"></el-table-column>
+        <el-table-column width="120" prop="riskLevel" label="风险等级" align="center"></el-table-column>
+        <el-table-column width="120" prop="inherentRisk" label="固有风险" align="center"></el-table-column>
+        <el-table-column width="100" label="操作" fixed="right" align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="calculateDynamicRisk(scope.row)">计算动态风险</el-button>
           </template>
@@ -94,24 +93,14 @@ export default {
   },
   created: function () {
     let startDate = new Date();
-    let endDate = api.getThisWeekStart(startDate);
+    let endDate = api.getThisWeekStartTwo(startDate);
     this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
     this.searchTable.weeklyEndTime = new Date(endDate);
-
+    this.searchWeekly(1);
     //获取项目列表
     getApi.getAllProjectName().then(response => {
       this.searchTable.options.projectIdOptions = response;
     });
-    //空搜索
-    let list = {
-      numberOfPage: this.pagination.pageSize,
-      pageNumber: 0,
-      weeklyStartTime: api.changeDate(this.searchTable.weeklyStartTime)
-    }
-    searchApi.getProjectWeeklyByCondition(list).then(response => {
-      this.tableData = response.returnList[0];
-      this.pagination.total = response.totalNumber;
-    })
   },
   methods: {
     //计算动态风险跳转
@@ -145,9 +134,10 @@ export default {
         numberOfPage: this.pagination.pageSize,
         pageNumber: pageNum - 1,
         projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
-        weeklyStartTime: this.searchTable.weeklyStartTime === "" ? undefined : api.changeDate(this.searchTable.weeklyStartTime)
+        workStartTime: this.searchTable.weeklyStartTime === "" || this.searchTable.weeklyStartTime === null ? undefined : api.changeDate(this.searchTable.weeklyStartTime),
+        workEndTime: this.searchTable.weeklyEndTime === "" || this.searchTable.weeklyEndTime === null ? undefined : api.changeDate(this.searchTable.weeklyEndTime)
       }
-      searchApi.getProjectWeeklyByCondition(list).then(response => {
+      searchApi.getWeeklyRiskContentDetailShowRespByCondition(list).then(response => {
         this.tableData = response.returnList[0];
         this.pagination.total = response.totalNumber;
 

@@ -6,18 +6,20 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="督查日期" prop="inspectStartDate" placeholder="周报开始日期">
-                <el-date-picker v-model="searchTable.inspectStartDate" :clearable="false" @change="inspectDateChange" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px"></el-date-picker>
+                <!-- <el-date-picker v-model="searchTable.inspectStartDate" :clearable="false" @change="inspectDateChange" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px"></el-date-picker> -->
+                <el-date-picker v-model="searchTable.inspectStartDate" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="6" style="margin-left:-12px">
+          <el-col :span="6" style="margin-left:-25px">
             <div class="bar">
               <el-form-item label="~" prop="inspectEndDate" placeholder="周报开始日期" label-width="5px">
-                <el-date-picker v-model="searchTable.inspectEndDate" disabled :clearable="false" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker>
+                <!-- <el-date-picker v-model="searchTable.inspectEndDate" disabled :clearable="false" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker> -->
+                <el-date-picker v-model="searchTable.inspectEndDate" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="6">
+          <!-- <el-col :span="6">
             <div class="bar">
               <el-form-item label="周报日期" prop="weeklyStartTime" placeholder="周报开始日期">
                 <el-date-picker v-model="searchTable.weeklyStartTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px" @change="weeklyStartTimeChanged"></el-date-picker>
@@ -33,17 +35,17 @@
           </el-col>
 
         </el-row>
-        <el-row :gutter="20">
-          <el-col :span="6">
+        <el-row :gutter="20"> -->
+          <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
-                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:430px;margin-left:0px">
+                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="width:260px;margin-left:0px">
                   <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="8" style="margin-top:-20px;margin-left:400px">
+          <el-col :span="3" style="margin-top:-20px;margin-left:20px">
             <div class="bar">
               <el-button type="primary" style="margin-left: -40px" @click="searchInspection()">搜索</el-button>
             </div>
@@ -56,7 +58,7 @@
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="110" prop="inspectDate" label="督查日期" align="center"></el-table-column>
         <el-table-column width="380" prop="projectName" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="180" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
+        <el-table-column width="180" prop="rectificationFeedbackResult" label="整改结果反馈情况" align="center"></el-table-column>
         <el-table-column width="150" prop="problemCount" label="存在问题数" align="center"></el-table-column>
         <el-table-column prop="rectificationFeedbackCount" label="反馈条目数" align="center"></el-table-column>
         <el-table-column width="400" label="操作" align="center" fixed="right">
@@ -467,12 +469,12 @@ export default {
   },
 
   created: function () {
-    this.formData = new FormData();
-    //空搜索获取信息
-    let startDate = new Date();
-    let endDate = api.getThisWeekStartTwo(startDate);
-    this.searchTable.inspectStartDate = new Date(api.changeDate(startDate));
-    this.searchTable.inspectEndDate = new Date(endDate);
+    // this.formData = new FormData();
+    // //空搜索获取信息
+    // let startDate = new Date();
+    // let endDate = api.getThisWeekStartTwo(startDate);
+    // this.searchTable.inspectStartDate = new Date(api.changeDate(startDate));
+    // this.searchTable.inspectEndDate = new Date(endDate);
     this.searchInspection();
     //获取项目列表
     getApi.getAllProjectName().then(response => {
@@ -843,18 +845,12 @@ export default {
     },
     //搜索
     searchInspection() {
-      if ((this.searchTable.inspectEndDate === null && this.searchTable.inspectStartDate != null) || (this.searchTable.inspectEndDate != null && this.searchTable.inspectStartDate === null)) {
-        this.$message({
-          type: "error",
-          message: "督查起止日期必须均填写或均不填写！"
-        });
-        return;
-      }
+      console.log( this.searchTable)
       let list = {
-        inspectEndDate: this.searchTable.inspectEndDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectEndDate)),
-        inspectStartDate: this.searchTable.inspectStartDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectStartDate)),
+        inspectEndDate: this.searchTable.inspectEndDate === "" ||this.searchTable.inspectEndDate === null  ? undefined : api.changeDate(new Date(this.searchTable.inspectEndDate)),
+        inspectStartDate: this.searchTable.inspectStartDate === ""||this.searchTable.inspectStartDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectStartDate)),
         projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
-        weeklyStartTime: this.searchTable.weeklyStartTime === null ? undefined : api.changeDate(this.searchTable.weeklyStartTime),
+        // weeklyStartTime: this.searchTable.weeklyStartTime === null ? undefined : api.changeDate(this.searchTable.weeklyStartTime),
       }
       searchApi.getRectificationFeedbackInspectionByCondition(list).then(response => {
         this.inspection.tableData = response.returnList[0];

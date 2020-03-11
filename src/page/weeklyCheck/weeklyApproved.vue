@@ -41,7 +41,7 @@
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="300" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="200" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
-        <el-table-column width="250" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
+        <el-table-column width="350" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
         <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
         <el-table-column width="100" prop="totalWorkDayCount" label="总作业数" align="center"></el-table-column>
         <el-table-column width="150" prop="hasCheckDayCount" label="已核对作业数" align="center"></el-table-column>
@@ -234,13 +234,13 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">安全专职</div>
+              <div class="title">安全专责</div>
               <el-input disabled v-model="weeklyDetail.safetyStaffName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">质量专职</div>
+              <div class="title">质量专责</div>
               <el-input disabled v-model="weeklyDetail.qualityStaffName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>

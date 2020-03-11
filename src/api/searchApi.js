@@ -148,3 +148,10 @@ export const updateInspectionJobOrderInfo = data => {
     data
   );
 };
+//根据条件获取周报风险作业内容详情展示信息
+export const getWeeklyRiskContentDetailShowRespByCondition = data => {
+  return request.post(
+    `/projectWeeklyManagement/getWeeklyRiskContentDetailShowRespByCondition`,
+    data
+  );
+};

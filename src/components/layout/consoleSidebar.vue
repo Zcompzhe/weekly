@@ -106,7 +106,7 @@
         </template>
 
         <el-menu-item index="/rectification/rectificationFeedback">
-          <i class="el-icon-document"></i>整改反馈通知
+          <i class="el-icon-document"></i>整改情况反馈
         </el-menu-item>
 
       </el-submenu>
@@ -124,10 +124,10 @@
       <el-submenu index="approve">
         <template slot="title">
           <i class="el-icon-message"></i>
-          周报信息核准
+          周计划信息核准
         </template>
         <el-menu-item index="/weeklyCheck/weeklyApproved">
-          <i class="el-icon-document"></i>周报信息准确度管理
+          <i class="el-icon-document"></i>周计划信息准确度管理
         </el-menu-item>
         <el-menu-item index="/weeklyCheck/dayWorkCheck">
           <i class="el-icon-document"></i>当日作业进度核准

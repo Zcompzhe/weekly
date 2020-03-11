@@ -49,7 +49,7 @@
         <el-table-column width="110" prop="inspectDate" label="督查时间" align="center"></el-table-column>
         <el-table-column width="550" prop="projectName" label="检查项目" align="center"></el-table-column>
         <el-table-column prop="problemContent" label="存在问题" align="center"></el-table-column>
-        <el-table-column width="180" prop="hasSetResponsibleStr" label="是否设置责任人" align="center"></el-table-column>
+        <el-table-column width="180" prop="hasFinishAssess" label="是否完成量化考核" align="center"></el-table-column>
         <el-table-column width="100" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="setPerson(scope.row)">设置责任人</el-button>

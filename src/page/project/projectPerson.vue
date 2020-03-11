@@ -37,7 +37,7 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="安全专职" prop="safetyStaff" placeholder="请选择安全专职">
+              <el-form-item label="安全专责" prop="safetyStaff" placeholder="请选择安全专责">
                 <el-select
                   v-model="ruleForm.safetyStaff"
                   clearable
@@ -56,7 +56,7 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="质量专职" prop="qualityStaff" placeholder="请选择质量专职">
+              <el-form-item label="质量专责" prop="qualityStaff" placeholder="请选择质量专责">
                 <el-select
                   v-model="ruleForm.qualityStaff"
                   clearable

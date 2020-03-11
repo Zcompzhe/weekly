@@ -1,12 +1,12 @@
 <template>
   <el-card class="box-card">
     <el-row :gutter="20">
-      <el-col :span="2">
+      <el-col :span="3">
         <div>
           <el-button type="primary" @click="handleNewInfoClick()">新增人员信息</el-button>
         </div>
       </el-col>
-      <el-col :span="2">
+      <el-col :span="3">
         <div>
           <el-button type="primary" @click="handleDeleteInfoClick()">删除人员信息</el-button>
         </div>

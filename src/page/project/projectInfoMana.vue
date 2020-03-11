@@ -213,13 +213,13 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">安全专职</div>
+              <div class="title">安全专责</div>
               <el-input disabled v-model="projectDetail.safetyStaffName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">质量专职</div>
+              <div class="title">质量专责</div>
               <el-input disabled v-model="projectDetail.qualityStaffName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
