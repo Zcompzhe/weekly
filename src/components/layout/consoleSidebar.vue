@@ -83,6 +83,9 @@
         <el-menu-item index="/weekly/weeklyDataManage">
           <i class="el-icon-document"></i>周计划（周报）数据管理
         </el-menu-item>
+        <el-menu-item index="/weekly/exportWeekly">
+          <i class="el-icon-document"></i>周计划（周报）数据导出
+        </el-menu-item>
       </el-submenu>
 
       <el-submenu index="supervision">

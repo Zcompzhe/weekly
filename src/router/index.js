@@ -21,6 +21,12 @@ const weeklyData = r =>
 // const addWeekly = r => require.ensure([], () => r(require('../page/weekly/addWeeklyData')), 'addWeeklyData');
 const addWeekly = r =>
   require.ensure([], () => r(require("../page/weekly/addWeekly")), "addWeekly");
+const exportWeekly = r =>
+  require.ensure(
+    [],
+    () => r(require("../page/weekly/exportWeekly")),
+    "exportWeekly"
+  );
 const updateWeekly = r =>
   require.ensure(
     [],
@@ -249,6 +255,16 @@ export default [
         meta: {
           activePath: "/weekly/addWeekly",
           bcrumd: ["周报管理", "添加周报信息"]
+        }
+      },
+      {
+        // 添加周报信息
+        path: "/weekly/exportWeekly",
+        name: "exportWeekly",
+        component: exportWeekly,
+        meta: {
+          activePath: "/weekly/exportWeekly",
+          bcrumd: ["周报管理", "周报导出"]
         }
       },
 
