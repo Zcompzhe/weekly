@@ -155,3 +155,13 @@ export const getWeeklyRiskContentDetailShowRespByCondition = data => {
     data
   );
 };
+//根据条件导出周报信息
+export const exportProjectWeeklyAsExcel = data => {
+  return request({
+    url: `/projectWeeklyManagement/exportProjectWeeklyAsExcel`,
+    method: "post",
+    data: data,
+    "Content-Type": "application/json;charset=UTF-8",
+    responseType: "blob"
+  });
+};

@@ -6,7 +6,7 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="周报日期" prop="weeklyStartTime" placeholder="周报开始日期">
-                <el-date-picker v-model="searchTable.weeklyStartTime" :clearable="false" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px" @change="weeklyStartTimeChanged"></el-date-picker>
+                <el-date-picker v-model="searchTable.weeklyStartTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px" @change="weeklyStartTimeChanged"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
@@ -67,28 +67,22 @@
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" style="margin-bottom:10px">
-          <el-col :span="8">
-            <div class="bar">
-              <el-button type="primary" style="margin-right: 20px" @click="searchWeekly(1)">搜索</el-button>
-            </div>
-          </el-col>
-        </el-row>
       </el-form>
     </el-card>
     <el-card class="box-card">
-      <el-row :gutter="20" style="margin-left:460px">
-        <el-transfer v-model="value" :data="data" :render-content="renderFunc()" target-order="push"></el-transfer>
-      </el-row>
+      <div class="transferDiv" style="margin-left:433px">
+        <el-transfer style="text-align: left; display: inline-block;" v-model="value" :data="data" target-order="push" :titles="['可选项', '导出项'] "></el-transfer>
+      </div>
+
       <el-row :gutter="20" style="margin-bottom:10px">
         <el-col :span="3" style="margin-left:580px">
           <div class="bar">
-            <el-button type="primary" style="margin-right: 20px">确认导出</el-button>
+            <el-button type="primary" style="margin-right: 20px" @click="exportData()">确认导出</el-button>
           </div>
         </el-col>
         <el-col :span="3">
           <div class="bar">
-            <el-button type="primary" style="margin-right: 20px">取消</el-button>
+            <el-button type="primary" style="margin-right: 20px" @click="goback()">取消</el-button>
           </div>
         </el-col>
       </el-row>
@@ -106,7 +100,8 @@ import * as searchApi from "@/api/searchApi.js";
 export default {
   data() {
     return {
-
+      exportArray: [],
+      exportString: "",
       //穿梭框数据
       data: [
         {
@@ -281,10 +276,11 @@ export default {
       },
       searchTableRule: {
         weeklyStartTime: [
-          { required: true, message: "请选择周报开始时间", trigger: "change" }
+          { required: false, message: "请选择周报开始时间", trigger: "change" }
         ],
       },
     };
+
   },
 
   created: function () {
@@ -308,56 +304,53 @@ export default {
 
   },
   methods: {
-    renderFunc(h, option) {
-      return (
-          <span title={option.name}>{option.name}</span>);
-    },
-    //搜索
-    searchWeekly(pageNum) {
-      this.$refs["searchTable"].validate(valid => {
-        if (valid) {
-          let list = {
-            numberOfPage: this.pagination.pageSize,
-            pageNumber: pageNum - 1,
-            adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
-            adminId: this.searchTable.adminId === "" ? undefined : this.searchTable.adminId,
-            hasThreePlusRiskWork: this.searchTable.hasThreePlusRiskWork === "" ? undefined : this.searchTable.hasThreePlusRiskWork,
-            hasWorkNextWeek: this.searchTable.hasWorkNextWeek === "" ? undefined : this.searchTable.hasWorkNextWeek,
-            projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
-            weeklyStartTime: this.searchTable.weeklyStartTime === "" ? undefined : api.changeDate(this.searchTable.weeklyStartTime)
+
+    //导出
+    exportData() {
+      this.exportArray = [];
+      this.exportString = "";
+      this.value.forEach(ele => {
+        this.exportArray.push(this.data[ele].label);
+      })
+      this.exportString = this.exportArray.join(",");
+      let list = {
+        columnNameList: this.exportString,
+        adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
+        adminId: this.searchTable.adminId === "" ? undefined : this.searchTable.adminId,
+        hasThreePlusRiskWork: this.searchTable.hasThreePlusRiskWork === "" ? undefined : this.searchTable.hasThreePlusRiskWork,
+        hasWorkNextWeek: this.searchTable.hasWorkNextWeek === "" ? undefined : this.searchTable.hasWorkNextWeek,
+        projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+        weeklyStartTime: this.searchTable.weeklyStartTime === "" || this.searchTable.weeklyStartTime === null ? undefined : api.changeDate(this.searchTable.weeklyStartTime)
+      };
+      searchApi.exportProjectWeeklyAsExcel(list)
+        .then(response => {
+          let content = response;
+          let blob = new Blob([content]);
+          let da = api.changeDate(new Date());
+          let fileName = "weekly-" + da + ".xlsx";
+          console.log(response);
+          if ("download" in document.createElement("a")) {
+            // 非IE下载
+            const elink = document.createElement("a");
+            elink.download = fileName;
+            elink.style.display = "none";
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else {
+            // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
           }
-          searchApi.getProjectWeeklyByCondition(list).then(response => {
-            this.weeklyInfo.tableData = response.returnList[0];
-            //转换下周是否有三级以上风险
-            this.weeklyInfo.tableData.forEach(element => {
-              if (element.hasThreePlusRiskWork) element.hasThreePlusRiskWorkStr = "是";
-              else element.hasThreePlusRiskWorkStr = "否";
-            })
-            this.pagination.total = response.totalNumber;
-
-            //换算标题
-            let startDate = this.searchTable.weeklyStartTime;
-            let endDate = api.getThisWeekStart(startDate);
-
-            this.tableTitle =
-              "国网上海建设咨询公司" +
-              new Date().getFullYear() +
-              "年在建工程周报(" +
-              api.changeDate(startDate) +
-              "~" +
-              endDate +
-              ")";
-          })
-        }
-      });
+        })
     },
+
     //周报开始日期改变，自动获取月份，周数，周次
     weeklyStartTimeChanged() {
-      if (this.searchTable.weeklyStartTime == null) {
+      if (this.searchTable.weeklyStartTime == null || this.searchTable.weeklyStartTime == "") {
         this.searchTable.weeklyStartTime = "";
         this.searchTable.weeklyEndTime = "";
-        this.searchTable.monthShowTime = "";
-        this.searchTable.monthStartTime = "";
         return;
       }
       this.searchTable.weeklyEndTime = api.getThisWeekStart(
@@ -369,14 +362,22 @@ export default {
       this.searchTable.monthStartTime =
         api.changeDate(this.searchTable.weeklyStartTime).substring(0, 7) + "-01";
     },
+    goback() {
+      this.$router.push({
+        name: "weeklyData"
+      })
+    }
   }
 };
 </script>
+
+
 <style>
 .el-transfer-panel {
-  width: 310px;
+  width: 240px;
 }
 </style>
+
 
 
 <style lang="less" scoped>

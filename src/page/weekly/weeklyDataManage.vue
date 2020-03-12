@@ -99,7 +99,7 @@
         </el-col> -->
         <el-col :offset="1" :span="2">
           <div class="bar">
-            <el-button type="primary" style="margin-right: 20px">导出周报</el-button>
+            <el-button type="primary" style="margin-right: 20px" @click="exportWeekly">导出周报</el-button>
           </div>
         </el-col>
       </el-row>
@@ -571,7 +571,7 @@ export default {
       searchApi.getProjectWeeklyByCondition({
         projectId: row.projectId,
         orderByIdDesc: true,
-        pageNumber: this.pagination2.currentPage-1,
+        pageNumber: this.pagination2.currentPage - 1,
         numberOfPage: this.pagination2.pageSize
       }).then(res => {
         this.historicalPanelFlag = true;
@@ -649,6 +649,12 @@ export default {
           })
         }
       });
+    },
+    //导出周报
+    exportWeekly() {
+      this.$router.push({
+        name: "exportWeekly"
+      })
     },
     //周报列表选中
     weeklySelect(val) {

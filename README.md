@@ -20,6 +20,8 @@ yarn run e2e
 # 所有测试
 yarn test
 
+#安装jsx
+npm install postcss-loader autoprefixer babel-loader babel-core
 
 #导出为EXCEL 
 npm install --save xlsx file-saver
