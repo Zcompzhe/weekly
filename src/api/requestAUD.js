@@ -14,7 +14,7 @@ service.interceptors.request.use(
   config => {
     // do something before request is sent
     const token = sessionStorage.getItem('token')
-    console.log("token",token)
+
     if (token) {
       // let each request carry token 
       // ['X-Token'] is a custom headers key

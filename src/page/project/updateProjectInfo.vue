@@ -267,6 +267,7 @@ import * as updateApi from "@/api/updateApi.js";
 export default {
   data() {
     return {
+      firstData: {},
       //修改的项目ID
       id: "",
       //返回路径
@@ -418,6 +419,7 @@ export default {
     this.backPath = data.backPath;
     getApi.getProjectInfoDetailPageShowRespById(this.id).then(res => {
       let response = res[0];
+      this.firstData = response;
       this.projectForm.name = response.name;
       this.projectForm.adminId = response.adminId;
       this.projectForm.supervisionId = response.supervisionId;
@@ -461,27 +463,27 @@ export default {
       if (validNum === 2) {
         let list = {
           id: this.id,
-          adminDept: this.projectForm.adminDept,
-          adminId: this.projectForm.adminId,
-          chiefInspectorId: this.personForm.chiefInspectorId,
-          constructDeptId: this.projectForm.constructDeptId,
-          detailedAddress: this.projectForm.detailedAddress,
-          districtId: this.projectForm.districtId,
-          latitude: this.projectForm.latitude,
-          longitude: this.projectForm.longitude,
-          name: this.projectForm.name,
-          professionalSupervisorId: this.personForm.professionalSupervisorId,
-          projectManagerId: this.personForm.projectManagerId,
-          qualityStaffId: this.personForm.qualityStaffId,
-          projectState: this.projectForm.projectState,
-          safetyStaffId: this.personForm.safetyStaffId,
-          safetySupervisorId: this.personForm.safetySupervisorId,
-          supervisionId: this.projectForm.supervisionId,
-          currentSubcontractorNum: this.projectForm.currentSubcontractorNum,
-          currentWorkerNum: this.projectForm.currentWorkerNum,
-          projectScale: this.projectForm.projectScale,
-          actualStartTime: api.changeDate(this.projectForm.actualStartTime),
-          planCompletionTime: api.changeDate(this.projectForm.planCompletionTime),
+          adminDept: this.projectForm.adminDept != this.firstData.adminDept ? this.projectForm.adminDept : undefined,
+          adminId: this.projectForm.adminId != this.firstData.adminId ? this.projectForm.adminId : undefined,
+          chiefInspectorId: this.personForm.chiefInspectorId != this.firstData.chiefInspectorId ? this.personForm.chiefInspectorId : undefined,
+          constructDeptId: this.projectForm.constructDeptId != this.firstData.constructDeptId ? this.projectForm.constructDeptId : undefined,
+          detailedAddress: this.projectForm.detailedAddress != this.firstData.detailedAddress ? this.projectForm.detailedAddress : undefined,
+          districtId: this.projectForm.districtId != this.firstData.districtId ? this.projectForm.districtId : undefined,
+          latitude: this.projectForm.latitude != this.firstData.latitude ? this.projectForm.latitude : undefined,
+          longitude: this.projectForm.longitude != this.firstData.longitude ? this.projectForm.longitude : undefined,
+          name: this.projectForm.name != this.firstData.name ? this.projectForm.name : undefined,
+          professionalSupervisorId: this.personForm.professionalSupervisorId != this.firstData.professionalSupervisorId ? this.personForm.professionalSupervisorId : undefined,
+          projectManagerId: this.personForm.projectManagerId != this.firstData.projectManagerId ? this.personForm.projectManagerId : undefined,
+          qualityStaffId: this.personForm.qualityStaffId != this.firstData.qualityStaffId ? this.personForm.qualityStaffId : undefined,
+          projectState: this.projectForm.projectState != this.firstData.projectState ? this.projectForm.projectState : undefined,
+          safetyStaffId: this.personForm.safetyStaffId != this.firstData.safetyStaffId ? this.personForm.safetyStaffId : undefined,
+          safetySupervisorId: this.personForm.safetySupervisorId != this.firstData.safetySupervisorId ? this.personForm.safetySupervisorId : undefined,
+          supervisionId: this.projectForm.supervisionId != this.firstData.supervisionId ? this.projectForm.supervisionId : undefined,
+          currentSubcontractorNum: this.projectForm.currentSubcontractorNum != this.firstData.currentSubcontractorNum ? this.projectForm.currentSubcontractorNum : undefined,
+          currentWorkerNum: this.projectForm.currentWorkerNum != this.firstData.currentWorkerNum ? this.projectForm.currentWorkerNum : undefined,
+          projectScale: this.projectForm.projectScale != this.firstData.projectScale ? this.projectForm.projectScale : undefined,
+          actualStartTime: api.changeDate(this.projectForm.actualStartTime) != this.firstData.actualStartTime ? api.changeDate(this.projectForm.actualStartTime) : undefined,
+          planCompletionTime: api.changeDate(this.projectForm.planCompletionTime) != this.firstData.planCompletionTime ? api.changeDate(this.projectForm.planCompletionTime) : undefined,
         }
         updateApi.updateProject(list).then(response => {
           this.goback();

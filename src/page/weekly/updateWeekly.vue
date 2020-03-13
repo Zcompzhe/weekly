@@ -15,7 +15,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="周报开始日期" prop="weeklyStartTime" placeholder="周报开始日期">
-                <el-date-picker v-model="updateFormOne.weeklyStartTime" type="date" placeholder="选择日期时间" style="min-width:200px" @change="weeklyStartTimeChanged"></el-date-picker>
+                <el-date-picker v-model="updateFormOne.weeklyStartTime" disabled type="date" placeholder="选择日期时间" style="min-width:200px" @change="weeklyStartTimeChanged"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
@@ -385,6 +385,7 @@ import * as updateApi from "@/api/updateApi.js";
 export default {
   data() {
     return {
+      firstData: {},
       //跳转参数
       backPath: "",
       id: "",
@@ -595,6 +596,7 @@ export default {
     //填写所有信息
     getApi.getProjectWeeklyInfoShowRespById(this.id).then(response => {
       let res = response[0];
+      this.firstData = res.projectWeeklyShowResp;
       this.updateFormOne.weeklyStartTime = new Date(res.projectWeeklyShowResp.weeklyStartTime);
       this.weeklyStartTimeChanged();
       this.updateFormTwo.projectIdName = res.projectWeeklyShowResp.projectName;
@@ -1135,32 +1137,32 @@ export default {
         //加入周报信息
         projectWeeklyAddReq = {
           id: this.id,
-          actualState: this.updateFormFive.actualState,
-          controlledState: this.updateFormFive.controlledState,
-          adminDept: this.updateFormTwo.adminDept,
-          adminId: this.updateFormTwo.adminId,
-          chiefInspectorId: this.updateFormThree.chiefInspectorId,
-          constructDeptId: this.updateFormTwo.constructDeptId,
-          detailedAddress: this.updateFormTwo.detailedAddress,
-          districtId: this.updateFormTwo.districtId,
-          hasThreePlusRiskWork: this.updateFormFour.hasThreePlusRiskWork,
-          hasWorkNextWeek: this.updateFormFour.hasWorkNextWeek,
-          latitude: this.updateFormTwo.latitude,
-          longitude: this.updateFormTwo.longitude,
-          monthStartTime: this.updateFormOne.monthStartTime,
-          professionalSupervisorId: this.updateFormThree.professionalSupervisorId,
-          projectId: this.updateFormTwo.id,
-          projectManagerId: this.updateFormThree.projectManagerId,
-          qualityStaffId: this.updateFormThree.qualityStaffId,
-          safetyStaffId: this.updateFormThree.safetyStaffId,
-          safetySupervisorId: this.updateFormThree.safetySupervisorId,
-          supervisionId: this.updateFormTwo.supervisionId,
-          currentSubcontractorNum: this.updateFormTwo.currentSubcontractorNum,
-          currentWorkerNum: this.updateFormTwo.currentWorkerNum,
-          projectScale: this.updateFormTwo.projectScale,
-          weeklyStartTime: api.changeDate(this.updateFormOne.weeklyStartTime),
-          actualStartTime: api.changeDate(this.updateFormTwo.actualStartTime),
-          planCompletionTime: api.changeDate(this.updateFormTwo.planCompletionTime),
+          actualState: this.updateFormFive.actualState != this.firstData.actualState ? this.updateFormFive.actualState : undefined,
+          controlledState: this.updateFormFive.controlledState != this.firstData.controlledState ? this.updateFormFive.controlledState : undefined,
+          adminDept: this.updateFormTwo.adminDept != this.firstData.adminDept ? this.updateFormTwo.adminDept : undefined,
+          adminId: this.updateFormTwo.adminId != this.firstData.adminId ? this.updateFormTwo.adminId : undefined,
+          chiefInspectorId: this.updateFormThree.chiefInspectorId != this.firstData.chiefInspectorId ? this.updateFormThree.chiefInspectorId : undefined,
+          constructDeptId: this.updateFormTwo.constructDeptId != this.firstData.constructDeptId ? this.updateFormTwo.constructDeptId : undefined,
+          detailedAddress: this.updateFormTwo.detailedAddress != this.firstData.detailedAddress ? this.updateFormTwo.detailedAddress : undefined,
+          districtId: this.updateFormTwo.districtId != this.firstData.districtId ? this.updateFormTwo.districtId : undefined,
+          hasThreePlusRiskWork: this.updateFormFour.hasThreePlusRiskWork != this.firstData.hasThreePlusRiskWork ? this.updateFormFour.hasThreePlusRiskWork : undefined,
+          hasWorkNextWeek: this.updateFormFour.hasWorkNextWeek != this.firstData.hasWorkNextWeek ? this.updateFormFour.hasWorkNextWeek : undefined,
+          latitude: this.updateFormTwo.latitude != this.firstData.latitude ? this.updateFormTwo.latitude : undefined,
+          longitude: this.updateFormTwo.longitude != this.firstData.longitude ? this.updateFormTwo.longitude : undefined,
+          monthStartTime: this.updateFormOne.monthStartTime != this.firstData.monthStartTime ? this.updateFormOne.monthStartTime : undefined,
+          professionalSupervisorId: this.updateFormThree.professionalSupervisorId != this.firstData.professionalSupervisorId ? this.updateFormThree.professionalSupervisorId : undefined,
+          projectId: this.updateFormTwo.id != this.firstData.projectId ? this.updateFormTwo.id : undefined,
+          projectManagerId: this.updateFormThree.projectManagerId != this.firstData.projectManagerId ? this.updateFormThree.projectManagerId : undefined,
+          qualityStaffId: this.updateFormThree.qualityStaffId != this.firstData.qualityStaffId ? this.updateFormThree.qualityStaffId : undefined,
+          safetyStaffId: this.updateFormThree.safetyStaffId != this.firstData.safetyStaffId ? this.updateFormThree.safetyStaffId : undefined,
+          safetySupervisorId: this.updateFormThree.safetySupervisorId != this.firstData.safetySupervisorId ? this.updateFormThree.safetySupervisorId : undefined,
+          supervisionId: this.updateFormTwo.supervisionId != this.firstData.supervisionId ? this.updateFormTwo.supervisionId : undefined,
+          currentSubcontractorNum: this.updateFormTwo.currentSubcontractorNum != this.firstData.currentSubcontractorNum ? this.updateFormTwo.currentSubcontractorNum : undefined,
+          currentWorkerNum: this.updateFormTwo.currentWorkerNum != this.firstData.currentWorkerNum ? this.updateFormTwo.currentWorkerNum : undefined,
+          projectScale: this.updateFormTwo.projectScale != this.firstData.projectScale ? this.updateFormTwo.projectScale : undefined,
+          weeklyStartTime: api.changeDate(this.updateFormOne.weeklyStartTime) != this.firstData.weeklyStartTime ? api.changeDate(this.updateFormOne.weeklyStartTime) : undefined,
+          actualStartTime: api.changeDate(this.updateFormTwo.actualStartTime) != this.firstData.actualStartTime ? api.changeDate(this.updateFormTwo.actualStartTime) : undefined,
+          planCompletionTime: api.changeDate(this.updateFormTwo.planCompletionTime) != this.firstData.planCompletionTime ? api.changeDate(this.updateFormTwo.planCompletionTime) : undefined,
         };
 
         //主要施工内容信息
