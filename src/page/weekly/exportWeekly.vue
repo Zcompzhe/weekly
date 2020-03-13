@@ -109,6 +109,10 @@ export default {
           label: `项目名称`,
         },
         {
+          key: 35,
+          label: `周报日期`,
+        },
+        {
           key: 1,
           label: `建设管理单位`,
         },
@@ -248,7 +252,7 @@ export default {
         },
 
       ],
-      value: [0, 1, 20, 21, 22, 13, 14, 15, 16, 17],
+      value: [0, 35,1, 20, 21, 22, 13, 14, 15, 16, 17],
       //搜索条件数据
       searchTable: {
         weeklyStartTime: "",
