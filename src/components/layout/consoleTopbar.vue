@@ -9,7 +9,7 @@
   font-size: 12px;
   width: 100%;
   .el-col {
-    background: #005F61;
+    background: #005f61;
     height: 100px;
     color: #fff;
     font-size: 14px;
@@ -18,16 +18,16 @@
       position: relative;
       display: block;
       width: 100%;
-      background: #005F61;
+      background: #005f61;
       font-size: 28px;
-      color: #FFF;
+      color: #fff;
       text-align: center;
       height: 100px;
       line-height: 50px;
       overflow: hidden;
       float: left;
       &:before {
-        content: '';
+        content: "";
         position: absolute;
         width: 300px;
         height: 120px;
@@ -56,10 +56,10 @@
       height: 50px;
       display: block;
       z-index: 2;
-      background: #005F61;
+      background: #005f61;
       color: #fff;
       font-size: 14px;
-      border-left: 1px solid #005F61;
+      border-left: 1px solid #005f61;
       text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -84,7 +84,7 @@
 </style>
 <template>
   <el-row class="console-topbar" type="flex">
-    <el-col :xs="12" :sm="12" :md="12" :lg="12" >
+    <el-col :xs="12" :sm="12" :md="12" :lg="12">
       <a class="topbar-home" target="_blank" href="javascript:void(0);"></a>
       <a href="javascript:void(0);" target="_self" class="topbar-home-link">
         <span>管理控制台</span>
@@ -96,8 +96,8 @@
           sosout<i class="el-icon-caret-bottom el-icon--right"></i>
         </a>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>重置密码</el-dropdown-item>
+          <!-- <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-item>重置密码</el-dropdown-item> -->
           <el-dropdown-item command="signOut">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -105,35 +105,31 @@
   </el-row>
 </template>
 <script>
-  import { Row, Col, Dropdown, Icon, DropdownMenu, DropdownItem } from 'element-ui';
-  export default {
-    components: {
-      ElRow: Row,
-      ElCol: Col,
-      ElDropdown: Dropdown,
-      ElDropdownMenu: DropdownMenu,
-      ElDropdownItem: DropdownItem,
-      Icon: Icon
-    },
-    data () {
-      return {
+import { Row, Col, Dropdown, Icon, DropdownMenu, DropdownItem } from 'element-ui';
+export default {
+  components: {
+    ElRow: Row,
+    ElCol: Col,
+    ElDropdown: Dropdown,
+    ElDropdownMenu: DropdownMenu,
+    ElDropdownItem: DropdownItem,
+    Icon: Icon
+  },
+  data() {
+    return {
 
-      }
-    },
-    methods: {
-      handleCommand(command) { // 点击菜单项触发的事件回调
-        const that = this;
-        if(command == 'signOut') { // 模拟退出登录
-          let $sto = that.$sto;
-          let $conf = that.$conf;
-          let cookies = $sto.get($conf.constant.cookie);
-          if(cookies && cookies.token) {
-            delete cookies.token;
-          }
-          $sto.set($conf.constant.cookie, cookies);
-          that.$router.push({path: $conf.route.login});
-        }
+    }
+  },
+  methods: {
+    // 点击菜单项触发的事件回调
+    handleCommand(command) {
+      const that = this;
+      if (command == "signOut") {
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("token-expired");
+        that.$router.push("/login");
       }
     }
   }
+}
 </script>
