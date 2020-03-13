@@ -121,10 +121,7 @@ export const getAllConstructProjectDeptName = () => {
   return request.get(`/baseInfoManagement/getAllConstructProjectDeptName`);
 };
 
-//获取监理项目部
-export const getAllAdminProjectDeptName = () => {
-  return request.get(`/baseInfoManagement/getAllAdminProjectDeptName`);
-};
+
 
 //获取整改项目部
 export const getAllRectification = () => {
