@@ -39,23 +39,26 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  let cookies = Sto.get(Config.constant.cookie);
-  if ((!cookies || !cookies.token) && to.path != Config.route.login) {
-    next(Config.route.login);
-  } else if (cookies && cookies.token && to.path != Config.route.login) {
-    let token = cookies.token;
-    // 保存2个小时TOKEN
-    if ((new Date()).getTime() - token > 7200000) {
-      delete cookies.token;
-      Sto.set(Config.constant.cookie, cookies);
-      next(Config.route.login);
+  const token = sessionStorage.getItem("token");
+  const exp = sessionStorage.getItem("token-expired");
+  const now = new Date().getTime();
+  if (to.path === "/login") {
+    if (token && exp && now - exp < 30000) {
+      next("/");
     } else {
       next();
     }
   } else {
-    next();
+    // token每过3小时需刷新一次
+    if (token && exp && now - exp < 10800000) {
+      next();
+    } else {
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("token-expired");
+      next("/login");
+    }
   }
-})
+});
 
 // router.afterEach((transition) => {
 // })

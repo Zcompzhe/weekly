@@ -156,7 +156,7 @@ const rectificationFeedback = r =>
 
 export default [
   {
-    path: Config.route.login,
+    path: '/login',
     name: "Login",
     component: Login
   },
@@ -427,8 +427,8 @@ export default [
   },
   {
     path: "*",
-    redirect: Config.route.login,
-    //name: 'Login',
+    redirect: '/login',
+    name: 'Login',
     component: Login
   }
 ];
