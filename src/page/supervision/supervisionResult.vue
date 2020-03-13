@@ -815,11 +815,6 @@ export default {
       this.updateCheckForm.options.jobOrderTypeOptions = response;
     });
 
-    //获取业主项目部
-    getApi.getAllAdminProjectDeptName().then(response => {
-      this.addCheckForm.options.ownerDeptIdOptions = response;
-      this.updateCheckForm.options.ownerDeptIdOptions = response;
-    });
 
     //获取施工项目部
     getApi.getAllConstructDeptName().then(response => {
