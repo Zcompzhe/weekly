@@ -32,22 +32,30 @@
                 <el-date-picker disabled v-model="searchTable.weeklyEndTime" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker>
               </el-form-item>
             </div>
+          </el-col> -->
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="项目名称">
+                <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="width:360px;margin-left:0px">
+                  <el-option v-for="item in searchTable.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
           </el-col>
-
         </el-row>
-        <el-row :gutter="20"> -->
+        <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
-                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="width:260px;margin-left:0px">
+                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="width:420px;margin-left:0px">
                   <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="3" style="margin-top:-20px;margin-left:20px">
+          <el-col :span="3" style="margin-top:-20px;margin-left:210px">
             <div class="bar">
-              <el-button type="primary" style="margin-left: -40px" @click="searchInspection()">搜索</el-button>
+              <el-button type="primary" @click="searchInspection()">搜索</el-button>
             </div>
           </el-col>
         </el-row>
@@ -58,6 +66,7 @@
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="110" prop="inspectDate" label="督查日期" align="center"></el-table-column>
         <el-table-column width="380" prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="180" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="180" prop="rectificationFeedbackResult" label="整改结果反馈情况" align="center"></el-table-column>
         <el-table-column width="150" prop="problemCount" label="存在问题数" align="center"></el-table-column>
         <el-table-column prop="rectificationFeedbackCount" label="反馈条目数" align="center"></el-table-column>
@@ -448,8 +457,10 @@ export default {
         weeklyEndTime: "",
         weeklyStartTime: "",
         projectId: "",
+        adminDept: "",
         options: {
           projectIdOptions: {},
+          adminDeptOptions: {},
         }
       },
       searchTableRule: {
@@ -479,6 +490,11 @@ export default {
     //获取项目列表
     getApi.getAllProjectName().then(response => {
       this.searchTable.options.projectIdOptions = response;
+
+    });
+    //获取所属部门
+    getApi.getAllProjectAdminDeptEnum().then(response => {
+      this.searchTable.options.adminDeptOptions = response;
 
     });
     //获取整改负责人
@@ -845,11 +861,12 @@ export default {
     },
     //搜索
     searchInspection() {
-      console.log( this.searchTable)
+      console.log(this.searchTable)
       let list = {
-        inspectEndDate: this.searchTable.inspectEndDate === "" ||this.searchTable.inspectEndDate === null  ? undefined : api.changeDate(new Date(this.searchTable.inspectEndDate)),
-        inspectStartDate: this.searchTable.inspectStartDate === ""||this.searchTable.inspectStartDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectStartDate)),
+        inspectEndDate: this.searchTable.inspectEndDate === "" || this.searchTable.inspectEndDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectEndDate)),
+        inspectStartDate: this.searchTable.inspectStartDate === "" || this.searchTable.inspectStartDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectStartDate)),
         projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+        adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
         // weeklyStartTime: this.searchTable.weeklyStartTime === null ? undefined : api.changeDate(this.searchTable.weeklyStartTime),
       }
       searchApi.getRectificationFeedbackInspectionByCondition(list).then(response => {
