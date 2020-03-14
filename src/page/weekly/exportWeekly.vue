@@ -109,150 +109,150 @@ export default {
           label: `项目名称`,
         },
         {
-          key: 35,
+          key: 1,
           label: `周报日期`,
         },
         {
-          key: 1,
+          key: 2,
           label: `建设管理单位`,
         },
         {
-          key: 2,
+          key: 3,
           label: `监理单位`,
         },
         {
-          key: 3,
+          key: 4,
           label: `施工单位`,
         },
         {
-          key: 4,
+          key: 5,
           label: `所在区域`,
         },
         {
-          key: 5,
+          key: 6,
           label: `详细地址`,
         },
 
         {
-          key: 6,
+          key: 7,
           label: `定位经度`,
         },
 
         {
-          key: 7,
+          key: 8,
           label: `定位纬度`,
         },
         {
-          key: 8,
+          key: 9,
           label: `实际开工时间`,
         },
         {
-          key: 9,
+          key: 10,
           label: `计划竣工时间`,
         },
         {
-          key: 10,
+          key: 11,
           label: `项目规模`,
         },
         {
-          key: 11,
+          key: 12,
           label: `一线作业人员数`,
         },
         {
-          key: 12,
+          key: 13,
           label: `当前分包人员数`,
         },
         {
-          key: 13,
+          key: 14,
           label: `项管部门`,
         },
         {
-          key: 14,
+          key: 15,
           label: `实际状态`,
         },
         {
-          key: 15,
+          key: 16,
           label: `管控内状态`,
         },
         {
-          key: 16,
+          key: 17,
           label: `固有风险`,
         },
         {
-          key: 17,
+          key: 18,
           label: `动态风险`,
         },
         {
-          key: 18,
+          key: 19,
           label: `下周是否有作业`,
         },
         {
-          key: 19,
+          key: 20,
           label: `是否有三级及以上风险`,
         },
         {
-          key: 20,
+          key: 21,
           label: `当前总体施工进度`,
         },
         {
-          key: 21,
+          key: 22,
           label: `下周主要施工作业内容`,
         },
         {
-          key: 22,
+          key: 23,
           label: `三级及以上风险作业安排、位置及内容`,
         },
         {
-          key: 23,
+          key: 24,
           label: `项目经理`,
         },
         {
-          key: 24,
+          key: 25,
           label: `项目经理联系方式`,
         },
         {
-          key: 25,
+          key: 26,
           label: `安全专职`,
         },
         {
-          key: 26,
+          key: 27,
           label: `安全专职联系方式`,
         },
         {
-          key: 27,
+          key: 28,
           label: `质量专职`,
         },
         {
-          key: 28,
+          key: 29,
           label: `质量专职联系方式`,
         },
         {
-          key: 29,
+          key: 30,
           label: `总监/总监代表`,
         },
         {
-          key: 30,
+          key: 31,
           label: `总监/总监代表联系方式`,
         },
         {
-          key: 31,
+          key: 32,
           label: `安全监理`,
         },
         {
-          key: 32,
+          key: 33,
           label: `安全监理联系方式`,
         },
         {
-          key: 33,
+          key: 34,
           label: `专业监理`,
         },
         {
-          key: 34,
+          key: 35,
           label: `专业监理联系方式`,
         },
 
       ],
-      value: [0, 35,1, 20, 21, 22, 13, 14, 15, 16, 17],
+      value: [0, 1, 2, 21, 22, 23, 14, 15, 16, 17, 18],
       //搜索条件数据
       searchTable: {
         weeklyStartTime: "",

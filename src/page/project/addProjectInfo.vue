@@ -308,6 +308,9 @@ export default {
         adminId: [
           { required: true, message: "请选择所属建管单位", trigger: "change" }
         ],
+        supervisionId: [
+          { required: true, message: "请选择监理单位", trigger: "change" }
+        ],
         constructDeptId: [
           { required: true, message: "请输入施工单位", trigger: "change" }
         ],
