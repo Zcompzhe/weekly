@@ -1269,6 +1269,7 @@ export default {
           this.updateCheckForm.firstTableData = [];
           if (this.updateCheckForm.jobOrderType === '整改通知单') {
             this.updateCheckForm.tableData.forEach(ele => {
+              ele.hasPhoto = "无";
               this.updateCheckForm.firstTableData.push({
                 violationType: ele.violationType,
                 id: ele.id,
@@ -1280,6 +1281,7 @@ export default {
             })
           } else if (this.updateCheckForm.jobOrderType === '口头警告通知单') {
             this.updateCheckForm.tableData.forEach(ele => {
+              ele.hasPhoto = "无";
               this.updateCheckForm.firstTableData.push({
                 id: ele.id,
                 responsibleDept: ele.responsibleDept,
@@ -1377,7 +1379,8 @@ export default {
             });
           }
         }
-        this.updateCheckForm.multiSelection[0].hasPhoto = item.file.name;
+        this.$forceUpdate();
+        this.$set(this.updateCheckForm.multiSelection[0], "hasPhoto", item.file.name);
       } else {
         this.$message({
           type: "error",
