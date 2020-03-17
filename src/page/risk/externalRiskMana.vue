@@ -18,16 +18,27 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="8" >
             <div class="bar">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="项目名称">
+                <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:400px">
+                  <el-option v-for="item in searchTable.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <div class="bar" >
               <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
-                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:300px">
+                <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:420px;margin-left:0px">
                   <el-option v-for="item in searchTable.options.projectIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="2" style="margin-left:80px;margin-bottom:20px">
+          <el-col :span="2" style="margin-left:220px;margin-bottom:20px">
             <div class="bar">
               <el-button type="primary" @click="searchWeekly(1)">搜索</el-button>
             </div>
@@ -41,6 +52,7 @@
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="120" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="300" prop="workArrangement" label="作业安排" align="center"></el-table-column>
         <el-table-column width="250" prop="workTime" label="作业日期" align="center"></el-table-column>
         <el-table-column width="120" prop="riskLevel" label="风险等级" align="center"></el-table-column>
@@ -77,7 +89,9 @@ export default {
         projectId: "",
         weeklyStartTime: "",
         weeklyEndTime: "",
+        adminDept: "",
         options: {
+          adminDeptOptions: [],
           projectIdOptions: [],
         }
       },
@@ -100,6 +114,10 @@ export default {
     //获取项目列表
     getApi.getAllProjectName().then(response => {
       this.searchTable.options.projectIdOptions = response;
+    });
+    //获取所有所属部门
+    getApi.getAllProjectAdminDeptEnum().then(response => {
+      this.searchTable.options.adminDeptOptions = response;
     });
   },
   methods: {
@@ -134,6 +152,7 @@ export default {
         numberOfPage: this.pagination.pageSize,
         pageNumber: pageNum - 1,
         projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+         adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
         workStartTime: this.searchTable.weeklyStartTime === "" || this.searchTable.weeklyStartTime === null ? undefined : api.changeDate(this.searchTable.weeklyStartTime),
         workEndTime: this.searchTable.weeklyEndTime === "" || this.searchTable.weeklyEndTime === null ? undefined : api.changeDate(this.searchTable.weeklyEndTime)
       }
