@@ -1255,7 +1255,6 @@ export default {
           this.fileListAdd = [];
           this.index = 1;
           this.updateCheckForm.deleteTable = [];
-
           this.updateCheckForm.id = res.id;
           this.updateCheckForm.jobOrderType = res.jobOrderType;
           this.updateCheckForm.projectId = res.projectId;
@@ -1265,11 +1264,10 @@ export default {
           this.updateCheckForm.constructDeptId = res.constructDeptId;
           this.updateCheckForm.inspectDate = res.inspectDate;
           this.updateCheckForm.checkRangeAndContent = res.checkRangeAndContent;
-          this.updateCheckForm.tableData = response.returnListSecondary[0];
+          this.updateCheckForm.tableData = [];
           this.updateCheckForm.firstTableData = [];
           if (this.updateCheckForm.jobOrderType === '整改通知单') {
-            this.updateCheckForm.tableData.forEach(ele => {
-              ele.hasPhoto = "无";
+            response.returnListSecondary[0].forEach(ele => {
               this.updateCheckForm.firstTableData.push({
                 violationType: ele.violationType,
                 id: ele.id,
@@ -1278,15 +1276,34 @@ export default {
                 problem: ele.problem,
                 hasPhoto: "",
               })
+              this.updateCheckForm.tableData.push({
+                id: ele.id,
+                inspectionId: ele.inspectionId,
+                jobOrderId: ele.jobOrderId,
+                photoNumber: ele.photoNumber,
+                problem: ele.problem,
+                rectificationRequirement: ele.rectificationRequirement,
+                responsibleDept:ele.responsibleDept,
+                violationType:ele.violationType,
+                hasPhoto:""
+              })
             })
           } else if (this.updateCheckForm.jobOrderType === '口头警告通知单') {
-            this.updateCheckForm.tableData.forEach(ele => {
-              ele.hasPhoto = "无";
+            response.returnListSecondary[0].forEach(ele => {
               this.updateCheckForm.firstTableData.push({
                 id: ele.id,
                 responsibleDept: ele.responsibleDept,
                 problem: ele.problem,
                 hasPhoto: ""
+              })
+              this.updateCheckForm.tableData.push({
+                id: ele.id,
+                inspectionId: ele.inspectionId,
+                jobOrderId: ele.jobOrderId,
+                photoNumber: ele.photoNumber,
+                problem: ele.problem,
+                responsibleDept: ele.responsibleDept,
+                hasPhoto:""
               })
             })
           }
