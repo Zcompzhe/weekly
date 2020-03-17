@@ -17,7 +17,7 @@
               </el-form-item>
             </div>
           </el-col>
-           <el-col :span="8" >
+          <el-col :span="8">
             <div class="bar">
               <el-form-item label="所属部门" prop="adminDept" placeholder="项目名称">
                 <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:400px">
@@ -51,18 +51,18 @@
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="300" prop="projectName" label="项目名称" align="center"></el-table-column>
-        <el-table-column width="120" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="200" prop="weeklyTime" label="周报日期" align="center"></el-table-column>
+        <el-table-column width="120" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="350" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
         <el-table-column width="350" prop="threePlusRiskWorkContent" label="下周的三级及以上风险作业安排、位置及内容" align="left"></el-table-column>
         <el-table-column width="100" prop="totalWorkDayCount" label="总作业数" align="center"></el-table-column>
         <el-table-column width="150" prop="hasCheckDayCount" label="已核对作业数" align="center"></el-table-column>
-        <el-table-column width="200" prop="accuracyValue" label="周报准确度"   fixed="right" align="center">
+        <el-table-column width="200" prop="accuracyValue" label="周报准确度" fixed="right" align="center">
           <template slot-scope="scope">
             <el-progress :text-inside="true" :stroke-width="24" :percentage="scope.row.accuracyValue*100" :status="getColor(scope.row.accuracyValue*100)"></el-progress>
           </template>
         </el-table-column>
-        <el-table-column width="100" label="操作"  fixed="right" align="center">
+        <el-table-column width="100" label="操作" fixed="right" align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="detailWeekly(scope.row)">查看详情</el-button>
           </template>
@@ -353,10 +353,10 @@ export default {
         projectId: "",
         weeklyStartTime: "",
         weeklyEndTime: "",
-        adminDept:"",
+        adminDept: "",
         options: {
           projectIdOptions: [],
-          adminDeptOptions:[],
+          adminDeptOptions: [],
         }
       },
       searchTableRule: {},
