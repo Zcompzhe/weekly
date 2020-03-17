@@ -434,6 +434,7 @@ export default {
         numberOfPage: this.pagination.pageSize,
         pageNumber: pageNum - 1,
         projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+        adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
         weeklyStartTime: this.searchTable.weeklyStartTime === "" ? undefined : api.changeDate(this.searchTable.weeklyStartTime)
       }
       searchApi.getWeeklyAccuracyShowRespByCondition(list).then(response => {
