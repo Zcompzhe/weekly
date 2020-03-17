@@ -1253,6 +1253,7 @@ export default {
           let res = response.returnListMajor[0][0];
           this.fileListA = [];
           this.fileListAdd = [];
+          this.formData = new FormData();
           this.index = 1;
           this.updateCheckForm.deleteTable = [];
           this.updateCheckForm.id = res.id;
@@ -1283,9 +1284,9 @@ export default {
                 photoNumber: ele.photoNumber,
                 problem: ele.problem,
                 rectificationRequirement: ele.rectificationRequirement,
-                responsibleDept:ele.responsibleDept,
-                violationType:ele.violationType,
-                hasPhoto:""
+                responsibleDept: ele.responsibleDept,
+                violationType: ele.violationType,
+                hasPhoto: ""
               })
             })
           } else if (this.updateCheckForm.jobOrderType === '口头警告通知单') {
@@ -1303,7 +1304,7 @@ export default {
                 photoNumber: ele.photoNumber,
                 problem: ele.problem,
                 responsibleDept: ele.responsibleDept,
-                hasPhoto:""
+                hasPhoto: ""
               })
             })
           }
