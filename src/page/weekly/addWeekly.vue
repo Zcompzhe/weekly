@@ -200,7 +200,7 @@
                 <!-- <el-select v-model="addFormThree.projectManagerId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.projectManagerIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                  <el-cascader v-model="addFormThree.projectManagerId" :options="addFormThree.options.projectManagerIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.projectManagerId" :options="addFormThree.options.projectManagerIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -211,7 +211,7 @@
                 <!-- <el-select v-model="addFormThree.safetyStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.safetyStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                  <el-cascader v-model="addFormThree.safetyStaffId" :options="addFormThree.options.safetyStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.safetyStaffId" :options="addFormThree.options.safetyStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -222,7 +222,7 @@
                 <!-- <el-select v-model="addFormThree.qualityStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.qualityStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                  <el-cascader v-model="addFormThree.qualityStaffId" :options="addFormThree.options.qualityStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.qualityStaffId" :options="addFormThree.options.qualityStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -234,7 +234,7 @@
                 <!-- <el-select v-model="addFormThree.chiefInspectorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.chiefInspectorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                  <el-cascader v-model="addFormThree.chiefInspectorId" :options="addFormThree.options.chiefInspectorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.chiefInspectorId" :options="addFormThree.options.chiefInspectorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -246,7 +246,7 @@
                   <el-option v-for="item in addFormThree.options
                       .safetySupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                  <el-cascader v-model="addFormThree.safetySupervisorId" :options="addFormThree.options.safetySupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.safetySupervisorId" :options="addFormThree.options.safetySupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -258,7 +258,7 @@
                   <el-option v-for="item in addFormThree.options
                       .professionalSupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                  <el-cascader v-model="addFormThree.professionalSupervisorId" :options="addFormThree.options.professionalSupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.professionalSupervisorId" :options="addFormThree.options.professionalSupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -511,12 +511,12 @@ export default {
         professionalSupervisorId: "",
 
         options: {
-          projectManagerIdOptions: {},
-          safetyStaffIdOptions: {},
-          qualityStaffIdOptions: {},
-          chiefInspectorIdOptions: {},
-          safetySupervisorIdOptions: {},
-          professionalSupervisorIdOptions: {}
+          projectManagerIdOptions: [],
+          safetyStaffIdOptions: [],
+          qualityStaffIdOptions: [],
+          chiefInspectorIdOptions: [],
+          safetySupervisorIdOptions: [],
+          professionalSupervisorIdOptions: []
         }
       },
       addFormThreeRule: {
@@ -750,13 +750,13 @@ export default {
               data.planCompletionTime
             );
 
-            this.addFormThree.projectManagerId = data.projectManagerId;
-            this.addFormThree.safetyStaffId = data.safetyStaffId;
-            this.addFormThree.qualityStaffId = data.qualityStaffId;
-            this.addFormThree.chiefInspectorId = data.chiefInspectorId;
-            this.addFormThree.safetySupervisorId = data.safetySupervisorId;
+            this.addFormThree.projectManagerId = [data.projectManagerDeptId, data.projectManagerId];
+            this.addFormThree.safetyStaffId = [data.safetyStaffDeptId, data.safetyStaffId];
+            this.addFormThree.qualityStaffId = [data.qualityStaffDeptId, data.qualityStaffId];
+            this.addFormThree.chiefInspectorId = [data.chiefInspectorDeptId, data.chiefInspectorId];
+            this.addFormThree.safetySupervisorId = [data.safetySupervisorDeptId, data.safetySupervisorId];
             this.addFormThree.professionalSupervisorId =
-              data.professionalSupervisorId;
+              [data.professionalSupervisorDeptId, data.professionalSupervisorId];
           });
       }
     },
@@ -1018,21 +1018,29 @@ export default {
             adminDept: this.addFormTwo.adminDept,
             actualStartTime: api.changeDate(this.addFormTwo.actualStartTime),
             planCompletionTime: api.changeDate(this.addFormTwo.planCompletionTime),
-            chiefInspectorId: this.addFormThree.chiefInspectorId,
-            professionalSupervisorId: this.addFormThree.professionalSupervisorId,
-            projectManagerId: this.addFormThree.projectManagerId,
-            qualityStaffId: this.addFormThree.qualityStaffId,
-            safetyStaffId: this.addFormThree.safetyStaffId,
-            safetySupervisorId: this.addFormThree.safetySupervisorId,
+            chiefInspectorId: this.addFormThree.chiefInspectorId[1],
+            professionalSupervisorId: this.addFormThree.professionalSupervisorId[1],
+            projectManagerId: this.addFormThree.projectManagerId[1],
+            qualityStaffId: this.addFormThree.qualityStaffId[1],
+            safetyStaffId: this.addFormThree.safetyStaffId[1],
+            safetySupervisorId: this.addFormThree.safetySupervisorId[1],
+
+            chiefInspectorDeptId: this.addFormThree.chiefInspectorId[0],
+            professionalSupervisorDeptId: this.addFormThree.professionalSupervisorId[0],
+            projectManagerDeptId: this.addFormThree.projectManagerId[0],
+            qualityStaffDeptId: this.addFormThree.qualityStaffId[0],
+            safetyStaffDeptId: this.addFormThree.safetyStaffId[0],
+            safetySupervisorDeptId: this.addFormThree.safetySupervisorId[0],
+
           };
         }
+        console.log(this.addFormThree)
         //加入周报信息
         projectWeeklyAddReq = {
           actualState: this.addFormFive.actualState,
           controlledState: this.addFormFive.controlledState,
           adminDept: this.addFormTwo.adminDept,
           adminId: this.addFormTwo.adminId,
-          chiefInspectorId: this.addFormThree.chiefInspectorId,
           constructDeptId: this.addFormTwo.constructDeptId,
           detailedAddress: this.addFormTwo.detailedAddress,
           districtId: this.addFormTwo.districtId,
@@ -1041,12 +1049,7 @@ export default {
           latitude: this.addFormTwo.latitude,
           longitude: this.addFormTwo.longitude,
           monthStartTime: this.addFormOne.monthStartTime,
-          professionalSupervisorId: this.addFormThree.professionalSupervisorId,
           projectId: this.addFormTwo.id,
-          projectManagerId: this.addFormThree.projectManagerId,
-          qualityStaffId: this.addFormThree.qualityStaffId,
-          safetyStaffId: this.addFormThree.safetyStaffId,
-          safetySupervisorId: this.addFormThree.safetySupervisorId,
           supervisionId: this.addFormTwo.supervisionId,
           currentSubcontractorNum: this.addFormTwo.currentSubcontractorNum,
           currentWorkerNum: this.addFormTwo.currentWorkerNum,
@@ -1054,6 +1057,19 @@ export default {
           weeklyStartTime: api.changeDate(this.addFormOne.weeklyStartTime),
           actualStartTime: api.changeDate(this.addFormTwo.actualStartTime),
           planCompletionTime: api.changeDate(this.addFormTwo.planCompletionTime),
+          chiefInspectorId: this.addFormThree.chiefInspectorId[1],
+          professionalSupervisorId: this.addFormThree.professionalSupervisorId[1],
+          projectManagerId: this.addFormThree.projectManagerId[1],
+          qualityStaffId: this.addFormThree.qualityStaffId[1],
+          safetyStaffId: this.addFormThree.safetyStaffId[1],
+          safetySupervisorId: this.addFormThree.safetySupervisorId[1],
+
+          chiefInspectorDeptId: this.addFormThree.chiefInspectorId[0],
+          professionalSupervisorDeptId: this.addFormThree.professionalSupervisorId[0],
+          projectManagerDeptId: this.addFormThree.projectManagerId[0],
+          qualityStaffDeptId: this.addFormThree.qualityStaffId[0],
+          safetyStaffDeptId: this.addFormThree.safetyStaffId[0],
+          safetySupervisorDeptId: this.addFormThree.safetySupervisorId[0],
         };
         //主要施工内容信息
         //风险作业内容信息
