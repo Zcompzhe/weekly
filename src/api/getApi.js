@@ -33,6 +33,11 @@ export const getAllStaffName = () => {
   return request.get(`/baseInfoManagement/getAllStaffName`);
 };
 
+//获取用户级联选择器
+export const getUserCascader = () => {
+  return request.get(`/getUserCascader`);
+};
+
 //获取工程编号级联选择器
 export const getJobNumber = () => {
   return cascader.getJobNumber();

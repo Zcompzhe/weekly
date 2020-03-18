@@ -176,27 +176,30 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目经理" prop="projectManagerId" placeholder="请选择项目经理">
-                <el-select v-model="personForm.projectManagerId" clearable placeholder="请选择" style="min-width:300px">
+                <!-- <el-select v-model="personForm.projectManagerId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="personForm.projectManagerId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="质量专责" prop="qualityStaffId" placeholder="请选择质量专责">
-                <el-select v-model="personForm.qualityStaffId" clearable placeholder="请选择" style="min-width:300px">
+                <!-- <el-select v-model="personForm.qualityStaffId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="personForm.qualityStaffId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全专责" prop="safetyStaffId" placeholder="请选择安全专责">
-                <el-select v-model="personForm.safetyStaffId" clearable placeholder="请选择" style="min-width:300px">
+                <!-- <el-select v-model="personForm.safetyStaffId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="personForm.safetyStaffId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -214,27 +217,30 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="总监/总监代表" prop="chiefInspectorId" placeholder="请选择总监/总监代表">
-                <el-select v-model="personForm.chiefInspectorId" clearable placeholder="请选择" style="min-width:300px">
+                <!-- <el-select v-model="personForm.chiefInspectorId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="personForm.chiefInspectorId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="专业监理" prop="professionalSupervisorId" placeholder="请选择专业监理">
-                <el-select v-model="personForm.professionalSupervisorId" clearable placeholder="请选择" style="min-width:300px">
+                <!-- <el-select v-model="personForm.professionalSupervisorId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="personForm.professionalSupervisorId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全监理" prop="safetySupervisorId" placeholder="请选择安全监理">
-                <el-select v-model="personForm.safetySupervisorId" clearable placeholder="请选择" style="min-width:300px">
+                <!-- <el-select v-model="personForm.safetySupervisorId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="personForm.safetySupervisorId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -267,6 +273,10 @@ import * as updateApi from "@/api/updateApi.js";
 export default {
   data() {
     return {
+      propsPerson: {
+        value: "id",
+        label: "name"
+      },
       firstData: {},
       //修改的项目ID
       id: "",
@@ -408,8 +418,8 @@ export default {
       this.projectForm.options.adminDeptOptions = response;
     });
     //获取所有人员信息
-    getApi.getAllStaffName().then(response => {
-      this.personForm.options.personOptions = response;
+    getApi.getUserCascader().then(response => {
+      this.personForm.options.personOptions = response.options;
     });
     //获取施工单位
     getApi.getAllConstructDeptName().then(response => {
@@ -439,12 +449,12 @@ export default {
       this.projectForm.actualStartTime = new Date(response.actualStartTime);
       this.projectForm.planCompletionTime = new Date(response.planCompletionTime);
 
-      this.personForm.projectManagerId = response.projectManagerId;
-      this.personForm.safetyStaffId = response.safetyStaffId;
-      this.personForm.qualityStaffId = response.qualityStaffId;
-      this.personForm.chiefInspectorId = response.chiefInspectorId;
-      this.personForm.professionalSupervisorId = response.professionalSupervisorId;
-      this.personForm.safetySupervisorId = response.safetySupervisorId;
+      this.personForm.projectManagerId = [response.projectManagerDeptId, response.projectManagerId];
+      this.personForm.safetyStaffId = [response.safetyStaffDeptId, response.safetyStaffId];
+      this.personForm.qualityStaffId = [response.qualityStaffDeptId, response.qualityStaffId];
+      this.personForm.chiefInspectorId = [response.chiefInspectorDeptId, response.chiefInspectorId];
+      this.personForm.professionalSupervisorId = [response.professionalSupervisorDeptId, response.professionalSupervisorId];
+      this.personForm.safetySupervisorId = [response.safetySupervisorDeptId, response.safetySupervisorId];
     })
 
   },
@@ -468,25 +478,33 @@ export default {
           id: this.id,
           adminDept: this.projectForm.adminDept != this.firstData.adminDept ? this.projectForm.adminDept : undefined,
           adminId: this.projectForm.adminId != this.firstData.adminId ? this.projectForm.adminId : undefined,
-          chiefInspectorId: this.personForm.chiefInspectorId != this.firstData.chiefInspectorId ? this.personForm.chiefInspectorId : undefined,
           constructDeptId: this.projectForm.constructDeptId != this.firstData.constructDeptId ? this.projectForm.constructDeptId : undefined,
           detailedAddress: this.projectForm.detailedAddress != this.firstData.detailedAddress ? this.projectForm.detailedAddress : undefined,
           districtId: this.projectForm.districtId != this.firstData.districtId ? this.projectForm.districtId : undefined,
           latitude: this.projectForm.latitude != this.firstData.latitude ? this.projectForm.latitude : undefined,
           longitude: this.projectForm.longitude != this.firstData.longitude ? this.projectForm.longitude : undefined,
-          name: this.projectForm.name != this.firstData.name ? this.projectForm.name : undefined,
-          professionalSupervisorId: this.personForm.professionalSupervisorId != this.firstData.professionalSupervisorId ? this.personForm.professionalSupervisorId : undefined,
-          projectManagerId: this.personForm.projectManagerId != this.firstData.projectManagerId ? this.personForm.projectManagerId : undefined,
-          qualityStaffId: this.personForm.qualityStaffId != this.firstData.qualityStaffId ? this.personForm.qualityStaffId : undefined,
           projectState: this.projectForm.projectState != this.firstData.projectState ? this.projectForm.projectState : undefined,
-          safetyStaffId: this.personForm.safetyStaffId != this.firstData.safetyStaffId ? this.personForm.safetyStaffId : undefined,
-          safetySupervisorId: this.personForm.safetySupervisorId != this.firstData.safetySupervisorId ? this.personForm.safetySupervisorId : undefined,
+          name: this.projectForm.name != this.firstData.name ? this.projectForm.name : undefined,
           supervisionId: this.projectForm.supervisionId != this.firstData.supervisionId ? this.projectForm.supervisionId : undefined,
           currentSubcontractorNum: this.projectForm.currentSubcontractorNum != this.firstData.currentSubcontractorNum ? this.projectForm.currentSubcontractorNum : undefined,
           currentWorkerNum: this.projectForm.currentWorkerNum != this.firstData.currentWorkerNum ? this.projectForm.currentWorkerNum : undefined,
           projectScale: this.projectForm.projectScale != this.firstData.projectScale ? this.projectForm.projectScale : undefined,
           actualStartTime: api.changeDate(this.projectForm.actualStartTime) != this.firstData.actualStartTime ? api.changeDate(this.projectForm.actualStartTime) : undefined,
           planCompletionTime: api.changeDate(this.projectForm.planCompletionTime) != this.firstData.planCompletionTime ? api.changeDate(this.projectForm.planCompletionTime) : undefined,
+
+          professionalSupervisorId: this.personForm.professionalSupervisorId[1] != this.firstData.professionalSupervisorId ? this.personForm.professionalSupervisorId[1] : undefined,
+          projectManagerId: this.personForm.projectManagerId[1] != this.firstData.projectManagerId ? this.personForm.projectManagerId[1] : undefined,
+          qualityStaffId: this.personForm.qualityStaffId[1] != this.firstData.qualityStaffId ? this.personForm.qualityStaffId[1] : undefined,
+          safetyStaffId: this.personForm.safetyStaffId[1] != this.firstData.safetyStaffId ? this.personForm.safetyStaffId[1] : undefined,
+          safetySupervisorId: this.personForm.safetySupervisorId[1] != this.firstData.safetySupervisorId ? this.personForm.safetySupervisorId[1] : undefined,
+          chiefInspectorId: this.personForm.chiefInspectorId[1] != this.firstData.chiefInspectorId ? this.personForm.chiefInspectorId[1] : undefined,
+
+          professionalSupervisorDeptId: this.personForm.professionalSupervisorId[0] != this.firstData.professionalSupervisorDeptId ? this.personForm.professionalSupervisorId[0] : undefined,
+          projectManagerDeptId: this.personForm.projectManagerId[0] != this.firstData.projectManagerDeptId ? this.personForm.projectManagerId[0] : undefined,
+          qualityStaffDeptId: this.personForm.qualityStaffId[0] != this.firstData.qualityStaffDeptId ? this.personForm.qualityStaffId[0] : undefined,
+          safetyStaffDeptId: this.personForm.safetyStaffId[0] != this.firstData.safetyStaffDeptId ? this.personForm.safetyStaffId[0] : undefined,
+          safetySupervisorDeptId: this.personForm.safetySupervisorId[0] != this.firstData.safetySupervisorDeptId ? this.personForm.safetySupervisorId[0] : undefined,
+          chiefInspectorDeptId: this.personForm.chiefInspectorId[0] != this.firstData.chiefInspectorDeptId ? this.personForm.chiefInspectorId[0] : undefined,
         }
         updateApi.updateProject(list).then(response => {
           this.goback();

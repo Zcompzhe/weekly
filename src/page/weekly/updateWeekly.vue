@@ -197,9 +197,10 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目经理" prop="projectManagerId" placeholder="项目名称">
-                <el-select v-model="updateFormThree.projectManagerId" clearable placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="updateFormThree.projectManagerId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormThree.options.projectManagerIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="updateFormThree.projectManagerId" :options="updateFormThree.options.projectManagerIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -207,9 +208,10 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全专责" prop="safetyStaffId" placeholder="当前月份">
-                <el-select v-model="updateFormThree.safetyStaffId" clearable placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="updateFormThree.safetyStaffId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormThree.options.safetyStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="updateFormThree.safetyStaffId" :options="updateFormThree.options.safetyStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -217,9 +219,10 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="质量专责" prop="qualityStaffId" placeholder="周报开始日期">
-                <el-select v-model="updateFormThree.qualityStaffId" clearable placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="updateFormThree.qualityStaffId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormThree.options.qualityStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="updateFormThree.qualityStaffId" :options="updateFormThree.options.qualityStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -228,9 +231,10 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="总监/总监代表" prop="chiefInspectorId" placeholder="项目名称">
-                <el-select v-model="updateFormThree.chiefInspectorId" clearable placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="updateFormThree.chiefInspectorId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormThree.options.chiefInspectorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="updateFormThree.chiefInspectorId" :options="updateFormThree.options.chiefInspectorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -238,10 +242,11 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全监理" prop="safetySupervisorId" placeholder="当前月份">
-                <el-select v-model="updateFormThree.safetySupervisorId" clearable placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="updateFormThree.safetySupervisorId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormThree.options
                       .safetySupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="updateFormThree.safetySupervisorId" :options="updateFormThree.options.safetySupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -249,10 +254,11 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="专业监理" prop="professionalSupervisorId" placeholder="周报开始日期">
-                <el-select v-model="updateFormThree.professionalSupervisorId" clearable placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="updateFormThree.professionalSupervisorId" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormThree.options
                       .professionalSupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                </el-select> -->
+                <el-cascader v-model="updateFormThree.professionalSupervisorId" :options="updateFormThree.options.professionalSupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -385,6 +391,10 @@ import * as updateApi from "@/api/updateApi.js";
 export default {
   data() {
     return {
+      propsPerson: {
+        value: "id",
+        label: "name"
+      },
       firstData: {},
       //跳转参数
       backPath: "",
@@ -620,12 +630,12 @@ export default {
 
 
       //人员
-      this.updateFormThree.projectManagerId = res.projectWeeklyShowResp.projectManagerId;
-      this.updateFormThree.safetyStaffId = res.projectWeeklyShowResp.safetyStaffId;
-      this.updateFormThree.qualityStaffId = res.projectWeeklyShowResp.qualityStaffId;
-      this.updateFormThree.chiefInspectorId = res.projectWeeklyShowResp.chiefInspectorId;
-      this.updateFormThree.safetySupervisorId = res.projectWeeklyShowResp.safetySupervisorId;
-      this.updateFormThree.professionalSupervisorId = res.projectWeeklyShowResp.professionalSupervisorId;
+      this.updateFormThree.projectManagerId = [res.projectWeeklyShowResp.projectManagerDeptId, res.projectWeeklyShowResp.projectManagerId];
+      this.updateFormThree.safetyStaffId = [res.projectWeeklyShowResp.safetyStaffDeptId, res.projectWeeklyShowResp.safetyStaffId];
+      this.updateFormThree.qualityStaffId = [res.projectWeeklyShowResp.qualityStaffDeptId, res.projectWeeklyShowResp.qualityStaffId];
+      this.updateFormThree.chiefInspectorId = [res.projectWeeklyShowResp.chiefInspectorDeptId, res.projectWeeklyShowResp.chiefInspectorId];
+      this.updateFormThree.safetySupervisorId = [res.projectWeeklyShowResp.safetySupervisorDeptId, res.projectWeeklyShowResp.safetySupervisorId];
+      this.updateFormThree.professionalSupervisorId = [res.projectWeeklyShowResp.professionalSupervisorDeptId, res.projectWeeklyShowResp.professionalSupervisorId];
 
       this.updateFormFour.hasWorkNextWeek = res.projectWeeklyShowResp.hasWorkNextWeek;
       this.updateFormFour.hasThreePlusRiskWork = res.projectWeeklyShowResp.hasThreePlusRiskWork;
@@ -708,14 +718,14 @@ export default {
     getApi.getAllProjectActualStateEnum().then(response => {
       this.updateFormFive.options.actualStateOptions = response;
     });
-    //获取所有人员信息
-    getApi.getAllStaffName().then(response => {
-      this.updateFormThree.options.projectManagerIdOptions = response;
-      this.updateFormThree.options.safetyStaffIdOptions = response;
-      this.updateFormThree.options.qualityStaffIdOptions = response;
-      this.updateFormThree.options.chiefInspectorIdOptions = response;
-      this.updateFormThree.options.safetySupervisorIdOptions = response;
-      this.updateFormThree.options.professionalSupervisorIdOptions = response;
+    //获取所有人员的级联选择器
+    getApi.getUserCascader().then(response => {
+      this.updateFormThree.options.projectManagerIdOptions = response.options;
+      this.updateFormThree.options.safetyStaffIdOptions = response.options;
+      this.updateFormThree.options.qualityStaffIdOptions = response.options;
+      this.updateFormThree.options.chiefInspectorIdOptions = response.options;
+      this.updateFormThree.options.safetySupervisorIdOptions = response.options;
+      this.updateFormThree.options.professionalSupervisorIdOptions = response.options;
     });
     //获取分部分项工程
     this.updateFormFour.options.jobNumberOptions = getApi.getJobNumber();
@@ -1141,7 +1151,6 @@ export default {
           controlledState: this.updateFormFive.controlledState != this.firstData.controlledState ? this.updateFormFive.controlledState : undefined,
           adminDept: this.updateFormTwo.adminDept != this.firstData.adminDept ? this.updateFormTwo.adminDept : undefined,
           adminId: this.updateFormTwo.adminId != this.firstData.adminId ? this.updateFormTwo.adminId : undefined,
-          chiefInspectorId: this.updateFormThree.chiefInspectorId != this.firstData.chiefInspectorId ? this.updateFormThree.chiefInspectorId : undefined,
           constructDeptId: this.updateFormTwo.constructDeptId != this.firstData.constructDeptId ? this.updateFormTwo.constructDeptId : undefined,
           detailedAddress: this.updateFormTwo.detailedAddress != this.firstData.detailedAddress ? this.updateFormTwo.detailedAddress : undefined,
           districtId: this.updateFormTwo.districtId != this.firstData.districtId ? this.updateFormTwo.districtId : undefined,
@@ -1150,12 +1159,7 @@ export default {
           latitude: this.updateFormTwo.latitude != this.firstData.latitude ? this.updateFormTwo.latitude : undefined,
           longitude: this.updateFormTwo.longitude != this.firstData.longitude ? this.updateFormTwo.longitude : undefined,
           monthStartTime: this.updateFormOne.monthStartTime != this.firstData.monthStartTime ? this.updateFormOne.monthStartTime : undefined,
-          professionalSupervisorId: this.updateFormThree.professionalSupervisorId != this.firstData.professionalSupervisorId ? this.updateFormThree.professionalSupervisorId : undefined,
           projectId: this.updateFormTwo.id != this.firstData.projectId ? this.updateFormTwo.id : undefined,
-          projectManagerId: this.updateFormThree.projectManagerId != this.firstData.projectManagerId ? this.updateFormThree.projectManagerId : undefined,
-          qualityStaffId: this.updateFormThree.qualityStaffId != this.firstData.qualityStaffId ? this.updateFormThree.qualityStaffId : undefined,
-          safetyStaffId: this.updateFormThree.safetyStaffId != this.firstData.safetyStaffId ? this.updateFormThree.safetyStaffId : undefined,
-          safetySupervisorId: this.updateFormThree.safetySupervisorId != this.firstData.safetySupervisorId ? this.updateFormThree.safetySupervisorId : undefined,
           supervisionId: this.updateFormTwo.supervisionId != this.firstData.supervisionId ? this.updateFormTwo.supervisionId : undefined,
           currentSubcontractorNum: this.updateFormTwo.currentSubcontractorNum != this.firstData.currentSubcontractorNum ? this.updateFormTwo.currentSubcontractorNum : undefined,
           currentWorkerNum: this.updateFormTwo.currentWorkerNum != this.firstData.currentWorkerNum ? this.updateFormTwo.currentWorkerNum : undefined,
@@ -1163,6 +1167,20 @@ export default {
           weeklyStartTime: api.changeDate(this.updateFormOne.weeklyStartTime) != this.firstData.weeklyStartTime ? api.changeDate(this.updateFormOne.weeklyStartTime) : undefined,
           actualStartTime: api.changeDate(this.updateFormTwo.actualStartTime) != this.firstData.actualStartTime ? api.changeDate(this.updateFormTwo.actualStartTime) : undefined,
           planCompletionTime: api.changeDate(this.updateFormTwo.planCompletionTime) != this.firstData.planCompletionTime ? api.changeDate(this.updateFormTwo.planCompletionTime) : undefined,
+
+          projectManagerId: this.updateFormThree.projectManagerId[1] != this.firstData.projectManagerId ? this.updateFormThree.projectManagerId[1] : undefined,
+          qualityStaffId: this.updateFormThree.qualityStaffId[1] != this.firstData.qualityStaffId ? this.updateFormThree.qualityStaffId[1] : undefined,
+          safetyStaffId: this.updateFormThree.safetyStaffId[1] != this.firstData.safetyStaffId ? this.updateFormThree.safetyStaffId[1] : undefined,
+          professionalSupervisorId: this.updateFormThree.professionalSupervisorId[1] != this.firstData.professionalSupervisorId ? this.updateFormThree.professionalSupervisorId[1] : undefined,
+          chiefInspectorId: this.updateFormThree.chiefInspectorId[1] != this.firstData.chiefInspectorId ? this.updateFormThree.chiefInspectorId[1] : undefined,
+          safetySupervisorId: this.updateFormThree.safetySupervisorId[1] != this.firstData.safetySupervisorId ? this.updateFormThree.safetySupervisorId[1] : undefined,
+
+          projectManagerDeptId: this.updateFormThree.projectManagerId[0] != this.firstData.projectManagerDeptId ? this.updateFormThree.projectManagerId[0] : undefined,
+          qualityStaffDeptId: this.updateFormThree.qualityStaffId[0] != this.firstData.qualityStaffDeptId ? this.updateFormThree.qualityStaffId[0] : undefined,
+          safetyStaffDeptId: this.updateFormThree.safetyStaffId[0] != this.firstData.safetyStaffDeptId ? this.updateFormThree.safetyStaffId[0] : undefined,
+          professionalSupervisorDeptId: this.updateFormThree.professionalSupervisorId[0] != this.firstData.professionalSupervisorDeptId ? this.updateFormThree.professionalSupervisorId[0] : undefined,
+          chiefInspectorDeptId: this.updateFormThree.chiefInspectorId[0] != this.firstData.chiefInspectorDeptId ? this.updateFormThree.chiefInspectorId[0] : undefined,
+          safetySupervisorDeptId: this.updateFormThree.safetySupervisorId[0] != this.firstData.safetySupervisorDeptId ? this.updateFormThree.safetySupervisorId[0] : undefined,
         };
 
         //主要施工内容信息
