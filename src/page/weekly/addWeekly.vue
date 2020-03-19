@@ -200,7 +200,7 @@
                 <!-- <el-select v-model="addFormThree.projectManagerId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.projectManagerIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.projectManagerId" :options="addFormThree.options.projectManagerIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.projectManagerId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.projectManagerIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -211,7 +211,7 @@
                 <!-- <el-select v-model="addFormThree.safetyStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.safetyStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.safetyStaffId" :options="addFormThree.options.safetyStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.safetyStaffId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.safetyStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -222,7 +222,7 @@
                 <!-- <el-select v-model="addFormThree.qualityStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.qualityStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.qualityStaffId" :options="addFormThree.options.qualityStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.qualityStaffId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.qualityStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -234,7 +234,7 @@
                 <!-- <el-select v-model="addFormThree.chiefInspectorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.chiefInspectorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.chiefInspectorId" :options="addFormThree.options.chiefInspectorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.chiefInspectorId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.chiefInspectorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -246,7 +246,7 @@
                   <el-option v-for="item in addFormThree.options
                       .safetySupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.safetySupervisorId" :options="addFormThree.options.safetySupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.safetySupervisorId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.safetySupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -258,7 +258,7 @@
                   <el-option v-for="item in addFormThree.options
                       .professionalSupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.professionalSupervisorId" :options="addFormThree.options.professionalSupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.professionalSupervisorId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.professionalSupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>

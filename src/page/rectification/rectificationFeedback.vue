@@ -331,9 +331,10 @@
               <el-col :span="8">
                 <div class="bar">
                   <el-form-item label="整改负责人" prop="rectificationStaffId" placeholder="查岗队伍数">
-                    <el-select v-model="inspectionRectificationAddFeedbackShowResps[item-1].rectificationStaffId" clearable placeholder="请选择" style="min-width:300px">
+                    <!-- <el-select v-model="inspectionRectificationAddFeedbackShowResps[item-1].rectificationStaffId" clearable placeholder="请选择" style="min-width:300px">
                       <el-option v-for="item in feedbackOptions.rectificationStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                    </el-select>
+                    </el-select> -->
+                    <el-cascader v-model="inspectionRectificationAddFeedbackShowResps[item-1].rectificationStaffId" :options="feedbackOptions.rectificationStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
                   </el-form-item>
                 </div>
               </el-col>
@@ -377,6 +378,10 @@ import * as updateApi from "@/api/updateApi.js";
 export default {
   data() {
     return {
+      propsPerson: {
+        value: "id",
+        label: "name"
+      },
       //添加问题照片表格
       photoTTT: {},
       fileList: [],
@@ -498,8 +503,8 @@ export default {
 
     });
     //获取整改负责人
-    getApi.getAllStaffName().then(response => {
-      this.feedbackOptions.rectificationStaffIdOptions = response;
+    getApi.getUserCascader().then(response => {
+      this.feedbackOptions.rectificationStaffIdOptions = response.options;
     });
     //获取整改项目部
     getApi.getAllRectification().then(response => {
@@ -557,50 +562,73 @@ export default {
       let ok = 0;
       let list = [];
       console.log(this.isUpdate)
+      let idList = [];
+      this.firstTable.forEach(element => {
+        idList.push(element.id)
+      }
+      )
       if (this.isUpdate) {
+
         this.inspectionRectificationAddFeedbackShowResps.forEach(ele => {
           if ((ele.rectificationDate != null && ele.rectificationDate != "")
             && (ele.rectificationDept != null && ele.rectificationDept != "")
             && (ele.rectificationSituation != null && ele.rectificationSituation != "")
-            && (ele.rectificationStaffId != null && ele.rectificationStaffId != "")) {
+            && (ele.rectificationStaffId[0] != null && ele.rectificationStaffId[0] != "")
+            && (ele.rectificationStaffId[1] != null && ele.rectificationStaffId[1] != "")) {
             //此时不为空
-            this.firstTable.forEach(element => {
-              //说明原来已经有了
-              if (element.id === ele.id) {
-                if (element.rectificationDate === api.changeDate(new Date(ele.rectificationDate)) &&
-                  element.rectificationDept === ele.rectificationDept &&
-                  element.rectificationSituation === ele.rectificationSituation &&
-                  element.rectificationStaffId === ele.rectificationStaffId) {
-                  //说明未修改
+            if (idList.includes(ele.id)) {
+              this.firstTable.forEach(element => {
+                //说明原来已经有了
+                if (element.id === ele.id) {
+                  if (element.rectificationDate === api.changeDate(new Date(ele.rectificationDate)) &&
+                    element.rectificationDept === ele.rectificationDept &&
+                    element.rectificationSituation === ele.rectificationSituation &&
+                    element.rectificationStaffId === ele.rectificationStaffId[1] &&
+                    element.rectificationStaffDeptId === ele.rectificationStaffId[0]) {
+                    //说明未修改
+                  }
+                  else {
+                    //已修改过
+                    list.push({
+                      listUpdateOperation: "更新",
+                      rectificationContentId: ele.id,
+                      id: ele.rectificationFeedBackId,
+                      rectificationDate: api.changeDate(new Date(ele.rectificationDate)),
+                      rectificationDept: ele.rectificationDept,
+                      rectificationSituation: ele.rectificationSituation,
+                      rectificationStaffId: ele.rectificationStaffId[1],
+                      rectificationStaffDeptId: ele.rectificationStaffId[0],
+                    })
+                  }
                 }
-                else {
-                  //已修改过
-                  list.push({
-                    listUpdateOperation: "更新",
-                    rectificationContentId: ele.id,
-                    id: ele.rectificationFeedBackId,
-                    rectificationDate: api.changeDate(ele.rectificationDate),
-                    rectificationDept: ele.rectificationDept,
-                    rectificationSituation: ele.rectificationSituation,
-                    rectificationStaffId: ele.rectificationStaffId
-                  })
-                }
-              } else {
-                //说明原来没有，是新增的
-                list.push({
-                  listUpdateOperation: "添加",
-                  rectificationContentId: ele.id,
-                  rectificationDate: api.changeDate(ele.rectificationDate),
-                  rectificationDept: ele.rectificationDept,
-                  rectificationSituation: ele.rectificationSituation,
-                  rectificationStaffId: ele.rectificationStaffId
-                })
-              }
-            })
+              })
+            }
+
+            else {
+              //说明原来没有，是新增的
+
+              list.push({
+                listUpdateOperation: "添加",
+                rectificationContentId: ele.id,
+                rectificationDate: api.changeDate(ele.rectificationDate),
+                rectificationDept: ele.rectificationDept,
+                rectificationSituation: ele.rectificationSituation,
+                rectificationStaffId: ele.rectificationStaffId[1],
+                rectificationStaffDeptId: ele.rectificationStaffId[0],
+              })
+            }
+
+
+
+
+
+
+
           } else if ((ele.rectificationDate === null || ele.rectificationDate === "")
             && (ele.rectificationDept === null || ele.rectificationDept === "") &&
             (ele.rectificationSituation === null || ele.rectificationSituation === "") &&
-            (ele.rectificationStaffId === null || ele.rectificationStaffId === "")) {
+            (ele.rectificationStaffId[0] === null || ele.rectificationStaffId[0] === "")
+            && (ele.rectificationStaffId[1] === null || ele.rectificationStaffId[1] === "")) {
 
             if (ele.hasFeedback) {
               this.$message({
@@ -630,24 +658,29 @@ export default {
             })
           }
         }
-      } else {
+      }
+      else {
         this.inspectionRectificationAddFeedbackShowResps.forEach(ele => {
           if ((ele.rectificationDate != null && ele.rectificationDate != "")
             && (ele.rectificationDept != null && ele.rectificationDept != "")
             && (ele.rectificationSituation != null && ele.rectificationSituation != "")
-            && (ele.rectificationStaffId != null && ele.rectificationStaffId != "")) {
+            && (ele.rectificationStaffId[0] != null && ele.rectificationStaffId[0] != "")
+            && (ele.rectificationStaffId[1] != null && ele.rectificationStaffId[1] != "")) {
             //此时不为空
             list.push({
               rectificationContentId: ele.id,
               rectificationDate: api.changeDate(ele.rectificationDate),
               rectificationDept: ele.rectificationDept,
               rectificationSituation: ele.rectificationSituation,
-              rectificationStaffId: ele.rectificationStaffId
+              rectificationStaffId: ele.rectificationStaffId[1],
+              rectificationStaffDeptId: ele.rectificationStaffId[0],
             })
-          } else if ((ele.rectificationDate === null || ele.rectificationDate === "")
+          }
+          else if ((ele.rectificationDate === null || ele.rectificationDate === "")
             && (ele.rectificationDept === null || ele.rectificationDept === "") &&
             (ele.rectificationSituation === null || ele.rectificationSituation === "") &&
-            (ele.rectificationStaffId === null || ele.rectificationStaffId === "")) {
+            (ele.rectificationStaffId[0] === null || ele.rectificationStaffId[0] === "")
+            && (ele.rectificationStaffId[1] === null || ele.rectificationStaffId[1] === "")) {
 
           }
           else {
@@ -680,17 +713,19 @@ export default {
         this.isUpdate = false;
         this.firstTable = [];
         for (let i = 0; i < this.problemNum; i++) {
-          // if (this.inspectionRectificationAddFeedbackShowResps[i].rectificationDept === null || this.inspectionRectificationAddFeedbackShowResps[i].rectificationDept === "")
-          //   this.inspectionRectificationAddFeedbackShowResps[i].rectificationDept = this.inspectionRectificationAddFeedbackShowResps[i].responsibleDept;
+          this.inspectionRectificationAddFeedbackShowResps[i].rectificationStaffId = [this.inspectionRectificationAddFeedbackShowResps[i].rectificationStaffDeptId, this.inspectionRectificationAddFeedbackShowResps[i].rectificationStaffId];
           if (this.inspectionRectificationAddFeedbackShowResps[i].hasFeedback) {
             this.firstTable.push({
               id: this.inspectionRectificationAddFeedbackShowResps[i].id,
               rectificationDate: this.inspectionRectificationAddFeedbackShowResps[i].rectificationDate,
               rectificationDept: this.inspectionRectificationAddFeedbackShowResps[i].rectificationDept,
-              rectificationStaffId: this.inspectionRectificationAddFeedbackShowResps[i].rectificationStaffId,
+              rectificationStaffId: this.inspectionRectificationAddFeedbackShowResps[i].rectificationStaffId[1],
+              rectificationStaffDeptId: this.inspectionRectificationAddFeedbackShowResps[i].rectificationStaffId[0],
               rectificationSituation: this.inspectionRectificationAddFeedbackShowResps[i].rectificationSituation
             })
+            this.inspectionRectificationAddFeedbackShowResps[i].rectificationDate = new Date(this.inspectionRectificationAddFeedbackShowResps[i].rectificationDate);
             this.problemTitle[i] = "检查问题" + (i + 1) + "(已反馈)";
+            console.log(this.inspectionRectificationAddFeedbackShowResps[i].rectificationStaffId)
             this.isUpdate = true;
           }
           else this.problemTitle[i] = "检查问题" + (i + 1) + "(未反馈)"
@@ -861,7 +896,6 @@ export default {
     },
     //搜索
     searchInspection() {
-      console.log(this.searchTable)
       let list = {
         inspectEndDate: this.searchTable.inspectEndDate === "" || this.searchTable.inspectEndDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectEndDate)),
         inspectStartDate: this.searchTable.inspectStartDate === "" || this.searchTable.inspectStartDate === null ? undefined : api.changeDate(new Date(this.searchTable.inspectStartDate)),

@@ -20,6 +20,17 @@
               </el-form-item>
             </div>
           </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="是否核准">
+                <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:300px">
+                  <el-option v-for="item in searchTable.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="排列方式" prop="arrayOrder" placeholder="是否核准">
@@ -42,6 +53,7 @@
       <el-table :data="tableData" max-height="800" border style="width: 100%; margin-top: 20px">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="200" prop="staffName" label="姓名" align="center"></el-table-column>
+        <el-table-column width="120" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="350" prop="year" label="年份" align="center"></el-table-column>
         <el-table-column width="120" prop="quarter" label="季度" align="center"></el-table-column>
         <el-table-column prop="score" label="得分" align="center"></el-table-column>
@@ -71,6 +83,7 @@ export default {
       searchTable: {
         year: "",
         quarter: "",
+        adminDept:"",
         arrayOrder: "",
         options: {
           quarterOptions: [
@@ -113,6 +126,10 @@ export default {
 
     //空搜索
     this.searchAssessScore(1);
+    //获取所有所属部门
+    getApi.getAllProjectAdminDeptEnum().then(response => {
+      this.searchTable.options.adminDeptOptions = response;
+    });
   },
   methods: {
     //搜索
@@ -121,6 +138,7 @@ export default {
         numberOfPage: this.pagination.pageSize,
         pageNumber: pageNum - 1,
         quarter: this.searchTable.quarter === "" ? undefined : this.searchTable.quarter,
+        adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
         arrayOrder: this.searchTable.arrayOrder === "" ? undefined : this.searchTable.arrayOrder,
         year: parseInt(api.changeDate(this.searchTable.year).slice(0, 4))
       }

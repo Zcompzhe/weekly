@@ -1,4 +1,5 @@
 export const changeDate = date => {
+  console.log(date)
   if (!date) {
     return undefined;
   } else {
