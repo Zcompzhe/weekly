@@ -147,11 +147,18 @@ const supervisionResult = r =>
     () => r(require("../page/supervision/supervisionResult")),
     "supervisionResult"
   );
-const rectificationFeedback = r =>
+  const rectificationFeedback = r =>
   require.ensure(
     [],
     () => r(require("../page/rectification/rectificationFeedback")),
     "rectificationFeedback"
+  );
+
+  const userInfo = r =>
+  require.ensure(
+    [],
+    () => r(require("../page/infoMana/userInfo")),
+    "userInfo"
   );
 
 export default [
@@ -193,6 +200,16 @@ export default [
         meta: {
           activePath: "/rectification/rectificationFeedback",
           bcrumd: ["整改通知反馈"]
+        }
+      },
+      {
+        // 周报数据管理
+        path: "/infoMana/userInfo",
+        name: "userInfo",
+        component: userInfo,
+        meta: {
+          activePath: "/infoMana/userInfo",
+          bcrumd: ["用户信息"]
         }
       },
       {

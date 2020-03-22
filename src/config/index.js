@@ -5,7 +5,9 @@ const Main = {
   },
   route: {
     login: '/'
-  }
+  },
+
+  
 };
 
 export default Main;

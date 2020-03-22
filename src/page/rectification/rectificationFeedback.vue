@@ -70,11 +70,12 @@
         <el-table-column width="180" prop="rectificationFeedbackResult" label="整改结果反馈情况" align="center"></el-table-column>
         <el-table-column width="150" prop="problemCount" label="存在问题数" align="center"></el-table-column>
         <el-table-column prop="rectificationFeedbackCount" label="反馈条目数" align="center"></el-table-column>
-        <el-table-column width="400" label="操作" align="center" fixed="right">
+        <el-table-column width="450" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="searchRetification(scope.row)">查看整改通知单</el-button>
             <el-button type="text" @click="openCheckPanel(scope.row)">反馈整改结果</el-button>
             <el-button type="text" @click="addProblemPic(scope.row)">添加整改照片</el-button>
+            <el-button type="text" >导出通知单</el-button>
           </template>
         </el-table-column>
       </el-table>

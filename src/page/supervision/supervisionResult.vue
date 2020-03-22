@@ -57,12 +57,14 @@
             </el-upload>
           </template>
         </el-table-column> -->
-        <el-table-column width="300" label="操作" align="center" fixed="right">
+        <el-table-column width="450" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="completeInspection(scope.row)">完成督查</el-button>
+            <el-button type="text" @click="cancelInspection(scope.row)">取消安排</el-button>
             <el-button type="text" @click="openCheckPanel(scope.row)">添加督查通知单</el-button>
             <!-- <el-button type="text" :disabled="scope.row.resultFeedBack != '已上报'" @click="addProblemPic(scope.row)">添加问题照片</el-button> -->
             <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'" @click="deleteInspection(scope.row)">删除通知单</el-button>
+            <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'">导出通知单</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -1493,6 +1495,28 @@ export default {
         })
         .catch(() => {
         });
+    },
+    //取消安排
+    cancelInspection(row) {
+      if (row.inspectionPlanState === "已督查") {
+        this.$confirm("当前项目已完成督查，是否取消？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            getApi.cancelHasCheckInspection(row.id).then(response => {
+              this.searchInspection();
+            });
+          })
+          .catch(() => {
+          });
+        return;
+      } else if (row.inspectionPlanState === "已安排") {
+        getApi.cancelInspection(row.id).then(response => {
+          this.searchInspection();
+        });
+      }
     },
     //查看问题照片
     // searchPhoto(row) {

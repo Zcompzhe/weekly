@@ -165,3 +165,8 @@ export const exportProjectWeeklyAsExcel = data => {
     responseType: "blob"
   });
 };
+
+//查找用户个人信息
+export const me = () => {
+  return request.get(`/me`);
+};

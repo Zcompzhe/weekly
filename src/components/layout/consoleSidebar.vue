@@ -150,27 +150,16 @@
           <i class="el-icon-document"></i>量化考核排名
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="back">
+      <el-submenu index="user">
         <template slot="title">
           <i class="el-icon-message"></i>
-          基本信息管理
+          个人信息管理
         </template>
 
-        <el-menu-item index="/back/infoMana">
-          <i class="el-icon-document"></i>单位/部门信息管理
+        <el-menu-item index="/infoMana/userInfo">
+          <i class="el-icon-document"></i>用户信息
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="personMana" v-if="false">
-        <template slot="title">
-          <i class="el-icon-message"></i>
-          人员信息管理
-        </template>
-
-        <el-menu-item index="/back/personInfoMana">
-          <i class="el-icon-document"></i>人员信息管理
-        </el-menu-item>
-      </el-submenu>
-
       <el-submenu index="exception">
         <template slot="title">
           <i class="el-icon-message"></i>
@@ -182,6 +171,27 @@
         </el-menu-item>
       </el-submenu>
 
+      <el-submenu index="personMana">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          人员信息管理
+        </template>
+
+        <el-menu-item index="/back/personInfoMana">
+          <i class="el-icon-document"></i>人员信息管理
+        </el-menu-item>
+      </el-submenu>
+
+      <el-submenu index="back">
+        <template slot="title">
+          <i class="el-icon-message"></i>
+          基本信息管理
+        </template>
+
+        <el-menu-item index="/back/infoMana">
+          <i class="el-icon-document"></i>单位/部门信息管理
+        </el-menu-item>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
