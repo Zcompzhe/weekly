@@ -170,3 +170,29 @@ export const exportProjectWeeklyAsExcel = data => {
 export const me = () => {
   return request.get(`/me`);
 };
+
+//根据条件导出督查通知单信息
+export const exportJobOrderInfoAsWord = data => {
+  return request({
+    url: `/inspectionManagement/exportJobOrderInfoAsWord`,
+    method: "get",
+    params: data,
+    "Content-Type": "application/json;charset=UTF-8",
+    responseType: "blob"
+  });
+};
+
+
+
+//根据条件导出整改反馈单
+export const exportRectificationFeedbackInfoAsWord = data => {
+  return request({
+    url: `/rectificationManagement/exportRectificationFeedbackInfoAsWord`,
+    method: "get",
+    params: data,
+    "Content-Type": "application/json;charset=UTF-8",
+    responseType: "blob"
+  });
+};
+
+

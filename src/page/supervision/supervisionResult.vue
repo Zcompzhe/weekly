@@ -64,7 +64,7 @@
             <el-button type="text" @click="openCheckPanel(scope.row)">添加督查通知单</el-button>
             <!-- <el-button type="text" :disabled="scope.row.resultFeedBack != '已上报'" @click="addProblemPic(scope.row)">添加问题照片</el-button> -->
             <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'" @click="deleteInspection(scope.row)">删除通知单</el-button>
-            <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'">导出通知单</el-button>
+            <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'" @click="exportInspection(scope.row)">导出通知单</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -837,6 +837,35 @@ export default {
     });
   },
   methods: {
+    //导出通知单
+    exportInspection(row) {
+      let list = {
+        inspectionId: row.id,
+        jobOrderTypeName: row.jobOrderType
+      };
+      searchApi.exportJobOrderInfoAsWord(list)
+        .then(response => {
+          let content = response;
+          let blob = new Blob([content]);
+          let da = api.changeDate(new Date());
+          let fileName = "督查结果通知单" + da + ".zip";
+          console.log(response);
+          if ("download" in document.createElement("a")) {
+            // 非IE下载
+            const elink = document.createElement("a");
+            elink.download = fileName;
+            elink.style.display = "none";
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else {
+            // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
+          }
+        })
+    },
     //关闭查看照片
     closeCheckPanelA() {
       this.showPicFlag = false;
@@ -1505,7 +1534,7 @@ export default {
           type: "warning"
         })
           .then(() => {
-            getApi.cancelHasCheckInspection(row.id).then(response => {
+            updateApi.cancelHasCheckInspection(row.id).then(response => {
               this.searchInspection();
             });
           })
@@ -1513,7 +1542,7 @@ export default {
           });
         return;
       } else if (row.inspectionPlanState === "已安排") {
-        getApi.cancelInspection(row.id).then(response => {
+        updateApi.cancelInspection(row.id).then(response => {
           this.searchInspection();
         });
       }

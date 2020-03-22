@@ -210,29 +210,7 @@ export const getAllRunningProjectName = () => {
 };
 
 
-//取消安排已完成的督查
-export const cancelHasCheckInspection = id => {
-  return request.get(
-    `/inspectionManagement/cancelHasCheckInspection`,
-    {
-      params: {
-        id: id
-      }
-    }
-  );
-};
 
-//取消安排已完成的督查
-export const cancelInspection = id => {
-  return request.get(
-    `/inspectionManagement/cancelInspection`,
-    {
-      params: {
-        id: id
-      }
-    }
-  );
-};
 
 //获取运行状态
 export const getAllSGCCUserDept = () => {

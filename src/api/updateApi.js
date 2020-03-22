@@ -46,3 +46,25 @@ export const updateExceptionInfo = data => {
     data
   );
 };
+//取消安排已完成的督查
+export const cancelInspection = id => {
+  return request.get(
+    `/inspectionManagement/cancelInspection`,
+    {
+      params: {
+        id: id
+      }
+    }
+  );
+};
+//取消安排已完成的督查
+export const cancelHasCheckInspection = id => {
+  return request.get(
+    `/inspectionManagement/cancelHasCheckInspection`,
+    {
+      params: {
+        id: id
+      }
+    }
+  );
+};

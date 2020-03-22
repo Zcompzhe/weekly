@@ -75,7 +75,7 @@
             <el-button type="text" @click="searchRetification(scope.row)">查看整改通知单</el-button>
             <el-button type="text" @click="openCheckPanel(scope.row)">反馈整改结果</el-button>
             <el-button type="text" @click="addProblemPic(scope.row)">添加整改照片</el-button>
-            <el-button type="text" >导出通知单</el-button>
+            <el-button type="text" @click="exportDocx(scope.row)">导出通知单</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -513,6 +513,34 @@ export default {
     });
   },
   methods: {
+    //导出通知单
+    exportDocx(row) {
+      let list = {
+        jobOrderId: row.jobOrderId
+      };
+      searchApi.exportRectificationFeedbackInfoAsWord(list)
+        .then(response => {
+          let content = response;
+          let blob = new Blob([content]);
+          let da = api.changeDate(new Date());
+          let fileName = "整改反馈单" + da + ".zip";
+          console.log(response);
+          if ("download" in document.createElement("a")) {
+            // 非IE下载
+            const elink = document.createElement("a");
+            elink.download = fileName;
+            elink.style.display = "none";
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else {
+            // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
+          }
+        })
+    },
     //上传文件
     sigleFileUploadAction(item) {
       if (item.file.type === "image/png" || item.file.type === "image/jpeg") {
