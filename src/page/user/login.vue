@@ -85,9 +85,13 @@
             <el-input type="password" v-model="formLogin.password" auto-complete="off" @keyup.enter.native="submitForm"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm">登录</el-button>
-            <el-button @click="resetForm">重置</el-button>
-            <el-button @click="findUserName">查找用户名</el-button>
+            <el-row :gutter="20">
+              <el-button type="primary" @click="submitForm">登录</el-button>
+              <el-button @click="resetForm">重置</el-button>
+            </el-row>
+            <el-row :gutter="20">
+              <el-button type="text"  @click="findUserName">忘记用户名？</el-button>
+            </el-row>
           </el-form-item>
         </el-form>
       </div>
