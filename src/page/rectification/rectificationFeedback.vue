@@ -733,7 +733,12 @@ export default {
       }
     },
     openCheckPanel(row) {
+
       getApi.getRectificationAddFeedbackShowRespByJobOrderId(row.jobOrderId).then(response => {
+        this.addPhotoPanelFlag = false;
+        this.photoShowFlag = false;
+        this.photoShowFlagA = false;
+        this.detailPanelFlag = false;
         this.feedBackPanelFlag = true;
         this.feedbackRow = row;
         this.feedBackForm = response.inspectionJobOrderRectificationAddFeedbackShowResp;
