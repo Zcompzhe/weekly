@@ -178,7 +178,7 @@
         </template>
 
         <el-menu-item index="/back/personInfoMana">
-          <i class="el-icon-document"></i>人员信息管理
+          <i class="el-icon-document"></i>公司人员信息管理
         </el-menu-item>
       </el-submenu>
 
