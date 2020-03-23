@@ -32,7 +32,8 @@ module.exports = {
     {
       '/apis': {
         // 测试环境
-        target: 'http://localhost:8001/',  // 接口域名
+      //  target: 'http://localhost:8001/',  // 接口域名
+        target: 'http://139.224.25.25:8001/',  // 接口域名
         changeOrigin: true,  //是否跨域
         pathRewrite: {
             '^/apis': ''   //需要rewrite重写的,
