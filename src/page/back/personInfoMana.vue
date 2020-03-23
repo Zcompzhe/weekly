@@ -59,7 +59,7 @@
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="pagination.currentPage" :page-sizes="pagination.pageSizes" :page-size="pagination.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination.total"></el-pagination>
     </div>
 
-    <el-dialog :modal="false" title="修改信息" :visible.sync="updateInfoFlag" width="1400px">
+    <el-dialog :modal="false" title="修改人员信息" :visible.sync="updateInfoFlag" width="1400px">
       <el-form :model="updateInfo" label-position="left" ref="updateInfo" :rules="updateInfoRule" label-width="100px" class="demo-ruleForm">
         <el-row :gutter="20">
           <el-col :span="8">
@@ -136,7 +136,7 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog :modal="false" title="修改信息" :visible.sync="addInfoFlag" width="1400px">
+    <el-dialog :modal="false" title="新增人员信息" :visible.sync="addInfoFlag" width="1400px">
       <el-form :model="addInfo" label-position="left" ref="addInfo" :rules="addInfoRule" label-width="100px" class="demo-ruleForm">
         <el-row :gutter="20">
           <el-col :span="8">
@@ -201,12 +201,12 @@
           </el-col>
           <el-col :span="4">
             <div class="bar">
-              <el-button type="primary" style="margin-right: 20px" @click="submitaddInfo()">确认修改</el-button>
+              <el-button type="primary" style="margin-right: 20px" @click="submitaddInfo()">确认添加</el-button>
             </div>
           </el-col>
           <el-col :span="4">
             <div class="bar">
-              <el-button type="primary" style="margin-right: 20px" @click="canceladdInfo()">取消修改</el-button>
+              <el-button type="primary" style="margin-right: 20px" @click="canceladdInfo()">取消添加</el-button>
             </div>
           </el-col>
         </el-row>

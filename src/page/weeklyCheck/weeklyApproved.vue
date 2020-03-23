@@ -94,7 +94,7 @@
           <el-col :span="8">
             <div class="bar">
               <div class="title">施工单位</div>
-              <el-input disabled v-model="weeklyDetail.constructDept" disabled style="min-width:200px"></el-input>
+              <el-input disabled v-model="weeklyDetail.constructDeptName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>

@@ -59,7 +59,7 @@
         </el-table-column> -->
         <el-table-column width="450" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text" @click="completeInspection(scope.row)">完成督查</el-button>
+            <el-button type="text" :disabled="scope.row.inspectionPlanState === '已督查'" @click="completeInspection(scope.row)">完成督查</el-button>
             <el-button type="text" @click="cancelInspection(scope.row)">取消安排</el-button>
             <el-button type="text" @click="openCheckPanel(scope.row)">添加督查通知单</el-button>
             <!-- <el-button type="text" :disabled="scope.row.resultFeedBack != '已上报'" @click="addProblemPic(scope.row)">添加问题照片</el-button> -->
