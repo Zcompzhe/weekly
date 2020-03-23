@@ -201,7 +201,7 @@
           </el-col>
           <el-col :span="4">
             <div class="bar">
-              <el-button type="primary" style="margin-right: 20px" @click="submitaddInfo()">确认添加</el-button>
+              <el-button type="primary" style="margin-right: 20px" @click="submitaddInfo()">确认新增</el-button>
             </div>
           </el-col>
           <el-col :span="4">
@@ -484,6 +484,15 @@ export default {
     submitUpdateInfo() {
       this.$refs["updateInfo"].validate(valid => {
         if (valid) {
+          if (this.updateInfo.phoneNumber === this.meTable.phoneNumber &&
+            this.updateInfo.username === this.meTable.username &&
+            this.updateInfo.onTheJob === this.meTable.onTheJob &&
+            this.updateInfo.name === this.meTable.name &&
+            this.updateInfo.deptId === this.meTable.deptId &&
+            this.updateInfo.positionId === this.meTable.positionId) {
+            this.updateInfoFlag = false;
+            return;
+          }
           userApi.updateSGCCStaff({
             id: this.updateInfo.id,
             phoneNumber: this.updateInfo.phoneNumber === this.meTable.phoneNumber ? undefined : this.updateInfo.phoneNumber,
