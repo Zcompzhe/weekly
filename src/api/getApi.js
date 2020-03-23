@@ -28,6 +28,10 @@ export const getAllProjectAdminDeptEnum = () => {
   return request.get(`/baseInfoManagement/getAllProjectAdminDeptEnum`);
 };
 
+//获得页面权限
+export const getCurrentUserFrontControl = () => {
+  return request.get(`/frontControlManagement/getCurrentUserFrontControl`);
+};
 //获取所有人员
 export const getAllStaffName = () => {
   return request.get(`/baseInfoManagement/getAllStaffName`);

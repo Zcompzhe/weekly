@@ -71,16 +71,16 @@
       <el-menu-item index="/quick">
         <i class="el-icon-message"></i>快速入门
       </el-menu-item>
-      <el-submenu index="project">
+      <el-submenu index="project" v-if="flag1">
         <template slot="title">
           <i class="el-icon-message"></i>
           工程项目数据管理
         </template>
 
-        <el-menu-item index="/project/projectInfoMana">
+        <el-menu-item index="/project/projectInfoMana" v-if="flag2">
           <i class="el-icon-document"></i>项目信息管理
         </el-menu-item>
-        <el-menu-item index="/weekly/weeklyDataManage">
+        <el-menu-item index="/weekly/weeklyDataManage" v-if="flag3">
           <i class="el-icon-document"></i>周计划（周报）数据管理
         </el-menu-item>
         <!-- <el-menu-item index="/weekly/exportWeekly">
@@ -88,107 +88,107 @@
         </el-menu-item> -->
       </el-submenu>
 
-      <el-submenu index="supervision">
+      <el-submenu index="supervision" v-if="flag4">
         <template slot="title">
           <i class="el-icon-message"></i>
           安监督查管理
         </template>
 
-        <el-menu-item index="/supervision/supervisionMana">
+        <el-menu-item index="/supervision/supervisionMana" v-if="flag5"> 
           <i class="el-icon-document"></i>督查方案设计
         </el-menu-item>
-        <el-menu-item index="/supervision/supervisionResult">
+        <el-menu-item index="/supervision/supervisionResult" v-if="flag6">
           <i class="el-icon-document"></i>督查结果管理
         </el-menu-item>
       </el-submenu>
 
-      <el-submenu index="rectificationFeedback">
+      <el-submenu index="rectificationFeedback" v-if="flag7">
         <template slot="title">
           <i class="el-icon-message"></i>
           督查整改反馈
         </template>
 
-        <el-menu-item index="/rectification/rectificationFeedback">
+        <el-menu-item index="/rectification/rectificationFeedback" v-if="flag8">
           <i class="el-icon-document"></i>整改情况反馈
         </el-menu-item>
 
       </el-submenu>
 
-      <el-submenu index="risk">
+      <el-submenu index="risk" v-if="flag9">
         <template slot="title">
           <i class="el-icon-message"></i>
           工程风险管理
         </template>
 
-        <el-menu-item index="/risk/externalRiskMana">
+        <el-menu-item index="/risk/externalRiskMana" v-if="flag10">
           <i class="el-icon-document"></i>工程外部风险管理
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="approve">
+      <el-submenu index="approve" v-if="flag11">
         <template slot="title">
           <i class="el-icon-message"></i>
           周计划信息核准
         </template>
-        <el-menu-item index="/weeklyCheck/weeklyApproved">
+        <el-menu-item index="/weeklyCheck/weeklyApproved" v-if="flag12">
           <i class="el-icon-document"></i>周计划信息准确度管理
         </el-menu-item>
-        <el-menu-item index="/weeklyCheck/dayWorkCheck">
+        <el-menu-item index="/weeklyCheck/dayWorkCheck" v-if="flag13">
           <i class="el-icon-document"></i>当日作业进度核准
         </el-menu-item>
       </el-submenu>
 
-      <el-submenu index="safetyResponsibility">
+      <el-submenu index="safetyResponsibility" v-if="flag14">
         <template slot="title">
           <i class="el-icon-message"></i>
           安全责任量化考核
         </template>
 
-        <el-menu-item index="/safetyResponsibility/personCharge">
+        <el-menu-item index="/safetyResponsibility/personCharge" v-if="flag15">
           <i class="el-icon-document"></i>问题责任人设置
         </el-menu-item>
-        <el-menu-item index="/safetyResponsibility/quantitative">
+        <el-menu-item index="/safetyResponsibility/quantitative" v-if="flag16">
           <i class="el-icon-document"></i>量化考核排名
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="user">
+      <el-submenu index="user" v-if="flag17">
         <template slot="title">
           <i class="el-icon-message"></i>
           个人信息管理
         </template>
 
-        <el-menu-item index="/infoMana/userInfo">
+        <el-menu-item index="/infoMana/userInfo" v-if="flag18">
           <i class="el-icon-document"></i>用户信息
         </el-menu-item>
       </el-submenu>
       <el-submenu index="exception">
-        <template slot="title">
+        <template slot="title" v-if="flag19">
           <i class="el-icon-message"></i>
           系统运行状态
         </template>
 
-        <el-menu-item index="/exception/exception">
+        <el-menu-item index="/exception/exception" v-if="flag20">
           <i class="el-icon-document"></i>系统当前运行状态
         </el-menu-item>
       </el-submenu>
 
-      <el-submenu index="personMana">
+      <el-submenu index="personMana" v-if="flag21">
         <template slot="title">
           <i class="el-icon-message"></i>
           人员信息管理
         </template>
 
-        <el-menu-item index="/back/personInfoMana">
+        <el-menu-item index="/back/personInfoMana" v-if="flag22">
           <i class="el-icon-document"></i>公司人员信息管理
         </el-menu-item>
       </el-submenu>
 
-      <el-submenu index="back">
+      <el-submenu index="back" v-if="flag23">
         <template slot="title">
           <i class="el-icon-message"></i>
           基本信息管理
         </template>
 
-        <el-menu-item index="/back/infoMana">
+        <el-menu-item index="/back/infoMana" v-if="flag24">
           <i class="el-icon-document"></i>单位/部门信息管理
         </el-menu-item>
       </el-submenu>
@@ -196,8 +196,121 @@
   </div>
 </template>
 <script>
+import * as getApi from "@/api/getApi.js";
 export default {
+  data() {
+    return {
+      pageList: [],
+      //各种flag
+      flag1:false,
+      flag2:false,
+      flag3:false,
+      flag4:false,
+      flag5:false,
+      flag6:false,
+      flag7:false,
+      flag8:false,
+      flag9:false,
+      flag10:false,
+      flag11:false,
+      flag12:false,
+      flag13:false,
+      flag14:false,
+      flag15:false,
+      flag16:false,
+      flag17:false,
+      flag18:false,
+      flag19:false,
+      flag20:false,
+      flag21:false,
+      flag22:false,
+      flag23:false,
+      flag24:false,
+    }
+  },
   components: {},
+  created() {
+    //获得自己的角色信息
+    getApi.getCurrentUserFrontControl().then(response => {
+      response.forEach(element => {
+        this.pageList.push(element.barName);
+      });
+      if (this.pageList.includes("工程项目数据管理")) {
+        this.flag1 = true;
+      }
+      if (this.pageList.includes("项目信息管理")) {
+        this.flag2 = true;
+      }
+      if (this.pageList.includes("周计划（周报）数据管理")) {
+        this.flag3 = true;
+      }
+      if (this.pageList.includes("安监督查管理")) {
+        this.flag4 = true;
+      }
+      if (this.pageList.includes("督查方案设计")) {
+        this.flag5 = true;
+      }
+      if (this.pageList.includes("督查结果管理")) {
+        this.flag6 = true;
+      }
+      if (this.pageList.includes("督查整改反馈")) {
+        this.flag7 = true;
+      }
+      if (this.pageList.includes("整改情况反馈")) {
+        this.flag8 = true;
+      }
+      if (this.pageList.includes("工程风险管理")) {
+        this.flag9 = true;
+      }
+      if (this.pageList.includes("工程外部风险管理")) {
+        this.flag10 = true;
+      }
+      if (this.pageList.includes("周计划信息核准")) {
+        this.flag11 = true;
+      }
+      if (this.pageList.includes("周计划信息准确度管理")) {
+        this.flag12 = true;
+      }
+      if (this.pageList.includes("当日作业进度核准")) {
+        this.flag13 = true;
+      }
+      if (this.pageList.includes("安全责任量化考核")) {
+        this.flag14 = true;
+      }
+      if (this.pageList.includes("问题责任人设置")) {
+        this.flag15 = true;
+      }
+      if (this.pageList.includes("量化考核排名")) {
+        this.flag16 = true;
+      }
+      if (this.pageList.includes("个人信息管理")) {
+        this.flag17 = true;
+      }
+      if (this.pageList.includes("用户信息")) {
+        this.flag18 = true;
+      }
+      if (this.pageList.includes("系统运行状态")) {
+        this.flag19 = true;
+      }
+      if (this.pageList.includes("系统当前运行状态")) {
+        this.flag20 = true;
+      }
+      if (this.pageList.includes("人员信息管理")) {
+        this.flag21 = true;
+      }
+      if (this.pageList.includes("公司人员信息管理")) {
+        this.flag22 = true;
+      }
+      if (this.pageList.includes("基本信息管理")) {
+        this.flag23 = true;
+      }
+      if (this.pageList.includes("单位/部门信息管理")) {
+        this.flag24 = true;
+      }
+
+    })
+
+  },
   computed: {
     defaultActive: function () {
       const that = this;
