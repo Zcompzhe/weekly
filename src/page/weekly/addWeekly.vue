@@ -643,18 +643,18 @@ export default {
   methods: {
     //信息保存
     saveAllInfo() {
-      var localStorage = window.localStorage;
-      // storage["beforeProjectInfo"] = this.beforeProjectInfo;
-      // storage["addFormOne"] = this.addFormOne;
-      // storage["addFormTwo"] = this.addFormTwo;
-      // // storage["addFormThree"] = this.addFormThree;
-      // storage["addFormFour"] = this.addFormFour;
-      // storage["addFormFive"] = this.addFormFive;
-      localStorage.setItem('addFormThree', this.addFormThree);
-      let list = localStorage.getItem('addFormThree');
-      console.log("ewqewqewq", localStorage);
-      console.log(list);
-
+    //   var localStorage = window.localStorage;
+    //   // storage["beforeProjectInfo"] = this.beforeProjectInfo;
+    //   // storage["addFormOne"] = this.addFormOne;
+    //   // storage["addFormTwo"] = this.addFormTwo;
+    //   // // storage["addFormThree"] = this.addFormThree;
+    //   // storage["addFormFour"] = this.addFormFour;
+    //   // storage["addFormFive"] = this.addFormFive;
+    //   localStorage.setItem('addFormThree', this.addFormThree);
+    //   let list = localStorage.getItem('addFormThree');
+    //   console.log("ewqewqewq", localStorage);
+    //   console.log(localStorage.getItem("addFormThree"));
+    //   console.log(list.options.projectManagerIdOptions );
     },
     //升级后，变化
     updateFlagChange(index, row) {
@@ -1013,7 +1013,7 @@ export default {
         //首先验证项目信息是否修改
         // this.projectInfoUpdate();
         // if (this.projectUpdateFlag) {
-        projectUpdateReq = {
+        projectUpdateReq = {  
           id: this.addFormTwo.id,
           name: this.addFormTwo.name != this.beforeProjectInfo.name ? this.addFormTwo.name : undefined,
           adminId: this.addFormTwo.adminId != this.beforeProjectInfo.adminId ? this.addFormTwo.adminId : undefined,
@@ -1029,12 +1029,12 @@ export default {
           adminDept: this.addFormTwo.adminDept != this.beforeProjectInfo.adminDept ? this.addFormTwo.adminDept : undefined,
           actualStartTime: api.changeDate(this.addFormTwo.actualStartTime) != this.beforeProjectInfo.actualStartTime ? api.changeDate(this.addFormTwo.actualStartTime) : undefined,
           planCompletionTime: api.changeDate(this.addFormTwo.planCompletionTime) != this.beforeProjectInfo.planCompletionTime ? api.changeDate(this.addFormTwo.planCompletionTime) : undefined,
-          chiefInspectorId: this.addFormThree.chiefInspectorId[1] != this.beforeProjectInfo.chiefInspectorId ? addFormThree.chiefInspectorId[1] : undefined,
-          professionalSupervisorId: this.addFormThree.professionalSupervisorId[1] != this.beforeProjectInfo.professionalSupervisorId ? addFormThree.professionalSupervisorId[1] : undefined,
-          projectManagerId: this.addFormThree.projectManagerId[1] != this.beforeProjectInfo.projectManagerId ? addFormThree.projectManagerId[1] : undefined,
-          qualityStaffId: this.addFormThree.qualityStaffId[1] != this.beforeProjectInfo.qualityStaffId ? addFormThree.qualityStaffId[1] : undefined,
-          safetyStaffId: this.addFormThree.safetyStaffId[1] != this.beforeProjectInfo.safetyStaffId ? addFormThree.safetyStaffId[1] : undefined,
-          safetySupervisorId: this.addFormThree.safetySupervisorId[1] != this.beforeProjectInfo.safetySupervisorId ? addFormThree.safetySupervisorId[1] : undefined,
+          chiefInspectorId: this.addFormThree.chiefInspectorId[1] != this.beforeProjectInfo.chiefInspectorId ? this.addFormThree.chiefInspectorId[1] : undefined,
+          professionalSupervisorId: this.addFormThree.professionalSupervisorId[1] != this.beforeProjectInfo.professionalSupervisorId ? this.addFormThree.professionalSupervisorId[1] : undefined,
+          projectManagerId: this.addFormThree.projectManagerId[1] != this.beforeProjectInfo.projectManagerId ? this.addFormThree.projectManagerId[1] : undefined,
+          qualityStaffId: this.addFormThree.qualityStaffId[1] != this.beforeProjectInfo.qualityStaffId ? this.addFormThree.qualityStaffId[1] : undefined,
+          safetyStaffId: this.addFormThree.safetyStaffId[1] != this.beforeProjectInfo.safetyStaffId ? this.addFormThree.safetyStaffId[1] : undefined,
+          safetySupervisorId: this.addFormThree.safetySupervisorId[1] != this.beforeProjectInfo.safetySupervisorId ? this.addFormThree.safetySupervisorId[1] : undefined,
 
           chiefInspectorDeptId: this.addFormThree.chiefInspectorId[0] != this.beforeProjectInfo.chiefInspectorDeptId ? this.addFormThree.chiefInspectorId[0] : undefined,
           professionalSupervisorDeptId: this.addFormThree.professionalSupervisorId[0] != this.beforeProjectInfo.professionalSupervisorDeptId ? this.addFormThree.professionalSupervisorId[0] : undefined,
@@ -1044,7 +1044,7 @@ export default {
           safetySupervisorDeptId: this.addFormThree.safetySupervisorId[0] != this.beforeProjectInfo.safetySupervisorDeptId ? this.addFormThree.safetySupervisorId[0] : undefined,
         };
         //   }
-        console.log(this.addFormThree)
+ 
         //加入周报信息
         projectWeeklyAddReq = {
           actualState: this.addFormFive.actualState,
