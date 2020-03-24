@@ -666,18 +666,18 @@ export default {
         data.currentSubcontractorNum
       )
         this.projectUpdateFlag = true;
-      if (this.addFormThree.projectManagerId != data.projectManagerId)
+      if (this.addFormThree.projectManagerId[1] != data.projectManagerId)
         this.projectUpdateFlag = true;
-      if (this.addFormThree.safetyStaffId != data.safetyStaffId)
+      if (this.addFormThree.safetyStaffId[1] != data.safetyStaffId)
         this.projectUpdateFlag = true;
-      if (this.addFormThree.qualityStaffId != data.qualityStaffId)
+      if (this.addFormThree.qualityStaffId[1] != data.qualityStaffId)
         this.projectUpdateFlag = true;
-      if (this.addFormThree.chiefInspectorId != data.chiefInspectorId)
+      if (this.addFormThree.chiefInspectorId[1] != data.chiefInspectorId)
         this.projectUpdateFlag = true;
-      if (this.addFormThree.safetySupervisorId != data.safetySupervisorId)
+      if (this.addFormThree.safetySupervisorId[1] != data.safetySupervisorId)
         this.projectUpdateFlag = true;
       if (
-        this.addFormThree.professionalSupervisorId !=
+        this.addFormThree.professionalSupervisorId[1] !=
         data.professionalSupervisorId
       )
         this.projectUpdateFlag = true;
