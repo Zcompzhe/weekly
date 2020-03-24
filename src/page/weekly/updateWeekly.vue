@@ -374,7 +374,7 @@
       </el-form>
 
       <div style="margin-left:35%;margin-top:30px;margin-bottom:10px">
-        <el-button type="primary" style="margin-right: 80px" @click="saveAllInfo">信息保存</el-button>
+        <!-- <el-button type="primary" style="margin-right: 80px" @click="saveAllInfo">信息保存</el-button> -->
         <el-button type="primary" style="margin-right: 80px" @click="submitProjectWeeklyInfo">信息上报</el-button>
         <el-button type="primary" style="margin-right: 80px" @click="cancelAllInfo">取消</el-button>
       </div>
@@ -607,7 +607,7 @@ export default {
     getApi.getProjectWeeklyInfoShowRespById(this.id).then(response => {
       let res = response[0];
       this.firstData = res.projectWeeklyShowResp;
-      console.log("12123131:",this.firstData)
+      console.log("12123131:", this.firstData)
       this.updateFormOne.weeklyStartTime = new Date(res.projectWeeklyShowResp.weeklyStartTime);
       this.weeklyStartTimeChanged();
       this.updateFormTwo.projectIdName = res.projectWeeklyShowResp.projectName;
@@ -759,24 +759,24 @@ export default {
         data.currentSubcontractorNum
       )
         this.projectUpdateFlag = true;
-        
+
       if (this.updateFormThree.projectManagerId[1] != data.projectManagerId)
         this.projectUpdateFlag = true;
-      if (this.updateFormThree.safetyStaffId[1]  != data.safetyStaffId)
+      if (this.updateFormThree.safetyStaffId[1] != data.safetyStaffId)
         this.projectUpdateFlag = true;
-      if (this.updateFormThree.qualityStaffId[1]  != data.qualityStaffId)
+      if (this.updateFormThree.qualityStaffId[1] != data.qualityStaffId)
         this.projectUpdateFlag = true;
-      if (this.updateFormThree.chiefInspectorId[1]  != data.chiefInspectorId)
+      if (this.updateFormThree.chiefInspectorId[1] != data.chiefInspectorId)
         this.projectUpdateFlag = true;
-      if (this.updateFormThree.safetySupervisorId[1]  != data.safetySupervisorId)
+      if (this.updateFormThree.safetySupervisorId[1] != data.safetySupervisorId)
         this.projectUpdateFlag = true;
-        
+
       if (
-        this.updateFormThree.professionalSupervisorId[1]  !=
+        this.updateFormThree.professionalSupervisorId[1] !=
         data.professionalSupervisorId
       )
         this.projectUpdateFlag = true;
-        
+
       if (this.updateFormTwo.adminDept != data.adminDept) this.projectUpdateFlag = true;
       if (
         api.changeDate(this.updateFormTwo.actualStartTime) !=
@@ -788,8 +788,8 @@ export default {
         api.changeDate(new Date(data.planCompletionTime))
       )
         this.projectUpdateFlag = true;
-        console.log(this.projectUpdateFlag)
-        
+      console.log(this.projectUpdateFlag)
+
     },
     //项目名称改变或选择时，自动填写后续内容
     projectChanged() {
@@ -1124,36 +1124,36 @@ export default {
         let weeklyRiskContentAddReqs = [];
         let weeklyWorkProgressAddReqs = [];
         //首先验证项目信息是否修改
-        this.projectInfoUpdate();
-        if (this.projectUpdateFlag) {
-          console.log("name:",this.updateFormTwo.name,this.firstData.name)
-          projectUpdateReq = {
-            id: this.updateFormTwo.id,
-            constructDeptId: this.updateFormTwo.constructDeptId!= this.firstData.constructDeptId ? this.updateFormTwo.constructDeptId : undefined,
-            detailedAddress: this.updateFormTwo.detailedAddress!= this.firstData.detailedAddress ? this.updateFormTwo.detailedAddress : undefined,
-            latitude: this.updateFormTwo.latitude!= this.firstData.latitude ? this.updateFormTwo.latitude : undefined,
-            longitude: this.updateFormTwo.longitude!= this.firstData.longitude ? this.updateFormTwo.longitude : undefined,
-            projectScale: this.updateFormTwo.projectScale!= this.firstData.projectScale ? this.updateFormTwo.projectScale : undefined,
-            currentWorkerNum: this.updateFormTwo.currentWorkerNum!= this.firstData.currentWorkerNum ? this.updateFormTwo.currentWorkerNum : undefined,
-            currentSubcontractorNum: this.updateFormTwo.currentSubcontractorNum!= this.firstData.currentSubcontractorNum ? this.updateFormTwo.currentSubcontractorNum : undefined,
-            adminDept: this.updateFormTwo.adminDept!= this.firstData.adminDept ? this.updateFormTwo.adminDept : undefined,
-            actualStartTime: api.changeDate(this.updateFormTwo.actualStartTime)!= this.firstData.actualStartTime ? api.changeDate(this.updateFormTwo.actualStartTime) : undefined,
-            planCompletionTime: api.changeDate(this.updateFormTwo.planCompletionTime)!= this.firstData.planCompletionTime ?api.changeDate(this.updateFormTwo.planCompletionTime) : undefined,
-            projectManagerId: this.updateFormThree.projectManagerId[1] != this.firstData.projectManagerId ? this.updateFormThree.projectManagerId[1] : undefined,
-            qualityStaffId: this.updateFormThree.qualityStaffId[1] != this.firstData.qualityStaffId ? this.updateFormThree.qualityStaffId[1] : undefined,
-            safetyStaffId: this.updateFormThree.safetyStaffId[1] != this.firstData.safetyStaffId ? this.updateFormThree.safetyStaffId[1] : undefined,
-            professionalSupervisorId: this.updateFormThree.professionalSupervisorId[1] != this.firstData.professionalSupervisorId ? this.updateFormThree.professionalSupervisorId[1] : undefined,
-            chiefInspectorId: this.updateFormThree.chiefInspectorId[1] != this.firstData.chiefInspectorId ? this.updateFormThree.chiefInspectorId[1] : undefined,
-            safetySupervisorId: this.updateFormThree.safetySupervisorId[1] != this.firstData.safetySupervisorId ? this.updateFormThree.safetySupervisorId[1] : undefined,
+        // this.projectInfoUpdate();
+        //if (this.projectUpdateFlag) {
+        console.log("name:", this.updateFormTwo.name, this.firstData.name)
+        projectUpdateReq = {
+          id: this.updateFormTwo.id,
+          constructDeptId: this.updateFormTwo.constructDeptId != this.firstData.constructDeptId ? this.updateFormTwo.constructDeptId : undefined,
+          detailedAddress: this.updateFormTwo.detailedAddress != this.firstData.detailedAddress ? this.updateFormTwo.detailedAddress : undefined,
+          latitude: this.updateFormTwo.latitude != this.firstData.latitude ? this.updateFormTwo.latitude : undefined,
+          longitude: this.updateFormTwo.longitude != this.firstData.longitude ? this.updateFormTwo.longitude : undefined,
+          projectScale: this.updateFormTwo.projectScale != this.firstData.projectScale ? this.updateFormTwo.projectScale : undefined,
+          currentWorkerNum: this.updateFormTwo.currentWorkerNum != this.firstData.currentWorkerNum ? this.updateFormTwo.currentWorkerNum : undefined,
+          currentSubcontractorNum: this.updateFormTwo.currentSubcontractorNum != this.firstData.currentSubcontractorNum ? this.updateFormTwo.currentSubcontractorNum : undefined,
+          adminDept: this.updateFormTwo.adminDept != this.firstData.adminDept ? this.updateFormTwo.adminDept : undefined,
+          actualStartTime: api.changeDate(this.updateFormTwo.actualStartTime) != this.firstData.actualStartTime ? api.changeDate(this.updateFormTwo.actualStartTime) : undefined,
+          planCompletionTime: api.changeDate(this.updateFormTwo.planCompletionTime) != this.firstData.planCompletionTime ? api.changeDate(this.updateFormTwo.planCompletionTime) : undefined,
+          projectManagerId: this.updateFormThree.projectManagerId[1] != this.firstData.projectManagerId ? this.updateFormThree.projectManagerId[1] : undefined,
+          qualityStaffId: this.updateFormThree.qualityStaffId[1] != this.firstData.qualityStaffId ? this.updateFormThree.qualityStaffId[1] : undefined,
+          safetyStaffId: this.updateFormThree.safetyStaffId[1] != this.firstData.safetyStaffId ? this.updateFormThree.safetyStaffId[1] : undefined,
+          professionalSupervisorId: this.updateFormThree.professionalSupervisorId[1] != this.firstData.professionalSupervisorId ? this.updateFormThree.professionalSupervisorId[1] : undefined,
+          chiefInspectorId: this.updateFormThree.chiefInspectorId[1] != this.firstData.chiefInspectorId ? this.updateFormThree.chiefInspectorId[1] : undefined,
+          safetySupervisorId: this.updateFormThree.safetySupervisorId[1] != this.firstData.safetySupervisorId ? this.updateFormThree.safetySupervisorId[1] : undefined,
 
-            projectManagerDeptId: this.updateFormThree.projectManagerId[0] != this.firstData.projectManagerDeptId ? this.updateFormThree.projectManagerId[0] : undefined,
-            qualityStaffDeptId: this.updateFormThree.qualityStaffId[0] != this.firstData.qualityStaffDeptId ? this.updateFormThree.qualityStaffId[0] : undefined,
-            safetyStaffDeptId: this.updateFormThree.safetyStaffId[0] != this.firstData.safetyStaffDeptId ? this.updateFormThree.safetyStaffId[0] : undefined,
-            professionalSupervisorDeptId: this.updateFormThree.professionalSupervisorId[0] != this.firstData.professionalSupervisorDeptId ? this.updateFormThree.professionalSupervisorId[0] : undefined,
-            chiefInspectorDeptId: this.updateFormThree.chiefInspectorId[0] != this.firstData.chiefInspectorDeptId ? this.updateFormThree.chiefInspectorId[0] : undefined,
-            safetySupervisorDeptId: this.updateFormThree.safetySupervisorId[0] != this.firstData.safetySupervisorDeptId ? this.updateFormThree.safetySupervisorId[0] : undefined,
-          };
-        }
+          projectManagerDeptId: this.updateFormThree.projectManagerId[0] != this.firstData.projectManagerDeptId ? this.updateFormThree.projectManagerId[0] : undefined,
+          qualityStaffDeptId: this.updateFormThree.qualityStaffId[0] != this.firstData.qualityStaffDeptId ? this.updateFormThree.qualityStaffId[0] : undefined,
+          safetyStaffDeptId: this.updateFormThree.safetyStaffId[0] != this.firstData.safetyStaffDeptId ? this.updateFormThree.safetyStaffId[0] : undefined,
+          professionalSupervisorDeptId: this.updateFormThree.professionalSupervisorId[0] != this.firstData.professionalSupervisorDeptId ? this.updateFormThree.professionalSupervisorId[0] : undefined,
+          chiefInspectorDeptId: this.updateFormThree.chiefInspectorId[0] != this.firstData.chiefInspectorDeptId ? this.updateFormThree.chiefInspectorId[0] : undefined,
+          safetySupervisorDeptId: this.updateFormThree.safetySupervisorId[0] != this.firstData.safetySupervisorDeptId ? this.updateFormThree.safetySupervisorId[0] : undefined,
+        };
+        // }
         //加入周报信息
         projectWeeklyAddReq = {
           id: this.id,

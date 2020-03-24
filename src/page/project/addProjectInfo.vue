@@ -371,7 +371,7 @@ export default {
         professionalSupervisorId: "",
         safetySupervisorId: "",
         options: {
-          personOptions: {},
+          personOptions: [],
         }
       },
       personFormRule: {

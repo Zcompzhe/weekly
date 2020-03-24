@@ -249,7 +249,7 @@
           <el-col :span="20">
             <div class="Mbutton">
               <el-col :span="6">
-                <el-button type="primary">信息保存</el-button>
+                <!-- <el-button type="primary">信息保存</el-button> -->
               </el-col>
               <el-col :span="6">
                 <el-button type="primary" @click="updateProjectInfo">信息上报</el-button>
@@ -370,7 +370,7 @@ export default {
         professionalSupervisorId: "",
         safetySupervisorId: "",
         options: {
-          personOptions: {},
+          personOptions: [],
         }
       },
       personFormRule: {
