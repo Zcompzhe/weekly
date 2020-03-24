@@ -325,10 +325,13 @@ export default {
                 type: "success",
                 message: response.returnBackInfo
               });
-              const that = this;
-              sessionStorage.removeItem("token");
-              sessionStorage.removeItem("token-expired");
-              that.$router.push("/login");
+              this.searchMe();
+              if (this.updateInfo.username != this.meTable.username) {
+                const that = this;
+                sessionStorage.removeItem("token");
+                sessionStorage.removeItem("token-expired");
+                that.$router.push("/login");
+              }
 
             }
           })
