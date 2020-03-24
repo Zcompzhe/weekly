@@ -253,7 +253,7 @@
           <el-col :span="20">
             <div class="Mbutton">
               <el-col :span="6">
-                <el-button type="primary">信息保存</el-button>
+                <el-button type="primary" @click="saveAllInfo">信息保存</el-button>
               </el-col>
               <el-col :span="6">
                 <el-button type="primary" @click="addProjectInfo">信息上报</el-button>
@@ -401,38 +401,69 @@ export default {
     //其他页面跳转的数据
     let data = this.$route.params;
     // this.backPath = data.backPath;
-    //获取运行状态
-    getApi.getAllProjectStateEnum().then(response => {
-      this.projectForm.options.projectStateOptions = response;
-    });
-    //获取所有所属建管单位
-    getApi.getAllAdministrativeDeptName().then(response => {
-      this.projectForm.options.adminIdOptions = response;
-    });
-    //获取所有监理单位
-    getApi.getAllSupervisionDeptName().then(response => {
-      this.projectForm.options.supervisionIdOptions = response;
-    });
-    //获取区域
-    getApi.getAllDistrictName().then(response => {
-      this.projectForm.options.districtIdOptions = response;
-    });
-    //获取所有所属部门
-    getApi.getAllProjectAdminDeptEnum().then(response => {
-      this.projectForm.options.adminDeptOptions = response;
-    });
-    //获取所有人员信息
-    getApi.getUserCascader().then(response => {
-      this.personForm.options.personOptions = response.options;
-    });
-    //获取施工单位
-    getApi.getAllConstructDeptName().then(response => {
-      this.projectForm.options.constructDeptIdOptions = response;
-    });
+    let saveFlag = false;
+    saveFlag = localStorage.getItem("saveFlag");
+    if (saveFlag === 'true') {
+      console.log(localStorage)
+      this.projectForm = JSON.parse(localStorage.getItem("projectForm"));
+      this.personForm = JSON.parse(localStorage.getItem("personForm"));
+      this.projectForm.actualStartTime = new Date(this.projectForm.actualStartTime);
+      this.projectForm.planCompletionTime = new Date(this.projectForm.planCompletionTime);
+      localStorage.removeItem('saveFlag');
+      localStorage.setItem('saveFlag', false);
+    } else {
+      //获取运行状态
+      getApi.getAllProjectStateEnum().then(response => {
+        this.projectForm.options.projectStateOptions = response;
+      });
+      //获取所有所属建管单位
+      getApi.getAllAdministrativeDeptName().then(response => {
+        this.projectForm.options.adminIdOptions = response;
+      });
+      //获取所有监理单位
+      getApi.getAllSupervisionDeptName().then(response => {
+        this.projectForm.options.supervisionIdOptions = response;
+      });
+      //获取区域
+      getApi.getAllDistrictName().then(response => {
+        this.projectForm.options.districtIdOptions = response;
+      });
+      //获取所有所属部门
+      getApi.getAllProjectAdminDeptEnum().then(response => {
+        this.projectForm.options.adminDeptOptions = response;
+      });
+      //获取所有人员信息
+      getApi.getUserCascader().then(response => {
+        this.personForm.options.personOptions = response.options;
+      });
+      //获取施工单位
+      getApi.getAllConstructDeptName().then(response => {
+        this.projectForm.options.constructDeptIdOptions = response;
+      });
+    }
 
   },
 
   methods: {
+    //信息保存
+    saveAllInfo() {
+      // storage["addFormOne"] = this.addFormOne;
+      // storage["addFormTwo"] = this.addFormTwo;
+      // // storage["addFormThree"] = this.addFormThree;
+      // storage["addFormFour"] = this.addFormFour;
+      // storage["addFormFive"] = this.addFormFive;
+      localStorage.removeItem('projectForm');
+      localStorage.removeItem('personForm');
+      localStorage.removeItem('saveFlag');
+      let obj1 = JSON.stringify(this.projectForm);
+      let obj2 = JSON.stringify(this.personForm);
+      localStorage.setItem('projectForm', obj1);
+      localStorage.setItem('personForm', obj2);
+      localStorage.setItem('saveFlag', true);
+      this.$router.push({
+        name: this.backPath
+      })
+    },
     //信息上报
     addProjectInfo() {
       let validNum = 0;

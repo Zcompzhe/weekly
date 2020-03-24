@@ -90,7 +90,7 @@
               <el-button @click="resetForm">重置</el-button>
             </el-row>
             <el-row :gutter="20">
-              <el-button type="text"  @click="findUserName">忘记用户名？</el-button>
+              <el-button type="text" @click="findUserName">忘记用户名？</el-button>
             </el-row>
           </el-form-item>
         </el-form>
@@ -159,6 +159,7 @@ import THREE from '../../libs/three/three'
 import { login } from '@/api/login-out'
 import * as getApi from "@/api/getApi.js";
 import * as userApi from "@/api/userApi.js";
+import * as searchApi from "@/api/searchApi.js";
 export default {
   data() {
     return {
@@ -257,7 +258,31 @@ export default {
       login(params).then(response => {
         sessionStorage.setItem('token', response.data)
         sessionStorage.setItem('token-expired', new Date().getTime())
-        this.$router.push({ name: 'Quick' })
+        getApi.getTodayExceptionInfoStatistics().then(res => {
+          console.log("dsadasd", res)
+          if (res.maxExceptionLevel === "轻微" || res.maxExceptionLevel === "一般") {
+            this.$message({
+              type: "error",
+              message: res.exceptionShowInfo
+            });
+            this.$router.push({ name: 'Quick' })
+          } else if (res.maxExceptionLevel === "严重" || res.maxExceptionLevel === "十分严重") {
+            this.$confirm(res.exceptionShowInfo, "提示", {
+              confirmButtonText: "继续使用",
+              cancelButtonText: "查看异常",
+              type: "warning"
+            })
+              .then(() => {
+                this.$router.push({ name: 'Quick' })
+              })
+              .catch(() => {
+                this.$router.push({ name: 'exception' })
+              });
+            return;
+          } else {
+            this.$router.push({ name: 'Quick' })
+          }
+        })
       }).catch(error => {
         console.log(error)
         that.$message.error('用户名或密码错误！');

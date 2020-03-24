@@ -182,8 +182,6 @@ export const exportJobOrderInfoAsWord = data => {
   });
 };
 
-
-
 //根据条件导出整改反馈单
 export const exportRectificationFeedbackInfoAsWord = data => {
   return request({
@@ -195,4 +193,11 @@ export const exportRectificationFeedbackInfoAsWord = data => {
   });
 };
 
+
+//获取督查队伍数和动态风险
+export const getTodayExceptionInfoStatistics = () => {
+  return request.get(
+    `/baseInfoManagement/getTodayExceptionInfoStatistics`
+  );
+};
 

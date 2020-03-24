@@ -50,9 +50,9 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="项目名称" prop="projectIdName" placeholder="项目名称">
-                <el-select v-model="addFormTwo.projectIdName" clearable placeholder="请选择" style="min-width:200px" @change="projectChanged">
-                  <el-option v-for="item in addFormTwo.options.idOptions" :key="item.id" :label="item.name" :value="[item.id,item.name]"></el-option>
+              <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
+                <el-select v-model="addFormTwo.projectId" clearable placeholder="请选择" style="min-width:200px" @change="projectChanged">
+                  <el-option v-for="item in addFormTwo.options.idOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -61,7 +61,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="所属建管单位" prop="adminId" placeholder="当前月份">
-                <el-select v-model="addFormTwo.adminId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormTwo.adminId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -71,7 +71,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="监理单位" prop="supervisionId" placeholder="周报开始日期">
-                <el-select v-model="addFormTwo.supervisionId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormTwo.supervisionId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.supervisionIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -81,7 +81,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="施工单位" prop="constructDeptId" placeholder="周报开始日期">
-                <el-select v-model="addFormTwo.constructDeptId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormTwo.constructDeptId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.constructDeptIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -93,7 +93,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="所在区域" prop="districtId" placeholder="项目名称">
-                <el-select v-model="addFormTwo.districtId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormTwo.districtId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.districtIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -103,7 +103,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="详细地址" prop="detailedAddress" placeholder="当前月份">
-                <el-input v-model="addFormTwo.detailedAddress" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.detailedAddress" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -111,7 +111,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="定位经度" prop="longitude" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.longitude" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.longitude" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -119,7 +119,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="定位纬度" prop="latitude" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.latitude" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.latitude" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -129,7 +129,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="实际开工时间" prop="actualStartTime" placeholder="项目名称">
-                <el-date-picker v-model="addFormTwo.actualStartTime" :disabled="!addFormTwo.projectIdName" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
+                <el-date-picker v-model="addFormTwo.actualStartTime" :disabled="!addFormTwo.projectId" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
@@ -137,7 +137,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="计划竣工时间" prop="planCompletionTime" placeholder="当前月份">
-                <el-date-picker v-model="addFormTwo.planCompletionTime" :disabled="!addFormTwo.projectIdName" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
+                <el-date-picker v-model="addFormTwo.planCompletionTime" :disabled="!addFormTwo.projectId" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
               </el-form-item>
             </div>
           </el-col>
@@ -145,7 +145,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目规模" prop="projectScale" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.projectScale" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.projectScale" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -153,7 +153,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="一线作业人数" prop="currentWorkerNum" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.currentWorkerNum" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.currentWorkerNum" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -163,7 +163,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="项目名称">
-                <el-input v-model="addFormTwo.currentSubcontractorNum" clearable :disabled="!addFormTwo.projectIdName" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.currentSubcontractorNum" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -171,7 +171,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="所属部门" prop="adminDept" placeholder="当前月份">
-                <el-select v-model="addFormTwo.adminDept" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <el-select v-model="addFormTwo.adminDept" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
@@ -197,10 +197,10 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目经理" prop="projectManagerId" placeholder="项目名称">
-                <!-- <el-select v-model="addFormThree.projectManagerId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="addFormThree.projectManagerId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.projectManagerIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.projectManagerId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.projectManagerIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.projectManagerId" :disabled="!addFormTwo.projectId" :options="addFormThree.options.projectManagerIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -208,10 +208,10 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全专责" prop="safetyStaffId" placeholder="当前月份">
-                <!-- <el-select v-model="addFormThree.safetyStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="addFormThree.safetyStaffId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.safetyStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.safetyStaffId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.safetyStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.safetyStaffId" :disabled="!addFormTwo.projectId" :options="addFormThree.options.safetyStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -219,10 +219,10 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="质量专责" prop="qualityStaffId" placeholder="周报开始日期">
-                <!-- <el-select v-model="addFormThree.qualityStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="addFormThree.qualityStaffId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.qualityStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.qualityStaffId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.qualityStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.qualityStaffId" :disabled="!addFormTwo.projectId" :options="addFormThree.options.qualityStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -231,10 +231,10 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="总监/总监代表" prop="chiefInspectorId" placeholder="项目名称">
-                <!-- <el-select v-model="addFormThree.chiefInspectorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="addFormThree.chiefInspectorId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options.chiefInspectorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.chiefInspectorId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.chiefInspectorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.chiefInspectorId" :disabled="!addFormTwo.projectId" :options="addFormThree.options.chiefInspectorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -242,11 +242,11 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全监理" prop="safetySupervisorId" placeholder="当前月份">
-                <!-- <el-select v-model="addFormThree.safetySupervisorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="addFormThree.safetySupervisorId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options
                       .safetySupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.safetySupervisorId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.safetySupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.safetySupervisorId" :disabled="!addFormTwo.projectId" :options="addFormThree.options.safetySupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -254,11 +254,11 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="专业监理" prop="professionalSupervisorId" placeholder="周报开始日期">
-                <!-- <el-select v-model="addFormThree.professionalSupervisorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="addFormThree.professionalSupervisorId" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormThree.options
                       .professionalSupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="addFormThree.professionalSupervisorId" :disabled="!addFormTwo.projectIdName" :options="addFormThree.options.professionalSupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="addFormThree.professionalSupervisorId" :disabled="!addFormTwo.projectId" :options="addFormThree.options.professionalSupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -433,7 +433,7 @@ export default {
       addFormTwo: {
         id: "",
         name: "",
-        projectIdName: "",
+        projectId: "",
         adminId: "",
         supervisionId: "",
         constructDeptId: "",
@@ -458,7 +458,7 @@ export default {
         }
       },
       addFormTwoRule: {
-        projectIdName: [
+        projectId: [
           { required: true, message: "请选择项目名称", trigger: "change" }
         ],
         adminDept: [
@@ -593,69 +593,105 @@ export default {
     //其他页面跳转的数据
     let data = this.$route.params;
     this.backPath = data.backPath;
-    //获取所有项目名称
-    getApi.getAllRunningProjectName().then(response => {
-      this.addFormTwo.options.idOptions = response;
-    });
-    //获取所有建设管理单位
-    getApi.getAllAdministrativeDeptName().then(response => {
-      this.addFormTwo.options.adminIdOptions = response;
-    });
-    //获取所有监理单位
-    getApi.getAllSupervisionDeptName().then(response => {
-      this.addFormTwo.options.supervisionIdOptions = response;
-    });
-    //获取区域
-    getApi.getAllDistrictName().then(response => {
-      this.addFormTwo.options.districtIdOptions = response;
-    });
-    //获取所有所属部门
-    getApi.getAllProjectAdminDeptEnum().then(response => {
-      this.addFormTwo.options.adminDeptOptions = response;
-    });
-    //获取管控内状态
-    getApi.getAllProjectControlledStateEnum().then(response => {
-      this.addFormFive.options.controlledStateOptions = response;
-    });
-    //获取所有实际状态
-    getApi.getAllProjectActualStateEnum().then(response => {
-      this.addFormFive.options.actualStateOptions = response;
-    });
-    //获取施工单位
-    getApi.getAllConstructDeptName().then(response => {
-      this.addFormTwo.options.constructDeptIdOptions = response;
-    });
+    // obj = JSON.parse(localStorage.getItem("temp2"));
+    //查看是否有草稿
 
-    //获取所有人员的级联选择器
-    getApi.getUserCascader().then(response => {
-      this.addFormThree.options.projectManagerIdOptions = response.options;
-      this.addFormThree.options.safetyStaffIdOptions = response.options;
-      this.addFormThree.options.qualityStaffIdOptions = response.options;
-      this.addFormThree.options.chiefInspectorIdOptions = response.options;
-      this.addFormThree.options.safetySupervisorIdOptions = response.options;
-      this.addFormThree.options.professionalSupervisorIdOptions = response.options;
-    });
-    //获取分部分项工程
-    this.addFormFour.options.jobNumberOptions = getApi.getJobNumber();
-    //获取分部分项工程
-    this.addFormFour.options.workProcessOptions = getApi.getWorkProcess();
+    let saveFlag = false;
+    saveFlag = localStorage.getItem("saveFlag");
+    if (saveFlag === 'true') {
+      console.log(localStorage)
+      this.addFormOne = JSON.parse(localStorage.getItem("addFormOne"));
+      this.addFormTwo = JSON.parse(localStorage.getItem("addFormTwo"));
+      this.addFormThree = JSON.parse(localStorage.getItem("addFormThree"));
+      this.addFormFour = JSON.parse(localStorage.getItem("addFormFour"));
+      this.addFormFive = JSON.parse(localStorage.getItem("addFormFive"));
+      this.beforeProjectInfo = JSON.parse(localStorage.getItem("beforeProjectInfo"));
+      this.addFormOne.weeklyStartTime = new Date(this.addFormOne.weeklyStartTime);
+      this.addFormTwo.actualStartTime = new Date(this.addFormTwo.actualStartTime);
+      this.addFormTwo.planCompletionTime = new Date(this.addFormTwo.planCompletionTime);
+      localStorage.removeItem('saveFlag');
+      localStorage.setItem('saveFlag', false);
+    } else {
+      //获取所有项目名称
+      getApi.getAllRunningProjectName().then(response => {
+        this.addFormTwo.options.idOptions = response;
+      });
+      //获取所有建设管理单位
+      getApi.getAllAdministrativeDeptName().then(response => {
+        this.addFormTwo.options.adminIdOptions = response;
+      });
+      //获取所有监理单位
+      getApi.getAllSupervisionDeptName().then(response => {
+        this.addFormTwo.options.supervisionIdOptions = response;
+      });
+      //获取区域
+      getApi.getAllDistrictName().then(response => {
+        this.addFormTwo.options.districtIdOptions = response;
+      });
+      //获取所有所属部门
+      getApi.getAllProjectAdminDeptEnum().then(response => {
+        this.addFormTwo.options.adminDeptOptions = response;
+      });
+      //获取管控内状态
+      getApi.getAllProjectControlledStateEnum().then(response => {
+        this.addFormFive.options.controlledStateOptions = response;
+      });
+      //获取所有实际状态
+      getApi.getAllProjectActualStateEnum().then(response => {
+        this.addFormFive.options.actualStateOptions = response;
+      });
+      //获取施工单位
+      getApi.getAllConstructDeptName().then(response => {
+        this.addFormTwo.options.constructDeptIdOptions = response;
+      });
+
+      //获取所有人员的级联选择器
+      getApi.getUserCascader().then(response => {
+        this.addFormThree.options.projectManagerIdOptions = response.options;
+        this.addFormThree.options.safetyStaffIdOptions = response.options;
+        this.addFormThree.options.qualityStaffIdOptions = response.options;
+        this.addFormThree.options.chiefInspectorIdOptions = response.options;
+        this.addFormThree.options.safetySupervisorIdOptions = response.options;
+        this.addFormThree.options.professionalSupervisorIdOptions = response.options;
+      });
+      //获取分部分项工程
+      this.addFormFour.options.jobNumberOptions = getApi.getJobNumber();
+      //获取分部分项工程
+      this.addFormFour.options.workProcessOptions = getApi.getWorkProcess();
+    }
+
   },
   methods: {
     //信息保存
     saveAllInfo() {
-      var localStorage = window.localStorage;
-      // storage["beforeProjectInfo"] = this.beforeProjectInfo;
       // storage["addFormOne"] = this.addFormOne;
       // storage["addFormTwo"] = this.addFormTwo;
       // // storage["addFormThree"] = this.addFormThree;
       // storage["addFormFour"] = this.addFormFour;
       // storage["addFormFive"] = this.addFormFive;
-      let obj = JSON.stringify(this.addFormThree);
-      localStorage.setItem('addFormThree', obj);
-      let list = localStorage.getItem('addFormThree');
-      console.log("ewqewqewq", localStorage);
-      console.log(localStorage.getItem("addFormThree"));
-      console.log(list.options.projectManagerIdOptions);
+      localStorage.removeItem('addFormOne');
+      localStorage.removeItem('addFormTwo');
+      localStorage.removeItem('addFormThree');
+      localStorage.removeItem('addFormFour');
+      localStorage.removeItem('addFormFive');
+      localStorage.removeItem('beforeProjectInfo');
+      localStorage.removeItem('saveFlag');
+      let obj1 = JSON.stringify(this.addFormOne);
+      let obj2 = JSON.stringify(this.addFormTwo);
+      let obj3 = JSON.stringify(this.addFormThree);
+      let obj4 = JSON.stringify(this.addFormFour);
+      let obj5 = JSON.stringify(this.addFormFive);
+      let obj6 = JSON.stringify(this.beforeProjectInfo);
+      localStorage.setItem('addFormOne', obj1);
+      localStorage.setItem('addFormTwo', obj2);
+      localStorage.setItem('addFormThree', obj3);
+      localStorage.setItem('addFormFour', obj4);
+      localStorage.setItem('addFormFive', obj5);
+      localStorage.setItem('beforeProjectInfo', obj6);
+      localStorage.setItem('saveFlag', true);
+      this.$router.push({
+        name: this.backPath
+      })
     },
     //升级后，变化
     updateFlagChange(index, row) {
@@ -711,14 +747,18 @@ export default {
     },
     //项目名称改变或选择时，自动填写后续内容
     projectChanged() {
-      if (this.addFormTwo.projectIdName === "") {
+      if (this.addFormTwo.projectId === "") {
         this.beforeProjectInfo = {};
         this.addFormTwo.id = "";
         this.addFormTwo.name = "";
       }
       else {
-        this.addFormTwo.id = this.addFormTwo.projectIdName[0];
-        this.addFormTwo.name = this.addFormTwo.projectIdName[1];
+        this.addFormTwo.options.idOptions.forEach(ele => {
+          if (ele.id === this.addFormTwo.projectId) {
+            this.addFormTwo.id = ele.id;
+            this.addFormTwo.name = ele.name;
+          }
+        })
       }
       if (this.addFormTwo.id === "") {
         this.addFormTwo.adminId = "";
@@ -1045,6 +1085,12 @@ export default {
           safetySupervisorDeptId: this.addFormThree.safetySupervisorId[0] != this.beforeProjectInfo.safetySupervisorDeptId ? this.addFormThree.safetySupervisorId[0] : undefined,
         };
         //   }
+        console.log(this.addFormOne)
+        console.log(this.addFormTwo)
+        console.log(this.addFormThree)
+        console.log(this.addFormFour)
+        console.log(this.addFormFive)
+        console.log(this.beforeProjectInfo)
 
         //加入周报信息
         projectWeeklyAddReq = {
