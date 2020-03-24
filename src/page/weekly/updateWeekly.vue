@@ -741,7 +741,7 @@ export default {
     },
     //判断是否修改过项目信息
     projectInfoUpdate() {
-      var data = this.beforeProjectInfo;
+      var data = this.firstData;
       this.projectUpdateFlag = false;
       if (this.updateFormTwo.adminId != data.adminId) this.projectUpdateFlag = true;
       if (this.updateFormTwo.supervisionId != data.supervisionId) this.projectUpdateFlag = true;
@@ -759,21 +759,24 @@ export default {
         data.currentSubcontractorNum
       )
         this.projectUpdateFlag = true;
-      if (this.updateFormThree.projectManagerId != data.projectManagerId)
+        
+      if (this.updateFormThree.projectManagerId[1] != data.projectManagerId)
         this.projectUpdateFlag = true;
-      if (this.updateFormThree.safetyStaffId != data.safetyStaffId)
+      if (this.updateFormThree.safetyStaffId[1]  != data.safetyStaffId)
         this.projectUpdateFlag = true;
-      if (this.updateFormThree.qualityStaffId != data.qualityStaffId)
+      if (this.updateFormThree.qualityStaffId[1]  != data.qualityStaffId)
         this.projectUpdateFlag = true;
-      if (this.updateFormThree.chiefInspectorId != data.chiefInspectorId)
+      if (this.updateFormThree.chiefInspectorId[1]  != data.chiefInspectorId)
         this.projectUpdateFlag = true;
-      if (this.updateFormThree.safetySupervisorId != data.safetySupervisorId)
+      if (this.updateFormThree.safetySupervisorId[1]  != data.safetySupervisorId)
         this.projectUpdateFlag = true;
+        
       if (
-        this.updateFormThree.professionalSupervisorId !=
+        this.updateFormThree.professionalSupervisorId[1]  !=
         data.professionalSupervisorId
       )
         this.projectUpdateFlag = true;
+        
       if (this.updateFormTwo.adminDept != data.adminDept) this.projectUpdateFlag = true;
       if (
         api.changeDate(this.updateFormTwo.actualStartTime) !=
@@ -785,6 +788,8 @@ export default {
         api.changeDate(new Date(data.planCompletionTime))
       )
         this.projectUpdateFlag = true;
+        console.log(this.projectUpdateFlag)
+        
     },
     //项目名称改变或选择时，自动填写后续内容
     projectChanged() {
