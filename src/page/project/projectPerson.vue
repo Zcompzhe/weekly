@@ -1,13 +1,7 @@
 <template>
   <div class="body">
-      <el-card class="box-card">
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        ref="ruleForm"
-        label-width="120px"
-        class="demo-ruleForm"
-      >
+    <el-card class="box-card">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
@@ -19,37 +13,8 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="项目经理" prop="projectManager" placeholder="请选择项目经理">
-                <el-select
-                  v-model="ruleForm.projectManager"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in projectManagerOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="安全专责" prop="safetyStaff" placeholder="请选择安全专责">
-                <el-select
-                  v-model="ruleForm.safetyStaff"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in safetyStaffOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
+                <el-select v-model="ruleForm.projectManager" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectManagerOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -57,24 +22,23 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="质量专责" prop="qualityStaff" placeholder="请选择质量专责">
-                <el-select
-                  v-model="ruleForm.qualityStaff"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in qualityStaffOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
+                <el-select v-model="ruleForm.qualityStaff" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in qualityStaffOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="安全专责" prop="safetyStaff" placeholder="请选择安全专责">
+                <el-select v-model="ruleForm.safetyStaff" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in safetyStaffOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
 
+        </el-row>
 
         <el-row :gutter="20">
           <el-col :span="20">
@@ -87,18 +51,8 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="总监/总监代表" prop="chiefInspector" placeholder="请选择总监/总监代表">
-                <el-select
-                  v-model="ruleForm.chiefInspector"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in chiefInspectorOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
+                <el-select v-model="ruleForm.chiefInspector" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in chiefInspectorOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -106,18 +60,8 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="专业监理" prop="professionalSupervisor" placeholder="请选择专业监理">
-                <el-select
-                  v-model="ruleForm.professionalSupervisor"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in professionalSupervisorOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
+                <el-select v-model="ruleForm.professionalSupervisor" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in professionalSupervisorOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -125,18 +69,8 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="安全监理" prop="safetySupervisor" placeholder="请选择安全监理">
-                <el-select
-                  v-model="ruleForm.safetySupervisor"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width:200px"
-                >
-                  <el-option
-                    v-for="item in safetySupervisorOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
+                <el-select v-model="ruleForm.safetySupervisor" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in safetySupervisorOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -164,8 +98,8 @@ import { POINT_CONVERSION_COMPRESSED } from "constants";
 export default {
   data() {
     return {
-        ruleForm:[],
-        rules:[],
+      ruleForm: [],
+      rules: [],
     };
   },
 
@@ -193,8 +127,8 @@ export default {
         query: {}
       });
     },
-    
-    
+
+
   }
 };
 </script>

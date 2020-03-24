@@ -643,18 +643,19 @@ export default {
   methods: {
     //信息保存
     saveAllInfo() {
-    //   var localStorage = window.localStorage;
-    //   // storage["beforeProjectInfo"] = this.beforeProjectInfo;
-    //   // storage["addFormOne"] = this.addFormOne;
-    //   // storage["addFormTwo"] = this.addFormTwo;
-    //   // // storage["addFormThree"] = this.addFormThree;
-    //   // storage["addFormFour"] = this.addFormFour;
-    //   // storage["addFormFive"] = this.addFormFive;
-    //   localStorage.setItem('addFormThree', this.addFormThree);
-    //   let list = localStorage.getItem('addFormThree');
-    //   console.log("ewqewqewq", localStorage);
-    //   console.log(localStorage.getItem("addFormThree"));
-    //   console.log(list.options.projectManagerIdOptions );
+      var localStorage = window.localStorage;
+      // storage["beforeProjectInfo"] = this.beforeProjectInfo;
+      // storage["addFormOne"] = this.addFormOne;
+      // storage["addFormTwo"] = this.addFormTwo;
+      // // storage["addFormThree"] = this.addFormThree;
+      // storage["addFormFour"] = this.addFormFour;
+      // storage["addFormFive"] = this.addFormFive;
+      let obj = JSON.stringify(this.addFormThree);
+      localStorage.setItem('addFormThree', obj);
+      let list = localStorage.getItem('addFormThree');
+      console.log("ewqewqewq", localStorage);
+      console.log(localStorage.getItem("addFormThree"));
+      console.log(list.options.projectManagerIdOptions);
     },
     //升级后，变化
     updateFlagChange(index, row) {
@@ -1013,7 +1014,7 @@ export default {
         //首先验证项目信息是否修改
         // this.projectInfoUpdate();
         // if (this.projectUpdateFlag) {
-        projectUpdateReq = {  
+        projectUpdateReq = {
           id: this.addFormTwo.id,
           name: this.addFormTwo.name != this.beforeProjectInfo.name ? this.addFormTwo.name : undefined,
           adminId: this.addFormTwo.adminId != this.beforeProjectInfo.adminId ? this.addFormTwo.adminId : undefined,
@@ -1044,7 +1045,7 @@ export default {
           safetySupervisorDeptId: this.addFormThree.safetySupervisorId[0] != this.beforeProjectInfo.safetySupervisorDeptId ? this.addFormThree.safetySupervisorId[0] : undefined,
         };
         //   }
- 
+
         //加入周报信息
         projectWeeklyAddReq = {
           actualState: this.addFormFive.actualState,

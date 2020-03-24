@@ -314,6 +314,7 @@ export default {
             username: this.updateInfo.username === this.meTable.username ? undefined : this.updateInfo.username,
             onTheJob: this.updateInfo.onTheJob === this.meTable.onTheJob ? undefined : this.updateInfo.onTheJob,
           }).then(response => {
+            this.updateInfoFlag = false;
             if (response.returnBackCode < 0) {
               this.$message({
                 type: "error",
@@ -324,9 +325,12 @@ export default {
                 type: "success",
                 message: response.returnBackInfo
               });
+              const that = this;
+              sessionStorage.removeItem("token");
+              sessionStorage.removeItem("token-expired");
+              that.$router.push("/login");
+
             }
-            this.searchMe();
-            this.updateInfoFlag = false;
           })
         }
       });

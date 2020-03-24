@@ -239,14 +239,14 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">安全专责</div>
-              <el-input disabled v-model="weeklyDetail.safetyStaffName" disabled style="min-width:200px"></el-input>
+              <div class="title">质量专责</div>
+              <el-input disabled v-model="weeklyDetail.qualityStaffName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">质量专责</div>
-              <el-input disabled v-model="weeklyDetail.qualityStaffName" disabled style="min-width:200px"></el-input>
+              <div class="title">安全专责</div>
+              <el-input disabled v-model="weeklyDetail.safetyStaffName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -260,16 +260,16 @@
           <el-col :span="8">
             <div class="bar">
               <div class="title">联系方式</div>
-              <el-input disabled v-model="weeklyDetail.safetyStaffTEL" disabled style="min-width:200px"></el-input>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="bar">
-              <div class="title">联系方式</div>
               <el-input disabled v-model="weeklyDetail.qualityStaffTEL" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>
+        <el-col :span="8">
+          <div class="bar">
+            <div class="title">联系方式</div>
+            <el-input disabled v-model="weeklyDetail.safetyStaffTEL" disabled style="min-width:200px"></el-input>
+          </div>
+        </el-col>
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
@@ -286,14 +286,14 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">安全监理</div>
-              <el-input disabled v-model="weeklyDetail.safetySupervisorName" disabled style="min-width:200px"></el-input>
+              <div class="title">专业监理</div>
+              <el-input disabled v-model="weeklyDetail.professionalSupervisorName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">专业监理</div>
-              <el-input disabled v-model="weeklyDetail.professionalSupervisorName" disabled style="min-width:200px"></el-input>
+              <div class="title">安全监理</div>
+              <el-input disabled v-model="weeklyDetail.safetySupervisorName" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -307,13 +307,13 @@
           <el-col :span="8">
             <div class="bar">
               <div class="title">联系方式</div>
-              <el-input disabled v-model="weeklyDetail.safetySupervisorTEL" disabled style="min-width:200px"></el-input>
+              <el-input disabled v-model="weeklyDetail.professionalSupervisorTEL" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
               <div class="title">联系方式</div>
-              <el-input disabled v-model="weeklyDetail.professionalSupervisorTEL" disabled style="min-width:200px"></el-input>
+              <el-input disabled v-model="weeklyDetail.safetySupervisorTEL" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -485,9 +485,9 @@ export default {
   methods: {
     //给督察队分配任务
     setInspectTeam() {
-      let list =[];
-      this.arrange.tableData.forEach(ele=>{
-        if(ele.inspectionPlanState!="已督查")  list.push(ele)
+      let list = [];
+      this.arrange.tableData.forEach(ele => {
+        if (ele.inspectionPlanState != "已督查") list.push(ele)
       })
       addApi.setInspectTeam(list).then(response => {
         this.inspectionByCondition();

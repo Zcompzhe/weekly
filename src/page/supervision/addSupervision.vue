@@ -177,19 +177,18 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="安全专责" prop="safetyStaffId" placeholder="当前月份">
-                <el-select v-model="addFormThree.safetyStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in addFormThree.options.safetyStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+              <el-form-item label="质量专责" prop="qualityStaffId" placeholder="周报开始日期">
+                <el-select v-model="addFormThree.qualityStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in addFormThree.options.qualityStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
             </div>
           </el-col>
-
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="质量专责" prop="qualityStaffId" placeholder="周报开始日期">
-                <el-select v-model="addFormThree.qualityStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in addFormThree.options.qualityStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+              <el-form-item label="安全专责" prop="safetyStaffId" placeholder="当前月份">
+                <el-select v-model="addFormThree.safetyStaffId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in addFormThree.options.safetyStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -205,7 +204,16 @@
               </el-form-item>
             </div>
           </el-col>
-
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="专业监理" prop="professionalSupervisorId" placeholder="周报开始日期">
+                <el-select v-model="addFormThree.professionalSupervisorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in addFormThree.options
+                      .professionalSupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全监理" prop="safetySupervisorId" placeholder="当前月份">
@@ -217,16 +225,6 @@
             </div>
           </el-col>
 
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="专业监理" prop="professionalSupervisorId" placeholder="周报开始日期">
-                <el-select v-model="addFormThree.professionalSupervisorId" clearable :disabled="!addFormTwo.projectIdName" placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in addFormThree.options
-                      .professionalSupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
         </el-row>
       </el-form>
     </el-card>

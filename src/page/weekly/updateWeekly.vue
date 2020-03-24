@@ -204,7 +204,16 @@
               </el-form-item>
             </div>
           </el-col>
-
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="质量专责" prop="qualityStaffId" placeholder="周报开始日期">
+                <!-- <el-select v-model="updateFormThree.qualityStaffId" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormThree.options.qualityStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select> -->
+                <el-cascader v-model="updateFormThree.qualityStaffId" :options="updateFormThree.options.qualityStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+              </el-form-item>
+            </div>
+          </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="安全专责" prop="safetyStaffId" placeholder="当前月份">
@@ -216,16 +225,6 @@
             </div>
           </el-col>
 
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="质量专责" prop="qualityStaffId" placeholder="周报开始日期">
-                <!-- <el-select v-model="updateFormThree.qualityStaffId" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in updateFormThree.options.qualityStaffIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select> -->
-                <el-cascader v-model="updateFormThree.qualityStaffId" :options="updateFormThree.options.qualityStaffIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
-              </el-form-item>
-            </div>
-          </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
@@ -238,19 +237,6 @@
               </el-form-item>
             </div>
           </el-col>
-
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="安全监理" prop="safetySupervisorId" placeholder="当前月份">
-                <!-- <el-select v-model="updateFormThree.safetySupervisorId" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in updateFormThree.options
-                      .safetySupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select> -->
-                <el-cascader v-model="updateFormThree.safetySupervisorId" :options="updateFormThree.options.safetySupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
-              </el-form-item>
-            </div>
-          </el-col>
-
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="专业监理" prop="professionalSupervisorId" placeholder="周报开始日期">
@@ -259,6 +245,17 @@
                       .professionalSupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
                 <el-cascader v-model="updateFormThree.professionalSupervisorId" :options="updateFormThree.options.professionalSupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="安全监理" prop="safetySupervisorId" placeholder="当前月份">
+                <!-- <el-select v-model="updateFormThree.safetySupervisorId" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormThree.options
+                      .safetySupervisorIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select> -->
+                <el-cascader v-model="updateFormThree.safetySupervisorId" :options="updateFormThree.options.safetySupervisorIdOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
