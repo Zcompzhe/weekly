@@ -520,12 +520,12 @@ export default {
         professionalSupervisorId: "",
 
         options: {
-          projectManagerIdOptions: {},
-          safetyStaffIdOptions: {},
-          qualityStaffIdOptions: {},
-          chiefInspectorIdOptions: {},
-          safetySupervisorIdOptions: {},
-          professionalSupervisorIdOptions: {}
+          projectManagerIdOptions: [],
+          safetyStaffIdOptions: [],
+          qualityStaffIdOptions: [],
+          chiefInspectorIdOptions: [],
+          safetySupervisorIdOptions: [],
+          professionalSupervisorIdOptions: []
         }
       },
       updateFormThreeRule: {
@@ -607,6 +607,7 @@ export default {
     getApi.getProjectWeeklyInfoShowRespById(this.id).then(response => {
       let res = response[0];
       this.firstData = res.projectWeeklyShowResp;
+      console.log("12123131:",this.firstData)
       this.updateFormOne.weeklyStartTime = new Date(res.projectWeeklyShowResp.weeklyStartTime);
       this.weeklyStartTimeChanged();
       this.updateFormTwo.projectIdName = res.projectWeeklyShowResp.projectName;
@@ -1120,22 +1121,19 @@ export default {
         //首先验证项目信息是否修改
         this.projectInfoUpdate();
         if (this.projectUpdateFlag) {
+          console.log("name:",this.updateFormTwo.name,this.firstData.name)
           projectUpdateReq = {
             id: this.updateFormTwo.id,
-            name: this.updateFormTwo.name,
-            adminId: this.updateFormTwo.adminId,
-            supervisionId: this.updateFormTwo.supervisionId,
-            constructDeptId: this.updateFormTwo.constructDeptId,
-            districtId: this.updateFormTwo.districtId,
-            detailedAddress: this.updateFormTwo.detailedAddress,
-            latitude: this.updateFormTwo.latitude,
-            longitude: this.updateFormTwo.longitude,
-            projectScale: this.updateFormTwo.projectScale,
-            currentWorkerNum: this.updateFormTwo.currentWorkerNum,
-            currentSubcontractorNum: this.updateFormTwo.currentSubcontractorNum,
-            adminDept: this.updateFormTwo.adminDept,
-            actualStartTime: api.changeDate(this.updateFormTwo.actualStartTime),
-            planCompletionTime: api.changeDate(this.updateFormTwo.planCompletionTime),
+            constructDeptId: this.updateFormTwo.constructDeptId!= this.firstData.constructDeptId ? this.updateFormTwo.constructDeptId : undefined,
+            detailedAddress: this.updateFormTwo.detailedAddress!= this.firstData.detailedAddress ? this.updateFormTwo.detailedAddress : undefined,
+            latitude: this.updateFormTwo.latitude!= this.firstData.latitude ? this.updateFormTwo.latitude : undefined,
+            longitude: this.updateFormTwo.longitude!= this.firstData.longitude ? this.updateFormTwo.longitude : undefined,
+            projectScale: this.updateFormTwo.projectScale!= this.firstData.projectScale ? this.updateFormTwo.projectScale : undefined,
+            currentWorkerNum: this.updateFormTwo.currentWorkerNum!= this.firstData.currentWorkerNum ? this.updateFormTwo.currentWorkerNum : undefined,
+            currentSubcontractorNum: this.updateFormTwo.currentSubcontractorNum!= this.firstData.currentSubcontractorNum ? this.updateFormTwo.currentSubcontractorNum : undefined,
+            adminDept: this.updateFormTwo.adminDept!= this.firstData.adminDept ? this.updateFormTwo.adminDept : undefined,
+            actualStartTime: api.changeDate(this.updateFormTwo.actualStartTime)!= this.firstData.actualStartTime ? api.changeDate(this.updateFormTwo.actualStartTime) : undefined,
+            planCompletionTime: api.changeDate(this.updateFormTwo.planCompletionTime)!= this.firstData.planCompletionTime ?api.changeDate(this.updateFormTwo.planCompletionTime) : undefined,
             projectManagerId: this.updateFormThree.projectManagerId[1] != this.firstData.projectManagerId ? this.updateFormThree.projectManagerId[1] : undefined,
             qualityStaffId: this.updateFormThree.qualityStaffId[1] != this.firstData.qualityStaffId ? this.updateFormThree.qualityStaffId[1] : undefined,
             safetyStaffId: this.updateFormThree.safetyStaffId[1] != this.firstData.safetyStaffId ? this.updateFormThree.safetyStaffId[1] : undefined,
