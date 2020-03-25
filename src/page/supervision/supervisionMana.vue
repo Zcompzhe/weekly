@@ -263,13 +263,13 @@
               <el-input disabled v-model="weeklyDetail.qualityStaffTEL" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">联系方式</div>
+              <el-input disabled v-model="weeklyDetail.safetyStaffTEL" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
         </el-row>
-        <el-col :span="8">
-          <div class="bar">
-            <div class="title">联系方式</div>
-            <el-input disabled v-model="weeklyDetail.safetyStaffTEL" disabled style="min-width:200px"></el-input>
-          </div>
-        </el-col>
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
