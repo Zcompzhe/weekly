@@ -100,9 +100,12 @@
         <el-menu-item index="/supervision/supervisionResult" v-if="flag6">
           <i class="el-icon-document"></i>督查结果管理
         </el-menu-item>
+        <el-menu-item index="/rectification/rectificationFeedback" v-if="flag8">
+          <i class="el-icon-document"></i>整改情况反馈
+        </el-menu-item>
       </el-submenu>
 
-      <el-submenu index="rectificationFeedback" v-if="flag7">
+      <!-- <el-submenu index="rectificationFeedback" v-if="flag7">
         <template slot="title">
           <i class="el-icon-message"></i>
           督查整改反馈
@@ -112,7 +115,7 @@
           <i class="el-icon-document"></i>整改情况反馈
         </el-menu-item>
 
-      </el-submenu>
+      </el-submenu> -->
 
       <el-submenu index="risk" v-if="flag9">
         <template slot="title">
@@ -121,7 +124,7 @@
         </template>
 
         <el-menu-item index="/risk/externalRiskMana" v-if="flag10">
-          <i class="el-icon-document"></i>工程外部风险管理
+          <i class="el-icon-document"></i>动态风险计算
         </el-menu-item>
       </el-submenu>
       <el-submenu index="approve" v-if="flag11">
@@ -129,11 +132,11 @@
           <i class="el-icon-message"></i>
           周计划信息核准
         </template>
-        <el-menu-item index="/weeklyCheck/weeklyApproved" v-if="flag12">
-          <i class="el-icon-document"></i>周计划信息准确度管理
-        </el-menu-item>
         <el-menu-item index="/weeklyCheck/dayWorkCheck" v-if="flag13">
           <i class="el-icon-document"></i>当日作业进度核准
+        </el-menu-item>
+        <el-menu-item index="/weeklyCheck/weeklyApproved" v-if="flag12">
+          <i class="el-icon-document"></i>周计划准确度展示
         </el-menu-item>
       </el-submenu>
 
@@ -144,7 +147,7 @@
         </template>
 
         <el-menu-item index="/safetyResponsibility/personCharge" v-if="flag15">
-          <i class="el-icon-document"></i>问题责任人设置
+          <i class="el-icon-document"></i>督查问题定责
         </el-menu-item>
         <el-menu-item index="/safetyResponsibility/quantitative" v-if="flag16">
           <i class="el-icon-document"></i>量化考核排名
@@ -201,31 +204,56 @@ export default {
   data() {
     return {
       pageList: [],
-      //各种flag
-      flag1:false,
-      flag2:false,
-      flag3:false,
-      flag4:false,
-      flag5:false,
-      flag6:false,
-      flag7:false,
-      flag8:false,
-      flag9:false,
-      flag10:false,
-      flag11:false,
-      flag12:false,
-      flag13:false,
-      flag14:false,
-      flag15:false,
-      flag16:false,
-      flag17:false,
-      flag18:false,
-      flag19:false,
-      flag20:false,
-      flag21:false,
-      flag22:false,
-      flag23:false,
-      flag24:false,
+      //全显示flag
+      flag1:true,
+      flag2:true,
+      flag3:true,
+      flag4:true,
+      flag5:true,
+      flag6:true,
+      flag7:true,
+      flag8:true,
+      flag9:true,
+      flag10:true,
+      flag11:true,
+      flag12:true,
+      flag13:true,
+      flag14:true,
+      flag15:true,
+      flag16:true,
+      flag17:true,
+      flag18:true,
+      flag19:true,
+      flag20:true,
+      flag21:true,
+      flag22:true,
+      flag23:true,
+      flag24:true,
+      //权限控制flag
+      // flag1:false,
+      // flag2:false,
+      // flag3:false,
+      // flag4:false,
+      // flag5:false,
+      // flag6:false,
+      // flag7:false,
+      // flag8:false,
+      // flag9:false,
+      // flag10:false,
+      // flag11:false,
+      // flag12:false,
+      // flag13:false,
+      // flag14:false,
+      // flag15:false,
+      // flag16:false,
+      // flag17:false,
+      // flag18:false,
+      // flag19:false,
+      // flag20:false,
+      // flag21:false,
+      // flag22:false,
+      // flag23:false,
+      // flag24:false,
     }
   },
   components: {},
@@ -253,22 +281,22 @@ export default {
       if (this.pageList.includes("督查结果管理")) {
         this.flag6 = true;
       }
-      if (this.pageList.includes("督查整改反馈")) {
-        this.flag7 = true;
-      }
+      // if (this.pageList.includes("督查整改反馈")) {
+      //   this.flag7 = true;
+      // }
       if (this.pageList.includes("整改情况反馈")) {
         this.flag8 = true;
       }
       if (this.pageList.includes("工程风险管理")) {
         this.flag9 = true;
       }
-      if (this.pageList.includes("工程外部风险管理")) {
+      if (this.pageList.includes("动态风险计算")) {
         this.flag10 = true;
       }
       if (this.pageList.includes("周计划信息核准")) {
         this.flag11 = true;
       }
-      if (this.pageList.includes("周计划信息准确度管理")) {
+      if (this.pageList.includes("周计划准确度展示")) {
         this.flag12 = true;
       }
       if (this.pageList.includes("当日作业进度核准")) {
@@ -277,7 +305,7 @@ export default {
       if (this.pageList.includes("安全责任量化考核")) {
         this.flag14 = true;
       }
-      if (this.pageList.includes("问题责任人设置")) {
+      if (this.pageList.includes("督查问题定责")) {
         this.flag15 = true;
       }
       if (this.pageList.includes("量化考核排名")) {
