@@ -71,7 +71,7 @@
         </el-table-column>
         <el-table-column width="240" label="偏差分析" align="center">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.deviationReason" clearable :rows="1" placeholder="请选择"></el-input>
+            <el-input v-model="scope.row.deviationReason" clearable :rows="1" placeholder="请输入"></el-input>
           </template>
         </el-table-column>
       </el-table>
