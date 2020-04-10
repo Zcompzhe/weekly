@@ -107,7 +107,7 @@
       <el-table :data="weeklyInfo.tableData" max-height="400" border @selection-change="weeklySelect" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="210" prop="projectName" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="350" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="210" prop="adminName" label="所属建管单位" align="center"></el-table-column>
         <el-table-column width="450" prop="workCurrentProgress" label="当前总体施工进度" align="left"></el-table-column>
         <el-table-column width="450" prop="constructContentNextWeek" label="下周主要施工作业内容" align="left"></el-table-column>
