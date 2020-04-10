@@ -56,7 +56,7 @@
       <el-table :data="tableData" border @selection-change="selectChange" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="200" prop="workDate" label="作业日期" align="center"></el-table-column>
+        <el-table-column width="120" prop="workDate" label="作业日期" align="center"></el-table-column>
         <el-table-column width="350" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="120" prop="riskLevel" label="作业风险等级" align="center"></el-table-column>
         <el-table-column prop="workContent" label="作业安排、位置及内容" align="center"></el-table-column>
@@ -69,7 +69,7 @@
             </el-radio-group>
           </template>
         </el-table-column>
-        <el-table-column width="240" label="偏差分析" align="center">
+        <el-table-column width="300" label="偏差分析" align="center">
           <template slot-scope="scope">
             <el-input v-model="scope.row.deviationReason" clearable :rows="1" placeholder="请输入"></el-input>
           </template>

@@ -55,13 +55,13 @@
 
       <el-table :data="projectInfo.tableData" max-height="800" border style="width: 100%; margin-top: 20px">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="210" prop="name" label="项目名称" align="center"></el-table-column>
+        <el-table-column width="350" prop="name" label="项目名称" align="center"></el-table-column>
         <el-table-column width="210" prop="adminName" label="所属建管单位" align="center"></el-table-column>
-        <el-table-column width="210" prop="constructDeptName" label="施工单位" align="center"></el-table-column>
-        <el-table-column width="210" prop="adminDept" label="所属部门" align="center"></el-table-column>
-        <el-table-column width="210" prop="districtName" label="所在区域" align="center"></el-table-column>
-        <el-table-column width="210" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
-        <el-table-column width="210" prop="projectState" label="项目状态" align="center"></el-table-column>
+        <el-table-column width="100" prop="constructDeptName" label="施工单位" align="center"></el-table-column>
+        <el-table-column width="150" prop="adminDept" label="所属部门" align="center"></el-table-column>
+        <el-table-column width="100" prop="districtName" label="所在区域" align="center"></el-table-column>
+        <el-table-column width="300" prop="detailedAddress" label="详细地址" align="center"></el-table-column>
+        <el-table-column width="100" prop="projectState" label="项目状态" align="center"></el-table-column>
         <el-table-column width="250" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="detailProject(scope.row)">查看详情</el-button>
