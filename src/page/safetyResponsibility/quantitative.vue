@@ -62,6 +62,7 @@
       <el-table :data="tableData" max-height="800" border style="width: 100%; margin-top: 20px">
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
         <el-table-column width="200" prop="staffName" label="姓名" align="center"></el-table-column>
+        <el-table-column width="200" prop="projectDeptRole" label="项目部角色" align="center"></el-table-column>
         <el-table-column width="120" prop="adminDept" label="所属部门" align="center"></el-table-column>
         <el-table-column width="350" prop="year" label="年份" align="center"></el-table-column>
         <el-table-column width="120" prop="quarter" label="季度" align="center"></el-table-column>
