@@ -168,6 +168,7 @@ export default {
         numberOfPage: this.pagination.pageSize,
         pageNumber: pageNum - 1,
         projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+        hasCheck:this.searchTable.hasCheck === "" ? undefined : this.searchTable.hasCheck,
         workDate: this.searchTable.workDate === "" ? undefined : api.changeDate(this.searchTable.workDate)
       }
       searchApi.getWeeklyDayWorkCheckShowByCondition(list).then(response => {
