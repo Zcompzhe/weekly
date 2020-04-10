@@ -6,7 +6,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="年份" prop="year" placeholder="周报开始日期">
-                <el-date-picker v-model="searchTable.year" type="year" placeholder="选择年" style="min-width:300px">
+                <el-date-picker v-model="searchTable.year" :clearable="false" type="year" placeholder="选择年" style="min-width:300px">
                 </el-date-picker>
               </el-form-item>
             </div>
@@ -14,7 +14,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="季度" prop="quarter" placeholder="项目名称">
-                <el-select v-model="searchTable.quarter" clearable placeholder="请选择" style="min-width:300px">
+                <el-select v-model="searchTable.quarter" :clearable="false"  placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in searchTable.options.quarterOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
@@ -123,6 +123,10 @@ export default {
   created: function () {
     let startDate = new Date();
     this.searchTable.year = new Date(api.changeDate(startDate));
+    if(this.searchTable.year.getMonth()>=0 && this.searchTable.year.getMonth() <3) this.searchTable.quarter="第一季度";
+    else if(this.searchTable.year.getMonth()>=3 && this.searchTable.year.getMonth() <6) this.searchTable.quarter="第二季度";
+    else if(this.searchTable.year.getMonth()>=6 && this.searchTable.year.getMonth() <9) this.searchTable.quarter="第三季度";
+    else if(this.searchTable.year.getMonth()>=9 && this.searchTable.year.getMonth() <12) this.searchTable.quarter="第四季度";
 
     //空搜索
     this.searchAssessScore(1);
