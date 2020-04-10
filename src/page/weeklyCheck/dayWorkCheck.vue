@@ -61,12 +61,17 @@
         <el-table-column width="120" prop="riskLevel" label="作业风险等级" align="center"></el-table-column>
         <el-table-column prop="workContent" label="作业安排、位置及内容" align="center"></el-table-column>
         <el-table-column width="100" prop="hasCheckStr" label="是否核准" align="center"></el-table-column>
-        <el-table-column width="250" prop="checkExist" label="实际作业是否存在" align="center">
+        <el-table-column width="180" prop="checkExist" label="实际作业是否存在" align="center">
           <template slot-scope="scope">
             <el-radio-group v-model="scope.row.checkExist">
               <el-radio :label="true" style="width:40px">是</el-radio>
               <el-radio :label="false" style="width:40px">否</el-radio>
             </el-radio-group>
+          </template>
+        </el-table-column>
+        <el-table-column width="240" label="偏差分析" align="center">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.deviationReason" clearable :rows="1" placeholder="请选择"></el-input>
           </template>
         </el-table-column>
       </el-table>
@@ -140,10 +145,11 @@ export default {
       let list = [];
       console.log(this.copyTableData)
       for (let i = 0; i < this.tableData.length; i++) {
-        if (this.tableData[i].checkExist != this.copyTableData[i].checkExist) {
+        if (this.tableData[i].checkExist != this.copyTableData[i].checkExist || this.tableData[i].deviationReason != this.copyTableData[i].deviationReason) {
           list.push({
             id: this.tableData[i].id,
-            checkExist: this.tableData[i].checkExist
+            checkExist: this.tableData[i].checkExist,
+            deviationReason:this.tableData[i].deviationReason
           })
         }
       }
@@ -174,7 +180,8 @@ export default {
           else ele.hasCheckStr = "否";
           this.copyTableData.push({
             id: ele.id,
-            checkExist: ele.checkExist
+            checkExist: ele.checkExist,
+            deviationReason:ele.deviationReason
           })
         })
 

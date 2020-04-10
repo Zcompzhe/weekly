@@ -221,4 +221,10 @@ export const getAllSGCCUserDept = () => {
   return request.get(`/getAllSGCCUserDept`);
 };
 
+//获取项目部角色
+export const getAllResponsiblePersonEnum = () => {
+  return request.get(`/baseInfoManagement/getAllResponsiblePersonEnum`);
+};
+
+
 

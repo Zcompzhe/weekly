@@ -20,6 +20,15 @@
               </el-form-item>
             </div>
           </el-col>
+           <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="项目部角色" prop="responsiblePerson" placeholder="是否核准">
+                <el-select v-model="searchTable.responsiblePerson" clearable placeholder="请选择" style="min-width:300px">
+                  <el-option v-for="item in searchTable.options.responsiblePersonOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
@@ -85,7 +94,9 @@ export default {
         quarter: "",
         adminDept:"",
         arrayOrder: "",
+        responsiblePerson:"",
         options: {
+          responsiblePersonOptions:[],
           quarterOptions: [
             {
               name: "第一季度"
@@ -134,6 +145,10 @@ export default {
     getApi.getAllProjectAdminDeptEnum().then(response => {
       this.searchTable.options.adminDeptOptions = response;
     });
+    //获得项目部角色
+    getApi.getAllResponsiblePersonEnum().then(response => {
+      this.searchTable.options.responsiblePersonOptions = response;
+    });
   },
   methods: {
     //搜索
@@ -144,6 +159,7 @@ export default {
         quarter: this.searchTable.quarter === "" ? undefined : this.searchTable.quarter,
         adminDept: this.searchTable.adminDept === "" ? undefined : this.searchTable.adminDept,
         arrayOrder: this.searchTable.arrayOrder === "" ? undefined : this.searchTable.arrayOrder,
+        responsiblePerson:this.searchTable.responsiblePerson === "" ? undefined : this.searchTable.responsiblePerson,
         year: parseInt(api.changeDate(this.searchTable.year).slice(0, 4))
       }
       searchApi.getAssessScoreShowRespByCondition(list).then(response => {

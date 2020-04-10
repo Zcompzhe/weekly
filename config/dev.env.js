@@ -1,3 +1,11 @@
+// 开发环境和生产环境
+// 1、开发环境需要配置index.js下的proxy
+// 2、开发环境需要修改userApi下添加/apis
+// 3、main.js下的照片路径需要修改
+// 4、本文件下的BASE_URL、USER_URL需要修改
+
+
+
 var merge = require("webpack-merge");
 var prodEnv = require("./prod.env");
 

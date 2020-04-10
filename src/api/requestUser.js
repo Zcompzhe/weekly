@@ -4,7 +4,7 @@ import store from "@/store";
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.USER_URL, // url = base url + request url
+  // baseURL: process.env.USER_URL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
   

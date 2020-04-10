@@ -3,7 +3,24 @@
     <el-card class="box-card">
       <el-form :model="searchTable" label-position="left" ref="searchTable" :rules="searchTableRule" label-width="110px" class="demo-ruleForm">
         <el-row :gutter="20">
-          <el-col :span="6">
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="年份" prop="year" placeholder="周报开始日期">
+                <el-date-picker v-model="searchTable.year" :clearable="false" type="year" placeholder="选择年" style="min-width:300px">
+                </el-date-picker>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="季度" prop="quarter" placeholder="项目名称">
+                <el-select v-model="searchTable.quarter" :clearable="false" placeholder="请选择" style="min-width:300px">
+                  <el-option v-for="item in searchTable.options.quarterOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <!-- <el-col :span="6">
             <div class="bar">
               <el-form-item label="督查日期" prop="inspectStartDate" placeholder="周报开始日期">
                 <el-date-picker v-model="searchTable.inspectStartDate" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:0px"></el-date-picker>
@@ -16,8 +33,8 @@
                 <el-date-picker v-model="searchTable.inspectEndDate" type="date" placeholder="选择日期时间" style="min-width:200px;margin-left:2px"></el-date-picker>
               </el-form-item>
             </div>
-          </el-col>
-          <el-col :span="6" style="margin-left:-122px">
+          </el-col> -->
+          <!-- <el-col :span="6" style="margin-left:-122px">
             <div class="bar">
               <el-form-item label="项目名称" prop="projectId" placeholder="项目名称">
                 <el-select v-model="searchTable.projectId" clearable placeholder="请选择" style="min-width:200px">
@@ -25,7 +42,7 @@
                 </el-select>
               </el-form-item>
             </div>
-          </el-col>
+          </el-col> -->
           <el-col :span="6" style="margin-left:-12px">
             <div class="bar">
               <el-form-item label="是否设置责任人" prop="hasSetResponsible" placeholder="项目名称">
@@ -123,12 +140,29 @@ export default {
       },
       //搜索条件数据
       searchTable: {
+        year:"",
+        quarter:"",
+
         inspectStartDate: "",
         inspectEndDate: "",
         projectId: "",
         hasSetResponsible: "",
         options: {
           projectIdOptions: {},
+           quarterOptions: [
+            {
+              name: "第一季度"
+            },
+            {
+              name: "第二季度"
+            },
+            {
+              name: "第三季度"
+            },
+            {
+              name: "第四季度"
+            },
+          ],
           hasSetResponsibleOptions: [
             {
               value: true,
@@ -160,9 +194,11 @@ export default {
   created: function () {
     //空搜索获取信息
     let startDate = new Date();
-    let endDate = api.getThisWeekStartTwo(startDate);
-    this.searchTable.inspectStartDate = new Date(api.changeDate(startDate));
-    this.searchTable.inspectEndDate = new Date(endDate);
+    this.searchTable.year = new Date(api.changeDate(startDate));
+    if(this.searchTable.year.getMonth()>=0 && this.searchTable.year.getMonth() <3) this.searchTable.quarter="第一季度";
+    else if(this.searchTable.year.getMonth()>=3 && this.searchTable.year.getMonth() <6) this.searchTable.quarter="第二季度";
+    else if(this.searchTable.year.getMonth()>=6 && this.searchTable.year.getMonth() <9) this.searchTable.quarter="第三季度";
+    else if(this.searchTable.year.getMonth()>=9 && this.searchTable.year.getMonth() <12) this.searchTable.quarter="第四季度";
     this.searchResponsibleSet(1);
 
     //获取项目列表
@@ -301,17 +337,19 @@ export default {
     },
     //搜索
     searchResponsibleSet(num) {
-      if ((this.searchTable.inspectEndDate === null && this.searchTable.inspectStartDate != null) || (this.searchTable.inspectEndDate != null && this.searchTable.inspectStartDate === null)) {
-        this.$message({
-          type: "error",
-          message: "督查起止日期必须均填写或均不填写！"
-        });
-        return;
-      }
+      // if ((this.searchTable.inspectEndDate === null && this.searchTable.inspectStartDate != null) || (this.searchTable.inspectEndDate != null && this.searchTable.inspectStartDate === null)) {
+      //   this.$message({
+      //     type: "error",
+      //     message: "督查起止日期必须均填写或均不填写！"
+      //   });
+      //   return;
+      // }
       let list = {
-        inspectEndDate: this.searchTable.inspectEndDate === null ? undefined : api.changeDate(this.searchTable.inspectEndDate),
-        inspectStartDate: this.searchTable.inspectStartDate === null ? undefined : api.changeDate(this.searchTable.inspectStartDate),
-        projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+        // inspectEndDate: this.searchTable.inspectEndDate === null ? undefined : api.changeDate(this.searchTable.inspectEndDate),
+        // inspectStartDate: this.searchTable.inspectStartDate === null ? undefined : api.changeDate(this.searchTable.inspectStartDate),
+        // projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
+        quarter:this.searchTable.quarter,
+       year: parseInt(api.changeDate(this.searchTable.year).slice(0, 4)),
         pageNumber: num - 1,
         numberOfPage: this.pagination.pageNumber,
         hasSetResponsible: this.searchTable.hasSetResponsible === "" ? undefined : this.searchTable.hasSetResponsible
