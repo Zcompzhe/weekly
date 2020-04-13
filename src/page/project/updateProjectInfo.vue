@@ -23,7 +23,7 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="项目名称" prop="name" placeholder="请选择项目名称">
-                <el-input v-model="projectForm.name" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="projectForm.name" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -70,21 +70,21 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="详细地址" prop="detailedAddress" placeholder="请输入详细地址">
-                <el-input v-model="projectForm.detailedAddress" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="projectForm.detailedAddress" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="定位经度" prop="longitude" placeholder="请输入详细地址">
-                <el-input v-model="projectForm.longitude" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="projectForm.longitude" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="定位纬度" prop="latitude" placeholder="请输入详细地址">
-                <el-input v-model="projectForm.latitude" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="projectForm.latitude" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -108,14 +108,14 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="项目规模" prop="projectScale" placeholder="请输入项目规模">
-                <el-input v-model="projectForm.projectScale" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="projectForm.projectScale" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="一线作业人数" prop="currentWorkerNum" placeholder="请输入一线作业人数">
-                <el-input v-model="projectForm.currentWorkerNum" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="projectForm.currentWorkerNum" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -125,7 +125,7 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="请选择实际状态">
-                <el-input v-model="projectForm.currentSubcontractorNum" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="projectForm.currentSubcontractorNum" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>

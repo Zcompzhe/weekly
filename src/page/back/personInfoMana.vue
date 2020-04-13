@@ -65,21 +65,21 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="姓名" prop="name" placeholder="周报开始日期">
-                <el-input v-model="updateInfo.name" clearable :rows="1" placeholder="请选择" style="min-width:300px"></el-input>
+                <el-input v-model="updateInfo.name" clearable :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="用户名" prop="username" placeholder="周报开始日期">
-                <el-input v-model="updateInfo.username" clearable :rows="1" placeholder="请选择" style="min-width:300px"></el-input>
+                <el-input v-model="updateInfo.username" clearable :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="联系方式" prop="phoneNumber" placeholder="项目名称">
-                <el-input v-model="updateInfo.phoneNumber" clearable :rows="1" placeholder="请选择" style="min-width:300px"></el-input>
+                <el-input v-model="updateInfo.phoneNumber" clearable :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -142,21 +142,21 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="姓名" prop="name" placeholder="周报开始日期">
-                <el-input v-model="addInfo.name" clearable :rows="1" placeholder="请选择" style="min-width:300px"></el-input>
+                <el-input v-model="addInfo.name" clearable :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="用户名" prop="username" placeholder="周报开始日期">
-                <el-input v-model="addInfo.username" clearable :rows="1" placeholder="请选择" style="min-width:300px"></el-input>
+                <el-input v-model="addInfo.username" clearable :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="联系方式" prop="phoneNumber" placeholder="项目名称">
-                <el-input v-model="addInfo.phoneNumber" clearable :rows="1" placeholder="请选择" style="min-width:300px"></el-input>
+                <el-input v-model="addInfo.phoneNumber" clearable :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
           </el-col>

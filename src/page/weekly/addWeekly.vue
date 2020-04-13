@@ -29,7 +29,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="当前月份" prop="monthShowTime" placeholder="当前月份">
-                <el-input disabled v-model="addFormOne.monthShowTime" clearable :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input disabled v-model="addFormOne.monthShowTime" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -103,7 +103,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="详细地址" prop="detailedAddress" placeholder="当前月份">
-                <el-input v-model="addFormTwo.detailedAddress" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.detailedAddress" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -111,7 +111,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="定位经度" prop="longitude" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.longitude" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.longitude" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -119,7 +119,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="定位纬度" prop="latitude" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.latitude" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.latitude" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -145,7 +145,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="项目规模" prop="projectScale" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.projectScale" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.projectScale" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -153,7 +153,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="一线作业人数" prop="currentWorkerNum" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.currentWorkerNum" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.currentWorkerNum" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -163,7 +163,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="项目名称">
-                <el-input v-model="addFormTwo.currentSubcontractorNum" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请选择" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.currentSubcontractorNum" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -287,7 +287,7 @@
         </el-table-column>
         <el-table-column label="当前总体施工进度详情" align="center">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.currentProgress" clearable :rows="1" placeholder="请选择"></el-input>
+            <el-input v-model="scope.row.currentProgress" clearable :rows="1" placeholder="请输入"></el-input>
           </template>
         </el-table-column>
       </el-table>
@@ -324,7 +324,7 @@
         </el-table-column>
         <el-table-column prop="workContent" label="下周作业安排、位置及内容" align="center">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.workContent" clearable :rows="1" placeholder="请选择"></el-input>
+            <el-input v-model="scope.row.workContent" clearable :rows="1" placeholder="请输入"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="riskAdd" label="是否风险升级管理" align="center">
