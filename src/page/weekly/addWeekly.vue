@@ -533,12 +533,12 @@ export default {
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
                 if (!value.match(reg)) {
-                  callback(new Error("一线自有作业人员数需要整数，如：20"));
+                  callback(new Error("当前分包人数需要整数，如：20"));
                 } else {
                   callback();
                 }
               } else {
-                callback(new Error("请输入当前施工单位一线自有作业人员数"));
+                callback(new Error("请输入当前分包人数"));
               }
             }
           }
