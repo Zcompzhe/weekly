@@ -93,7 +93,7 @@
     <el-col :xs="12" :sm="12" :md="12" :lg="12" style="">
       <el-dropdown trigger="click" class="topbar-info" @command="handleCommand">
         <a href="javascript:void(0)" class="user-name">
-          sosout<i class="el-icon-caret-bottom el-icon--right"></i>
+          {{userName}}<i class="el-icon-caret-bottom el-icon--right"></i>
         </a>
         <el-dropdown-menu slot="dropdown">
           <!-- <el-dropdown-item>个人中心</el-dropdown-item>
@@ -106,6 +106,7 @@
 </template>
 <script>
 import { Row, Col, Dropdown, Icon, DropdownMenu, DropdownItem } from 'element-ui';
+import * as searchApi from "@/api/searchApi.js";
 export default {
   components: {
     ElRow: Row,
@@ -117,10 +118,17 @@ export default {
   },
   data() {
     return {
+      userName: "",
 
     }
   },
+  mounted() {
+    searchApi.me().then(response => {
+      this.userName=response.username;
+    })
+  },
   methods: {
+
     // 点击菜单项触发的事件回调
     handleCommand(command) {
       const that = this;

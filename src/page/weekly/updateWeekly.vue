@@ -111,7 +111,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="定位经度" prop="longitude" placeholder="周报开始日期">
-                <el-input v-model="updateFormTwo.longitude" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+                <el-input v-model="updateFormTwo.longitude" clearable :rows="1" placeholder="浮点型，如：100.123" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -119,7 +119,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="定位纬度" prop="latitude" placeholder="周报开始日期">
-                <el-input v-model="updateFormTwo.latitude" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+                <el-input v-model="updateFormTwo.latitude" clearable :rows="1" placeholder="浮点型，如：100.123" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -153,7 +153,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="一线作业人数" prop="currentWorkerNum" placeholder="周报开始日期">
-                <el-input v-model="updateFormTwo.currentWorkerNum" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+                <el-input v-model="updateFormTwo.currentWorkerNum" clearable :rows="1" placeholder="整数，如20" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -163,7 +163,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="项目名称">
-                <el-input v-model="updateFormTwo.currentSubcontractorNum" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+                <el-input v-model="updateFormTwo.currentSubcontractorNum" clearable :rows="1" placeholder="整数，如20" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -346,6 +346,15 @@
       </el-table>
     </el-card>
     <el-card class="box-card">
+      <el-row :gutter="20">
+        <el-col :span="20">
+          <div class="bar">
+            <div id="title">
+              <p id="tableTitle" style="min-width:1000px;font-size:28px;margin-left:655px;">项目运作状态</p>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
       <el-form :model="updateFormFive" ref="updateFormFive" label-position="left" :rules="updateFormFiveRule" label-width="100px" class="demo-ruleForm">
         <el-row :gutter="20">
           <el-col :span="8">
@@ -483,10 +492,40 @@ export default {
           { required: true, message: "请选择区域", trigger: "change" }
         ],
         latitude: [
-          { required: true, message: "请输入纬度", trigger: "change" }
+          {
+            required: true,
+            trigger: "change",
+            validator: (rule, value, callback) => {
+              if (value != "" && value != null) {
+                var reg = /^([+]\d+[.]\d+|[-]\d+[.]\d+|\d+[.]\d+|[+]\d+|[-]\d+|\d+)$/gi
+                if (!value.match(reg)) {
+                  callback(new Error("定位纬度需要浮点型，如：100.123"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback(new Error("请输入定位纬度"));
+              }
+            }
+          }
         ],
         longitude: [
-          { required: true, message: "请输入经度", trigger: "change" }
+          {
+            required: true,
+            trigger: "change",
+            validator: (rule, value, callback) => {
+              if (value != "" && value != null) {
+                var reg = /^([+]\d+[.]\d+|[-]\d+[.]\d+|\d+[.]\d+|[+]\d+|[-]\d+|\d+)$/gi
+                if (!value.match(reg)) {
+                  callback(new Error("定位经度需要浮点型，如：100.123"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback(new Error("请输入定位经度"));
+              }
+            }
+          }
         ],
         supervisionId: [
           { required: true, message: "请选择监理单位", trigger: "change" }
@@ -495,10 +534,40 @@ export default {
           { required: false, message: "请输入实际开工时间", trigger: "change" }
         ],
         currentSubcontractorNum: [
-          { required: false, message: "请输入当前分包人数", trigger: "change" }
+           {
+            required: false,
+            trigger: "change",
+            validator: (rule, value, callback) => {
+              if (value != "" && value != null) {
+                var reg = /^[1-9]\d*$/;
+                if (!value.match(reg)) {
+                  callback(new Error("当前分包人数需要整数，如：20"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback(new Error("请输入当前分包人数"));
+              }
+            }
+          }
         ],
         currentWorkerNum: [
-          { required: false, message: "请输入当前施工单位一线自有作业人员数", trigger: "change" }
+           {
+            required: false,
+            trigger: "change",
+            validator: (rule, value, callback) => {
+              if (value != "" && value != null) {
+                var reg = /^[1-9]\d*$/;
+                if (!value.match(reg)) {
+                  callback(new Error("一线自有作业人员数需要整数，如：20"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback(new Error("请输入当前施工单位一线自有作业人员数"));
+              }
+            }
+          }
         ],
         planCompletionTime: [
           { required: false, message: "请输入计划竣工时间", trigger: "change" }
