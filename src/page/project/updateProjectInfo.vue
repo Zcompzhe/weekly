@@ -385,7 +385,7 @@ export default {
             validator: (rule, value, callback) => {
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
-                if (!value.match(reg)) {
+                if (!value.match(reg)&& value!="0") {
                   callback(new Error("当前分包人数需要整数，如：20"));
                 } else {
                   callback();
@@ -403,7 +403,7 @@ export default {
             validator: (rule, value, callback) => {
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
-                if (!value.match(reg)) {
+                if (!value.match(reg)&& value!="0") {
                   callback(new Error("一线自有作业人员数需要整数，如：20"));
                 } else {
                   callback();
