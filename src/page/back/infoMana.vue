@@ -102,7 +102,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="条目名称" prop="addName" placeholder="条目名称">
-                <el-input v-model="addFormOne.addName" clearable :rows="1" placeholder="请选择" style="min-width:400px"></el-input>
+                <el-input v-model="addFormOne.addName" clearable :rows="1" placeholder="请输入" style="min-width:400px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -124,7 +124,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="条目名称" prop="addName" placeholder="条目名称">
-                <el-input v-model="addFormTwo.addName" clearable :rows="1" placeholder="请选择" style="min-width:400px"></el-input>
+                <el-input v-model="addFormTwo.addName" clearable :rows="1" placeholder="请输入" style="min-width:400px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -146,7 +146,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="条目名称" prop="addName" placeholder="条目名称">
-                <el-input v-model="addFormThree.addName" clearable :rows="1" placeholder="请选择" style="min-width:400px"></el-input>
+                <el-input v-model="addFormThree.addName" clearable :rows="1" placeholder="请输入" style="min-width:400px"></el-input>
               </el-form-item>
             </div>
           </el-col>
