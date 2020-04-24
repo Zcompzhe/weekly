@@ -590,7 +590,7 @@ export default {
   created: function () {
     //其他页面跳转的数据
     let data = this.$route.params;
-    this.backPath = data.backPath;
+    // this.backPath = data.backPath;
     // obj = JSON.parse(localStorage.getItem("temp2"));
     //查看是否有草稿
 
