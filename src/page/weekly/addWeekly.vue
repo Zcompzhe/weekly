@@ -490,7 +490,7 @@ export default {
             validator: (rule, value, callback) => {
               if (value != "" && value != null) {
                 var reg = /^([+]\d+[.]\d+|[-]\d+[.]\d+|\d+[.]\d+|[+]\d+|[-]\d+|\d+)$/gi
-                if (!value.match(reg)) {
+                if (!reg.test(value)) {
                   callback(new Error("定位纬度需要浮点型，如：100.123"));
                 } else {
                   callback();
@@ -508,7 +508,7 @@ export default {
             validator: (rule, value, callback) => {
               if (value != "" && value != null) {
                 var reg = /^([+]\d+[.]\d+|[-]\d+[.]\d+|\d+[.]\d+|[+]\d+|[-]\d+|\d+)$/gi
-                if (!value.match(reg)) {
+                if (!reg.test(value)) {
                   callback(new Error("定位经度需要浮点型，如：100.123"));
                 } else {
                   callback();
@@ -526,13 +526,14 @@ export default {
           { required: false, message: "请输入实际开工时间", trigger: "change" }
         ],
         currentSubcontractorNum: [
-           {
+          {
             required: false,
             trigger: "blur",
             validator: (rule, value, callback) => {
+              if (value == "0") callback();
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
-                if (!value.match(reg)&& value!="0") {
+                if (!reg.test(value) && value != "0") {
                   callback(new Error("当前分包人数需要整数，如：20"));
                 } else {
                   callback();
@@ -544,13 +545,14 @@ export default {
           }
         ],
         currentWorkerNum: [
-           {
+          {
             required: false,
             trigger: "blur",
             validator: (rule, value, callback) => {
+              if (value == "0") callback();
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
-                if (!value.match(reg)&& value!="0") {
+                if (!reg.test(value) && value != "0") {
                   callback(new Error("一线自有作业人员数需要整数，如：20"));
                 } else {
                   callback();
@@ -1097,22 +1099,23 @@ export default {
         if (valid) {
           validNum++;
         }
-      });
+      }); console.log(validNum)
       this.$refs["addFormTwo"].validate(valid => {
         if (valid) {
           validNum++;
         }
-      });
+      }); console.log(validNum)
       this.$refs["addFormThree"].validate(valid => {
         if (valid) {
           validNum++;
         }
-      });
+      }); console.log(validNum)
       this.$refs["addFormFive"].validate(valid => {
         if (valid) {
           validNum++;
         }
       });
+      console.log(validNum)
       if (validNum === 4) {
         let projectUpdateReq = {};
         let projectWeeklyAddReq;

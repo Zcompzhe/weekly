@@ -384,6 +384,7 @@ export default {
             required: false,
             trigger: "blur",
             validator: (rule, value, callback) => {
+              if (value == "0") callback();
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
                 if (!value.match(reg) && value!="0") {
@@ -402,6 +403,7 @@ export default {
             required: false,
             trigger: "blur",
             validator: (rule, value, callback) => {
+              if (value == "0") callback();
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
                 if (!value.match(reg)&& value!="0") {
