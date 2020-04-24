@@ -498,7 +498,7 @@ export default {
             validator: (rule, value, callback) => {
               if (value != "" && value != null) {
                 var reg = /^([+]\d+[.]\d+|[-]\d+[.]\d+|\d+[.]\d+|[+]\d+|[-]\d+|\d+)$/gi
-                if (!value.match(reg)) {
+                if (!reg.test(value)) {
                   callback(new Error("定位纬度需要浮点型，如：100.123"));
                 } else {
                   callback();
@@ -516,7 +516,7 @@ export default {
             validator: (rule, value, callback) => {
               if (value != "" && value != null) {
                 var reg = /^([+]\d+[.]\d+|[-]\d+[.]\d+|\d+[.]\d+|[+]\d+|[-]\d+|\d+)$/gi
-                if (!value.match(reg)) {
+                if (!reg.test(value)) {
                   callback(new Error("定位经度需要浮点型，如：100.123"));
                 } else {
                   callback();
@@ -541,7 +541,7 @@ export default {
               if (value == "0") callback();
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
-                if (!value.match(reg)&& value!="0") {
+                if (!reg.test(value)&& value!="0") {
                   callback(new Error("当前分包人数需要整数，如：20"));
                 } else {
                   callback();
@@ -560,7 +560,7 @@ export default {
               if (value == "0") callback();
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
-                if (!value.match(reg)&& value!="0") {
+                if (!reg.test(value)&& value!="0") {
                   callback(new Error("一线自有作业人员数需要整数，如：20"));
                 } else {
                   callback();
