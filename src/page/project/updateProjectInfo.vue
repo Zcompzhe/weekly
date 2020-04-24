@@ -381,7 +381,7 @@ export default {
         currentSubcontractorNum: [
            {
             required: false,
-            trigger: "change",
+            trigger: "blur",
             validator: (rule, value, callback) => {
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
@@ -399,7 +399,7 @@ export default {
         currentWorkerNum: [
           {
             required: false,
-            trigger: "change",
+            trigger: "blur",
             validator: (rule, value, callback) => {
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
