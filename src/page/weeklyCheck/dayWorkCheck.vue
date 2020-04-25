@@ -59,7 +59,7 @@
         <el-table-column width="120" prop="workDate" label="作业日期" align="center"></el-table-column>
         <el-table-column width="350" prop="projectName" label="项目名称" align="center"></el-table-column>
         <el-table-column width="120" prop="riskLevel" label="作业风险等级" align="center"></el-table-column>
-        <el-table-column prop="workContent" label="作业安排、位置及内容" align="center"></el-table-column>
+        <el-table-column width="300" prop="workContent" label="作业安排、位置及内容" align="center"></el-table-column>
         <el-table-column width="100" prop="hasCheckStr" label="是否核准" align="center"></el-table-column>
         <el-table-column width="180" prop="checkExist" label="实际作业是否存在" align="center">
           <template slot-scope="scope">
@@ -69,11 +69,16 @@
             </el-radio-group>
           </template>
         </el-table-column>
+        <el-table-column width="300" label="偏差分析" align="center">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.deviationReason" clearable :rows="1" placeholder="请输入"></el-input>
+          </template>
+        </el-table-column>
         <el-table-column width="140" label="核查方式" align="center">
           <template slot-scope="scope">
             <el-select v-model="scope.row.checkType" clearable placeholder="请选择" style="width:120px">
-                  <el-option v-for="item in checkTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
-                </el-select>
+              <el-option v-for="item in checkTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+            </el-select>
           </template>
         </el-table-column>
       </el-table>
@@ -152,12 +157,12 @@ export default {
       console.log(this.copyTableData)
       for (let i = 0; i < this.tableData.length; i++) {
         if (this.tableData[i].checkExist != this.copyTableData[i].checkExist || this.tableData[i].deviationReason != this.copyTableData[i].deviationReason ||
-         this.tableData[i].checkType != this.copyTableData[i].checkType) {
+          this.tableData[i].checkType != this.copyTableData[i].checkType) {
           list.push({
             id: this.tableData[i].id,
             checkExist: this.tableData[i].checkExist,
-            deviationReason:this.tableData[i].deviationReason,
-            checkType:this.tableData[i].checkType
+            deviationReason: this.tableData[i].deviationReason,
+            checkType: this.tableData[i].checkType
           })
         }
       }
@@ -176,7 +181,7 @@ export default {
         numberOfPage: this.pagination.pageSize,
         pageNumber: pageNum - 1,
         projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
-        hasCheck:this.searchTable.hasCheck === "" ? undefined : this.searchTable.hasCheck,
+        hasCheck: this.searchTable.hasCheck === "" ? undefined : this.searchTable.hasCheck,
         workDate: this.searchTable.workDate === "" ? undefined : api.changeDate(this.searchTable.workDate)
       }
       searchApi.getWeeklyDayWorkCheckShowByCondition(list).then(response => {
@@ -190,7 +195,7 @@ export default {
           this.copyTableData.push({
             id: ele.id,
             checkExist: ele.checkExist,
-            deviationReason:ele.deviationReason
+            deviationReason: ele.deviationReason
           })
         })
 
