@@ -16,6 +16,12 @@ const weeklyData = r =>
     () => r(require("../page/weekly/weeklyDataManage")),
     "weeklyDataManage"
   );
+  const noSubmit = r =>
+  require.ensure(
+    [],
+    () => r(require("../page/weekly/noSubmit")),
+    "noSubmit"
+  );
 
 //周报数据管理
 // const addWeekly = r => require.ensure([], () => r(require('../page/weekly/addWeeklyData')), 'addWeeklyData');
@@ -190,6 +196,16 @@ export default [
         meta: {
           activePath: "/weekly/weeklyDataManage",
           bcrumd: ["周报管理", "周报数据管理"]
+        }
+      },
+      {
+        // 周报数据管理
+        path: "/weekly/noSubmit",
+        name: "noSubmit",
+        component: noSubmit,
+        meta: {
+          activePath: "/weekly/noSubmit",
+          bcrumd: ["周报管理", "未上报周报"]
         }
       },
       {

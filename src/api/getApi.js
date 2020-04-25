@@ -226,5 +226,10 @@ export const getAllResponsiblePersonEnum = () => {
   return request.get(`/baseInfoManagement/getAllResponsiblePersonEnum`);
 };
 
+//获取核准方式
+export const getCheckTypeEnum = () => {
+  return request.get(`/baseInfoManagement/getCheckTypeEnum`);
+};
+
 
 

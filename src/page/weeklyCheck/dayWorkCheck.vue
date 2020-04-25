@@ -69,9 +69,11 @@
             </el-radio-group>
           </template>
         </el-table-column>
-        <el-table-column width="300" label="偏差分析" align="center">
+        <el-table-column width="140" label="核查方式" align="center">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.deviationReason" clearable :rows="1" placeholder="请输入"></el-input>
+            <el-select v-model="scope.row.checkType" clearable placeholder="请选择" style="width:120px">
+                  <el-option v-for="item in checkTypeOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
           </template>
         </el-table-column>
       </el-table>
@@ -137,6 +139,10 @@ export default {
     getApi.getAllProjectName().then(response => {
       this.searchTable.options.projectIdOptions = response;
     });
+    //获取核准方式
+    getApi.getCheckTypeEnum().then(response => {
+      this.checkTypeOptions = response;
+    });
     this.searchWeeklyDayWorkCheck(1);
   },
   methods: {
@@ -145,11 +151,13 @@ export default {
       let list = [];
       console.log(this.copyTableData)
       for (let i = 0; i < this.tableData.length; i++) {
-        if (this.tableData[i].checkExist != this.copyTableData[i].checkExist || this.tableData[i].deviationReason != this.copyTableData[i].deviationReason) {
+        if (this.tableData[i].checkExist != this.copyTableData[i].checkExist || this.tableData[i].deviationReason != this.copyTableData[i].deviationReason ||
+         this.tableData[i].checkType != this.copyTableData[i].checkType) {
           list.push({
             id: this.tableData[i].id,
             checkExist: this.tableData[i].checkExist,
-            deviationReason:this.tableData[i].deviationReason
+            deviationReason:this.tableData[i].deviationReason,
+            checkType:this.tableData[i].checkType
           })
         }
       }

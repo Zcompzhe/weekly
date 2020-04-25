@@ -201,3 +201,9 @@ export const getTodayExceptionInfoStatistics = () => {
   );
 };
 
+//获取核准方式
+export const getCurrentWeekWithoutWeeklyProjectInfo = () => {
+  return request.get(`/projectWeeklyManagement/getCurrentWeekWithoutWeeklyProjectInfo`);
+};
+
+

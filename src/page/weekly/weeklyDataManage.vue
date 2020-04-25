@@ -102,6 +102,11 @@
             <el-button type="primary" style="margin-right: 20px" @click="exportWeekly">导出周报</el-button>
           </div>
         </el-col>
+        <el-col :offset="1" :span="2">
+          <div class="bar">
+            <el-button type="primary" style="margin-right: 20px" @click="showNotSubmit">本周未上报项目</el-button>
+          </div>
+        </el-col>
       </el-row>
 
       <el-table :data="weeklyInfo.tableData" max-height="400" border @selection-change="weeklySelect" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
@@ -565,6 +570,12 @@ export default {
 
   },
   methods: {
+    //本周未上报
+    showNotSubmit(){
+      this.$router.push({
+        name: "noSubmit"
+      })
+    },
     //历史信息
     historicalInfo(row) {
       this.historicalBackup = row;
