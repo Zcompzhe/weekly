@@ -1,7 +1,8 @@
 <style lang="less">
+div p{margin:0 auto;width:500px;}
 .quick-container {
   .quick-card {
-    height: 1000px;
+    height:400px;
     .el-card__header {
       padding: 0 20px;
       height: 48px;
@@ -20,7 +21,7 @@
 <style lang="less" scoped>
 .quick-container {
   .quick-card {
-    margin: 0px 20px 20px 20px;
+    margin: 50px 200px 200px 200px;
     .github-star {
       float: right;
       color: #108ee9;
@@ -89,12 +90,12 @@
       </div>
       <div class="card-text">此项目是本人空余时间搭建的。希望大家提供宝贵的意见和建议，谢谢。</div>
     </el-card> -->
-    <el-card class="quick-card">
+    <el-card class="quick-card" >
       <el-row :gutter="20" style="margin-top: 10%; margin-bottom: 5px;">
         <el-col :span="20">
           <div class="bar">
             <div id="title">
-              <p id="tableTitle" style="min-width:1000px;font-size:50px;margin-left:35%;margin-top:20px;">欢迎回来，{{userName}}!</p>
+              <p id="tableTitle" style="min-width:1000px;font-size:50px;text-align:center;margin-top:20px;">欢迎回来，{{userName}}!</p>
             </div>
           </div>
         </el-col>
@@ -103,7 +104,7 @@
         <el-col :span="20">
           <div class="bar">
             <div id="title">
-              <p id="tableTitle" style="min-width:1000px;margin-left:30%;font-size:20px;align:center;margin-top:20px;color:red">如有使用问题，请联系系统管理员，13900001111</p>
+              <p id="tableTitle"  style="min-width:1000px;font-size:20px;text-align:center;margin-top:20px;color:red">如有使用问题，请联系系统管理员，13900001111</p>
             </div>
           </div>
         </el-col>
@@ -131,7 +132,7 @@ export default {
   },
   mounted() {
     searchApi.me().then(response => {
-      this.userName = response.username;
+      this.userName = response.name;
     })
   },
   methods: {
