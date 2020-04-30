@@ -85,8 +85,8 @@
 <template>
   <el-row class="console-topbar" type="flex">
     <el-col :xs="12" :sm="12" :md="12" :lg="12">
-      <a class="topbar-home" target="_blank" href="javascript:void(0);"></a>
-      <a href="javascript:void(0);" target="_self" class="topbar-home-link">
+      <a class="topbar-home" target="_blank" href="http://www.sgcc.com.cn"></a>
+      <a href="http://www.sgcc.com.cn" target="_self" class="topbar-home-link">
         <span>管理控制台</span>
       </a>
     </el-col>

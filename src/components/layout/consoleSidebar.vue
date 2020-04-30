@@ -68,9 +68,9 @@
   <div class="console-sidebar">
     <el-menu :unique-opened="true" :router="true" :default-active="defaultActive" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" class="sidebar-content">
       <div class="sidebar-fold">版本1.0.0</div>
-      <el-menu-item index="/quick">
+      <!-- <el-menu-item index="/quick">
         <i class="el-icon-message"></i>快速入门
-      </el-menu-item>
+      </el-menu-item> -->
       <el-submenu index="project" v-if="flag1">
         <template slot="title">
           <i class="el-icon-message"></i>

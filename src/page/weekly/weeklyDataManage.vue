@@ -581,7 +581,6 @@ export default {
       this.historicalBackup = row;
       searchApi.getProjectWeeklyByCondition({
         projectId: row.projectId,
-        orderByIdDesc: true,
         pageNumber: this.pagination2.currentPage - 1,
         numberOfPage: this.pagination2.pageSize
       }).then(res => {
