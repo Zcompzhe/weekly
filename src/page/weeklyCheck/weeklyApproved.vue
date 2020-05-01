@@ -47,6 +47,13 @@
     </el-card>
 
     <el-card class="box-card">
+      <el-row :gutter="20">
+        <el-col :span="2" style="margin-bottom:20px">
+          <div class="bar">
+            <el-button type="primary" @click="exportAcc()">导出准确度报告</el-button>
+          </div>
+        </el-col>
+      </el-row>
       <el-table :data="tableData" max-height="400" border @selection-change="weeklyChange" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
@@ -397,6 +404,42 @@ export default {
     });
   },
   methods: {
+    //导出报告
+    exportAcc() {
+      if (this.searchTable.weeklyStartTime === "" || this.searchTable.weeklyStartTime === null) {
+        this.$message({
+          type: "error",
+          message: "请先选择周报日期！"
+        });
+        return ;
+      }
+      let list = {
+        weeklyStartTime:api.changeDate(this.searchTable.weeklyStartTime)
+      }
+      searchApi.exportWeeklyAccuracyAsExcel(list)
+        .then(response => {
+          this.searchWeekly(1);
+          let content = response;
+          let blob = new Blob([content]);
+          let da = api.changeDate(new Date());
+          let fileName = "WeeklyAccuracy-" + api.changeDate(this.searchTable.weeklyStartTime) + ".xlsx";
+          console.log(response);
+          if ("download" in document.createElement("a")) {
+            // 非IE下载
+            const elink = document.createElement("a");
+            elink.download = fileName;
+            elink.style.display = "none";
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else {
+            // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
+          }
+        })
+    },
     //获取不同颜色进度条
     getColor(value) {
       if (value === 100) return "success";

@@ -207,3 +207,13 @@ export const getCurrentWeekWithoutWeeklyProjectInfo = () => {
 };
 
 
+//获取准确度报告
+export const exportWeeklyAccuracyAsExcel = data => {
+  return request({
+    url: `/weeklyAccuracyManagement/exportWeeklyAccuracyAsExcel`,
+    method: "post",
+    data: data,
+    "Content-Type": "application/json;charset=UTF-8",
+    responseType: "blob"
+  });
+};
