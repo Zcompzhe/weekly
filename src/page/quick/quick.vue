@@ -92,22 +92,22 @@ div p{margin:0 auto;width:500px;}
     </el-card> -->
     <el-card class="quick-card" >
       <el-row :gutter="20" style="margin-top: 10%; margin-bottom: 5px;">
-        <el-col :span="20">
+        <!-- <el-col :span="20"> -->
           <div class="bar">
             <div id="title">
               <p id="tableTitle" style="min-width:1000px;font-size:50px;text-align:center;margin-top:20px;">欢迎回来，{{userName}}!</p>
             </div>
           </div>
-        </el-col>
+        <!-- </el-col> -->
       </el-row>
        <el-row :gutter="20" style="margin-top: -10px; margin-bottom: 5px;">
-        <el-col :span="20">
+        <!-- <el-col :span="20"> -->
           <div class="bar">
             <div id="title">
               <p id="tableTitle"  style="min-width:1000px;font-size:20px;text-align:center;margin-top:20px;color:red">如有使用问题，请联系系统管理员，13900001111</p>
             </div>
           </div>
-        </el-col>
+        <!-- </el-col> -->
       </el-row>
     </el-card>
   </div>
