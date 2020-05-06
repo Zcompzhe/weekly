@@ -329,7 +329,7 @@
         </el-table-column>
         <el-table-column prop="riskAdd" label="是否风险升级管理" align="center">
           <template slot-scope="scope">
-            <el-select v-model="scope.row.riskAdd" clearable placeholder="请选择" style="min-width:200px" @change="updateFlagChange(scope.index,scope.row)">
+            <el-select v-model="scope.row.riskAdd"  placeholder="请选择" style="min-width:200px" @change="updateFlagChange(scope.index,scope.row)">
               <el-option v-for="item in addFormFour.options.riskAddOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
             </el-select>
           </template>
@@ -1117,6 +1117,13 @@ export default {
       });
       console.log(validNum)
       if (validNum === 4) {
+        if (this.isValidTable()) {
+          this.$message({
+            type: "error",
+            message: "请填写当前总体施工进度详情表格和下周作业安排表格中的所有条目！"
+          });
+          return;
+        }
         let projectUpdateReq = {};
         let projectWeeklyAddReq;
         let weeklyRiskContentAddReqs;
@@ -1215,6 +1222,20 @@ export default {
           this.goback();
         });
       }
+    },
+    //判断是否表格内容全部填写
+    isValidTable() {
+      console.log(this.addFormFour.weeklyRiskContentAddReqs)
+      console.log(this.addFormFour.weeklyWorkProgressAddReqs)
+      let flag = false;
+      this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+        if (ele.riskLevel === "" || ele.workContent === "" || ele.workEndTime === "" || ele.workProcess === "" || ele.workStartTime === "" ||
+          ele.riskLevel === null || ele.workContent === null || ele.workEndTime === null || ele.workProcess === null || ele.workStartTime === null) flag = true;
+      })
+      this.addFormFour.weeklyWorkProgressAddReqs.forEach(ele => {
+        if (ele.currentProgress === "" || ele.jobNumber === "") flag = true;
+      })
+      return flag;
     },
     //取消
     cancelAllInfo() {

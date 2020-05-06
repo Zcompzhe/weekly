@@ -328,7 +328,7 @@
         </el-table-column>
         <el-table-column prop="riskAdd" label="是否风险升级管理" align="center">
           <template slot-scope="scope">
-            <el-select v-model="scope.row.riskAdd" clearable placeholder="请选择" style="min-width:200px" @change="updateFlagChange(scope.index,scope.row)">
+            <el-select v-model="scope.row.riskAdd"  placeholder="请选择" style="min-width:200px" @change="updateFlagChange(scope.index,scope.row)">
               <el-option v-for="item in updateFormFour.options.riskAddOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
             </el-select>
           </template>
@@ -534,14 +534,14 @@ export default {
           { required: false, message: "请输入实际开工时间", trigger: "change" }
         ],
         currentSubcontractorNum: [
-           {
+          {
             required: false,
             trigger: "blur",
             validator: (rule, value, callback) => {
               if (value == "0") callback();
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
-                if (!reg.test(value)&& value!="0") {
+                if (!reg.test(value) && value != "0") {
                   callback(new Error("当前分包人数需要整数，如：20"));
                 } else {
                   callback();
@@ -553,14 +553,14 @@ export default {
           }
         ],
         currentWorkerNum: [
-           {
+          {
             required: false,
             trigger: "blur",
             validator: (rule, value, callback) => {
               if (value == "0") callback();
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
-                if (!reg.test(value)&& value!="0") {
+                if (!reg.test(value) && value != "0") {
                   callback(new Error("一线自有作业人员数需要整数，如：20"));
                 } else {
                   callback();
@@ -1162,6 +1162,20 @@ export default {
     dateChangeToSecondB(row) {
       row.workEndTime = api.changeDateToSecond(row.workEndTime);
     },
+    //判断是否表格内容全部填写
+    isValidTable() {
+      console.log(this.updateFormFour.weeklyRiskContentAddReqs)
+      console.log(this.updateFormFour.weeklyWorkProgressAddReqs)
+      let flag = false;
+      this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+        if (ele.riskLevel === "" || ele.workContent === "" || ele.workEndTime === "" || ele.workProcess === "" || ele.workStartTime === "" ||
+          ele.riskLevel === null || ele.workContent === null || ele.workEndTime === null || ele.workProcess === null || ele.workStartTime === null) flag = true;
+      })
+      this.updateFormFour.weeklyWorkProgressAddReqs.forEach(ele => {
+        if (ele.currentProgress === "" || ele.jobNumber === "") flag = true;
+      })
+      return flag;
+    },
     //信息上报
     submitProjectWeeklyInfo() {
       let validNum = 0;
@@ -1186,6 +1200,13 @@ export default {
         }
       });
       if (validNum === 4) {
+        if (this.isValidTable()) {
+          this.$message({
+            type: "error",
+            message: "请填写当前总体施工进度详情表格和下周作业安排表格中的所有条目！"
+          });
+          return;
+        }
         let projectUpdateReq = {};
         let projectWeeklyAddReq;
         // let weeklyConstructContentAddReqs = [];
