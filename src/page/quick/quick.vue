@@ -2,7 +2,7 @@
 div p{margin:0 auto;width:500px;}
 .quick-container {
   .quick-card {
-    height:400px;
+    height: 500px;
     .el-card__header {
       padding: 0 20px;
       height: 48px;
