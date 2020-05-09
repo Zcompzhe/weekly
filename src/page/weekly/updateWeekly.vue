@@ -720,7 +720,7 @@ export default {
         // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(0, ele.jobNumberTotalList.length - 1);
         // ele.jobNumberTotalList = ele.jobNumberTotalList.substr(1, ele.jobNumberTotalList.length - 1);
         ele.jobNumberShow = ele.jobNumberTotalList.split(",");
-        ele.jobNumberTotalList = "[" + ele.jobNumberTotalList + "]";
+        // ele.jobNumberTotalList = "[" + ele.jobNumberTotalList + "]";
         this.weeklyWorkProgress.push({
           currentProgress: ele.currentProgress,
           id: ele.id,
@@ -742,7 +742,7 @@ export default {
         // ele.workProcessTotalList = ele.workProcessTotalList.substr(0, ele.workProcessTotalList.length - 1);
         // ele.workProcessTotalList = ele.workProcessTotalList.substr(1, ele.workProcessTotalList.length - 1);
         ele.workProcessShow = ele.workProcessTotalList.split(",");
-        ele.workProcessTotalList = "[" + ele.workProcessTotalList + "]";
+        // ele.workProcessTotalList = "[" + ele.workProcessTotalList + "]";
         this.weeklyRiskContent.push({
           workStartTime: ele.workStartTime,
           workEndTime: ele.workEndTime,
