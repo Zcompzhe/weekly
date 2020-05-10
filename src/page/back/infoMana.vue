@@ -19,10 +19,10 @@
           </el-header>
 
           <el-main clas="containerMain">
-            <el-table ref="multipleTable" :data="tableDataOne" border tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChangeOne">
+            <el-table ref="multipleTable" :data="tableDataOne" border tooltip-effect="dark" style="width:605px" @selection-change="handleSelectionChangeOne">
               <el-table-column type="selection" width="55"></el-table-column>
               <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-              <el-table-column prop="name" label="所属建管单位" align="center"></el-table-column>
+              <el-table-column width="400" prop="name" label="所属建管单位" align="center"></el-table-column>
               <el-table-column width="100" label="操作" align="center">
                 <template slot-scope="scope">
                   <el-button type="text" @click="deleteOneLineOne(scope.row)">删除</el-button>
@@ -50,10 +50,10 @@
           </el-header>
 
           <el-main clas="containerMain">
-            <el-table ref="multipleTable" :data="tableDataTwo" border tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChangeTwo">
+            <el-table ref="multipleTable" :data="tableDataTwo" border tooltip-effect="dark" style="width: 605px" @selection-change="handleSelectionChangeTwo">
               <el-table-column type="selection" width="55"></el-table-column>
               <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-              <el-table-column prop="name" label="监理单位" align="center"></el-table-column>
+              <el-table-column width="400" prop="name" label="监理单位" align="center"></el-table-column>
               <el-table-column width="100" label="操作" align="center">
                 <template slot-scope="scope">
                   <el-button type="text" @click="deleteOneLineTwo(scope.row)">删除</el-button>
@@ -81,10 +81,10 @@
           </el-header>
 
           <el-main clas="containerMain">
-            <el-table ref="multipleTable" :data="tableDataThree" border tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChangeThree">
+            <el-table ref="multipleTable" :data="tableDataThree" border tooltip-effect="dark" style="width: 605px" @selection-change="handleSelectionChangeThree">
               <el-table-column type="selection" width="55"></el-table-column>
               <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-              <el-table-column prop="name" label="施工项目部" align="center"></el-table-column>
+              <el-table-column width="400" prop="name" label="施工项目部" align="center"></el-table-column>
               <el-table-column width="100" label="操作" align="center">
                 <template slot-scope="scope">
                   <el-button type="text" @click="deleteOneLineThree(scope.row)">删除</el-button>

@@ -124,7 +124,7 @@
           <el-table-column width="200" label="操作" align="center" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="addPhotoPanel(scope.row)">上传照片</el-button>
-              <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
+              <el-button type="text" :disabled="scope.row.photoNumber===0" @click="searchPhoto(scope.row)">查看照片</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -138,7 +138,7 @@
           <el-table-column width="200" label="操作" align="center" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="addPhotoPanel(scope.row)">上传照片</el-button>
-              <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
+              <el-button type="text" :disabled="scope.row.photoNumber===0" @click="searchPhoto(scope.row)">查看照片</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -499,7 +499,7 @@
           <el-table-column width="180" prop="hasPhoto" label="新上传照片" align="center"></el-table-column>
           <el-table-column width="200" label="操作" align="center" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
+              <el-button type="text" :disabled="scope.row.photoNumber===0" @click="searchPhoto(scope.row)">查看照片</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -536,7 +536,7 @@
           <el-table-column width="200" label="操作" align="center" fixed="right">
             <template slot-scope="scope">
 
-              <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
+              <el-button type="text" :disabled="scope.row.photoNumber===0" @click="searchPhoto(scope.row)">查看照片</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -1071,6 +1071,26 @@ export default {
         }
       });
     },
+    isValidTable(l) {
+      console.log(l)
+      let flag = 0;
+      if (this.updateCheckForm.jobOrderType === "整改通知单") {
+        let list = l.inspectionRectificationContentUpdateReqs;
+        list.forEach(ele => {
+          if (ele.problem === "" || ele.violationType === "" || ele.responsibleDept === "" || ele.rectificationRequirement === "") {
+            flag = 1;
+          }
+        })
+      } else if (this.updateCheckForm.jobOrderType === "口头警告通知单") {
+        let list = l.inspectionOralWarningContentUpdateReqs;
+        list.forEach(ele => {
+          if (ele.problem === "" || ele.responsibleDept === "" ) {
+            flag = 1;
+          }
+        })
+      }
+      return flag;
+    },
     //确认修改问题
     updateSubmitCheckForm() {
       this.$refs["updateCheckForm"].validate(valid => {
@@ -1137,6 +1157,13 @@ export default {
             inspectionOralWarningContentUpdateReqs,
             inspectionRectificationContentUpdateReqs
           };
+          if (this.isValidTable(list)) {
+            this.$message({
+              type: "error",
+              message: "请填写通知单表格中的所有条目！"
+            });
+            return;
+          }
 
           searchApi.updateInspectionJobOrderInfo(list).then(response => {
             //下面开始添加文件
@@ -1234,6 +1261,10 @@ export default {
         problem: "",
         listUpdateOperation: "添加",
         jobOrderId: this.updateCheckForm.id,
+        inspectionId: "",
+        rectificationRequirement: "",
+        responsibleDept: "",
+        violationType: "",
         photoNumber: 0,
         index: this.index,
         hasPhoto: "无"

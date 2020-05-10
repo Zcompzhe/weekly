@@ -96,7 +96,7 @@
           <el-table-column width="200" label="操作" align="center" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="addPhotoPanel(scope.row)">上传照片</el-button>
-              <el-button type="text" @click="searchPhotoA(scope.row)">查看照片</el-button>
+              <el-button type="text"  :disabled="scope.row.photoNumber===0" @click="searchPhotoA(scope.row)">查看照片</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -217,7 +217,7 @@
             <el-table-column prop="rectificationRequirement" label="整改要求" align="center"></el-table-column>
             <el-table-column width="150" label="操作" align="center" fixed="right">
               <template slot-scope="scope">
-                <el-button type="text" @click="searchPhoto(scope.row)">查看照片</el-button>
+                <el-button type="text"  :disabled="scope.row.photoNumber===0" @click="searchPhoto(scope.row)">查看照片</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -486,12 +486,12 @@ export default {
   },
 
   created: function () {
-    // this.formData = new FormData();
-    // //空搜索获取信息
-    // let startDate = new Date();
-    // let endDate = api.getThisWeekStartTwo(startDate);
-    // this.searchTable.inspectStartDate = new Date(api.changeDate(startDate));
-    // this.searchTable.inspectEndDate = new Date(endDate);
+    this.formData = new FormData();
+    //空搜索获取信息
+    let startDate = new Date();
+    let endDate = api.getThisWeekStartTwo(startDate);
+    this.searchTable.inspectStartDate = new Date(api.changeDate(startDate));
+    this.searchTable.inspectEndDate = new Date(endDate);
     this.searchInspection();
     //获取项目列表
     getApi.getAllProjectName().then(response => {
@@ -541,6 +541,7 @@ export default {
           }
         })
     },
+
     //上传文件
     sigleFileUploadAction(item) {
       if (item.file.type === "image/png" || item.file.type === "image/jpeg") {
@@ -554,7 +555,26 @@ export default {
         });
       }
     },
-
+    isValidTable(l) {
+      console.log(l)
+      let flag = 0;
+      if (this.updateCheckForm.jobOrderType === "整改通知单") {
+        let list = l.inspectionRectificationContentUpdateReqs;
+        list.forEach(ele => {
+          if (ele.problem === "" || ele.violationType === "" || ele.responsibleDept === "" || ele.rectificationRequirement === "") {
+            flag = 1;
+          }
+        })
+      } else if (this.updateCheckForm.jobOrderType === "口头警告通知单") {
+        let list = l.inspectionOralWarningContentUpdateReqs;
+        list.forEach(ele => {
+          if (ele.problem === "" || ele.responsibleDept === "") {
+            flag = 1;
+          }
+        })
+      }
+      return flag;
+    },
     submitUpload() {
       this.formData.append("id", this.problemRow.id);
       addApi.uploadRectifyPhoto(this.formData).then(response => {
