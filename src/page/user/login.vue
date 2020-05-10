@@ -38,7 +38,7 @@
     cursor: pointer;
     margin-bottom: 24px;
     img {
-      width: 200px;
+      width: 60px;
       height:60px;
       margin-top:-10px;
       margin-right: 8px;
@@ -77,7 +77,7 @@
     <transition name="form-fade" mode="in-out">
       <div class="login-form" v-show="showLogin">
         <div class="login-logo">
-          <img src="../../images/logo.jpg">
+          <img src="../../images/timg.png">
         </div>
         <el-form :model="formLogin" :rules="rulesLogin" ref="formLogin">
           <el-form-item prop="username">
