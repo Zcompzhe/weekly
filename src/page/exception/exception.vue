@@ -19,7 +19,7 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="最高异常等级" prop="maxExceptionLevel" placeholder="是否核准">
+              <el-form-item label="今日最高异常等级" prop="maxExceptionLevel" placeholder="是否核准">
                 <el-input v-model="searchTable.maxExceptionLevel" disabled :rows="1" placeholder="暂无信息" style="min-width:300px"></el-input>
               </el-form-item>
             </div>
