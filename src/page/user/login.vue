@@ -38,9 +38,9 @@
     cursor: pointer;
     margin-bottom: 24px;
     img {
-      width: 60px;
-      height:60px;
-      margin-top:-10px;
+      width: 40px;
+      height: 40px;
+      margin-top: -10px;
       margin-right: 8px;
     }
     span {
@@ -77,14 +77,14 @@
     <transition name="form-fade" mode="in-out">
       <div class="login-form" v-show="showLogin">
         <div class="login-logo">
-          <img src="../../images/timg.png">
+          <img src="../../images/timg2.png"><span>国网上海电力公司智慧督查系统</span>
         </div>
         <el-form :model="formLogin" :rules="rulesLogin" ref="formLogin">
           <el-form-item prop="username">
-            <el-input type="text" v-model="formLogin.username" auto-complete="off" @keyup.enter.native="submitForm"></el-input>
+            <el-input type="text" v-model="formLogin.username" placeholder="用户名"  auto-complete="off" @keyup.enter.native="submitForm"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input type="password" v-model="formLogin.password" auto-complete="off" @keyup.enter.native="submitForm"></el-input>
+            <el-input type="password" v-model="formLogin.password" placeholder="密码"  auto-complete="off" @keyup.enter.native="submitForm"></el-input>
           </el-form-item>
           <el-form-item>
             <el-row :gutter="20">
