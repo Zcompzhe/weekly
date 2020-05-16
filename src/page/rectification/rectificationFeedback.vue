@@ -75,7 +75,7 @@
             <el-button type="text" @click="searchRetification(scope.row)">查看整改通知单</el-button>
             <el-button type="text" @click="openCheckPanel(scope.row)">反馈整改结果</el-button>
             <el-button type="text" @click="addProblemPic(scope.row)">添加整改照片</el-button>
-            <el-button type="text" @click="exportDocx(scope.row)">导出通知单</el-button>
+            <el-button type="text" @click="exportDocx(scope.row)">导出反馈结果</el-button>
           </template>
         </el-table-column>
       </el-table>
