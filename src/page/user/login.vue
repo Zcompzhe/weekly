@@ -2,7 +2,7 @@
 .login-container {
   width: 100%;
   position: absolute;
-  top: 0;
+  top: -60px;
   bottom: 0;
   left: 0;
   text-align: center;
@@ -21,7 +21,7 @@
 }
 .login-form {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   margin: -230px 0 0 -180px;
   width: 310px;
