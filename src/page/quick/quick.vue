@@ -95,7 +95,7 @@ div p{margin:0 auto;width:500px;}
         <!-- <el-col :span="20"> -->
           <div class="bar">
             <div id="title">
-              <p id="tableTitle" style="min-width:1000px;font-size:50px;text-align:center;margin-top:20px;">欢迎回来，{{userName}}!</p>
+              <p id="tableTitle" style="min-width:100%;font-size:35px;text-align:center;margin-top:20px;">欢迎回来，{{userName}}!</p>
             </div>
           </div>
         <!-- </el-col> -->
@@ -104,7 +104,7 @@ div p{margin:0 auto;width:500px;}
         <!-- <el-col :span="20"> -->
           <div class="bar">
             <div id="title">
-              <p id="tableTitle"  style="min-width:1000px;font-size:20px;text-align:center;margin-top:20px;color:red">如有使用问题，请联系系统管理员，13900001111</p>
+              <p id="tableTitle"  style="min-width:100%;font-size:20px;text-align:center;margin-top:20px;color:red">如有使用问题，请联系系统管理员，13900001111</p>
             </div>
           </div>
         <!-- </el-col> -->
