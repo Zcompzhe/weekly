@@ -34,6 +34,11 @@
             <el-button type="primary" style="margin-right: 20px" @click="searchWeekly(1)">生成今日风险排名</el-button>
           </div>
         </el-col>
+        <el-col  :offset="1" :span="2">
+          <div class="bar">
+            <el-button type="primary" style="margin-right: 20px" @click="RefreshRisk">刷新风险排名</el-button>
+          </div>
+        </el-col>
         <el-col :offset="1" :span="2">
           <div class="bar">
             <el-button type="primary" style="margin-right: 20px" @click="arrangeInspection">确认安排督查</el-button>
@@ -318,6 +323,172 @@
           </el-col>
         </el-row>
       </el-dialog>
+
+      <el-dialog title="刷新风险排名" :visible.sync="refreshFlag"  width="1400px" :modal="false">
+        <!-- <el-row :gutter="20" style="margin-top: 30px; margin-bottom: 5px;">
+          <el-col :span="2">
+            <div class="bar">
+              <el-button type="primary" style="margin-right: 20px" @click="RefreshClick">刷新风险排名</el-button>
+            </div>
+          </el-col>
+        </el-row> -->
+
+        <el-table :data="refreshTable" max-height="400" border @selection-change="refreshSelect" :stripe="true" :highlight-current-row="true" style="width: 100%; margin-top: 20px" id="out-table">
+          <el-table-column type="selection" width="50" align="center" fixed="left"></el-table-column>
+          <el-table-column width="50" type="index" label="序号" align="center" fixed="left"></el-table-column>
+          <el-table-column prop="projectName" label="项目名称" align="center" fixed="left"></el-table-column>
+          <el-table-column width="210" prop="hasUpdatedTodayStr" label="今日是否有内容更新" align="center"></el-table-column>
+          <el-table-column width="250" label="操作" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button type="text" @click="detailproject(scope.row)">查看详情</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <br><br>
+        <hr><br>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目名称</div>
+              <el-input disabled v-model="projectDetail.name" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">所属建管单位</div>
+              <el-input disabled v-model="projectDetail.adminName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">监理单位</div>
+              <el-input disabled v-model="projectDetail.supervisionName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">施工单位</div>
+              <el-input disabled v-model="projectDetail.constructDeptName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">所在区域</div>
+              <el-input disabled v-model="projectDetail.districtName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">详细地址</div>
+              <el-input disabled v-model="projectDetail.detailedAddress" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">定位经度</div>
+              <el-input disabled v-model="projectDetail.longitude" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">定位纬度</div>
+              <el-input disabled v-model="projectDetail.latitude" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">实际开工时间</div>
+              <el-input disabled v-model="projectDetail.actualStartTime" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">计划竣工时间</div>
+              <el-input disabled v-model="projectDetail.planCompletionTime" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目规模</div>
+              <el-input disabled v-model="projectDetail.projectScale" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">一线作业人员数</div>
+              <el-input disabled v-model="projectDetail.currentWorkerNum" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">当前分包人员数</div>
+              <el-input disabled v-model="projectDetail.currentSubcontractorNum" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">所属部门</div>
+              <el-input disabled v-model="projectDetail.adminDept" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目状态</div>
+              <el-input disabled v-model="projectDetail.projectState" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+          </el-col>
+        </el-row>
+        <br>
+        <hr><br>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目经理</div>
+              <el-input disabled v-model="projectDetail.projectManagerName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">质量专责</div>
+              <el-input disabled v-model="projectDetail.qualityStaffName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">安全专责</div>
+              <el-input disabled v-model="projectDetail.safetyStaffName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">总监/总监代表</div>
+              <el-input disabled v-model="projectDetail.chiefInspectorName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">专业监理</div>
+              <el-input disabled v-model="projectDetail.professionalSupervisorName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">安全监理</div>
+              <el-input disabled v-model="projectDetail.safetySupervisorName" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+      </el-dialog>
     </el-card>
     <el-card class="box-card">
       <el-row :gutter="20">
@@ -406,6 +577,11 @@ import * as addApi from "@/api/addApi.js";
 export default {
   data() {
     return {
+      //刷新风险排名
+      projectDetail: {},
+      refreshFlag: false,
+      refreshTable: [],
+      refreshSelection: [],
       //安监队督查项目列表计数
       teamNum: 0,
       //页面标记
@@ -483,6 +659,31 @@ export default {
     })
   },
   methods: {
+    RefreshClick() {
+    },
+    detailproject(row) {
+      getApi.getProjectInfoDetailPageShowRespById(row.projectId).then(response => {
+        this.projectDetail = response[0];
+      })
+    },
+    //刷新风险排名按钮点击
+    RefreshRisk() {
+      this.refreshFlag = true;
+      this.projectDetail = {};
+      this.refreshTable = [];
+      getApi.saveAllUpdatedProjectWeeklyInfo().then(response => {
+        this.refreshTable = response;
+        this.refreshTable.forEach(ele => {
+          if (ele.hasUpdatedToday) ele.hasUpdatedTodayStr = "是";
+          else if (!ele.hasUpdatedToday) ele.hasUpdatedTodayStr = "否";
+        })
+        this.searchWeekly(1);
+
+      })
+    },
+    refreshSelect(val) {
+      this.refreshSelection = val;
+    },
     //给督察队分配任务
     setInspectTeam() {
       let list = [];

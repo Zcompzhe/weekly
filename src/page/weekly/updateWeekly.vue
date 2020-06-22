@@ -310,15 +310,16 @@
       <el-table :data="updateFormFour.weeklyRiskContentAddReqs" @selection-change="selectWeeklyRiskContentAddReqs" border>
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="400" prop="workProcessShow" label="分部分项工程" align="center">
+        <el-table-column width="400" prop="workProcessShow" label="风险库" align="center">
           <template slot-scope="scope">
             <el-cascader v-model="scope.row.workProcessShow" :props="optionPropsB" :options="updateFormFour.options.workProcessOptions" @change="workProcessChanged(scope.index, scope.row)" style="min-width:350px"></el-cascader>
           </template>
         </el-table-column>
         <el-table-column prop="riskLevel" label="风险等级" width="100px" align="center">
           <template slot-scope="scope">
-            <span v-if="scope.row.riskAdd" style="color:red">{{ scope.row.riskLevel }}</span>
-            <span v-else>{{ scope.row.riskLevel }}</span>
+            <!-- <span v-if="scope.row.riskAdd" style="color:red">{{ scope.row.riskLevel }}</span>
+            <span v-else>{{ scope.row.riskLevel }}</span> -->
+            <el-input v-model="scope.row.riskLevel" clearable :rows="1" placeholder="请输入"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="workContent" label="下周作业安排、位置及内容" align="center">
@@ -1040,7 +1041,7 @@ export default {
     //增加一行风险
     addOneLineWeeklyRiskContentAddReqs() {
       this.updateFormFour.weeklyRiskContentAddReqs.push({
-        riskLevel: "",
+        riskLevel: "0",
         workContent: "",
         workEndTime: "",
         workProcess: "",
@@ -1077,7 +1078,7 @@ export default {
           });
           let num = 0;
           this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
-            if (ele.riskLevel >= 3)
+            if (ele.riskLevel >= 3  || (ele.riskLevel === 2 && ele.riskAdd === true))
               num = 1;
           })
           if (num === 1) {
@@ -1094,40 +1095,40 @@ export default {
     workProcessChangedA(index, row) {
       row.workProcess = row.workProcessShow[row.workProcessShow.length - 1];
       row.workProcessTotalList = row.workProcessShow.toString();
-      this.findFlag = false;
-      this.Traversal(
-        this.updateFormFour.options.workProcessOptions,
-        row.workProcess,
-        row
-      );
-      let num = 0;
-      this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
-        if (ele.riskLevel >= 3)
-          num = 1;
-      })
-      if (num === 1) {
-        this.updateFormFour.hasThreePlusRiskWork = true;
-      } else if (num === 0) this.updateFormFour.hasThreePlusRiskWork = false;
+      // this.findFlag = false;
+      // this.Traversal(
+      //   this.updateFormFour.options.workProcessOptions,
+      //   row.workProcess,
+      //   row
+      // );
+      // let num = 0;
+      // this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+      //   if (ele.riskLevel >= 3)
+      //     num = 1;
+      // })
+      // if (num === 1) {
+      //   this.updateFormFour.hasThreePlusRiskWork = true;
+      // } else if (num === 0) this.updateFormFour.hasThreePlusRiskWork = false;
     },
     //当某一行的分部分项工程值发生改变时，风险等级相应变化
     workProcessChanged(index, row) {
       row.workProcess = row.workProcessShow[row.workProcessShow.length - 1];
       row.workProcessTotalList = row.workProcessShow.toString();
-      this.findFlag = false;
-      row.riskAdd = false;
-      this.Traversal(
-        this.updateFormFour.options.workProcessOptions,
-        row.workProcess,
-        row
-      );
-      let num = 0;
-      this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
-        if (ele.riskLevel >= 3)
-          num = 1;
-      })
-      if (num === 1) {
-        this.updateFormFour.hasThreePlusRiskWork = true;
-      } else if (num === 0) this.updateFormFour.hasThreePlusRiskWork = false;
+      // this.findFlag = false;
+      // row.riskAdd = false;
+      // this.Traversal(
+      //   this.updateFormFour.options.workProcessOptions,
+      //   row.workProcess,
+      //   row
+      // );
+      // let num = 0;
+      // this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+      //   if (ele.riskLevel >= 3)
+      //     num = 1;
+      // })
+      // if (num === 1) {
+      //   this.updateFormFour.hasThreePlusRiskWork = true;
+      // } else if (num === 0) this.updateFormFour.hasThreePlusRiskWork = false;
     },
     //将分部分项工程设置为最后一列
     jobNumberChanged(index, row) {
@@ -1216,6 +1217,16 @@ export default {
         // this.projectInfoUpdate();
         //if (this.projectUpdateFlag) {
         console.log("name:", this.updateFormTwo.name, this.firstData.name)
+
+        let num = 0;
+        this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+          if (ele.riskLevel >= 3 || (ele.riskLevel === 2 && ele.riskAdd === true))
+            num = 1;
+        })
+        if (num === 1) {
+          this.updateFormFour.hasThreePlusRiskWork = true;
+        } else if (num === 0) this.updateFormFour.hasThreePlusRiskWork = false;
+
         projectUpdateReq = {
           id: this.updateFormTwo.id,
           constructDeptId: this.updateFormTwo.constructDeptId != this.firstData.constructDeptId ? this.updateFormTwo.constructDeptId : undefined,
@@ -1243,6 +1254,8 @@ export default {
           safetySupervisorDeptId: this.updateFormThree.safetySupervisorId[0] != this.firstData.safetySupervisorDeptId ? this.updateFormThree.safetySupervisorId[0] : undefined,
         };
         // }
+
+
         //加入周报信息
         projectWeeklyAddReq = {
           id: this.id,
@@ -1308,7 +1321,7 @@ export default {
               console.log("element:", element);
               console.log("ele:", ele);
               if (ele.id === element.id) {
-                if (ele.riskAdd != element.riskAdd || ele.workEndTime != element.workEndTime || ele.workStartTime != element.workStartTime || ele.workContent != element.workContent || ele.workProcessTotalList != element.workProcessTotalList) {
+                if (ele.riskAdd != element.riskAdd|| ele.riskLevel != element.riskLevel || ele.workEndTime != element.workEndTime || ele.workStartTime != element.workStartTime || ele.workContent != element.workContent || ele.workProcessTotalList != element.workProcessTotalList) {
                   element.listUpdateOperation = "更新";
                   weeklyRiskContentAddReqs.push(element);
                 }

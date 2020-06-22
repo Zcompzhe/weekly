@@ -52,6 +52,17 @@ export const getWorkProcess = () => {
   return cascader.getWorkProcess();
 };
 
+
+//获取工程编号级联选择器
+export const getJobNumberA = () => {
+  return cascader.getJobNumberA();
+};
+
+//获取工序级联选择器
+export const getWorkProcessA = () => {
+  return cascader.getWorkProcessA();
+};
+
 //获取管控内状态
 export const getAllProjectControlledStateEnum = () => {
   return request.get(`/baseInfoManagement/getAllProjectControlledStateEnum`);
@@ -130,6 +141,10 @@ export const getAllConstructProjectDeptName = () => {
   return request.get(`/baseInfoManagement/getAllConstructProjectDeptName`);
 };
 
+//获取刷新表格数据
+export const saveAllUpdatedProjectWeeklyInfo = () => {
+  return request.get(`/projectWeeklyManagement/saveAllUpdatedProjectWeeklyInfo`);
+};
 
 
 //获取整改项目部
@@ -229,6 +244,11 @@ export const getAllResponsiblePersonEnum = () => {
 //获取核准方式
 export const getCheckTypeEnum = () => {
   return request.get(`/baseInfoManagement/getCheckTypeEnum`);
+};
+
+//刷新风险排名
+export const aa = () => {
+  return request.get(`/projectWeeklyManagement/aa`);
 };
 
 

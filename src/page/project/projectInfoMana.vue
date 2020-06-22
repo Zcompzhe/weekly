@@ -51,6 +51,11 @@
             <el-button type="primary" style="margin-right: 20px" @click="addProject">添加项目</el-button>
           </div>
         </el-col>
+        <el-col :span="2">
+          <div class="bar">
+            <el-button type="primary" style="margin-right: 20px" @click="showAllInfo">查看所有分项工程</el-button>
+          </div>
+        </el-col>
       </el-row>
 
       <el-table :data="projectInfo.tableData" max-height="800" border style="width: 100%; margin-top: 20px">
@@ -100,6 +105,9 @@
         <el-table-column width="210" prop="actualState" label="实际状态" align="center"></el-table-column>
         <el-table-column width="210" prop="controlledState" label="管控内状态" align="center"></el-table-column>
       </el-table>-->
+      <el-dialog title="分项工程信息" :visible.sync="jobNumberFlag" width="1200px" :modal="false">
+        <el-tree :data="jobNumberOptions" width="1000px" :props="defaultProps" :default-expand-all="false" @node-click="handleNodeClick"></el-tree>
+      </el-dialog>
 
       <el-dialog title="详细信息" :visible.sync="detailPanelFlag" width="1400px" :modal="false">
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
@@ -259,6 +267,13 @@ import * as searchApi from "@/api/searchApi.js";
 export default {
   data() {
     return {
+      defaultProps: {
+        id: 'value',
+        label: 'value'
+      },
+      //查看所有分项工程
+      jobNumberOptions: [],
+      jobNumberFlag: false,
       //搜索条件数据
       searchTable: {
         adminId: "",
@@ -321,6 +336,8 @@ export default {
   },
 
   created: function () {
+    //所有分项工程
+    this.jobNumberOptions = getApi.getJobNumberA();
     //获取所有所属建管单位
     getApi.getAllAdministrativeDeptName().then(response => {
       this.searchTable.options.adminIdOptions = response;
@@ -349,6 +366,12 @@ export default {
   },
 
   methods: {
+    handleNodeClick(data) {
+      console.log(data);
+    },
+    showAllInfo() {
+      this.jobNumberFlag = true;
+    },
     //点击搜索按钮
     searchProject(pageNum) {
       console.log(this.pagination)

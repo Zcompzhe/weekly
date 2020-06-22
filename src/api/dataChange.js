@@ -1,5 +1,5 @@
 //获取工序级联选择器
-export const getWorkProcess = () => {
+export const getWorkProcessA = () => {
   return [
     {
       value: "01",
@@ -3286,8 +3286,62 @@ export const getWorkProcess = () => {
   ];
 };
 
-//获取工程编号级联选择器
+export const getWorkProcess = () => {
+  return [
+    {
+      value: "01",
+      label: "公共部分",
+    },
+    {
+      value: "02",
+      label: "变电站土建工程",
+    },
+    {
+      value: "03",
+      label: "变电站电气工程",
+    },
+    {
+      value: "04",
+      label: "架空线路工程",
+    },
+    {
+      value: "05",
+      label: "电力沟道，隧道施工",
+    },
+    {
+      value: "06",
+      label: "电缆线路工程",
+    },
+    {
+      value: "07000000",
+      label: "其他",
+    },
+  ]
+}
+
 export const getJobNumber = () => {
+  return [
+    {
+      value: "变电工程",
+      label: "变电工程",
+    },
+    {
+      value: "土建工程",
+      label: "土建工程",
+    },
+    {
+      value: "架空输电线路工程",
+      label: "架空输电线路工程",
+    },
+    {
+      value: "其他",
+      label: "其他",
+    },
+  ]
+}
+
+//获取工程编号级联选择器
+export const getJobNumberA = () => {
   return [
     {
       value: "变电工程",

@@ -305,21 +305,22 @@
       <el-checkbox v-model="addFormFour.hasWorkNextWeek" style="margin-left:20px">下周是否有作业</el-checkbox>
       <el-button type="primary" style="margin-left:50px;margin-right: 20px" @click="addOneLineWeeklyRiskContentAddReqs" :disabled="!addFormFour.hasWorkNextWeek">添加条目</el-button>
       <el-button type="primary" style="margin-right: 20px" @click="deleteLinesWeeklyRiskContentAddReqs">删除条目</el-button>
-      <el-checkbox v-model="addFormFour.hasThreePlusRiskWork" disabled style="margin-left:20px">是否有三级及以上风险</el-checkbox>
+      <el-checkbox v-model="addFormFour.hasThreePlusRiskWork" v-if="false" disabled style="margin-left:20px">是否有三级及以上风险</el-checkbox>
       <br />
       <br />
       <el-table :data="addFormFour.weeklyRiskContentAddReqs" @selection-change="selectWeeklyRiskContentAddReqs" border>
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
-        <el-table-column width="400" prop="workProcessShow" label="分部分项工程" align="center">
+        <el-table-column width="400" prop="workProcessShow" label="风险库" align="center">
           <template slot-scope="scope">
             <el-cascader v-model="scope.row.workProcessShow" :props="optionPropsB" :options="addFormFour.options.workProcessOptions" @change="workProcessChanged(scope.index, scope.row)" style="min-width:350px"></el-cascader>
           </template>
         </el-table-column>
         <el-table-column prop="riskLevel" label="风险等级" width="100px" align="center">
           <template slot-scope="scope">
-            <span v-if="scope.row.riskAdd" style="color:red">{{ scope.row.riskLevel }}</span>
-            <span v-else>{{ scope.row.riskLevel }}</span>
+            <!-- <span v-if="scope.row.riskAdd" style="color:red">{{ scope.row.riskLevel }}</span>
+            <span v-else>{{ scope.row.riskLevel }}</span> -->
+            <el-input v-model="scope.row.riskLevel" clearable :rows="1" placeholder="请输入"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="workContent" label="下周作业安排、位置及内容" align="center">
@@ -329,7 +330,7 @@
         </el-table-column>
         <el-table-column prop="riskAdd" label="是否风险升级管理" align="center">
           <template slot-scope="scope">
-            <el-select v-model="scope.row.riskAdd"  placeholder="请选择" style="min-width:200px" @change="updateFlagChange(scope.index,scope.row)">
+            <el-select v-model="scope.row.riskAdd" placeholder="请选择" style="min-width:200px" @change="updateFlagChange(scope.index,scope.row)">
               <el-option v-for="item in addFormFour.options.riskAddOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
             </el-select>
           </template>
@@ -764,8 +765,9 @@ export default {
     },
     //升级后，变化
     updateFlagChange(index, row) {
-      if (row.workProcessShow === "" || row.workProcessShow === undefined) return;
-      this.workProcessChangedA(index, row);
+
+      // if (row.workProcessShow === "" || row.workProcessShow === undefined) return;
+      // this.workProcessChangedA(index, row);
     },
     //判断是否修改过项目信息
     projectInfoUpdate() {
@@ -983,7 +985,7 @@ export default {
     //增加一行风险
     addOneLineWeeklyRiskContentAddReqs() {
       this.addFormFour.weeklyRiskContentAddReqs.push({
-        riskLevel: "",
+        riskLevel: "0",
         riskAdd: false,
         workContent: "",
         workEndTime: "",
@@ -1011,7 +1013,7 @@ export default {
           });
           let num = 0;
           this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
-            if (ele.riskLevel >= 3)
+            if (ele.riskLevel >= 3 || (ele.riskLevel === 2 && ele.riskAdd === true))
               num = 1;
           })
           if (num === 1) {
@@ -1029,39 +1031,39 @@ export default {
     workProcessChangedA(index, row) {
       row.workProcess = row.workProcessShow[row.workProcessShow.length - 1];
       row.workProcessTotalList = row.workProcessShow.toString();
-      this.findFlag = false;
-      this.Traversal(
-        this.addFormFour.options.workProcessOptions,
-        row.workProcess,
-        row
-      );
-      let num = 0;
-      this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
-        if (ele.riskLevel >= 3)
-          num = 1;
-      })
-      if (num === 1) {
-        this.addFormFour.hasThreePlusRiskWork = true;
-      } else if (num === 0) this.addFormFour.hasThreePlusRiskWork = false;
+      // this.findFlag = false;
+      // this.Traversal(
+      //   this.addFormFour.options.workProcessOptions,
+      //   row.workProcess,
+      //   row
+      // );
+      // let num = 0;
+      // this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+      //   if (ele.riskLevel >= 3 || (ele.riskLevel === 2 && ele.riskAdd ===true))
+      //     num = 1;
+      // })
+      // if (num === 1) {
+      //   this.addFormFour.hasThreePlusRiskWork = true;
+      // } else if (num === 0) this.addFormFour.hasThreePlusRiskWork = false;
     },
     workProcessChanged(index, row) {
       row.workProcess = row.workProcessShow[row.workProcessShow.length - 1];
       row.workProcessTotalList = row.workProcessShow.toString();
       this.findFlag = false;
-      row.riskAdd = false;
-      this.Traversal(
-        this.addFormFour.options.workProcessOptions,
-        row.workProcess,
-        row
-      );
-      let num = 0;
-      this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
-        if (ele.riskLevel >= 3)
-          num = 1;
-      })
-      if (num === 1) {
-        this.addFormFour.hasThreePlusRiskWork = true;
-      } else if (num === 0) this.addFormFour.hasThreePlusRiskWork = false;
+      // row.riskAdd = false;
+      // this.Traversal(
+      //   this.addFormFour.options.workProcessOptions,
+      //   row.workProcess,
+      //   row
+      // );
+      // let num = 0;
+      // this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+      //   if (ele.riskLevel >= 3 || (ele.riskLevel === 2 && ele.riskAdd ===true))
+      //     num = 1;
+      // })
+      // if (num === 1) {
+      //   this.addFormFour.hasThreePlusRiskWork = true;
+      // } else if (num === 0) this.addFormFour.hasThreePlusRiskWork = false;
     },
     //将分部分项工程设置为最后一列
     jobNumberChanged(index, row) {
@@ -1169,6 +1171,15 @@ export default {
         console.log(this.addFormFive)
         console.log(this.beforeProjectInfo)
 
+        let num = 0;
+        this.addFormFour.weeklyRiskContentAddReqs.forEach(ele => {
+          if (ele.riskLevel >= 3 || (ele.riskLevel === 2 && ele.riskAdd === true))
+            num = 1;
+        })
+        if (num === 1) {
+          this.addFormFour.hasThreePlusRiskWork = true;
+        } else if (num === 0) this.addFormFour.hasThreePlusRiskWork = false;
+
         //加入周报信息
         projectWeeklyAddReq = {
           actualState: this.addFormFive.actualState,
@@ -1206,8 +1217,10 @@ export default {
           safetySupervisorDeptId: this.addFormThree.safetySupervisorId[0],
         };
         //主要施工内容信息
+
         //风险作业内容信息
         weeklyRiskContentAddReqs = this.addFormFour.weeklyRiskContentAddReqs;
+        weeklyRiskContentAddReqs.forEach
         console.log(weeklyRiskContentAddReqs)
         //施工进度信息
         weeklyWorkProgressAddReqs = this.addFormFour.weeklyWorkProgressAddReqs;
