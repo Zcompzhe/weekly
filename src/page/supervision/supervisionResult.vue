@@ -57,14 +57,15 @@
             </el-upload>
           </template>
         </el-table-column> -->
-        <el-table-column width="450" label="操作" align="center" fixed="right">
+        <el-table-column width="550" label="操作" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text" :disabled="scope.row.inspectionPlanState === '已督查'" @click="completeInspection(scope.row)">完成督查</el-button>
+            <el-button type="text" :disabled="scope.row.inspectionPlanState === '已督查'" @click="completeInspectionPanel(scope.row)">完成督查</el-button>
             <el-button type="text" @click="cancelInspection(scope.row)">取消安排</el-button>
             <el-button type="text" :disabled="scope.row.inspectionPlanState != '已督查'" @click="openCheckPanel(scope.row)">添加督查通知单</el-button>
             <!-- <el-button type="text" :disabled="scope.row.resultFeedBack != '已上报'" @click="addProblemPic(scope.row)">添加问题照片</el-button> -->
             <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'" @click="deleteInspection(scope.row)">删除通知单</el-button>
             <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'" @click="exportInspection(scope.row)">导出通知单</el-button>
+            <el-button type="text" :disabled="scope.row.resultFeedBack === '已督查'" @click="exportInspectionInfo(scope.row)">导出通知单</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -364,6 +365,56 @@
 
       </el-form>
     </el-dialog>
+    <!-- 完成督察 -->
+    <el-dialog title="督查记录表" :visible.sync="completeInspectionFlag" width="1100px" :modal="false">
+      <el-form :model="completeInspection" ref="completeInspection" label-position="left" label-width="160px" class="demo-ruleForm">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div class="bar">
+              <el-form-item label="督查项目名称" prop="projectName" placeholder="项目名称">
+                <el-input disabled v-model="completeInspection.projectName" :rows="1" placeholder="暂无信息" style="min-width:800px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div class="bar">
+              <el-form-item label="项目所属项管部门" prop="adminDept" placeholder="项目名称">
+                <el-input disabled v-model="completeInspection.adminDept" :rows="1" placeholder="暂无信息" style="min-width:800px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div class="bar">
+              <el-form-item label="督查情况" prop="inspectContent" placeholder="项目名称">
+                <el-input v-model="completeInspection.inspectContent" type="textarea" :rows="5" placeholder="暂无信息" style="min-width:800px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-button type="primary" @click="addOneLine">添加督察人员</el-button>
+        <el-button type="primary" style="margin-right: 20px" @click="deleteOneLine">删除督察人员</el-button><br><br><br>
+        <el-table :data="completeInspection.tableData" @selection-change="selectPersonChange" border>
+          <el-table-column type="selection" width="50" align="center"></el-table-column>
+          <el-table-column width="50" type="index" label="序号" align="center"></el-table-column>
+          <el-table-column prop="projectManagerId" label="督察人员" align="center">
+            <template slot-scope="scope">
+              <el-cascader v-model="scope.row.projectManagerId" :options="personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:800px;margin-left:20px"></el-cascader>
+            </template>
+          </el-table-column>
+        </el-table>
+        <br><br><br>
+        <el-row :gutter="20">
+          <el-col :span="8" align="right" style="margin-left:18%">
+            <el-button type="primary" @click="completeInspectionClick">确认修改</el-button>
+            <el-button type="primary" @click="completeInspectionFlag=false">取消</el-button>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-dialog>
     <!-- 修改弹窗 -->
     <el-dialog title="反馈检查问题" :visible.sync="updateInspectionProblemPanelFlag" width="1400px" :modal="false">
       <el-form :model="updateCheckForm" ref="updateCheckForm" label-position="left" :rules="updateCheckFormRule" label-width="120px" class="demo-ruleForm">
@@ -590,6 +641,21 @@ import * as updateApi from "@/api/updateApi.js";
 export default {
   data() {
     return {
+      propsPerson: {
+        value: "id",
+        label: "name"
+      },
+      personOptions: [],
+      //完成督察弹出框
+      completeInspectionFlag: false,
+      completeInspection: {
+        row: {},
+        inspectContent: "",
+        projectName: "",
+        tableData: [],
+        multiSelection: [],
+        adminDept: "",
+      },
 
       //用于标志添加照片的行index
       showPicFlag: false,
@@ -835,8 +901,66 @@ export default {
       this.addCheckForm.options.responsibleDeptOptions = response;
       this.updateCheckForm.options.responsibleDeptOptions = response;
     });
+    //获取所有人员信息
+    getApi.getUserCascader().then(response => {
+      this.personOptions = response.options;
+      this.personOptions.forEach(element => {
+        element.children.forEach(ele => {
+          ele.id = ele.id + "," + ele.name;
+        })
+      })
+    });
   },
   methods: {
+    selectPersonChange(val) {
+      this.completeInspection.multiSelection = val;
+    },
+    //增加一行人员
+    addOneLine() {
+      this.completeInspection.tableData.push({
+        projectManagerId: [],
+      });
+    },
+    //删除人员
+    deleteOneLine() {
+      this.$confirm("确认删除选中条目？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.completeInspection.multiSelection.forEach(element => {
+            let i = 0;
+            this.completeInspection.tableData.forEach(ele => {
+              if (ele === element) {
+                this.completeInspection.tableData.splice(i, 1);
+                i--;
+              }
+              i++;
+            });
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    //打开完成督察的弹出框
+    completeInspectionPanel(row) {
+
+      getApi.getProjectInfoDetailPageShowRespById(row.projectId).then(response => {
+        this.completeInspection.row = row;
+        this.completeInspection.inspectContent = "";
+        this.completeInspection.tableData = [];
+        this.completeInspection.multiSelection = [];
+        this.completeInspectionFlag = true;
+        this.completeInspection.projectName = response[0].name;
+        this.completeInspection.adminDept = response[0].adminDept;
+      })
+
+    },
     //导出通知单
     exportInspection(row) {
       let list = {
@@ -849,6 +973,34 @@ export default {
           let blob = new Blob([content]);
           let da = api.changeDate(new Date());
           let fileName = "督查结果通知单" + da + ".zip";
+          console.log(response);
+          if ("download" in document.createElement("a")) {
+            // 非IE下载
+            const elink = document.createElement("a");
+            elink.download = fileName;
+            elink.style.display = "none";
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else {
+            // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
+          }
+        })
+    },
+    exportInspectionInfo(row) {
+      let list = {
+        inspectionId: row.id,
+  
+      };
+      searchApi.exportInspectionInfoAsWord(list)
+        .then(response => {
+          let content = response;
+          let blob = new Blob([content]);
+          let da = api.changeDate(new Date());
+          let fileName = "督查信息" + da + ".zip";
           console.log(response);
           if ("download" in document.createElement("a")) {
             // 非IE下载
@@ -1084,7 +1236,7 @@ export default {
       } else if (this.updateCheckForm.jobOrderType === "口头警告通知单") {
         let list = l.inspectionOralWarningContentUpdateReqs;
         list.forEach(ele => {
-          if (ele.problem === "" || ele.responsibleDept === "" ) {
+          if (ele.problem === "" || ele.responsibleDept === "") {
             flag = 1;
           }
         })
@@ -1537,7 +1689,29 @@ export default {
       this.formData = new FormData();
     },
     //完成督查
-    completeInspection(row) {
+    completeInspectionClick() {
+      let list = {
+        id: this.completeInspection.row.id,
+        inspectContent: this.completeInspection.inspectContent,
+        inspectionPlanState: "已督查"
+      };
+      let inspectionStaffList = [];
+
+      this.completeInspection.tableData.forEach(ele => {
+        let per = {};
+        per.staffDeptId = ele.projectManagerId[0];
+        let nameArr = ele.projectManagerId[1].split(",");
+        per.staffId = parseInt(nameArr[0]);
+        per.staffName = nameArr[1];
+        inspectionStaffList.push(per);
+      })
+      list.inspectionStaffList = inspectionStaffList;
+      updateApi.updateProjectInspection(list).then(response => {
+        this.searchInspection();
+        this.completeInspectionFlag = false;
+      });
+    },
+    completeInspectionClickA() {
       this.$confirm("确认要完成督查吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",

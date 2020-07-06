@@ -182,6 +182,17 @@ export const exportJobOrderInfoAsWord = data => {
   });
 };
 
+//根据条件导出督查信息内容
+export const exportInspectionInfoAsWord = data => {
+  return request({
+    url: `/inspectionManagement/exportInspectionInfoAsWord`,
+    method: "get",
+    params: data,
+    "Content-Type": "application/json;charset=UTF-8",
+    responseType: "blob"
+  });
+};
+
 //根据条件导出整改反馈单
 export const exportRectificationFeedbackInfoAsWord = data => {
   return request({
