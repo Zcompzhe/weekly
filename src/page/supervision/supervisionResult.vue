@@ -65,7 +65,7 @@
             <!-- <el-button type="text" :disabled="scope.row.resultFeedBack != '已上报'" @click="addProblemPic(scope.row)">添加问题照片</el-button> -->
             <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'" @click="deleteInspection(scope.row)">删除通知单</el-button>
             <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'" @click="exportInspection(scope.row)">导出通知单</el-button>
-            <el-button type="text" :disabled="scope.row.resultFeedBack === '已督查'" @click="exportInspectionInfo(scope.row)">导出通知单</el-button>
+            <el-button type="text" :disabled="scope.row.inspectionPlanState != '已督查'" @click="exportInspectionInfo(scope.row)">导出通知单</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -1000,7 +1000,7 @@ export default {
           let content = response;
           let blob = new Blob([content]);
           let da = api.changeDate(new Date());
-          let fileName = "督查信息" + da + ".zip";
+          let fileName = "督查信息" + da + ".docx";
           console.log(response);
           if ("download" in document.createElement("a")) {
             // 非IE下载
