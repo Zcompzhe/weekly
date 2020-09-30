@@ -103,7 +103,7 @@
         <!-- 文件操作 -->
         <el-row :gutter="20" v-if="toAddPhotoPanelFlag">
           <el-upload ref="upload" action :file-list="fileList" :http-request="sigleFileUploadAction" :show-file-list="false" multiple style="margin-left:11%" :auto-upload="true">
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+            <el-button slot="trigger" size="small" type="primary">选取照片</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
           </el-upload>
         </el-row>

@@ -65,7 +65,7 @@
             <!-- <el-button type="text" :disabled="scope.row.resultFeedBack != '已上报'" @click="addProblemPic(scope.row)">添加问题照片</el-button> -->
             <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'" @click="deleteInspection(scope.row)">删除通知单</el-button>
             <el-button type="text" :disabled="scope.row.resultFeedBack === '未通知'" @click="exportInspection(scope.row)">导出通知单</el-button>
-            <el-button type="text" :disabled="scope.row.inspectionPlanState != '已督查'" @click="exportInspectionInfo(scope.row)">导出通知单</el-button>
+            <el-button type="text" :disabled="scope.row.inspectionPlanState != '已督查'" @click="exportInspectionInfo(scope.row)">导出督查信息</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -174,7 +174,7 @@
         <!-- 文件操作 -->
         <el-row :gutter="20" v-if="toAddPhotoPanelFlag">
           <el-upload ref="upload" action :file-list="fileList" :http-request="sigleFileUploadAction" :show-file-list="false" multiple style="margin-left:11%" :auto-upload="true">
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+            <el-button slot="trigger" size="small" type="primary">选取照片</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
           </el-upload>
         </el-row>
@@ -295,7 +295,7 @@
           </el-col>
           <el-col :span="3">
             <el-upload ref="upload" action :file-list="fileList" :http-request="sigleFileUploadAction" :show-file-list="false" multiple style="margin-left:11px" :auto-upload="true">
-              <el-button slot="trigger" size="primary" :disabled="addCheckForm.multiSelection.length !=1" type="primary" @click="uploadJudge">选取文件</el-button>
+              <el-button slot="trigger" size="primary" :disabled="addCheckForm.multiSelection.length !=1" type="primary" @click="uploadJudge">选取照片</el-button>
               <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
             </el-upload>
           </el-col>
@@ -524,7 +524,7 @@
           </el-col>
           <el-col :span="3">
             <el-upload ref="upload" action :file-list="fileListA" :http-request="sigleFileUploadActionA" :show-file-list="false" multiple style="margin-left:11px" :auto-upload="true">
-              <el-button slot="trigger" size="primary" :disabled="updateCheckForm.multiSelection.length !=1" type="primary" @click="uploadJudgeA">选取文件</el-button>
+              <el-button slot="trigger" size="primary" :disabled="updateCheckForm.multiSelection.length !=1" type="primary" @click="uploadJudgeA">选取照片</el-button>
               <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
             </el-upload>
           </el-col>
@@ -903,6 +903,7 @@ export default {
     });
     //获取所有人员信息
     getApi.getUserCascader().then(response => {
+      console.log(response);
       this.personOptions = response.options;
       this.personOptions.forEach(element => {
         element.children.forEach(ele => {
