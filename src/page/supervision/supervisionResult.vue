@@ -902,7 +902,7 @@ export default {
       this.updateCheckForm.options.responsibleDeptOptions = response;
     });
     //获取所有人员信息
-    getApi.getUserCascader().then(response => {
+    getApi.getInspectionUserCascader().then(response => {
       console.log(response);
       this.personOptions = response.options;
       this.personOptions.forEach(element => {

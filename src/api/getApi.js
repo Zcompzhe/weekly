@@ -43,6 +43,11 @@ export const getUserCascader = () => {
 };
 
 //获取用户级联选择器
+export const getInspectionUserCascader = () => {
+  return request.get(`/getInspectionUserCascader`);
+};
+
+//获取用户级联选择器
 export const getSGCCInspectionDept = () => {
   return request.get(`/getSGCCInspectionDept`);
 };
