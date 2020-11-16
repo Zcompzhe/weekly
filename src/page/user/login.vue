@@ -77,7 +77,7 @@
     <transition name="form-fade" mode="in-out">
       <div class="login-form" v-show="showLogin">
         <div class="login-logo">
-          <img src="../../images/timg2.png"><span>国网上海电力公司智慧督查系统</span>
+          <img src="../../images/timg2.png"><span>智慧督查</span>
         </div>
         <el-form :model="formLogin" :rules="rulesLogin" ref="formLogin">
           <el-form-item prop="username">

@@ -533,7 +533,7 @@ export default {
     this.searchTable.weeklyEndTime = new Date(endDate);
 
     this.tableTitle =
-      "国网上海建设咨询公司" +
+      "公司" +
       new Date().getFullYear() +
       "年在建工程周报(" +
       api.changeDate(startDate) +
