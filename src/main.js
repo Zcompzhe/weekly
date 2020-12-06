@@ -67,10 +67,10 @@ router.beforeEach((to, from, next) => {
 window.$config = {};
 
 //dev
-window.$config.PIC = 'http://139.224.25.25:8080';
+window.$config.PIC = 'http://172.16.14.20:8080';
 // window.$config.PIC = 'http://localhost:8080';
 //dev
-window.$config.HOST = 'http://127.0.0.1:8001'
+window.$config.HOST = 'http://116.228.229.189:18081'
 
 
 
