@@ -23,6 +23,10 @@ yarn test
 #安装jsx
 npm install postcss-loader autoprefixer babel-loader babel-core
 
+#chromedriver问题
+npm install chromedriver --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver
+
+
 #导出为EXCEL 
 npm install --save xlsx file-saver
 

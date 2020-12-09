@@ -378,6 +378,16 @@
               </el-form-item>
             </div>
           </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="e安全上线" prop="hasESecurityOnline" placeholder="e安全上线">
+                <el-select v-model="addFormFive.hasESecurityOnline" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in addFormFive.options.hasESecurityOnlineOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
         </el-row>
       </el-form>
 
@@ -643,9 +653,20 @@ export default {
       addFormFive: {
         actualState: "",
         controlledState: "",
+        hasESecurityOnline:"",
         options: {
           actualStateOptions: {},
-          controlledStateOptions: {}
+          controlledStateOptions: {},
+          hasESecurityOnlineOptions:[
+            {
+              name:"是",
+              value:true
+            },
+            {
+              name:"否",
+              value:false
+            }
+          ]
         }
       },
       addFormFiveRule: {
@@ -655,6 +676,10 @@ export default {
         controlledState: [
           { required: true, message: "请选择管控内状态", trigger: "change" }
         ],
+
+        hasESecurityOnline:[
+           { required: false, message: "请选择e安全上线", trigger: "change" }
+        ]
       }
     };
   },
@@ -1184,6 +1209,7 @@ export default {
         projectWeeklyAddReq = {
           actualState: this.addFormFive.actualState,
           controlledState: this.addFormFive.controlledState,
+          hasESecurityOnline:this.addFormFive.hasESecurityOnline,
           adminDept: this.addFormTwo.adminDept,
           adminId: this.addFormTwo.adminId,
           constructDeptId: this.addFormTwo.constructDeptId,

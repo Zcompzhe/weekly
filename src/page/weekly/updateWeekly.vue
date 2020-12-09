@@ -377,6 +377,16 @@
               </el-form-item>
             </div>
           </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="e安全上线" prop="hasESecurityOnline" placeholder="e安全上线">
+                <el-select v-model="updateFormFive.hasESecurityOnline" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormFive.options.hasESecurityOnlineOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
         </el-row>
       </el-form>
 
@@ -651,9 +661,20 @@ export default {
       updateFormFive: {
         actualState: "",
         controlledState: "",
+        hasESecurityOnline:"",
         options: {
           actualStateOptions: {},
-          controlledStateOptions: {}
+          controlledStateOptions: {},
+          hasESecurityOnlineOptions:[
+            {
+              name:"是",
+              value:true
+            },
+            {
+              name:"否",
+              value:false
+            }
+          ]
         }
       },
       updateFormFiveRule: {
@@ -663,6 +684,9 @@ export default {
         controlledState: [
           { required: true, message: "请选择管控内状态", trigger: "change" }
         ],
+        hasESecurityOnline:[
+           { required: false, message: "请选择e安全上线", trigger: "change" }
+        ]
       }
     };
   },
@@ -697,6 +721,8 @@ export default {
       this.updateFormTwo.adminDept = res.projectWeeklyShowResp.adminDept;
       this.updateFormFive.actualState = res.projectWeeklyShowResp.actualState;
       this.updateFormFive.controlledState = res.projectWeeklyShowResp.controlledState;
+      this.updateFormFive.hasESecurityOnline = res.projectWeeklyShowResp.hasESecurityOnline;
+      
 
 
       //人员
@@ -1261,6 +1287,7 @@ export default {
           id: this.id,
           actualState: this.updateFormFive.actualState != this.firstData.actualState ? this.updateFormFive.actualState : undefined,
           controlledState: this.updateFormFive.controlledState != this.firstData.controlledState ? this.updateFormFive.controlledState : undefined,
+          hasESecurityOnline: this.updateFormFive.hasESecurityOnline != this.firstData.hasESecurityOnline ? this.updateFormFive.hasESecurityOnline : undefined,
           adminDept: this.updateFormTwo.adminDept != this.firstData.adminDept ? this.updateFormTwo.adminDept : undefined,
           adminId: this.updateFormTwo.adminId != this.firstData.adminId ? this.updateFormTwo.adminId : undefined,
           constructDeptId: this.updateFormTwo.constructDeptId != this.firstData.constructDeptId ? this.updateFormTwo.constructDeptId : undefined,

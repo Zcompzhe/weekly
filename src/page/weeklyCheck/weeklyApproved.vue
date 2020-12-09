@@ -209,6 +209,14 @@
             </div>
           </el-col>
         </el-row>
+         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">e安全上线</div>
+              <el-input disabled v-model="weeklyDetail.hasESecurityOnline" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
         <br>
         <hr><br>
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
@@ -455,6 +463,8 @@ export default {
         else if (!this.weeklyDetail.hasWorkNextWeek) this.weeklyDetail.hasWorkNextWeekStr = "否";
         if (this.weeklyDetail.hasThreePlusRiskWork) this.weeklyDetail.hasThreePlusRiskWorkStr = "是";
         else if (!this.weeklyDetail.hasThreePlusRiskWork) this.weeklyDetail.hasThreePlusRiskWorkStr = "否";
+        if (this.weeklyDetail.hasESecurityOnline) this.weeklyDetail.hasESecurityOnline = "是";
+        else if (!this.weeklyDetail.hasESecurityOnline) this.weeklyDetail.hasESecurityOnline = "否";
         this.detailPanelFlag = true;
       })
     },

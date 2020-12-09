@@ -30,7 +30,7 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="所属建管单位" prop="adminId" placeholder="请选择所属建管单位">
-                <el-select v-model="projectForm.adminId" clearable placeholder="请选择" style="min-width:200px">
+                <el-select v-model="projectForm.adminId" clearable placeholder="请选择" style="min-width:200px" @change="adminIdChanged()">
                   <el-option v-for="item in projectForm.options.adminIdOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -179,7 +179,7 @@
                 <!-- <el-select v-model="personForm.projectManagerId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="personForm.projectManagerId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="personForm.projectManagerId" placeholder="人员暂缺" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
 
               </el-form-item>
             </div>
@@ -190,7 +190,7 @@
                 <!-- <el-select v-model="personForm.qualityStaffId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="personForm.qualityStaffId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="personForm.qualityStaffId" placeholder="人员暂缺"  :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
 
               </el-form-item>
             </div>
@@ -201,7 +201,7 @@
                 <!-- <el-select v-model="personForm.safetyStaffId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="personForm.safetyStaffId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="personForm.safetyStaffId" placeholder="人员暂缺"  :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
 
               </el-form-item>
             </div>
@@ -223,7 +223,7 @@
                 <!-- <el-select v-model="personForm.chiefInspectorId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="personForm.chiefInspectorId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="personForm.chiefInspectorId" placeholder="人员暂缺"  :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
 
               </el-form-item>
             </div>
@@ -234,7 +234,7 @@
                 <!-- <el-select v-model="personForm.professionalSupervisorId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="personForm.professionalSupervisorId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="personForm.professionalSupervisorId" placeholder="人员暂缺"  :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -244,7 +244,7 @@
                 <!-- <el-select v-model="personForm.safetySupervisorId" clearable placeholder="请选择" style="min-width:300px">
                   <el-option v-for="item in personForm.options.personOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select> -->
-                <el-cascader v-model="personForm.safetySupervisorId" :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
+                <el-cascader v-model="personForm.safetySupervisorId" placeholder="人员暂缺"  :options="personForm.options.personOptions" :show-all-levels="false" :props="propsPerson" style="min-width:300px;margin-left:20px"></el-cascader>
               </el-form-item>
             </div>
           </el-col>
@@ -497,6 +497,11 @@ export default {
       //获取所有人员信息
       getApi.getUserCascader().then(response => {
         this.personForm.options.personOptions = response.options;
+        this.personForm.options.personOptions.forEach(ele=>{
+          if(ele.id==-1){
+            ele.children[0].id = 100000;
+          }
+        })
       });
       //获取施工单位
       getApi.getAllConstructDeptName().then(response => {
@@ -507,6 +512,17 @@ export default {
   },
 
   methods: {
+    adminIdChanged(){
+    
+      this.projectForm.options.adminIdOptions.forEach(ele=>{
+        if(ele.name == "国网上海市电力公司工程建设咨询分公司" && ele.id == this.projectForm.adminId){
+          this.personForm.projectManagerId=  [-1,100000];
+          this.personForm.qualityStaffId =  [-1,100000];
+          this.personForm.safetyStaffId = [-1,100000];
+        }
+      })
+    },
+
     //信息保存
     saveAllInfo() {
       // storage["addFormOne"] = this.addFormOne;
@@ -557,12 +573,12 @@ export default {
           actualStartTime: api.changeDate(this.projectForm.actualStartTime),
           planCompletionTime: api.changeDate(this.projectForm.planCompletionTime),
 
-          chiefInspectorId: this.personForm.chiefInspectorId[1],
-          professionalSupervisorId: this.personForm.professionalSupervisorId[1],
-          projectManagerId: this.personForm.projectManagerId[1],
-          qualityStaffId: this.personForm.qualityStaffId[1],
-          safetyStaffId: this.personForm.safetyStaffId[1],
-          safetySupervisorId: this.personForm.safetySupervisorId[1],
+          chiefInspectorId: this.personForm.chiefInspectorId[1] == 100000? (-1):this.personForm.chiefInspectorId[1] ,
+          professionalSupervisorId: this.personForm.professionalSupervisorId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
+          projectManagerId: this.personForm.projectManagerId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
+          qualityStaffId: this.personForm.qualityStaffId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
+          safetyStaffId: this.personForm.safetyStaffId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
+          safetySupervisorId: this.personForm.safetySupervisorId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
 
           chiefInspectorDeptId: this.personForm.chiefInspectorId[0],
           professionalSupervisorDeptId: this.personForm.professionalSupervisorId[0],
