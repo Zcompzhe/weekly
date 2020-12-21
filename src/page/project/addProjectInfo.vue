@@ -574,11 +574,11 @@ export default {
           planCompletionTime: api.changeDate(this.projectForm.planCompletionTime),
 
           chiefInspectorId: this.personForm.chiefInspectorId[1] == 100000? (-1):this.personForm.chiefInspectorId[1] ,
-          professionalSupervisorId: this.personForm.professionalSupervisorId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
-          projectManagerId: this.personForm.projectManagerId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
-          qualityStaffId: this.personForm.qualityStaffId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
-          safetyStaffId: this.personForm.safetyStaffId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
-          safetySupervisorId: this.personForm.safetySupervisorId[1]== 100000? (-1):this.personForm.chiefInspectorId[1] ,
+          professionalSupervisorId: this.personForm.professionalSupervisorId[1]== 100000? (-1):this.personForm.professionalSupervisorId[1] ,
+          projectManagerId: this.personForm.projectManagerId[1]== 100000? (-1):this.personForm.projectManagerId[1] ,
+          qualityStaffId: this.personForm.qualityStaffId[1]== 100000? (-1):this.personForm.qualityStaffId[1] ,
+          safetyStaffId: this.personForm.safetyStaffId[1]== 100000? (-1):this.personForm.safetyStaffId[1] ,
+          safetySupervisorId: this.personForm.safetySupervisorId[1]== 100000? (-1):this.personForm.safetySupervisorId[1] ,
 
           chiefInspectorDeptId: this.personForm.chiefInspectorId[0],
           professionalSupervisorDeptId: this.personForm.professionalSupervisorId[0],
