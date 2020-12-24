@@ -202,6 +202,94 @@
             </div>
           </el-col>
         </el-row>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item
+                label="电压等级"
+                prop="voltageClass"
+                placeholder="请选择电压等级"
+              >
+                <el-select
+                  v-model="projectForm.voltageClass"
+                  clearable
+                  placeholder="请选择"
+                  style="min-width: 200px"
+                >
+                  <el-option
+                    v-for="item in projectForm.options.voltageClassOptions"
+                    :key="item.value"
+                    :label="item.value"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item
+                label="作业类型"
+                prop="assignmentType"
+                placeholder="请选择作业类型"
+              >
+                <el-select
+                  v-model="projectForm.assignmentType"
+                  clearable
+                  placeholder="请选择"
+                  style="min-width: 200px"
+                >
+                  <el-option
+                    v-for="item in projectForm.options.assignmentTypeOptions"
+                    :key="item.value"
+                    :label="item.value"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item
+                label="施工单位类别"
+                prop="constructionType"
+                placeholder="请选择施工单位类别"
+              >
+                <el-select
+                  v-model="projectForm.constructionType"
+                  clearable
+                  placeholder="请选择"
+                  style="min-width: 200px"
+                >
+                  <el-option
+                    v-for="item in projectForm.options.constructionTypeOptions"
+                    :key="item.value"
+                    :label="item.value"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item
+                label="项目规模"
+                prop="projectScale"
+                placeholder="请输入项目规模"
+              >
+                <el-input
+                  v-model="projectForm.projectScale"
+                  clearable
+                  :rows="1"
+                  placeholder="请输入"
+                  style="min-width: 200px"
+                ></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
 
         <el-row :gutter="20">
           <el-col :span="6">
@@ -241,32 +329,33 @@
           <el-col :span="6">
             <div class="bar">
               <el-form-item
-                label="项目规模"
-                prop="projectScale"
-                placeholder="请输入项目规模"
+                label="主业作业人数"
+                prop="mainWorkerNum"
+                placeholder="请输入主业单位作业人数"
               >
                 <el-input
-                  v-model="projectForm.projectScale"
+                  v-model="projectForm.mainWorkerNum"
                   clearable
                   :rows="1"
-                  placeholder="请输入"
+                  placeholder="整数，如：20"
                   style="min-width: 200px"
                 ></el-input>
               </el-form-item>
             </div>
           </el-col>
+
           <el-col :span="6">
             <div class="bar">
               <el-form-item
-                label="一线作业人数"
-                prop="currentWorkerNum"
-                placeholder="请输入一线作业人数"
+                label="外包作业人数"
+                prop="outsourcingWorkerNum"
+                placeholder="请输入外包单位作业人数"
               >
                 <el-input
-                  v-model="projectForm.currentWorkerNum"
+                  v-model="projectForm.outsourcingWorkerNum"
                   clearable
                   :rows="1"
-                  placeholder="整数，如20"
+                  placeholder="整数，如：20"
                   style="min-width: 200px"
                 ></el-input>
               </el-form-item>
@@ -518,6 +607,23 @@
             </div>
           </el-col>
         </el-row>
+                <el-row :gutter="20">
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="施工单位负责人" prop="constructionPrincipal" placeholder="请选择施工单位负责人">
+                <el-input v-model="personForm.constructionPrincipal" clearable  :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="联系方式" prop="constructionPrincipalNumber" placeholder="请选择联系方式">
+                <el-input v-model="personForm.constructionPrincipalNumber"  clearable :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+
+        </el-row>
         <el-row :gutter="20">
           <el-col :span="20">
             <div class="Mbutton">
@@ -535,6 +641,7 @@
             </div>
           </el-col>
         </el-row>
+        
       </el-form>
     </el-card>
   </div>
@@ -545,6 +652,7 @@ import { POINT_CONVERSION_COMPRESSED } from "constants";
 import * as api from "@/api/date.js";
 import * as getApi from "@/api/getApi.js";
 import * as updateApi from "@/api/updateApi.js";
+import * as dataApi from "@/api/dataChange.js";
 export default {
   data() {
     return {
@@ -567,11 +675,16 @@ export default {
         detailedAddress: "",
         longitude: "",
         latitude: "",
+        voltageClass:"",
+        assignmentType:"",
+        constructionType:"",
         actualStartTime: "",
         planCompletionTime: "",
         projectScale: "",
         currentWorkerNum: "",
         currentSubcontractorNum: "",
+         mainWorkerNum: "",
+        outsourcingWorkerNum:"",
         adminDept: "",
         projectState: "",
         options: {
@@ -580,6 +693,9 @@ export default {
           districtIdOptions: {},
           adminDeptOptions: {},
           constructDeptIdOptions: {},
+          voltageClassOptions:{},
+          assignmentTypeOptions:{},
+          constructionTypeOptions:{},
           projectStateOptions: [
             {
               value: true,
@@ -675,7 +791,7 @@ export default {
             },
           },
         ],
-        currentWorkerNum: [
+               mainWorkerNum: [
           {
             required: false,
             trigger: "blur",
@@ -683,16 +799,35 @@ export default {
               if (value == "0") callback();
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
-                if (!reg.test(value) && value != "0") {
-                  callback(new Error("一线自有作业人员数需要整数，如：20"));
+                if (!reg.test(value)&& value!="0") {
+                  callback(new Error("主业单位作业人员数需要整数，如：20"));
                 } else {
                   callback();
                 }
               } else {
-                callback(new Error("请输入当前施工单位一线自有作业人员数"));
+                callback();
               }
-            },
-          },
+            }
+          }
+        ],
+        outsourcingWorkerNum:[
+          {
+            required: false,
+            trigger: "blur",
+            validator: (rule, value, callback) => {
+              if (value == "0") callback();
+              if (value != "" && value != null) {
+                var reg = /^[1-9]\d*$/;
+                if (!reg.test(value)&& value!="0") {
+                  callback(new Error("外包单位作业人员数需要整数，如：20"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback();
+              }
+            }
+          }
         ],
         planCompletionTime: [
           { required: false, message: "请选择计划竣工时间", trigger: "change" },
@@ -709,6 +844,8 @@ export default {
         chiefInspectorId: "",
         professionalSupervisorId: "",
         safetySupervisorId: "",
+        constructionPrincipalNumber:"",
+        constructionPrincipal:"",
         options: {
           personOptions: [],
         },
@@ -731,6 +868,27 @@ export default {
         ],
         safetySupervisorId: [
           { required: true, message: "请选择安全监理", trigger: "change" },
+        ],
+        constructionPrincipalNumber:[
+          {
+            required: false,
+            trigger: "change",
+            validator: (rule, value, callback) => {
+              if (value != "" && value != null) {
+                var reg = /^([+]\d+[.]\d+|[-]\d+[.]\d+|\d+[.]\d+|[+]\d+|[-]\d+|\d+)$/gi
+                if (!reg.test(value)) {
+                  callback(new Error("请输入施工单位负责人联系方式。"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback();
+              }
+            }
+          }
+        ],
+        constructionPrincipal:[
+          { required: false, message: "请输入施工单位负责人", trigger: "change" }
         ],
       },
     };
@@ -757,6 +915,12 @@ export default {
     getApi.getAllProjectAdminDeptEnum().then((response) => {
       this.projectForm.options.adminDeptOptions = response;
     });
+    //获取电压等级
+    this.projectForm.options.voltageClassOptions = dataApi.getVoltageClass();
+    //获取作业类型
+    this.projectForm.options.assignmentTypeOptions = dataApi.getAssignmentType();
+    //获取施工单位类别
+    this.projectForm.options.constructionTypeOptions = dataApi.getConstructionType();
     //获取所有人员信息
     getApi.getUserCascader().then((response) => {
       this.personForm.options.personOptions = response.options;
@@ -786,8 +950,12 @@ export default {
       this.projectForm.detailedAddress = response.detailedAddress;
       this.projectForm.longitude = response.longitude;
       this.projectForm.latitude = response.latitude;
+      this.projectForm.voltageClass = response.voltageClass;
+      this.projectForm.assignmentType = response.assignmentType;
+      this.projectForm.constructionType = response.constructionType;
       this.projectForm.projectScale = response.projectScale;
-      this.projectForm.currentWorkerNum = response.currentWorkerNum;
+      this.projectForm.mainWorkerNum = response.mainWorkerNum;
+      this.projectForm.outsourcingWorkerNum = response.outsourcingWorkerNum;
       this.projectForm.currentSubcontractorNum =
         response.currentSubcontractorNum;
       this.projectForm.adminDept = response.adminDept;
@@ -799,28 +967,34 @@ export default {
 
       this.personForm.projectManagerId = [
         response.projectManagerDeptId,
-        response.projectManagerId == -1 ?100000:response.projectManagerId
+        response.projectManagerId == -1 ? 100000 : response.projectManagerId,
       ];
       this.personForm.safetyStaffId = [
         response.safetyStaffDeptId,
-        response.safetyStaffId == -1 ?100000:response.safetyStaffId
+        response.safetyStaffId == -1 ? 100000 : response.safetyStaffId,
       ];
       this.personForm.qualityStaffId = [
         response.qualityStaffDeptId,
-        response.qualityStaffId == -1 ?100000:response.qualityStaffId
+        response.qualityStaffId == -1 ? 100000 : response.qualityStaffId,
       ];
       this.personForm.chiefInspectorId = [
         response.chiefInspectorDeptId,
-        response.chiefInspectorId == -1 ?100000:response.chiefInspectorId
+        response.chiefInspectorId == -1 ? 100000 : response.chiefInspectorId,
       ];
       this.personForm.professionalSupervisorId = [
         response.professionalSupervisorDeptId,
-        response.professionalSupervisorId == -1 ?100000:response.professionalSupervisorId
+        response.professionalSupervisorId == -1
+          ? 100000
+          : response.professionalSupervisorId,
       ];
       this.personForm.safetySupervisorId = [
         response.safetySupervisorDeptId,
-        response.safetySupervisorId == -1 ?100000:response.safetySupervisorId
+        response.safetySupervisorId == -1
+          ? 100000
+          : response.safetySupervisorId,
       ];
+      this.personForm.constructionPrincipal = response.constructionPrincipal;
+      this.personForm.constructionPrincipalNumber = response.constructionPrincipalNumber;
     });
   },
 
@@ -880,6 +1054,26 @@ export default {
           longitude:
             this.projectForm.longitude != this.firstData.longitude
               ? this.projectForm.longitude
+              : undefined,
+          voltageClass:
+            this.projectForm.voltageClass != this.firstData.voltageClass
+              ? this.projectForm.voltageClass
+              : undefined,
+          assignmentType:
+            this.projectForm.assignmentType != this.firstData.assignmentType
+              ? this.projectForm.assignmentType
+              : undefined,
+          constructionType:
+            this.projectForm.constructionType != this.firstData.constructionType
+              ? this.projectForm.constructionType
+              : undefined,
+          mainWorkerNum:
+            this.projectForm.mainWorkerNum != this.firstData.mainWorkerNum
+              ? this.projectForm.mainWorkerNum
+              : undefined,
+          outsourcingWorkerNum:
+            this.projectForm.outsourcingWorkerNum != this.firstData.outsourcingWorkerNum
+              ? this.projectForm.outsourcingWorkerNum
               : undefined,
           projectState:
             this.projectForm.projectState != this.firstData.projectState
@@ -974,21 +1168,68 @@ export default {
             this.firstData.chiefInspectorDeptId
               ? this.personForm.chiefInspectorId[0]
               : undefined,
+          constructionPrincipalNumber:this.personForm.constructionPrincipalNumber != this.firstData.constructionPrincipalNumber
+              ? this.personForm.constructionPrincipalNumber
+              : undefined,
+            constructionPrincipal:this.personForm.constructionPrincipal != this.firstData.constructionPrincipal
+              ? this.personForm.constructionPrincipal
+              : undefined,
         };
-        if(list.projectManagerId==100000 && this.firstData.projectManagerId==-1) list.projectManagerId=undefined;
-        if(list.qualityStaffId==100000 && this.firstData.qualityStaffId==-1) list.qualityStaffId=undefined;
-        if(list.safetyStaffId==100000 && this.firstData.safetyStaffId==-1) list.safetyStaffId=undefined;
-        if(list.safetySupervisorId==100000 && this.firstData.safetySupervisorId==-1) list.safetySupervisorId=undefined;
-        if(list.chiefInspectorId==100000 && this.firstData.chiefInspectorId==-1) list.chiefInspectorId=undefined;
-        if(list.professionalSupervisorId==100000 && this.firstData.professionalSupervisorId==-1) list.professionalSupervisorId=undefined;
+        if (
+          list.projectManagerId == 100000 &&
+          this.firstData.projectManagerId == -1
+        )
+          list.projectManagerId = undefined;
+        if (
+          list.qualityStaffId == 100000 &&
+          this.firstData.qualityStaffId == -1
+        )
+          list.qualityStaffId = undefined;
+        if (list.safetyStaffId == 100000 && this.firstData.safetyStaffId == -1)
+          list.safetyStaffId = undefined;
+        if (
+          list.safetySupervisorId == 100000 &&
+          this.firstData.safetySupervisorId == -1
+        )
+          list.safetySupervisorId = undefined;
+        if (
+          list.chiefInspectorId == 100000 &&
+          this.firstData.chiefInspectorId == -1
+        )
+          list.chiefInspectorId = undefined;
+        if (
+          list.professionalSupervisorId == 100000 &&
+          this.firstData.professionalSupervisorId == -1
+        )
+          list.professionalSupervisorId = undefined;
 
-
-        if(list.projectManagerId==100000 && this.firstData.projectManagerId!=-1) list.projectManagerId=-1;
-        if(list.qualityStaffId==100000 && this.firstData.qualityStaffId!=-1) list.qualityStaffId=-1;
-        if(list.safetyStaffId==100000 && this.firstData.safetyStaffId!=-1) list.safetyStaffId=-1;
-        if(list.safetySupervisorId==100000 && this.firstData.safetySupervisorId!=-1) list.safetySupervisorId=-1;
-        if(list.chiefInspectorId==100000 && this.firstData.chiefInspectorId!=-1) list.chiefInspectorId=-1;
-        if(list.professionalSupervisorId==100000 && this.firstData.professionalSupervisorId!=-1) list.professionalSupervisorId=-1;
+        if (
+          list.projectManagerId == 100000 &&
+          this.firstData.projectManagerId != -1
+        )
+          list.projectManagerId = -1;
+        if (
+          list.qualityStaffId == 100000 &&
+          this.firstData.qualityStaffId != -1
+        )
+          list.qualityStaffId = -1;
+        if (list.safetyStaffId == 100000 && this.firstData.safetyStaffId != -1)
+          list.safetyStaffId = -1;
+        if (
+          list.safetySupervisorId == 100000 &&
+          this.firstData.safetySupervisorId != -1
+        )
+          list.safetySupervisorId = -1;
+        if (
+          list.chiefInspectorId == 100000 &&
+          this.firstData.chiefInspectorId != -1
+        )
+          list.chiefInspectorId = -1;
+        if (
+          list.professionalSupervisorId == 100000 &&
+          this.firstData.professionalSupervisorId != -1
+        )
+          list.professionalSupervisorId = -1;
         updateApi.updateProject(list).then((response) => {
           this.goback();
         });

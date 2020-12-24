@@ -137,7 +137,7 @@
       </div>
 
       <el-dialog title="详细信息" :visible.sync="detailPanelFlag" width="1400px" :modal="false">
-        <el-row :gutter="20">
+                      <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
               <div id="title">
@@ -217,20 +217,15 @@
               <el-input disabled v-model="weeklyDetail.projectScale" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
-          <el-col :span="8">
-            <div class="bar">
-              <div class="title">一线作业人员数</div>
-              <el-input disabled v-model="weeklyDetail.currentWorkerNum" disabled style="min-width:200px"></el-input>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
-          <el-col :span="8">
+<el-col :span="8">
             <div class="bar">
               <div class="title">当前分包人员数</div>
               <el-input disabled v-model="weeklyDetail.currentSubcontractorNum" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          
           <el-col :span="8">
             <div class="bar">
               <div class="title">所属部门</div>
@@ -249,8 +244,55 @@
               <el-input disabled v-model="weeklyDetail.controlledState" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">e安全上线</div>
+              <el-input disabled v-model="weeklyDetail.hasESecurityOnline" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
         </el-row>
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">电压等级</div>
+              <el-input disabled v-model="weeklyDetail.voltageClass" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">作业类型</div>
+              <el-input disabled v-model="weeklyDetail.assignmentType" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">施工单位类别</div>
+              <el-input disabled v-model="weeklyDetail.constructionType" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">下周是否有作业</div>
+              <el-input disabled v-model="weeklyDetail.hasWorkNextWeekStr" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">主业作业人数</div>
+              <el-input disabled v-model="weeklyDetail.mainWorkerNum" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">外包作业人数</div>
+              <el-input disabled v-model="weeklyDetail.outsourcingWorkerNum" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
           <el-col :span="8">
             <div class="bar">
               <div class="title">固有风险</div>
@@ -263,26 +305,16 @@
               <el-input disabled v-model="weeklyDetail.dynamicRisk" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
-          <el-col :span="8">
-            <div class="bar">
-              <div class="title">下周是否有作业</div>
-              <el-input disabled v-model="weeklyDetail.hasWorkNextWeekStr" disabled style="min-width:200px"></el-input>
-            </div>
-          </el-col>
-          <el-col :span="8">
+          </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="20">
             <div class="bar">
               <div class="title">是否有三级及以上风险</div>
               <el-input disabled v-model="weeklyDetail.hasThreePlusRiskWorkStr" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
-        </el-row>
-        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
-          <el-col :span="8">
-            <div class="bar">
-              <div class="title">e安全上线</div>
-              <el-input disabled v-model="weeklyDetail.hasESecurityOnline" disabled style="min-width:200px"></el-input>
-            </div>
-          </el-col>
+
+
         </el-row>
         <br>
         <hr><br>
@@ -423,6 +455,22 @@
             <div class="bar">
               <div class="title">联系方式</div>
               <el-input disabled v-model="weeklyDetail.safetySupervisorTEL" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <br>
+        <hr><br>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+                  <el-col :span="8">
+            <div class="bar">
+              <div class="title">施工单位负责人</div>
+              <el-input disabled v-model="weeklyDetail.constructionPrincipal" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="bar">
+              <div class="title">施工单位负责人联系方式</div>
+              <el-input disabled v-model="weeklyDetail.constructionPrincipalNumber" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>

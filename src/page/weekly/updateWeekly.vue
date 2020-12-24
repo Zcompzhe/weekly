@@ -124,7 +124,45 @@
             </div>
           </el-col>
         </el-row>
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="电压等级" prop="voltageClass" placeholder="电压等级">
+                <el-select v-model="updateFormTwo.voltageClass" clearable  placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormTwo.options.voltageClassOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
 
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="作业类型" prop="assignmentType" placeholder="作业类型">
+                <el-select v-model="updateFormTwo.assignmentType" clearable  placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormTwo.options.assignmentTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="施工单位类别" prop="constructionType" placeholder="周报开始日期">
+                <el-select v-model="updateFormTwo.constructionType" clearable  placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormTwo.options.constructionTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="项目规模" prop="projectScale" placeholder="周报开始日期">
+                <el-input v-model="updateFormTwo.projectScale" clearable  :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
             <div class="bar">
@@ -144,16 +182,16 @@
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="项目规模" prop="projectScale" placeholder="周报开始日期">
-                <el-input v-model="updateFormTwo.projectScale" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+              <el-form-item label="主业作业人数" prop="mainWorkerNum" placeholder="周报开始日期">
+                <el-input v-model="updateFormTwo.mainWorkerNum" clearable  :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
 
           <el-col :span="8">
             <div class="bar">
-              <el-form-item label="一线作业人数" prop="currentWorkerNum" placeholder="周报开始日期">
-                <el-input v-model="updateFormTwo.currentWorkerNum" clearable :rows="1" placeholder="整数，如20" style="min-width:200px"></el-input>
+              <el-form-item label="外包作业人数" prop="outsourcingWorkerNum" placeholder="周报开始日期">
+                <el-input v-model="updateFormTwo.outsourcingWorkerNum" clearable  :rows="1" placeholder="整数，如20" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -260,6 +298,22 @@
             </div>
           </el-col>
         </el-row>
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="施工单位负责人" prop="constructionPrincipal" placeholder="请选择施工单位负责人">
+                <el-input v-model="updateFormThree.constructionPrincipal" clearable disabled :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="联系方式" prop="constructionPrincipalNumber" placeholder="请选择联系方式">
+                <el-input v-model="updateFormThree.constructionPrincipalNumber" clearable disabled :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
       </el-form>
     </el-card>
     <el-card class="box-card">
@@ -319,19 +373,36 @@
           <template slot-scope="scope">
             <!-- <span v-if="scope.row.riskAdd" style="color:red">{{ scope.row.riskLevel }}</span>
             <span v-else>{{ scope.row.riskLevel }}</span> -->
-            <el-input v-model="scope.row.riskLevel" clearable :rows="1" placeholder="请输入"></el-input>
+            <el-input v-model="scope.row.riskLevel" clearable @change="riskLevelChanged(scope.row)" :rows="1" placeholder="请输入"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="workContent" label="下周作业安排、位置及内容" align="center">
+        <el-table-column prop="workContent" label="下周作业安排、位置及内容"  width="300px" align="center">
           <template slot-scope="scope">
             <el-input v-model="scope.row.workContent" clearable :rows="1" placeholder="请输入"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="riskAdd" label="是否风险升级管理" align="center">
+        <el-table-column prop="riskAdd" label="是否风险升级管理"  width="250px" align="center">
           <template slot-scope="scope">
             <el-select v-model="scope.row.riskAdd"  placeholder="请选择" style="min-width:200px" @change="updateFlagChange(scope.index,scope.row)">
               <el-option v-for="item in updateFormFour.options.riskAddOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
             </el-select>
+          </template>
+        </el-table-column>
+        <el-table-column prop="isElectrification" label="是否带电" width="150px" align="center">
+          <template slot-scope="scope">
+            <el-select v-model="scope.row.isElectrification" placeholder="请选择" style="min-width:100px">
+              <el-option v-for="item in updateFormFour.options.riskAddOptions" :key="item.value" :label="item.name" :value="item.value"></el-option>
+            </el-select>
+          </template>
+        </el-table-column>
+        <el-table-column prop="laborSubcontractor" label="劳务分包单位" width="300px" align="center">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.laborSubcontractor" clearable :rows="1" placeholder="请输入"></el-input>
+          </template>
+        </el-table-column>
+                <el-table-column prop="professionalSubcontractor" label="专业分包单位" width="300px" align="center">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.professionalSubcontractor" clearable :rows="1" placeholder="请输入"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="workStartTime" width="180px" label="作业开始时间" align="center">
@@ -342,6 +413,27 @@
         <el-table-column prop="workEndTime" width="180px" label="作业结束时间" align="center">
           <template slot-scope="scope">
             <el-date-picker v-model="scope.row.workEndTime" type="date" placeholder="选择日期时间" @change="dateChangeToSecondB(scope.row)" style="width:150px"></el-date-picker>
+          </template>
+        </el-table-column>
+         <el-table-column prop="personnelName" label="到岗到位人员姓名" width="300px" align="center">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.personnelName" :disabled="scope.row.riskLevel<3" clearable :rows="1" placeholder="请输入"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="personnelPosition" label="到岗到位人员职务" width="300px" align="center">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.personnelPosition" :disabled="scope.row.riskLevel<3" clearable :rows="1" placeholder="请输入"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="personnelPhone" label="到岗到位人员手机号码" width="300px" align="center">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.personnelPhone" :disabled="scope.row.riskLevel<3" clearable :rows="1" placeholder="请输入"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="personnelTime" label="到岗到位人员到位时间" width="300px" align="center">
+          <template slot-scope="scope">
+            <el-date-picker  @change="changeFormatDate(scope.row.personnelTime)"     v-model="scope.row.personnelTime" :disabled="scope.row.riskLevel<3"     type="datetime"      placeholder="选择日期时间"      default-time="9:00:00">
+            </el-date-picker>
           </template>
         </el-table-column>
       </el-table>
@@ -405,6 +497,7 @@ import { POINT_CONVERSION_COMPRESSED } from "constants";
 import * as api from "@/api/date.js";
 import * as getApi from "@/api/getApi.js";
 import * as updateApi from "@/api/updateApi.js";
+import * as dataApi from "@/api/dataChange.js";
 export default {
   data() {
     return {
@@ -425,7 +518,7 @@ export default {
       deleteweeklyRiskContentAddReqs: [],
       //项目修改标志
       projectUpdateFlag: false,
-      beforeProjectInfo: {},
+      firstData: {},
       //节点映射
       optionPropsA: {
         value: "value",
@@ -473,12 +566,20 @@ export default {
         currentWorkerNum: "",
         currentSubcontractorNum: "",
         adminDept: "",
+        constructionType:"",
+        voltageClass:"",
+        assignmentType:"",
+        mainWorkerNum:"",
+        outsourcingWorkerNum:"",
 
         options: {
           idOptions: {},
           adminIdOptions: {},
           supervisionIdOptions: {},
           constructDeptIdOptions: {},
+          constructionTypeOptions:{},
+          voltageClassOptions:{},
+          assignmentTypeOptions:{},
           districtIdOptions: {},
           adminDeptOptions: {}
         }
@@ -546,7 +647,7 @@ export default {
         ],
         currentSubcontractorNum: [
           {
-            required: false,
+            required: true,
             trigger: "blur",
             validator: (rule, value, callback) => {
               if (value == "0") callback();
@@ -563,7 +664,7 @@ export default {
             }
           }
         ],
-        currentWorkerNum: [
+        mainWorkerNum: [
           {
             required: false,
             trigger: "blur",
@@ -572,12 +673,31 @@ export default {
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
                 if (!reg.test(value) && value != "0") {
-                  callback(new Error("一线自有作业人员数需要整数，如：20"));
+                  callback(new Error("主业单位人数需要整数，如：20"));
                 } else {
                   callback();
                 }
               } else {
-                callback(new Error("请输入当前施工单位一线自有作业人员数"));
+                callback();
+              }
+            }
+          }
+        ],
+        outsourcingWorkerNum: [
+          {
+            required: false,
+            trigger: "blur",
+            validator: (rule, value, callback) => {
+              if (value == "0") callback();
+              if (value != "" && value != null) {
+                var reg = /^[1-9]\d*$/;
+                if (!reg.test(value) && value != "0") {
+                  callback(new Error("外包单位人数需要整数，如：20"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback();
               }
             }
           }
@@ -595,8 +715,11 @@ export default {
         safetyStaffId: "",
         qualityStaffId: "",
         chiefInspectorId: "",
+        constructionPrincipalNumber:"",
+        constructionPrincipal:"",
         safetySupervisorId: "",
         professionalSupervisorId: "",
+        
 
         options: {
           projectManagerIdOptions: [],
@@ -700,7 +823,6 @@ export default {
     getApi.getProjectWeeklyInfoShowRespById(this.id).then(response => {
       let res = response[0];
       this.firstData = res.projectWeeklyShowResp;
-      console.log("12123131:", this.firstData)
       this.updateFormOne.weeklyStartTime = new Date(res.projectWeeklyShowResp.weeklyStartTime);
       this.weeklyStartTimeChanged();
       this.updateFormTwo.projectIdName = res.projectWeeklyShowResp.projectName;
@@ -719,9 +841,24 @@ export default {
       this.updateFormTwo.currentWorkerNum = res.projectWeeklyShowResp.currentWorkerNum;
       this.updateFormTwo.currentSubcontractorNum = res.projectWeeklyShowResp.currentSubcontractorNum;
       this.updateFormTwo.adminDept = res.projectWeeklyShowResp.adminDept;
+
+
+      this.updateFormTwo.constructionType = res.projectWeeklyShowResp.constructionType;
+      this.updateFormTwo.voltageClass = res.projectWeeklyShowResp.voltageClass;
+      this.updateFormTwo.assignmentType = res.projectWeeklyShowResp.assignmentType;
+      this.updateFormTwo.mainWorkerNum = res.projectWeeklyShowResp.mainWorkerNum;
+      this.updateFormTwo.outsourcingWorkerNum = res.projectWeeklyShowResp.outsourcingWorkerNum;
+      
+
+
+      this.updateFormThree.constructionPrincipalNumber = res.projectWeeklyShowResp.constructionPrincipalNumber;
+      this.updateFormThree.constructionPrincipal = res.projectWeeklyShowResp.constructionPrincipal;
+
       this.updateFormFive.actualState = res.projectWeeklyShowResp.actualState;
       this.updateFormFive.controlledState = res.projectWeeklyShowResp.controlledState;
       this.updateFormFive.hasESecurityOnline = res.projectWeeklyShowResp.hasESecurityOnline;
+      this.updateFormFive.outsourcingWorkerNum = res.projectWeeklyShowResp.outsourcingWorkerNum;
+
       
 
 
@@ -740,6 +877,9 @@ export default {
       this.updateFormFour.weeklyWorkProgressAddReqs = res.weeklyWorkProgressShowResps;
       // this.updateFormFour.weeklyConstructContentAddReqs = res.weeklyConstructContentShowResps;
       this.updateFormFour.weeklyRiskContentAddReqs = res.weeklyRiskContentShowResps;
+      this.updateFormFour.weeklyRiskContentAddReqs.forEach(ele=>{
+        if(ele.personnelTime!="") ele.personnelTime = new Date(ele.personnelTime);
+      })
 
 
 
@@ -776,12 +916,31 @@ export default {
           workContent: ele.workContent,
           riskAdd: ele.riskAdd,
           id: ele.id,
-          workProcessTotalList: ele.workProcessTotalList
+          workProcessTotalList: ele.workProcessTotalList,
+          isElectrification:false,
+        laborSubcontractor:ele.laborSubcontractor,
+        professionalSubcontractor:ele.professionalSubcontractor,
+        personnelName :ele.personnelName,
+        personnelPosition:ele.personnelPosition,
+        personnelPhone : ele.personnelPhone,
+        personnelTime : ele.personnelTime,
         })
 
       })
+      if(this.updateFormThree.projectManagerId[1]==-1) this.updateFormThree.projectManagerId[1] = 100000;
+      if(this.updateFormThree.safetyStaffId[1]==-1) this.updateFormThree.safetyStaffId[1] = 100000;
+      if(this.updateFormThree.qualityStaffId[1]==-1) this.updateFormThree.qualityStaffId[1] = 100000;
+      if(this.updateFormThree.chiefInspectorId[1] == -1) this.updateFormThree.chiefInspectorId[1]=100000;
+      if(this.updateFormThree.safetySupervisorId[1] == -1) this.updateFormThree.safetySupervisorId[1]=100000;
+      if(this.updateFormThree.professionalSupervisorId[1] == -1) this.updateFormThree.professionalSupervisorId[1]=100000;
       console.log(this.updateFormFour)
     });
+    //获取电压等级
+    this.updateFormTwo.options.voltageClassOptions = dataApi.getVoltageClass();
+    //获取作业类型
+    this.updateFormTwo.options.assignmentTypeOptions = dataApi.getAssignmentType();
+    //获取施工单位类别
+    this.updateFormTwo.options.constructionTypeOptions = dataApi.getConstructionType();
     //获取所有项目名称
     getApi.getAllRunningProjectName().then(response => {
       this.updateFormTwo.options.idOptions = response;
@@ -816,6 +975,11 @@ export default {
     });
     //获取所有人员的级联选择器
     getApi.getUserCascader().then(response => {
+      response.options.forEach(ele=>{
+          if(ele.id==-1){
+            ele.children[0].id = 100000;
+          }
+        })
       this.updateFormThree.options.projectManagerIdOptions = response.options;
       this.updateFormThree.options.safetyStaffIdOptions = response.options;
       this.updateFormThree.options.qualityStaffIdOptions = response.options;
@@ -829,67 +993,30 @@ export default {
     this.updateFormFour.options.workProcessOptions = getApi.getWorkProcess();
   },
   methods: {
+    //修改日期格式
+    changeFormatDate(row){
+      row = api.changeDateToSecond2(row);
+    },
+    // 风险等级改变
+    riskLevelChanged(row){
+      if(parseInt(row.riskLevel) < 3){
+        row.personnelName = "";
+        row.personnelPosition = "";
+        row.personnelPhone = "";
+        row.personnelTime = "";
+
+      }
+    },
     //升级后，变化
     updateFlagChange(index, row) {
       if (row.workProcessShow === "" || row.workProcessShow === undefined) return;
       this.workProcessChangedA(index, row);
     },
-    //判断是否修改过项目信息
-    projectInfoUpdate() {
-      var data = this.firstData;
-      this.projectUpdateFlag = false;
-      if (this.updateFormTwo.adminId != data.adminId) this.projectUpdateFlag = true;
-      if (this.updateFormTwo.supervisionId != data.supervisionId) this.projectUpdateFlag = true;
-      if (this.updateFormTwo.constructDeptId != data.constructDeptId) this.projectUpdateFlag = true;
-      if (this.updateFormTwo.districtId != data.districtId) this.projectUpdateFlag = true;
-      if (this.updateFormTwo.detailedAddress != data.detailedAddress)
-        this.projectUpdateFlag = true;
-      if (this.updateFormTwo.latitude != data.latitude) this.projectUpdateFlag = true;
-      if (this.updateFormTwo.longitude != data.longitude) this.projectUpdateFlag = true;
-      if (this.updateFormTwo.projectScale != data.projectScale) this.projectUpdateFlag = true;
-      if (this.updateFormTwo.currentWorkerNum != data.currentWorkerNum)
-        this.projectUpdateFlag = true;
-      if (
-        this.updateFormTwo.currentSubcontractorNum !=
-        data.currentSubcontractorNum
-      )
-        this.projectUpdateFlag = true;
 
-      if (this.updateFormThree.projectManagerId[1] != data.projectManagerId)
-        this.projectUpdateFlag = true;
-      if (this.updateFormThree.safetyStaffId[1] != data.safetyStaffId)
-        this.projectUpdateFlag = true;
-      if (this.updateFormThree.qualityStaffId[1] != data.qualityStaffId)
-        this.projectUpdateFlag = true;
-      if (this.updateFormThree.chiefInspectorId[1] != data.chiefInspectorId)
-        this.projectUpdateFlag = true;
-      if (this.updateFormThree.safetySupervisorId[1] != data.safetySupervisorId)
-        this.projectUpdateFlag = true;
-
-      if (
-        this.updateFormThree.professionalSupervisorId[1] !=
-        data.professionalSupervisorId
-      )
-        this.projectUpdateFlag = true;
-
-      if (this.updateFormTwo.adminDept != data.adminDept) this.projectUpdateFlag = true;
-      if (
-        api.changeDate(this.updateFormTwo.actualStartTime) !=
-        api.changeDate(new Date(data.actualStartTime))
-      )
-        this.projectUpdateFlag = true;
-      if (
-        api.changeDate(this.updateFormTwo.planCompletionTime) !=
-        api.changeDate(new Date(data.planCompletionTime))
-      )
-        this.projectUpdateFlag = true;
-      console.log(this.projectUpdateFlag)
-
-    },
     //项目名称改变或选择时，自动填写后续内容
     projectChanged() {
       if (this.updateFormTwo.projectIdName === "") {
-        this.beforeProjectInfo = {};
+        this.firstData = {};
         this.updateFormTwo.id = "";
         this.updateFormTwo.name = "";
       }
@@ -925,7 +1052,7 @@ export default {
           .getProjectInfoDetailPageShowRespById(this.updateFormTwo.id)
           .then(response => {
             let data = response[0];
-            this.beforeProjectInfo = data;
+            this.firstData = data;
             this.updateFormTwo.adminId = data.adminId;
             this.updateFormTwo.supervisionId = data.supervisionId;
             this.updateFormTwo.constructDeptId = data.constructDeptId;
@@ -950,6 +1077,13 @@ export default {
             this.updateFormThree.safetySupervisorId = data.safetySupervisorId;
             this.updateFormThree.professionalSupervisorId =
               data.professionalSupervisorId;
+
+            if(this.updateFormThree.projectManagerId[1] == -1) this.updateFormThree.projectManagerId[1]=100000;
+            if(this.updateFormThree.qualityStaffId[1] == -1) this.updateFormThree.qualityStaffId[1]=100000;
+            if(this.updateFormThree.safetyStaffId[1] == -1) this.updateFormThree.safetyStaffId[1]=100000;
+            if(this.updateFormThree.chiefInspectorId[1] == -1) this.updateFormThree.chiefInspectorId[1]=100000;
+            if(this.updateFormThree.safetySupervisorId[1] == -1) this.updateFormThree.safetySupervisorId[1]=100000;
+            if(this.updateFormThree.professionalSupervisorId[1] == -1) this.updateFormThree.professionalSupervisorId[1]=100000;
           });
       }
     },
@@ -1073,7 +1207,14 @@ export default {
         workProcess: "",
         workStartTime: "",
         listUpdateOperation: "添加",
-        weeklyId: this.id
+        weeklyId: this.id,
+        isElectrification:false,
+        laborSubcontractor:"",
+        professionalSubcontractor:"",
+        personnelName :"",
+        personnelPosition:"",
+        personnelPhone : "",
+        personnelTime : ""
       });
     },
     //删除选中多行风险
@@ -1226,6 +1367,7 @@ export default {
           validNum++;
         }
       });
+      console.log(validNum)
       if (validNum === 4) {
         if (this.isValidTable()) {
           this.$message({
@@ -1272,6 +1414,17 @@ export default {
           chiefInspectorId: this.updateFormThree.chiefInspectorId[1] != this.firstData.chiefInspectorId ? this.updateFormThree.chiefInspectorId[1] : undefined,
           safetySupervisorId: this.updateFormThree.safetySupervisorId[1] != this.firstData.safetySupervisorId ? this.updateFormThree.safetySupervisorId[1] : undefined,
 
+          voltageClass: this.updateFormTwo.voltageClass != this.firstData.voltageClass ? this.updateFormTwo.voltageClass : undefined,
+          assignmentType: this.updateFormTwo.assignmentType != this.firstData.assignmentType ? this.updateFormTwo.assignmentType : undefined,
+          constructionType: this.updateFormTwo.constructionType != this.firstData.constructionType ? this.updateFormTwo.constructionType : undefined,
+          mainWorkerNum: this.updateFormTwo.mainWorkerNum != this.firstData.mainWorkerNum ? this.updateFormTwo.mainWorkerNum : undefined,
+          outsourcingWorkerNum: this.updateFormTwo.outsourcingWorkerNum != this.firstData.outsourcingWorkerNum ? this.updateFormTwo.outsourcingWorkerNum : undefined,
+
+          constructionPrincipalNumber: this.updateFormThree.constructionPrincipalNumber != this.firstData.constructionPrincipalNumber ? this.updateFormThree.constructionPrincipalNumber : undefined,
+          constructionPrincipal: this.updateFormThree.constructionPrincipal != this.firstData.constructionPrincipal ? this.updateFormThree.constructionPrincipal : undefined,
+
+
+
           projectManagerDeptId: this.updateFormThree.projectManagerId[0] != this.firstData.projectManagerDeptId ? this.updateFormThree.projectManagerId[0] : undefined,
           qualityStaffDeptId: this.updateFormThree.qualityStaffId[0] != this.firstData.qualityStaffDeptId ? this.updateFormThree.qualityStaffId[0] : undefined,
           safetyStaffDeptId: this.updateFormThree.safetyStaffId[0] != this.firstData.safetyStaffDeptId ? this.updateFormThree.safetyStaffId[0] : undefined,
@@ -1279,6 +1432,14 @@ export default {
           chiefInspectorDeptId: this.updateFormThree.chiefInspectorId[0] != this.firstData.chiefInspectorDeptId ? this.updateFormThree.chiefInspectorId[0] : undefined,
           safetySupervisorDeptId: this.updateFormThree.safetySupervisorId[0] != this.firstData.safetySupervisorDeptId ? this.updateFormThree.safetySupervisorId[0] : undefined,
         };
+        console.log(projectUpdateReq)
+
+        if(this.firstData.projectManagerId == -1 && this.updateFormThree.projectManagerId[1]==100000) projectUpdateReq.projectManagerId = undefined;
+        if(this.firstData.safetyStaffId == -1 && this.updateFormThree.safetyStaffId[1]==100000) projectUpdateReq.safetyStaffId = undefined;
+        if(this.firstData.qualityStaffId == -1 && this.updateFormThree.qualityStaffId[1]==100000) projectUpdateReq.qualityStaffId = undefined;
+        if(this.firstData.chiefInspectorId == -1 && this.updateFormThree.chiefInspectorId[1]==100000) projectUpdateReq.chiefInspectorId=undefined;
+        if(this.firstData.safetySupervisorId == -1 && this.updateFormThree.safetySupervisorId[1]==100000) projectUpdateReq.safetySupervisorId=undefined;
+        if(this.firstData.professionalSupervisorId == -1 && this.updateFormThree.professionalSupervisorId[1]==100000) projectUpdateReq.professionalSupervisorId=undefined;
         // }
 
 
@@ -1297,6 +1458,14 @@ export default {
           hasWorkNextWeek: this.updateFormFour.hasWorkNextWeek != this.firstData.hasWorkNextWeek ? this.updateFormFour.hasWorkNextWeek : undefined,
           latitude: this.updateFormTwo.latitude != this.firstData.latitude ? this.updateFormTwo.latitude : undefined,
           longitude: this.updateFormTwo.longitude != this.firstData.longitude ? this.updateFormTwo.longitude : undefined,
+
+          voltageClass: this.updateFormTwo.voltageClass != this.firstData.voltageClass ? this.updateFormTwo.voltageClass : undefined,
+          assignmentType: this.updateFormTwo.assignmentType != this.firstData.assignmentType ? this.updateFormTwo.assignmentType : undefined,
+          constructionType: this.updateFormTwo.constructionType != this.firstData.constructionType ? this.updateFormTwo.constructionType : undefined,
+          mainWorkerNum: this.updateFormTwo.mainWorkerNum != this.firstData.mainWorkerNum ? this.updateFormTwo.mainWorkerNum : undefined,
+          outsourcingWorkerNum: this.updateFormTwo.outsourcingWorkerNum != this.firstData.outsourcingWorkerNum ? this.updateFormTwo.outsourcingWorkerNum : undefined,
+
+          
           monthStartTime: this.updateFormOne.monthStartTime != this.firstData.monthStartTime ? this.updateFormOne.monthStartTime : undefined,
           projectId: this.updateFormTwo.id != this.firstData.projectId ? this.updateFormTwo.id : undefined,
           supervisionId: this.updateFormTwo.supervisionId != this.firstData.supervisionId ? this.updateFormTwo.supervisionId : undefined,
@@ -1322,6 +1491,20 @@ export default {
           safetySupervisorDeptId: this.updateFormThree.safetySupervisorId[0] != this.firstData.safetySupervisorDeptId ? this.updateFormThree.safetySupervisorId[0] : undefined,
         };
 
+        if(this.updateFormThree.projectManagerId[1]==100000) projectWeeklyAddReq.projectManagerId = -1;
+        if(this.updateFormThree.safetyStaffId[1]==100000) projectWeeklyAddReq.safetyStaffId = -1;
+        if(this.updateFormThree.qualityStaffId[1]==100000) projectWeeklyAddReq.qualityStaffId = -1;
+        if(this.updateFormThree.chiefInspectorId[1] == 100000) projectWeeklyAddReq.chiefInspectorId = -1;
+        if(this.updateFormThree.safetySupervisorId[1] == 100000) projectWeeklyAddReq.safetySupervisorId = -1;
+        if(this.updateFormThree.professionalSupervisorId[1] == 100000) projectWeeklyAddReq.professionalSupervisorId = -1;
+
+        
+        if(this.firstData.projectManagerId == -1 && this.updateFormThree.projectManagerId[1]==100000) projectWeeklyAddReq.projectManagerId = undefined;
+        if(this.firstData.safetyStaffId == -1 && this.updateFormThree.safetyStaffId[1]==100000) projectWeeklyAddReq.safetyStaffId = undefined;
+        if(this.firstData.qualityStaffId == -1 && this.updateFormThree.qualityStaffId[1]==100000) projectWeeklyAddReq.qualityStaffId = undefined;
+        if(this.firstData.chiefInspectorId == -1 && this.updateFormThree.chiefInspectorId[1]==100000) projectWeeklyAddReq.chiefInspectorId=undefined;
+        if(this.firstData.safetySupervisorId == -1 && this.updateFormThree.safetySupervisorId[1]==100000) projectWeeklyAddReq.safetySupervisorId=undefined;
+        if(this.firstData.professionalSupervisorId == -1 && this.updateFormThree.professionalSupervisorId[1]==100000) projectWeeklyAddReq.professionalSupervisorId=undefined;
         //主要施工内容信息
         // this.updateFormFour.weeklyConstructContentAddReqs.forEach(element => {
         //   if (element.id) {
@@ -1348,7 +1531,9 @@ export default {
               console.log("element:", element);
               console.log("ele:", ele);
               if (ele.id === element.id) {
-                if (ele.riskAdd != element.riskAdd|| ele.riskLevel != element.riskLevel || ele.workEndTime != element.workEndTime || ele.workStartTime != element.workStartTime || ele.workContent != element.workContent || ele.workProcessTotalList != element.workProcessTotalList) {
+                if (ele.riskAdd != element.riskAdd|| ele.riskLevel != element.riskLevel || ele.workEndTime != element.workEndTime || ele.workStartTime != element.workStartTime || ele.workContent != element.workContent || ele.workProcessTotalList != element.workProcessTotalList
+                || ele.isElectrification != element.isElectrification|| ele.laborSubcontractor != element.laborSubcontractor|| ele.professionalSubcontractor != element.professionalSubcontractor
+                || ele.personnelName != element.personnelName|| ele.personnelPosition != element.personnelPosition|| ele.personnelPhone != element.personnelPhone|| ele.personnelTime != element.personnelTime) {
                   element.listUpdateOperation = "更新";
                   weeklyRiskContentAddReqs.push(element);
                 }
@@ -1380,6 +1565,8 @@ export default {
         this.deleteweeklyWorkProgressAddReqs.forEach(element => {
           weeklyWorkProgressAddReqs.push(element);
         })
+
+        
 
         //信息整合
         let list = {

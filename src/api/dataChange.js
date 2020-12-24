@@ -4281,3 +4281,126 @@ export const getJobNumberA = () => {
     }
   ];
 };
+
+
+// 获取电压等级
+export const getVoltageClass = () => {
+  return [
+    {
+      value: "1000kV",
+    },
+    {
+      value: "750kV",
+    },
+    {
+      value: "500kV",
+    },
+    {
+      value: "330kV",
+    },
+    {
+      value: "220kV",
+    },
+    {
+      value: "110kV(66kV)",
+    },
+    {
+      value: "35kV",
+    },
+    {
+      value: "10kV(20kV)",
+    },
+    {
+      value: "±1100kV",
+    },
+    {
+      value: "±800kV",
+    },
+    {
+      value: "±600kV",
+    },
+    {
+      value: "±500kV",
+    },
+    {
+      value: "±400kV",
+    },
+    {
+      value: "±200kV",
+    },
+    {
+      value: "其他",
+    },
+  ]
+}
+
+
+// 获取作业类型
+export const getAssignmentType = () => {
+  return [
+    {
+      value: "生产检修改造",
+    },
+    {
+      value: "输变电工程",
+    },
+    {
+      value: "配农网工程",
+    },
+    {
+      value: "业扩工程",
+    },
+    {
+      value: "迁改工程",
+    },
+    {
+      value: "网络信息作业",
+    },
+    {
+      value: "通信检修施工",
+    },
+    {
+      value: "外部工程",
+    },
+    {
+      value: "发电检修改造",
+    },
+    {
+      value: "发电基建工程",
+    },
+    {
+      value: "综合能源项目",
+    },
+    {
+      value: "充电桩工程",
+    },
+    {
+      value: "小型基建工程",
+    },
+    {
+      value: "其他",
+    },
+  ]
+}
+
+
+// 获取施工单位类别
+export const getConstructionType  = () => {
+  return [
+    {
+      value: "电网主业单位",
+    },
+    {
+      value: "直属产业单位",
+    },
+    {
+      value: "省送变电公司",
+    },
+    {
+      value: "省管产业单位",
+    },
+    {
+      value: "系统外单位",
+    },
+  ]
+}

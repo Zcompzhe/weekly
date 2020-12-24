@@ -89,7 +89,42 @@
             </div>
           </el-col>
         </el-row>
-
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="电压等级" prop="voltageClass" placeholder="请选择电压等级">
+                <el-select v-model="projectForm.voltageClass" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.voltageClassOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="作业类型" prop="assignmentType" placeholder="请选择作业类型">
+                <el-select v-model="projectForm.assignmentType" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.assignmentTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="施工单位类别" prop="constructionType" placeholder="请选择施工单位类别">
+                <el-select v-model="projectForm.constructionType" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.constructionTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="项目规模" prop="projectScale" placeholder="请输入项目规模">
+                <el-input v-model="projectForm.projectScale" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
         <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
@@ -107,15 +142,16 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="项目规模" prop="projectScale" placeholder="请输入项目规模">
-                <el-input v-model="projectForm.projectScale" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+              <el-form-item label="主业作业人数" prop="mainWorkerNum" placeholder="请输入主业单位作业人数">
+                <el-input v-model="projectForm.mainWorkerNum" clearable :rows="1" placeholder="整数，如：20" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
+
           <el-col :span="6">
             <div class="bar">
-              <el-form-item label="一线作业人数" prop="currentWorkerNum" placeholder="请输入一线作业人数">
-                <el-input v-model="projectForm.currentWorkerNum" clearable :rows="1" placeholder="整数，如：20" style="min-width:200px"></el-input>
+              <el-form-item label="外包作业人数" prop="outsourcingWorkerNum" placeholder="请输入外包单位作业人数">
+                <el-input v-model="projectForm.outsourcingWorkerNum" clearable :rows="1" placeholder="整数，如：20" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -250,6 +286,23 @@
           </el-col>
         </el-row>
         <el-row :gutter="20">
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="施工单位负责人" prop="constructionPrincipal" placeholder="请选择施工单位负责人">
+                <el-input v-model="personForm.constructionPrincipal" clearable :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="联系方式" prop="constructionPrincipalNumber" placeholder="请选择联系方式">
+                <el-input v-model="personForm.constructionPrincipalNumber" clearable :rows="1" placeholder="请输入" style="min-width:300px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+
+        </el-row>
+        <el-row :gutter="20">
           <el-col :span="20">
             <div class="Mbutton">
               <el-col :span="6">
@@ -274,6 +327,7 @@ import { POINT_CONVERSION_COMPRESSED } from "constants";
 import * as api from "@/api/date.js";
 import * as getApi from "@/api/getApi.js";
 import * as addApi from "@/api/addApi.js";
+import * as dataApi from "@/api/dataChange.js";
 export default {
   data() {
     return {
@@ -293,19 +347,27 @@ export default {
         detailedAddress: "",
         longitude: "",
         latitude: "",
+        voltageClass:"",
+        assignmentType:"",
+        constructionType:"",
         actualStartTime: "",
         planCompletionTime: "",
         projectScale: "",
-        currentWorkerNum: "",
+        mainWorkerNum: "",
+        outsourcingWorkerNum:"",
         currentSubcontractorNum: "",
         adminDept: "",
         projectState: "",
+        
         options: {
           adminIdOptions: {},
           supervisionIdOptions: {},
           districtIdOptions: {},
           adminDeptOptions: {},
           constructDeptIdOptions: {},
+          voltageClassOptions:{},
+          assignmentTypeOptions:{},
+          constructionTypeOptions:{},
           projectStateOptions: [{
             value: true,
             name: "是"
@@ -398,7 +460,7 @@ export default {
             }
           }
         ],
-        currentWorkerNum: [
+        mainWorkerNum: [
           {
             required: false,
             trigger: "blur",
@@ -407,12 +469,31 @@ export default {
               if (value != "" && value != null) {
                 var reg = /^[1-9]\d*$/;
                 if (!reg.test(value)&& value!="0") {
-                  callback(new Error("一线自有作业人员数需要整数，如：20"));
+                  callback(new Error("主业单位作业人员数需要整数，如：20"));
                 } else {
                   callback();
                 }
               } else {
-                callback(new Error("请输入当前施工单位一线自有作业人员数"));
+                callback();
+              }
+            }
+          }
+        ],
+        outsourcingWorkerNum:[
+          {
+            required: false,
+            trigger: "blur",
+            validator: (rule, value, callback) => {
+              if (value == "0") callback();
+              if (value != "" && value != null) {
+                var reg = /^[1-9]\d*$/;
+                if (!reg.test(value)&& value!="0") {
+                  callback(new Error("外包单位作业人员数需要整数，如：20"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback();
               }
             }
           }
@@ -432,6 +513,8 @@ export default {
         chiefInspectorId: "",
         professionalSupervisorId: "",
         safetySupervisorId: "",
+        constructionPrincipalNumber:"",
+        constructionPrincipal:"",
         options: {
           personOptions: [],
         }
@@ -454,6 +537,27 @@ export default {
         ],
         safetySupervisorId: [
           { required: true, message: "请选择安全监理", trigger: "change" }
+        ],
+        constructionPrincipalNumber:[
+          {
+            required: false,
+            trigger: "change",
+            validator: (rule, value, callback) => {
+              if (value != "" && value != null) {
+                var reg = /^([+]\d+[.]\d+|[-]\d+[.]\d+|\d+[.]\d+|[+]\d+|[-]\d+|\d+)$/gi
+                if (!reg.test(value)) {
+                  callback(new Error("请输入施工单位负责人联系方式。"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback();
+              }
+            }
+          }
+        ],
+        constructionPrincipal:[
+          { required: false, message: "请输入施工单位负责人", trigger: "change" }
         ],
       },
     };
@@ -494,6 +598,12 @@ export default {
       getApi.getAllProjectAdminDeptEnum().then(response => {
         this.projectForm.options.adminDeptOptions = response;
       });
+      //获取电压等级
+      this.projectForm.options.voltageClassOptions = dataApi.getVoltageClass();
+      //获取作业类型
+      this.projectForm.options.assignmentTypeOptions = dataApi.getAssignmentType();
+      //获取施工单位类别
+      this.projectForm.options.constructionTypeOptions = dataApi.getConstructionType();
       //获取所有人员信息
       getApi.getUserCascader().then(response => {
         this.personForm.options.personOptions = response.options;
@@ -563,12 +673,19 @@ export default {
           detailedAddress: this.projectForm.detailedAddress,
           districtId: this.projectForm.districtId,
           latitude: this.projectForm.latitude,
-          longitude: this.projectForm.longitude,
+          longitude:this.projectForm.longitude,
+          voltageClass: this.projectForm.voltageClass,
+          assignmentType: this.projectForm.assignmentType,
+          constructionType: this.projectForm.constructionType,
           name: this.projectForm.name,
           projectState: this.projectForm.projectState,
           supervisionId: this.projectForm.supervisionId,
           currentSubcontractorNum: this.projectForm.currentSubcontractorNum,
-          currentWorkerNum: this.projectForm.currentWorkerNum,
+          mainWorkerNum: this.projectForm.mainWorkerNum,
+          outsourcingWorkerNum:this.projectForm.outsourcingWorkerNum,
+
+          constructionPrincipalNumber:this.personForm.constructionPrincipalNumber,
+          constructionPrincipal:this.personForm.constructionPrincipal,
           projectScale: this.projectForm.projectScale,
           actualStartTime: api.changeDate(this.projectForm.actualStartTime),
           planCompletionTime: api.changeDate(this.projectForm.planCompletionTime),

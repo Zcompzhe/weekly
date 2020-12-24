@@ -88,6 +88,32 @@
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
+              <div class="title">电压等级</div>
+              <el-input disabled v-model="projectDetail.voltageClass" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">作业类型</div>
+              <el-input disabled v-model="projectDetail.assignmentType" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">施工单位类别</div>
+              <el-input disabled v-model="projectDetail.constructionType" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目规模</div>
+              <el-input disabled v-model="projectDetail.projectScale" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
               <div class="title">实际开工时间</div>
               <el-input disabled v-model="projectDetail.actualStartTime" disabled style="min-width:200px"></el-input>
             </div>
@@ -100,14 +126,14 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">项目规模</div>
-              <el-input disabled v-model="projectDetail.projectScale" disabled style="min-width:200px"></el-input>
+              <div class="title">主业单位作业人数</div>
+              <el-input disabled v-model="projectDetail.mainWorkerNum" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">一线作业人员数</div>
-              <el-input disabled v-model="projectDetail.currentWorkerNum" disabled style="min-width:200px"></el-input>
+              <div class="title">外包单位作业人数</div>
+              <el-input disabled v-model="projectDetail.outsourcingWorkerNum" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -175,6 +201,20 @@
             </div>
           </el-col>
         </el-row>
+         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">施工单位负责人</div>
+              <el-input disabled v-model="projectDetail.constructionPrincipal" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">负责人联系方式</div>
+              <el-input disabled v-model="projectDetail.constructionPrincipalNumber" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+         </el-row>
       </el-dialog>
 
     </el-card>

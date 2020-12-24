@@ -26,6 +26,27 @@ export const changeDateToSecond = date => {
   }
 };
 
+export const changeDateToSecond2 = date => {
+  if (!date) {
+    return undefined;
+  } else {
+    // var date = new Date(date);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? "0" + m : m;
+    var d = date.getDate();
+    d = d < 10 ? "0" + d : d;
+
+    var h = date.getHours();
+    h = h < 10 ? "0" + h : h;
+    var mm = date.getMinutes();
+    mm = mm < 10 ? "0" + mm : mm;
+    var s = date.getSeconds();
+    s = s < 10 ? "0" + s : s;
+    return y + "-" + m + "-" + d + " " + h + ":" + mm + ":" + s;
+  }
+};
+
 //获得本周五到下周五
 export const getThisWeekStart = weeklyStartTime => {
   //先求星期几
