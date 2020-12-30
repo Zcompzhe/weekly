@@ -183,7 +183,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="主业作业人数" prop="mainWorkerNum" placeholder="周报开始日期">
-                <el-input v-model="updateFormTwo.mainWorkerNum" clearable  :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+                <el-input v-model="updateFormTwo.mainWorkerNum" clearable  :rows="1" placeholder="整数，如20" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>

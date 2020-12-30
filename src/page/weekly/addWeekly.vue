@@ -185,7 +185,7 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="主业作业人数" prop="mainWorkerNum" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.mainWorkerNum" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+                <el-input v-model="addFormTwo.mainWorkerNum" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="整数，如20" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -1418,7 +1418,9 @@ export default {
 
         //风险作业内容信息
         weeklyRiskContentAddReqs = this.addFormFour.weeklyRiskContentAddReqs;
-        weeklyRiskContentAddReqs.forEach
+        weeklyRiskContentAddReqs.forEach(ele=>{
+          ele.personnelTime = api.changeDateToSecond2(ele.personnelTime);
+        })
         console.log(weeklyRiskContentAddReqs)
         //施工进度信息
         weeklyWorkProgressAddReqs = this.addFormFour.weeklyWorkProgressAddReqs;

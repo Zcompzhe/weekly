@@ -59,7 +59,7 @@ export const getThisWeekStart = weeklyStartTime => {
     //第一步，将截止日期求出来
 
     weeklyStartTime2 = new Date(weeklyStartTime);
-    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 12);
+    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 14);
     weeklyStartTime2 = changeDate(weeklyStartTime2);
 
     //第二步，将起始日期求出来
@@ -70,7 +70,7 @@ export const getThisWeekStart = weeklyStartTime => {
     //第一步，将截止日期求出来
 
     weeklyStartTime2 = new Date(weeklyStartTime);
-    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 5);
+    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 7);
     weeklyStartTime2 = changeDate(weeklyStartTime2);
 
     //第二步，将起始日期求出来
