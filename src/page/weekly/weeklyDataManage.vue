@@ -99,7 +99,12 @@
         </el-col> -->
         <el-col :offset="1" :span="2">
           <div class="bar">
-            <el-button type="primary" style="margin-right: 20px" @click="exportWeekly">导出周报</el-button>
+            <el-button type="primary" style="margin-right: 20px" @click="exportWeekly">导出计管中心周报</el-button>
+          </div>
+        </el-col>
+        <el-col :offset="1" :span="2">
+          <div class="bar">
+            <el-button type="primary" style="margin-right: 20px" @click="exportWeeklyTwo">导出安保部周报</el-button>
           </div>
         </el-col>
         <el-col :offset="1" :span="2">
@@ -720,10 +725,22 @@ export default {
         }
       });
     },
-    //导出周报
+    //导出计管中心周报
     exportWeekly() {
       this.$router.push({
-        name: "exportWeekly"
+        name: "exportWeekly",
+        params: {
+          flag: "exportProjectWeekly"
+        }
+      })
+    },
+    //导出安保部周报
+    exportWeeklyTwo() {
+      this.$router.push({
+        name: "exportWeekly",
+        params: {
+          flag: "exportInspectionProjectWeekly"
+        }
       })
     },
     //周报列表选中

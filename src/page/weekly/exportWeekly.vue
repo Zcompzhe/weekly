@@ -287,11 +287,15 @@ export default {
           { required: false, message: "请选择周报开始时间", trigger: "change" }
         ],
       },
+      // export flag
+      flag:"exportProjectWeekly",
     };
 
   },
 
   created: function () {
+    let data = this.$route.params;
+    this.flag = data.flag;
     //空搜索获取信息
     let startDate = new Date();
     let endDate = api.getThisWeekStart(startDate);
@@ -330,28 +334,56 @@ export default {
         projectId: this.searchTable.projectId === "" ? undefined : this.searchTable.projectId,
         weeklyStartTime: this.searchTable.weeklyStartTime === "" || this.searchTable.weeklyStartTime === null ? undefined : api.changeDate(this.searchTable.weeklyStartTime)
       };
-      searchApi.exportProjectWeeklyAsExcel(list)
-        .then(response => {
-          let content = response;
-          let blob = new Blob([content]);
-          let da = api.changeDate(new Date());
-          let fileName = "weekly-" + da + ".xlsx";
-          console.log(response);
-          if ("download" in document.createElement("a")) {
-            // 非IE下载
-            const elink = document.createElement("a");
-            elink.download = fileName;
-            elink.style.display = "none";
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            URL.revokeObjectURL(elink.href); // 释放URL 对象
-            document.body.removeChild(elink);
-          } else {
-            // IE10+下载
-            navigator.msSaveBlob(blob, fileName);
-          }
-        })
+
+      if(this.flag == "exportProjectWeekly")
+      {
+        searchApi.exportProjectWeeklyAsExcel(list)
+                .then(response => {
+                  let content = response;
+                  let blob = new Blob([content]);
+                  let da = api.changeDate(new Date());
+                  let fileName = "weekly-" + da + ".xlsx";
+                  console.log(response);
+                  if ("download" in document.createElement("a")) {
+                    // 非IE下载
+                    const elink = document.createElement("a");
+                    elink.download = fileName;
+                    elink.style.display = "none";
+                    elink.href = URL.createObjectURL(blob);
+                    document.body.appendChild(elink);
+                    elink.click();
+                    URL.revokeObjectURL(elink.href); // 释放URL 对象
+                    document.body.removeChild(elink);
+                  } else {
+                    // IE10+下载
+                    navigator.msSaveBlob(blob, fileName);
+                  }
+                })
+      }else{
+        searchApi.exportInspectionProjectWeeklyAsExcel(list)
+                .then(response => {
+                  let content = response;
+                  let blob = new Blob([content]);
+                  let da = api.changeDate(new Date());
+                  let fileName = "weekly-" + da + ".xlsx";
+                  console.log(response);
+                  if ("download" in document.createElement("a")) {
+                    // 非IE下载
+                    const elink = document.createElement("a");
+                    elink.download = fileName;
+                    elink.style.display = "none";
+                    elink.href = URL.createObjectURL(blob);
+                    document.body.appendChild(elink);
+                    elink.click();
+                    URL.revokeObjectURL(elink.href); // 释放URL 对象
+                    document.body.removeChild(elink);
+                  } else {
+                    // IE10+下载
+                    navigator.msSaveBlob(blob, fileName);
+                  }
+                })
+      }
+      
     },
 
     //周报开始日期改变，自动获取月份，周数，周次

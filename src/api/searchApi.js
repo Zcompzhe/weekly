@@ -166,6 +166,17 @@ export const exportProjectWeeklyAsExcel = data => {
   });
 };
 
+//根据条件导出周报信息
+export const exportInspectionProjectWeeklyAsExcel = data => {
+  return request({
+    url: `/projectWeeklyManagement/exportInspectionProjectWeeklyAsExcel`,
+    method: "post",
+    data: data,
+    "Content-Type": "application/json;charset=UTF-8",
+    responseType: "blob"
+  });
+};
+
 //查找用户个人信息
 export const me = () => {
   return request.get(`/me`);
