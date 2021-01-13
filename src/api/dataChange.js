@@ -3334,6 +3334,10 @@ export const getJobNumber = () => {
       label: "架空输电线路工程",
     },
     {
+      value: "电缆工程",
+      label: "电缆工程",
+    },
+    {
       value: "其他",
       label: "其他",
     },
