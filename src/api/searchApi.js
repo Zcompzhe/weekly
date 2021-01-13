@@ -177,6 +177,18 @@ export const exportInspectionProjectWeeklyAsExcel = data => {
   });
 };
 
+
+//根据条件导出统计
+export const exportWeeklyStatisticAsExcel = data => {
+  return request({
+    url: `/projectWeeklyManagement/exportWeeklyStatisticAsExcel`,
+    method: "post",
+    data: data,
+    "Content-Type": "application/json;charset=UTF-8",
+    responseType: "blob"
+  });
+};
+
 //查找用户个人信息
 export const me = () => {
   return request.get(`/me`);
