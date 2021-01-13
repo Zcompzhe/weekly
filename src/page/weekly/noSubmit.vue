@@ -94,10 +94,24 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
+              <div class="title">项目性质</div>
+              <el-input disabled v-model="projectDetail.projectProperty" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">工程类型</div>
+              <el-input disabled v-model="projectDetail.engineeringType" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
               <div class="title">作业类型</div>
               <el-input disabled v-model="projectDetail.assignmentType" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
               <div class="title">施工单位类别</div>
@@ -110,8 +124,7 @@
               <el-input disabled v-model="projectDetail.projectScale" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
-        </el-row>
-        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+      
           <el-col :span="8">
             <div class="bar">
               <div class="title">实际开工时间</div>
@@ -124,6 +137,8 @@
               <el-input disabled v-model="projectDetail.planCompletionTime" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
               <div class="title">主业单位作业人数</div>
@@ -136,8 +151,6 @@
               <el-input disabled v-model="projectDetail.outsourcingWorkerNum" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
-        </el-row>
-        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
               <div class="title">当前分包人员数</div>
@@ -150,6 +163,8 @@
               <el-input disabled v-model="projectDetail.adminDept" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
               <div class="title">项目状态</div>

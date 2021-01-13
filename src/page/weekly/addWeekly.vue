@@ -138,6 +138,26 @@
 
           <el-col :span="8">
             <div class="bar">
+              <el-form-item label="项目性质" prop="projectProperty" placeholder="项目性质">
+                <el-select v-model="addFormTwo.projectProperty" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in addFormTwo.options.projectPropertyOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="工程类型" prop="engineeringType" placeholder="工程类型">
+                <el-select v-model="addFormTwo.engineeringType" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in addFormTwo.options.engineeringTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
               <el-form-item label="作业类型" prop="assignmentType" placeholder="作业类型">
                 <el-select v-model="addFormTwo.assignmentType" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in addFormTwo.options.assignmentTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
@@ -145,6 +165,9 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+
+        <el-row :gutter="20">
 
           <el-col :span="8">
             <div class="bar">
@@ -163,9 +186,7 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-
-        <el-row :gutter="20">
+        
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="实际开工时间" prop="actualStartTime" placeholder="项目名称">
@@ -181,6 +202,9 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+
+        <el-row :gutter="20">
 
           <el-col :span="8">
             <div class="bar">
@@ -197,9 +221,7 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-
-        <el-row :gutter="20">
+        
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="项目名称">
@@ -217,8 +239,6 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="8"></el-col>
-          <el-col :span="8"></el-col>
         </el-row>
       </el-form>
     </el-card>
@@ -546,6 +566,8 @@ export default {
       addFormTwo: {
         id: "",
         name: "",
+        engineeringType : "",
+        projectProperty : "",
         projectId: "",
         adminId: "",
         supervisionId: "",
@@ -571,6 +593,8 @@ export default {
           adminIdOptions: {},
           supervisionIdOptions: {},
           constructDeptIdOptions: {},
+          engineeringTypeOptions : {},
+          projectPropertyOptions : {},
           constructionTypeOptions:{},
           voltageClassOptions:{},
           assignmentTypeOptions:{},
@@ -851,6 +875,10 @@ export default {
       getApi.getAllProjectAdminDeptEnum().then(response => {
         this.addFormTwo.options.adminDeptOptions = response;
       });
+      //获得项目性质
+      this.addFormTwo.options.projectPropertyOptions = dataApi.getProjectProperty();
+      //获得工程类型
+      this.addFormTwo.options.engineeringTypeOptions = dataApi.getEngineeringType();
       //获取电压等级
       this.addFormTwo.options.voltageClassOptions = dataApi.getVoltageClass();
       //获取作业类型
@@ -963,6 +991,8 @@ export default {
         this.addFormTwo.adminId = "";
         this.addFormTwo.supervisionId = "";
         this.addFormTwo.constructDeptId = "";
+        this.addFormTwo.engineeringType = "";
+        this.addFormTwo.projectProperty = "";
         this.addFormTwo.districtId = "";
         this.addFormTwo.detailedAddress = "";
         this.addFormTwo.latitude = "";
@@ -1005,6 +1035,8 @@ export default {
             this.addFormTwo.currentWorkerNum = data.currentWorkerNum;
             this.addFormTwo.currentSubcontractorNum =
               data.currentSubcontractorNum;
+            this.addFormTwo.engineeringType = data.engineeringType;
+            this.addFormTwo.projectProperty = data.projectProperty;
             this.addFormTwo.voltageClass = data.voltageClass;
             this.addFormTwo.assignmentType = data.assignmentType;
             this.addFormTwo.constructionType = data.constructionType;
@@ -1303,6 +1335,8 @@ export default {
           currentWorkerNum: this.addFormTwo.currentWorkerNum != this.beforeProjectInfo.currentWorkerNum ? this.addFormTwo.currentWorkerNum : undefined,
           currentSubcontractorNum: this.addFormTwo.currentSubcontractorNum != this.beforeProjectInfo.currentSubcontractorNum ? this.addFormTwo.currentSubcontractorNum : undefined,
           adminDept: this.addFormTwo.adminDept != this.beforeProjectInfo.adminDept ? this.addFormTwo.adminDept : undefined,
+          projectProperty: this.addFormTwo.projectProperty != this.beforeProjectInfo.projectProperty ? this.addFormTwo.projectProperty : undefined,
+          engineeringType: this.addFormTwo.engineeringType != this.beforeProjectInfo.engineeringType ? this.addFormTwo.engineeringType : undefined,
 
           voltageClass: this.addFormTwo.voltageClass != this.beforeProjectInfo.voltageClass ? this.addFormTwo.voltageClass : undefined,
           assignmentType: this.addFormTwo.assignmentType != this.beforeProjectInfo.assignmentType ? this.addFormTwo.assignmentType : undefined,
@@ -1388,6 +1422,9 @@ export default {
           qualityStaffId: this.addFormThree.qualityStaffId[1],
           safetyStaffId: this.addFormThree.safetyStaffId[1],
           safetySupervisorId: this.addFormThree.safetySupervisorId[1],
+
+          engineeringType: this.addFormTwo.engineeringType,
+          projectProperty: this.addFormTwo.projectProperty,
 
           voltageClass: this.addFormTwo.voltageClass,
           assignmentType: this.addFormTwo.assignmentType,

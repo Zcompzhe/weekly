@@ -137,6 +137,26 @@
 
           <el-col :span="8">
             <div class="bar">
+              <el-form-item label="项目性质" prop="projectProperty" placeholder="项目性质">
+                <el-select v-model="updateFormTwo.projectProperty" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormTwo.options.projectPropertyOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="工程类型" prop="engineeringType" placeholder="工程类型">
+                <el-select v-model="updateFormTwo.engineeringType" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormTwo.options.engineeringTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
               <el-form-item label="作业类型" prop="assignmentType" placeholder="作业类型">
                 <el-select v-model="updateFormTwo.assignmentType" clearable  placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in updateFormTwo.options.assignmentTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
@@ -144,6 +164,8 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20">
 
           <el-col :span="8">
             <div class="bar">
@@ -162,8 +184,7 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
+        
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="实际开工时间" prop="actualStartTime" placeholder="项目名称">
@@ -179,6 +200,8 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20">
 
           <el-col :span="8">
             <div class="bar">
@@ -195,9 +218,7 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-
-        <el-row :gutter="20">
+        
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="项目名称">
@@ -215,8 +236,6 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="8"></el-col>
-          <el-col :span="8"></el-col>
         </el-row>
       </el-form>
     </el-card>
@@ -566,6 +585,8 @@ export default {
         currentWorkerNum: "",
         currentSubcontractorNum: "",
         adminDept: "",
+        engineeringType : "",
+        projectProperty : "",
         constructionType:"",
         voltageClass:"",
         assignmentType:"",
@@ -577,6 +598,8 @@ export default {
           adminIdOptions: {},
           supervisionIdOptions: {},
           constructDeptIdOptions: {},
+          engineeringTypeOptions : {},
+          projectPropertyOptions : {},
           constructionTypeOptions:{},
           voltageClassOptions:{},
           assignmentTypeOptions:{},
@@ -843,6 +866,9 @@ export default {
       this.updateFormTwo.adminDept = res.projectWeeklyShowResp.adminDept;
 
 
+      this.updateFormTwo.projectProperty = res.projectWeeklyShowResp.projectProperty;
+      this.updateFormTwo.engineeringType = res.projectWeeklyShowResp.engineeringType;
+
       this.updateFormTwo.constructionType = res.projectWeeklyShowResp.constructionType;
       this.updateFormTwo.voltageClass = res.projectWeeklyShowResp.voltageClass;
       this.updateFormTwo.assignmentType = res.projectWeeklyShowResp.assignmentType;
@@ -935,6 +961,11 @@ export default {
       if(this.updateFormThree.professionalSupervisorId[1] == -1) this.updateFormThree.professionalSupervisorId[1]=100000;
       console.log(this.updateFormFour)
     });
+
+    //获得项目性质
+    this.updateFormTwo.options.projectPropertyOptions = dataApi.getProjectProperty();
+    //获得工程类型
+    this.updateFormTwo.options.engineeringTypeOptions = dataApi.getEngineeringType();
     //获取电压等级
     this.updateFormTwo.options.voltageClassOptions = dataApi.getVoltageClass();
     //获取作业类型
@@ -1414,6 +1445,9 @@ export default {
           chiefInspectorId: this.updateFormThree.chiefInspectorId[1] != this.firstData.chiefInspectorId ? this.updateFormThree.chiefInspectorId[1] : undefined,
           safetySupervisorId: this.updateFormThree.safetySupervisorId[1] != this.firstData.safetySupervisorId ? this.updateFormThree.safetySupervisorId[1] : undefined,
 
+          engineeringType: this.updateFormTwo.engineeringType != this.firstData.engineeringType ? this.updateFormTwo.engineeringType : undefined,
+          projectProperty: this.updateFormTwo.projectProperty != this.firstData.projectProperty ? this.updateFormTwo.projectProperty : undefined,
+
           voltageClass: this.updateFormTwo.voltageClass != this.firstData.voltageClass ? this.updateFormTwo.voltageClass : undefined,
           assignmentType: this.updateFormTwo.assignmentType != this.firstData.assignmentType ? this.updateFormTwo.assignmentType : undefined,
           constructionType: this.updateFormTwo.constructionType != this.firstData.constructionType ? this.updateFormTwo.constructionType : undefined,
@@ -1458,6 +1492,9 @@ export default {
           hasWorkNextWeek: this.updateFormFour.hasWorkNextWeek != this.firstData.hasWorkNextWeek ? this.updateFormFour.hasWorkNextWeek : undefined,
           latitude: this.updateFormTwo.latitude != this.firstData.latitude ? this.updateFormTwo.latitude : undefined,
           longitude: this.updateFormTwo.longitude != this.firstData.longitude ? this.updateFormTwo.longitude : undefined,
+
+          projectProperty: this.updateFormTwo.projectProperty != this.firstData.projectProperty ? this.updateFormTwo.projectProperty : undefined,
+          engineeringType: this.updateFormTwo.engineeringType != this.firstData.engineeringType ? this.updateFormTwo.engineeringType : undefined,
 
           voltageClass: this.updateFormTwo.voltageClass != this.firstData.voltageClass ? this.updateFormTwo.voltageClass : undefined,
           assignmentType: this.updateFormTwo.assignmentType != this.firstData.assignmentType ? this.updateFormTwo.assignmentType : undefined,

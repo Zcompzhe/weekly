@@ -101,6 +101,24 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
+              <el-form-item label="项目性质" prop="projectProperty" placeholder="请选择项目性质">
+                <el-select v-model="projectForm.projectProperty" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.projectPropertyOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="工程类型" prop="engineeringType" placeholder="请选择工程类型">
+                <el-select v-model="projectForm.engineeringType" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.engineeringTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
               <el-form-item label="作业类型" prop="assignmentType" placeholder="请选择作业类型">
                 <el-select v-model="projectForm.assignmentType" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in projectForm.options.assignmentTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
@@ -108,6 +126,8 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="施工单位类别" prop="constructionType" placeholder="请选择施工单位类别">
@@ -124,8 +144,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="实际开工时间" prop="actualStartTime" placeholder="请选择实际开工时间">
@@ -140,6 +158,8 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="主业作业人数" prop="mainWorkerNum" placeholder="请输入主业单位作业人数">
@@ -155,9 +175,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-
-        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="请选择实际状态">
@@ -174,6 +191,8 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="项目状态" prop="projectState" placeholder="管控内状态">
@@ -350,6 +369,7 @@ export default {
         voltageClass:"",
         assignmentType:"",
         constructionType:"",
+        engineeringType:"",
         actualStartTime: "",
         planCompletionTime: "",
         projectScale: "",
@@ -358,16 +378,19 @@ export default {
         currentSubcontractorNum: "",
         adminDept: "",
         projectState: "",
+        projectProperty:"",
         
         options: {
           adminIdOptions: {},
           supervisionIdOptions: {},
           districtIdOptions: {},
           adminDeptOptions: {},
+          engineeringTypeOptions:{},
           constructDeptIdOptions: {},
           voltageClassOptions:{},
           assignmentTypeOptions:{},
           constructionTypeOptions:{},
+          projectPropertyOptions:{},
           projectStateOptions: [{
             value: true,
             name: "是"
@@ -396,6 +419,7 @@ export default {
         districtId: [
           { required: true, message: "请选择所在区域", trigger: "change" }
         ],
+        
         latitude: [
           {
             required: true,
@@ -598,6 +622,10 @@ export default {
       getApi.getAllProjectAdminDeptEnum().then(response => {
         this.projectForm.options.adminDeptOptions = response;
       });
+      //获得项目性质
+      this.projectForm.options.projectPropertyOptions = dataApi.getProjectProperty();
+      //获得工程类型
+      this.projectForm.options.engineeringTypeOptions = dataApi.getEngineeringType();
       //获取电压等级
       this.projectForm.options.voltageClassOptions = dataApi.getVoltageClass();
       //获取作业类型
@@ -625,7 +653,7 @@ export default {
     adminIdChanged(){
     
       this.projectForm.options.adminIdOptions.forEach(ele=>{
-        if(ele.name == "国网上海市电力公司工程建设咨询分公司" && ele.id == this.projectForm.adminId){
+        if(ele.name != "国网上海市电力公司工程建设咨询分公司" && ele.id == this.projectForm.adminId){
           this.personForm.projectManagerId=  [-1,100000];
           this.personForm.qualityStaffId =  [-1,100000];
           this.personForm.safetyStaffId = [-1,100000];
@@ -675,6 +703,8 @@ export default {
           latitude: this.projectForm.latitude,
           longitude:this.projectForm.longitude,
           voltageClass: this.projectForm.voltageClass,
+          engineeringType:this.projectForm.engineeringType,
+          projectProperty:this.projectForm.projectProperty,
           assignmentType: this.projectForm.assignmentType,
           constructionType: this.projectForm.constructionType,
           name: this.projectForm.name,

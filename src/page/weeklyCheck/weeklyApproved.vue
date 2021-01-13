@@ -79,7 +79,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="pagination.currentPage" :page-sizes="pagination.pageSizes" :page-size="pagination.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination.total"></el-pagination>
       </div>
       <el-dialog title="详细信息" :visible.sync="detailPanelFlag" width="1500px" :modal="false">
-                <el-row :gutter="20">
+                            <el-row :gutter="20">
           <el-col :span="20">
             <div class="bar">
               <div id="title">
@@ -201,12 +201,27 @@
               <el-input disabled v-model="weeklyDetail.voltageClass" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目性质</div>
+              <el-input disabled v-model="weeklyDetail.projectProperty" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">工程类型</div>
+              <el-input disabled v-model="weeklyDetail.engineeringType" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
           <el-col :span="8">
             <div class="bar">
               <div class="title">作业类型</div>
               <el-input disabled v-model="weeklyDetail.assignmentType" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
               <div class="title">施工单位类别</div>
@@ -221,8 +236,7 @@
             </div>
           </el-col>
 
-        </el-row>
-        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
+      
           <el-col :span="8">
             <div class="bar">
               <div class="title">主业作业人数</div>
@@ -235,6 +249,8 @@
               <el-input disabled v-model="weeklyDetail.outsourcingWorkerNum" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
               <div class="title">固有风险</div>
@@ -247,9 +263,7 @@
               <el-input disabled v-model="weeklyDetail.dynamicRisk" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
-          </el-row>
-        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
-          <el-col :span="20">
+          <el-col :span="16">
             <div class="bar">
               <div class="title">是否有三级及以上风险</div>
               <el-input disabled v-model="weeklyDetail.hasThreePlusRiskWorkStr" disabled style="min-width:200px"></el-input>

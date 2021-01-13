@@ -4404,3 +4404,36 @@ export const getConstructionType  = () => {
     },
   ]
 }
+
+// 获取项目性质
+export const getProjectProperty  = () => {
+  return [
+    {
+      value: "基建管控内",
+    },
+    {
+      value: "基建管控外",
+    },
+    {
+      value: "用户",
+    },
+    {
+      value: "境外",
+    },
+    {
+      value: "省外",
+    },
+  ]
+}
+
+// 获取项目性质
+export const getEngineeringType  = () => {
+  return [
+    {
+      value: "输电线路",
+    },
+    {
+      value: "变电站",
+    },
+  ]
+}

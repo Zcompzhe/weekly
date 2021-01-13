@@ -228,6 +228,24 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
+              <el-form-item label="项目性质" prop="projectProperty" placeholder="请选择项目性质">
+                <el-select v-model="projectForm.projectProperty" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.projectPropertyOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="工程类型" prop="engineeringType" placeholder="请选择工程类型">
+                <el-select v-model="projectForm.engineeringType" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.engineeringTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
               <el-form-item
                 label="作业类型"
                 prop="assignmentType"
@@ -249,6 +267,9 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+
+        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item
@@ -289,9 +310,7 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-
-        <el-row :gutter="20">
+        
           <el-col :span="6">
             <div class="bar">
               <el-form-item
@@ -326,6 +345,9 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+
+        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item
@@ -361,9 +383,7 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
 
-        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item
@@ -404,6 +424,9 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+
+        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item
@@ -679,7 +702,9 @@ export default {
         assignmentType:"",
         constructionType:"",
         actualStartTime: "",
+        projectProperty:"",
         planCompletionTime: "",
+        engineeringType:"",
         projectScale: "",
         currentWorkerNum: "",
         currentSubcontractorNum: "",
@@ -689,7 +714,9 @@ export default {
         projectState: "",
         options: {
           adminIdOptions: {},
+          engineeringTypeOptions:{},
           supervisionIdOptions: {},
+          projectPropertyOptions:{},
           districtIdOptions: {},
           adminDeptOptions: {},
           constructDeptIdOptions: {},
@@ -915,6 +942,10 @@ export default {
     getApi.getAllProjectAdminDeptEnum().then((response) => {
       this.projectForm.options.adminDeptOptions = response;
     });
+    //获得项目性质
+    this.projectForm.options.projectPropertyOptions = dataApi.getProjectProperty();
+    //获得工程类型
+    this.projectForm.options.engineeringTypeOptions = dataApi.getEngineeringType();
     //获取电压等级
     this.projectForm.options.voltageClassOptions = dataApi.getVoltageClass();
     //获取作业类型
@@ -950,6 +981,8 @@ export default {
       this.projectForm.detailedAddress = response.detailedAddress;
       this.projectForm.longitude = response.longitude;
       this.projectForm.latitude = response.latitude;
+      this.projectForm.projectProperty = response.projectProperty;
+      this.projectForm.engineeringType = response.engineeringType;
       this.projectForm.voltageClass = response.voltageClass;
       this.projectForm.assignmentType = response.assignmentType;
       this.projectForm.constructionType = response.constructionType;
@@ -1002,7 +1035,7 @@ export default {
     adminIdChanged() {
       this.projectForm.options.adminIdOptions.forEach((ele) => {
         if (
-          ele.name == "国网上海市电力公司工程建设咨询分公司" &&
+          ele.name != "国网上海市电力公司工程建设咨询分公司" &&
           ele.id == this.projectForm.adminId
         ) {
           this.personForm.projectManagerId = [-1, 100000];
@@ -1059,6 +1092,18 @@ export default {
             this.projectForm.voltageClass != this.firstData.voltageClass
               ? this.projectForm.voltageClass
               : undefined,
+
+          projectProperty:
+            this.projectForm.projectProperty != this.firstData.projectProperty
+              ? this.projectForm.projectProperty
+              : undefined,
+
+          engineeringType:
+            this.projectForm.engineeringType != this.firstData.engineeringType
+              ? this.projectForm.engineeringType
+              : undefined,
+
+          
           assignmentType:
             this.projectForm.assignmentType != this.firstData.assignmentType
               ? this.projectForm.assignmentType
