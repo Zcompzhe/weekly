@@ -182,12 +182,7 @@
               <el-input disabled v-model="weeklyDetail.projectScale" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
-<el-col :span="8">
-            <div class="bar">
-              <div class="title">当前分包人员数</div>
-              <el-input disabled v-model="weeklyDetail.currentSubcontractorNum" disabled style="min-width:200px"></el-input>
-            </div>
-          </el-col>
+        <el-col :span="8"></el-col>
         </el-row>
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           
