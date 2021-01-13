@@ -102,11 +102,24 @@
 
           <el-col :span="8">
             <div class="bar">
+              <el-form-item label="乡镇/街道" prop="street" placeholder="乡镇/街道">
+                <el-input v-model="addFormTwo.street" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
               <el-form-item label="详细地址" prop="detailedAddress" placeholder="当前月份">
                 <el-input v-model="addFormTwo.detailedAddress" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
+          <el-col :span="8">
+          </el-col>
+          </el-row>
+
+        <el-row :gutter="20">
 
           <el-col :span="8">
             <div class="bar">
@@ -120,6 +133,23 @@
             <div class="bar">
               <el-form-item label="定位纬度" prop="latitude" placeholder="周报开始日期">
                 <el-input v-model="addFormTwo.latitude" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="浮点型，如：100.123" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+           <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="施工单位类别" prop="constructionType" placeholder="周报开始日期">
+                <el-select v-model="addFormTwo.constructionType" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in addFormTwo.options.constructionTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="项目规模" prop="projectScale" placeholder="周报开始日期">
+                <el-input v-model="addFormTwo.projectScale" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -169,23 +199,7 @@
 
         <el-row :gutter="20">
 
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="施工单位类别" prop="constructionType" placeholder="周报开始日期">
-                <el-select v-model="addFormTwo.constructionType" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in addFormTwo.options.constructionTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="项目规模" prop="projectScale" placeholder="周报开始日期">
-                <el-input v-model="addFormTwo.projectScale" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
+  
         
           <el-col :span="8">
             <div class="bar">
@@ -201,6 +215,18 @@
                 <el-date-picker v-model="addFormTwo.planCompletionTime" :disabled="!addFormTwo.projectId" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
               </el-form-item>
             </div>
+          </el-col>
+
+               <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="当前月份">
+                <el-select v-model="addFormTwo.adminDept" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in addFormTwo.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8">
           </el-col>
           </el-row>
 
@@ -221,6 +247,14 @@
               </el-form-item>
             </div>
           </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="直属单位人数" prop="directWorkerNum" placeholder="直属单位人数">
+                <el-input v-model="addFormTwo.directWorkerNum" clearable :disabled="!addFormTwo.projectId" :rows="1" placeholder="整数，如20" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
         
           <el-col :span="8">
             <div class="bar">
@@ -230,15 +264,7 @@
             </div>
           </el-col>
 
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="所属部门" prop="adminDept" placeholder="当前月份">
-                <el-select v-model="addFormTwo.adminDept" clearable :disabled="!addFormTwo.projectId" placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in addFormTwo.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
+     
         </el-row>
       </el-form>
     </el-card>
@@ -573,6 +599,7 @@ export default {
         supervisionId: "",
         constructDeptId: "",
         districtId: "",
+        street:"",
         detailedAddress: "",
         latitude: "",
         longitude: "",
@@ -581,6 +608,7 @@ export default {
         projectScale: "",
         currentWorkerNum: "",
         currentSubcontractorNum: "",
+        directWorkerNum:"",
         adminDept: "",
         constructionType:"",
         voltageClass:"",
@@ -614,6 +642,9 @@ export default {
         ],
         constructDeptId: [
           { required: true, message: "请输入施工单位", trigger: "change" }
+        ],
+        street: [
+          { required: false, message: "请输入乡镇/街道", trigger: "change" }
         ],
         detailedAddress: [
           { required: true, message: "请输入详细地址", trigger: "change" }
@@ -678,6 +709,25 @@ export default {
                 }
               } else {
                 callback(new Error("请输入当前分包人数"));
+              }
+            }
+          }
+        ],
+        directWorkerNum: [
+          {
+            required: false,
+            trigger: "blur",
+            validator: (rule, value, callback) => {
+              if (value == "0") callback();
+              if (value != "" && value != null) {
+                var reg = /^[1-9]\d*$/;
+                if (!reg.test(value) && value != "0") {
+                  callback(new Error("当前分包人数需要整数，如：20"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback();
               }
             }
           }
@@ -994,12 +1044,14 @@ export default {
         this.addFormTwo.engineeringType = "";
         this.addFormTwo.projectProperty = "";
         this.addFormTwo.districtId = "";
+        this.addFormTwo.street = "";
         this.addFormTwo.detailedAddress = "";
         this.addFormTwo.latitude = "";
         this.addFormTwo.longitude = "";
         this.addFormTwo.projectScale = "";
         this.addFormTwo.currentWorkerNum = "";
         this.addFormTwo.currentSubcontractorNum = "";
+        this.addFormTwo.directWorkerNum = "";
         this.addFormTwo.adminDept = "";
         this.addFormTwo.actualStartTime = "";
         this.addFormTwo.planCompletionTime = "";
@@ -1028,6 +1080,7 @@ export default {
             this.addFormTwo.supervisionId = data.supervisionId;
             this.addFormTwo.constructDeptId = data.constructDeptId;
             this.addFormTwo.districtId = data.districtId;
+            this.addFormTwo.street = data.street;
             this.addFormTwo.detailedAddress = data.detailedAddress;
             this.addFormTwo.latitude = data.latitude;
             this.addFormTwo.longitude = data.longitude;
@@ -1035,6 +1088,9 @@ export default {
             this.addFormTwo.currentWorkerNum = data.currentWorkerNum;
             this.addFormTwo.currentSubcontractorNum =
               data.currentSubcontractorNum;
+
+            
+            this.addFormTwo.directWorkerNum = data.directWorkerNum;
             this.addFormTwo.engineeringType = data.engineeringType;
             this.addFormTwo.projectProperty = data.projectProperty;
             this.addFormTwo.voltageClass = data.voltageClass;
@@ -1328,11 +1384,13 @@ export default {
           supervisionId: this.addFormTwo.supervisionId != this.beforeProjectInfo.supervisionId ? this.addFormTwo.supervisionId : undefined,
           constructDeptId: this.addFormTwo.constructDeptId != this.beforeProjectInfo.constructDeptId ? this.addFormTwo.constructDeptId : undefined,
           districtId: this.addFormTwo.districtId != this.beforeProjectInfo.districtId ? this.addFormTwo.districtId : undefined,
+          street : this.addFormTwo.street != this.beforeProjectInfo.street ? this.addFormTwo.street : undefined,
           detailedAddress: this.addFormTwo.detailedAddress != this.beforeProjectInfo.detailedAddress ? this.addFormTwo.detailedAddress : undefined,
           latitude: this.addFormTwo.latitude != this.beforeProjectInfo.latitude ? this.addFormTwo.latitude : undefined,
           longitude: this.addFormTwo.longitude != this.beforeProjectInfo.longitude ? this.addFormTwo.longitude : undefined,
           projectScale: this.addFormTwo.projectScale != this.beforeProjectInfo.projectScale ? this.addFormTwo.projectScale : undefined,
           currentWorkerNum: this.addFormTwo.currentWorkerNum != this.beforeProjectInfo.currentWorkerNum ? this.addFormTwo.currentWorkerNum : undefined,
+          directWorkerNum: this.addFormTwo.directWorkerNum != this.beforeProjectInfo.directWorkerNum ? this.addFormTwo.directWorkerNum : undefined,
           currentSubcontractorNum: this.addFormTwo.currentSubcontractorNum != this.beforeProjectInfo.currentSubcontractorNum ? this.addFormTwo.currentSubcontractorNum : undefined,
           adminDept: this.addFormTwo.adminDept != this.beforeProjectInfo.adminDept ? this.addFormTwo.adminDept : undefined,
           projectProperty: this.addFormTwo.projectProperty != this.beforeProjectInfo.projectProperty ? this.addFormTwo.projectProperty : undefined,
@@ -1401,6 +1459,7 @@ export default {
           adminDept: this.addFormTwo.adminDept,
           adminId: this.addFormTwo.adminId,
           constructDeptId: this.addFormTwo.constructDeptId,
+          street: this.addFormTwo.street,
           detailedAddress: this.addFormTwo.detailedAddress,
           districtId: this.addFormTwo.districtId,
           hasThreePlusRiskWork: this.addFormFour.hasThreePlusRiskWork,
@@ -1410,6 +1469,7 @@ export default {
           monthStartTime: this.addFormOne.monthStartTime,
           projectId: this.addFormTwo.id,
           supervisionId: this.addFormTwo.supervisionId,
+          directWorkerNum:this.addFormTwo.directWorkerNum,
           currentSubcontractorNum: this.addFormTwo.currentSubcontractorNum,
           currentWorkerNum: this.addFormTwo.currentWorkerNum,
           projectScale: this.addFormTwo.projectScale,

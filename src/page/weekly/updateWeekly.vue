@@ -102,11 +102,23 @@
 
           <el-col :span="8">
             <div class="bar">
+              <el-form-item label="乡镇/街道" prop="street" placeholder="乡镇/街道">
+                <el-input v-model="updateFormTwo.street" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
               <el-form-item label="详细地址" prop="detailedAddress" placeholder="当前月份">
                 <el-input v-model="updateFormTwo.detailedAddress" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
+          <el-col :span="8">
+          </el-col>
+          </el-row>
+        <el-row :gutter="20">
 
           <el-col :span="8">
             <div class="bar">
@@ -123,8 +135,28 @@
               </el-form-item>
             </div>
           </el-col>
+          
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="施工单位类别" prop="constructionType" placeholder="周报开始日期">
+                <el-select v-model="updateFormTwo.constructionType" clearable  placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormTwo.options.constructionTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="项目规模" prop="projectScale" placeholder="周报开始日期">
+                <el-input v-model="updateFormTwo.projectScale" clearable  :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
         </el-row>
         <el-row :gutter="20">
+        
+        
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="电压等级" prop="voltageClass" placeholder="电压等级">
@@ -167,23 +199,6 @@
           </el-row>
         <el-row :gutter="20">
 
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="施工单位类别" prop="constructionType" placeholder="周报开始日期">
-                <el-select v-model="updateFormTwo.constructionType" clearable  placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in updateFormTwo.options.constructionTypeOptions" :key="item.value" :label="item.value" :value="item.value"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="项目规模" prop="projectScale" placeholder="周报开始日期">
-                <el-input v-model="updateFormTwo.projectScale" clearable  :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
         
           <el-col :span="8">
             <div class="bar">
@@ -199,6 +214,17 @@
                 <el-date-picker v-model="updateFormTwo.planCompletionTime" type="date" placeholder="选择日期时间" style="min-width:200px"></el-date-picker>
               </el-form-item>
             </div>
+          </el-col>
+                <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="当前月份">
+                <el-select v-model="updateFormTwo.adminDept" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in updateFormTwo.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="8">
           </el-col>
           </el-row>
         <el-row :gutter="20">
@@ -218,6 +244,13 @@
               </el-form-item>
             </div>
           </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <el-form-item label="直属单位人数" prop="directWorkerNum" placeholder="周报开始日期">
+                <el-input v-model="updateFormTwo.directWorkerNum" clearable  :rows="1" placeholder="整数，如20" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
         
           <el-col :span="8">
             <div class="bar">
@@ -227,15 +260,7 @@
             </div>
           </el-col>
 
-          <el-col :span="8">
-            <div class="bar">
-              <el-form-item label="所属部门" prop="adminDept" placeholder="当前月份">
-                <el-select v-model="updateFormTwo.adminDept" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in updateFormTwo.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
+    
         </el-row>
       </el-form>
     </el-card>
@@ -576,6 +601,7 @@ export default {
         supervisionId: "",
         constructDeptId: "",
         districtId: "",
+        street:"",
         detailedAddress: "",
         latitude: "",
         longitude: "",
@@ -592,6 +618,7 @@ export default {
         assignmentType:"",
         mainWorkerNum:"",
         outsourcingWorkerNum:"",
+        directWorkerNum:"",
 
         options: {
           idOptions: {},
@@ -619,6 +646,9 @@ export default {
         ],
         constructDeptId: [
           { required: true, message: "请输入施工单位", trigger: "change" }
+        ],
+        street: [
+          { required: false, message: "请输入乡镇/街道", trigger: "change" }
         ],
         detailedAddress: [
           { required: true, message: "请输入详细地址", trigger: "change" }
@@ -716,6 +746,25 @@ export default {
                 var reg = /^[1-9]\d*$/;
                 if (!reg.test(value) && value != "0") {
                   callback(new Error("外包单位人数需要整数，如：20"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback();
+              }
+            }
+          }
+        ],
+        directWorkerNum: [
+          {
+            required: false,
+            trigger: "blur",
+            validator: (rule, value, callback) => {
+              if (value == "0") callback();
+              if (value != "" && value != null) {
+                var reg = /^[1-9]\d*$/;
+                if (!reg.test(value) && value != "0") {
+                  callback(new Error("直属和省管产业单位人数需要整数，如：20"));
                 } else {
                   callback();
                 }
@@ -855,6 +904,8 @@ export default {
       this.updateFormTwo.supervisionId = res.projectWeeklyShowResp.supervisionId;
       this.updateFormTwo.constructDeptId = res.projectWeeklyShowResp.constructDeptId;
       this.updateFormTwo.districtId = res.projectWeeklyShowResp.districtId;
+      
+      this.updateFormTwo.street = res.projectWeeklyShowResp.street;
       this.updateFormTwo.detailedAddress = res.projectWeeklyShowResp.detailedAddress;
       this.updateFormTwo.longitude = res.projectWeeklyShowResp.longitude;
       this.updateFormTwo.latitude = res.projectWeeklyShowResp.latitude;
@@ -874,6 +925,7 @@ export default {
       this.updateFormTwo.assignmentType = res.projectWeeklyShowResp.assignmentType;
       this.updateFormTwo.mainWorkerNum = res.projectWeeklyShowResp.mainWorkerNum;
       this.updateFormTwo.outsourcingWorkerNum = res.projectWeeklyShowResp.outsourcingWorkerNum;
+      this.updateFormTwo.directWorkerNum = res.projectWeeklyShowResp.directWorkerNum;
       
 
 
@@ -883,7 +935,7 @@ export default {
       this.updateFormFive.actualState = res.projectWeeklyShowResp.actualState;
       this.updateFormFive.controlledState = res.projectWeeklyShowResp.controlledState;
       this.updateFormFive.hasESecurityOnline = res.projectWeeklyShowResp.hasESecurityOnline;
-      this.updateFormFive.outsourcingWorkerNum = res.projectWeeklyShowResp.outsourcingWorkerNum;
+
 
       
 
@@ -1060,6 +1112,7 @@ export default {
         this.updateFormTwo.supervisionId = "";
         this.updateFormTwo.constructDeptId = "";
         this.updateFormTwo.districtId = "";
+        this.updateFormTwo.street = "";
         this.updateFormTwo.detailedAddress = "";
         this.updateFormTwo.latitude = "";
         this.updateFormTwo.longitude = "";
@@ -1088,6 +1141,7 @@ export default {
             this.updateFormTwo.supervisionId = data.supervisionId;
             this.updateFormTwo.constructDeptId = data.constructDeptId;
             this.updateFormTwo.districtId = data.districtId;
+            this.updateFormTwo.street = data.street;
             this.updateFormTwo.detailedAddress = data.detailedAddress;
             this.updateFormTwo.latitude = data.latitude;
             this.updateFormTwo.longitude = data.longitude;
@@ -1429,6 +1483,8 @@ export default {
         projectUpdateReq = {
           id: this.updateFormTwo.id,
           constructDeptId: this.updateFormTwo.constructDeptId != this.firstData.constructDeptId ? this.updateFormTwo.constructDeptId : undefined,
+          
+          street: this.updateFormTwo.street != this.firstData.street ? this.updateFormTwo.street : undefined,
           detailedAddress: this.updateFormTwo.detailedAddress != this.firstData.detailedAddress ? this.updateFormTwo.detailedAddress : undefined,
           latitude: this.updateFormTwo.latitude != this.firstData.latitude ? this.updateFormTwo.latitude : undefined,
           longitude: this.updateFormTwo.longitude != this.firstData.longitude ? this.updateFormTwo.longitude : undefined,
@@ -1453,7 +1509,7 @@ export default {
           constructionType: this.updateFormTwo.constructionType != this.firstData.constructionType ? this.updateFormTwo.constructionType : undefined,
           mainWorkerNum: this.updateFormTwo.mainWorkerNum != this.firstData.mainWorkerNum ? this.updateFormTwo.mainWorkerNum : undefined,
           outsourcingWorkerNum: this.updateFormTwo.outsourcingWorkerNum != this.firstData.outsourcingWorkerNum ? this.updateFormTwo.outsourcingWorkerNum : undefined,
-
+          directWorkerNum: this.updateFormTwo.directWorkerNum != this.firstData.directWorkerNum ? this.updateFormTwo.directWorkerNum : undefined,
           constructionPrincipalNumber: this.updateFormThree.constructionPrincipalNumber != this.firstData.constructionPrincipalNumber ? this.updateFormThree.constructionPrincipalNumber : undefined,
           constructionPrincipal: this.updateFormThree.constructionPrincipal != this.firstData.constructionPrincipal ? this.updateFormThree.constructionPrincipal : undefined,
 
@@ -1486,6 +1542,8 @@ export default {
           adminDept: this.updateFormTwo.adminDept != this.firstData.adminDept ? this.updateFormTwo.adminDept : undefined,
           adminId: this.updateFormTwo.adminId != this.firstData.adminId ? this.updateFormTwo.adminId : undefined,
           constructDeptId: this.updateFormTwo.constructDeptId != this.firstData.constructDeptId ? this.updateFormTwo.constructDeptId : undefined,
+          
+          street: this.updateFormTwo.street != this.firstData.street ? this.updateFormTwo.street : undefined,
           detailedAddress: this.updateFormTwo.detailedAddress != this.firstData.detailedAddress ? this.updateFormTwo.detailedAddress : undefined,
           districtId: this.updateFormTwo.districtId != this.firstData.districtId ? this.updateFormTwo.districtId : undefined,
           hasThreePlusRiskWork: this.updateFormFour.hasThreePlusRiskWork != this.firstData.hasThreePlusRiskWork ? this.updateFormFour.hasThreePlusRiskWork : undefined,
@@ -1501,7 +1559,7 @@ export default {
           constructionType: this.updateFormTwo.constructionType != this.firstData.constructionType ? this.updateFormTwo.constructionType : undefined,
           mainWorkerNum: this.updateFormTwo.mainWorkerNum != this.firstData.mainWorkerNum ? this.updateFormTwo.mainWorkerNum : undefined,
           outsourcingWorkerNum: this.updateFormTwo.outsourcingWorkerNum != this.firstData.outsourcingWorkerNum ? this.updateFormTwo.outsourcingWorkerNum : undefined,
-
+          directWorkerNum: this.updateFormTwo.directWorkerNum != this.firstData.directWorkerNum ? this.updateFormTwo.directWorkerNum : undefined,
           
           monthStartTime: this.updateFormOne.monthStartTime != this.firstData.monthStartTime ? this.updateFormOne.monthStartTime : undefined,
           projectId: this.updateFormTwo.id != this.firstData.projectId ? this.updateFormTwo.id : undefined,

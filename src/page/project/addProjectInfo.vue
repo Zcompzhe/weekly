@@ -69,11 +69,22 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
+              <el-form-item label="乡镇/街道" prop="street" placeholder="请输入乡镇/街道">
+                <el-input v-model="projectForm.street" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          
+
+          <el-col :span="6">
+            <div class="bar">
               <el-form-item label="详细地址" prop="detailedAddress" placeholder="请输入详细地址">
                 <el-input v-model="projectForm.detailedAddress" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="定位经度" prop="longitude" placeholder="请输入详细地址">
@@ -88,8 +99,28 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="所属部门" prop="adminDept" placeholder="请选择实际状态">
+                <el-select v-model="projectForm.adminDept" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="项目状态" prop="projectState" placeholder="管控内状态">
+                <el-select v-model="projectForm.projectState" clearable placeholder="请选择" style="min-width:200px">
+                  <el-option v-for="item in projectForm.options.projectStateOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          </el-row>
         <el-row :gutter="20">
+        
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="电压等级" prop="voltageClass" placeholder="请选择电压等级">
@@ -175,6 +206,14 @@
               </el-form-item>
             </div>
           </el-col>
+
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="直属单位人数" prop="directWorkerNum" placeholder="请输入直属单位人数">
+                <el-input v-model="projectForm.directWorkerNum" clearable :rows="1" placeholder="整数，如：20" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
           <el-col :span="6">
             <div class="bar">
               <el-form-item label="当前分包人数" prop="currentSubcontractorNum" placeholder="请选择实际状态">
@@ -182,27 +221,8 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="所属部门" prop="adminDept" placeholder="请选择实际状态">
-                <el-select v-model="projectForm.adminDept" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in projectForm.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
           </el-row>
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item label="项目状态" prop="projectState" placeholder="管控内状态">
-                <el-select v-model="projectForm.projectState" clearable placeholder="请选择" style="min-width:200px">
-                  <el-option v-for="item in projectForm.options.projectStateOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
+    
       </el-form>
     </el-card>
 
@@ -364,6 +384,7 @@ export default {
         constructDeptId: "",
         districtId: "",
         detailedAddress: "",
+        street:"",
         longitude: "",
         latitude: "",
         voltageClass:"",
@@ -375,6 +396,8 @@ export default {
         projectScale: "",
         mainWorkerNum: "",
         outsourcingWorkerNum:"",
+
+        directWorkerNum:"",
         currentSubcontractorNum: "",
         adminDept: "",
         projectState: "",
@@ -415,6 +438,9 @@ export default {
         ],
         detailedAddress: [
           { required: true, message: "请输入详细地址", trigger: "change" }
+        ],
+        street:[
+          { required: false, message: "请输入乡镇/街道", trigger: "change" }
         ],
         districtId: [
           { required: true, message: "请选择所在区域", trigger: "change" }
@@ -513,6 +539,25 @@ export default {
                 var reg = /^[1-9]\d*$/;
                 if (!reg.test(value)&& value!="0") {
                   callback(new Error("外包单位作业人员数需要整数，如：20"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback();
+              }
+            }
+          }
+        ],
+        directWorkerNum:[
+          {
+            required: false,
+            trigger: "blur",
+            validator: (rule, value, callback) => {
+              if (value == "0") callback();
+              if (value != "" && value != null) {
+                var reg = /^[1-9]\d*$/;
+                if (!reg.test(value)&& value!="0") {
+                  callback(new Error("直属单位人数需要整数，如：20"));
                 } else {
                   callback();
                 }
@@ -699,6 +744,7 @@ export default {
           adminId: this.projectForm.adminId,
           constructDeptId: this.projectForm.constructDeptId,
           detailedAddress: this.projectForm.detailedAddress,
+          street:this.projectForm.street,
           districtId: this.projectForm.districtId,
           latitude: this.projectForm.latitude,
           longitude:this.projectForm.longitude,
@@ -713,6 +759,7 @@ export default {
           currentSubcontractorNum: this.projectForm.currentSubcontractorNum,
           mainWorkerNum: this.projectForm.mainWorkerNum,
           outsourcingWorkerNum:this.projectForm.outsourcingWorkerNum,
+          directWorkerNum:this.projectForm.directWorkerNum,
 
           constructionPrincipalNumber:this.personForm.constructionPrincipalNumber,
           constructionPrincipal:this.personForm.constructionPrincipal,

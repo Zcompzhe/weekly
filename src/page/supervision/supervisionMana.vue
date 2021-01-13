@@ -114,10 +114,20 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
+              <div class="title">乡镇/街道</div>
+              <el-input disabled v-model="weeklyDetail.street" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
               <div class="title">详细地址</div>
               <el-input disabled v-model="weeklyDetail.detailedAddress" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+          <el-col :span="8">
+          </el-col>
+          </el-row>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
               <div class="title">定位经度</div>
@@ -128,6 +138,19 @@
             <div class="bar">
               <div class="title">定位纬度</div>
               <el-input disabled v-model="weeklyDetail.latitude" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">施工单位类别</div>
+              <el-input disabled v-model="weeklyDetail.constructionType" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">下周是否有作业</div>
+              <el-input disabled v-model="weeklyDetail.hasWorkNextWeekStr" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -213,19 +236,7 @@
           </el-col>
           </el-row>
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
-          <el-col :span="8">
-            <div class="bar">
-              <div class="title">施工单位类别</div>
-              <el-input disabled v-model="weeklyDetail.constructionType" disabled style="min-width:200px"></el-input>
-            </div>
-          </el-col>
           
-          <el-col :span="8">
-            <div class="bar">
-              <div class="title">下周是否有作业</div>
-              <el-input disabled v-model="weeklyDetail.hasWorkNextWeekStr" disabled style="min-width:200px"></el-input>
-            </div>
-          </el-col>
 
       
           <el-col :span="8">
@@ -238,6 +249,19 @@
             <div class="bar">
               <div class="title">外包作业人数</div>
               <el-input disabled v-model="weeklyDetail.outsourcingWorkerNum" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">直属单位人数</div>
+              <el-input disabled v-model="weeklyDetail.directWorkerNum" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">当前分包人数</div>
+              <el-input disabled v-model="weeklyDetail.currentSubcontractorNum" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
           </el-row>
@@ -480,10 +504,22 @@
           </el-col>
           <el-col :span="8">
             <div class="bar">
+              <div class="title">乡镇/街道</div>
+              <el-input disabled v-model="projectDetail.street" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
               <div class="title">详细地址</div>
               <el-input disabled v-model="projectDetail.detailedAddress" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+           <el-col :span="8">
+           </el-col>
+
+
+          </el-row>
+          <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
             <div class="bar">
               <div class="title">定位经度</div>
@@ -496,6 +532,19 @@
               <el-input disabled v-model="projectDetail.latitude" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">所属部门</div>
+              <el-input disabled v-model="projectDetail.adminDept" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">项目状态</div>
+              <el-input disabled v-model="projectDetail.projectState" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
+
         </el-row>
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
           <el-col :span="8">
@@ -563,29 +612,21 @@
               <el-input disabled v-model="projectDetail.outsourcingWorkerNum" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
+
+          <el-col :span="8">
+            <div class="bar">
+              <div class="title">直属单位人数</div>
+              <el-input disabled v-model="projectDetail.directWorkerNum" disabled style="min-width:200px"></el-input>
+            </div>
+          </el-col>
           <el-col :span="8">
             <div class="bar">
               <div class="title">当前分包人员数</div>
               <el-input disabled v-model="projectDetail.currentSubcontractorNum" disabled style="min-width:200px"></el-input>
             </div>
           </el-col>
-          <el-col :span="8">
-            <div class="bar">
-              <div class="title">所属部门</div>
-              <el-input disabled v-model="projectDetail.adminDept" disabled style="min-width:200px"></el-input>
-            </div>
-          </el-col>
+          
           </el-row>
-        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">
-          <el-col :span="8">
-            <div class="bar">
-              <div class="title">项目状态</div>
-              <el-input disabled v-model="projectDetail.projectState" disabled style="min-width:200px"></el-input>
-            </div>
-          </el-col>
-          <el-col :span="8">
-          </el-col>
-        </el-row>
         <br>
         <hr><br>
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px;">

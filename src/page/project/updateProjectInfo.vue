@@ -152,6 +152,13 @@
           </el-col>
           <el-col :span="6">
             <div class="bar">
+              <el-form-item label="乡镇/街道" prop="street" placeholder="请输入乡镇/街道">
+                <el-input v-model="projectForm.street" clearable :rows="1" placeholder="请输入" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
               <el-form-item
                 label="详细地址"
                 prop="detailedAddress"
@@ -167,6 +174,8 @@
               </el-form-item>
             </div>
           </el-col>
+          </el-row>
+        <el-row :gutter="20">
           <el-col :span="6">
             <div class="bar">
               <el-form-item
@@ -198,6 +207,52 @@
                   placeholder="浮点型，如：100.123"
                   style="min-width: 200px"
                 ></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item
+                label="所属部门"
+                prop="adminDept"
+                placeholder="请选择实际状态"
+              >
+                <el-select
+                  v-model="projectForm.adminDept"
+                  clearable
+                  placeholder="请选择"
+                  style="min-width: 200px"
+                >
+                  <el-option
+                    v-for="item in projectForm.options.adminDeptOptions"
+                    :key="item.name"
+                    :label="item.name"
+                    :value="item.name"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="bar">
+              <el-form-item
+                label="项目状态"
+                prop="projectState"
+                placeholder="管控内状态"
+              >
+                <el-select
+                  v-model="projectForm.projectState"
+                  clearable
+                  placeholder="请选择"
+                  style="min-width: 200px"
+                >
+                  <el-option
+                    v-for="item in projectForm.options.projectStateOptions"
+                    :key="item.name"
+                    :label="item.name"
+                    :value="item.name"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </div>
           </el-col>
@@ -383,6 +438,13 @@
               </el-form-item>
             </div>
           </el-col>
+            <el-col :span="6">
+            <div class="bar">
+              <el-form-item label="直属单位人数" prop="directWorkerNum" placeholder="请输入直属单位人数">
+                <el-input v-model="projectForm.directWorkerNum" clearable :rows="1" placeholder="整数，如：20" style="min-width:200px"></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
 
           <el-col :span="6">
             <div class="bar">
@@ -401,55 +463,7 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item
-                label="所属部门"
-                prop="adminDept"
-                placeholder="请选择实际状态"
-              >
-                <el-select
-                  v-model="projectForm.adminDept"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width: 200px"
-                >
-                  <el-option
-                    v-for="item in projectForm.options.adminDeptOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          </el-row>
-
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <div class="bar">
-              <el-form-item
-                label="项目状态"
-                prop="projectState"
-                placeholder="管控内状态"
-              >
-                <el-select
-                  v-model="projectForm.projectState"
-                  clearable
-                  placeholder="请选择"
-                  style="min-width: 200px"
-                >
-                  <el-option
-                    v-for="item in projectForm.options.projectStateOptions"
-                    :key="item.name"
-                    :label="item.name"
-                    :value="item.name"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
+          
         </el-row>
       </el-form>
     </el-card>
@@ -695,6 +709,7 @@ export default {
         supervisionId: "",
         constructDeptId: "",
         districtId: "",
+        street:"",
         detailedAddress: "",
         longitude: "",
         latitude: "",
@@ -708,6 +723,7 @@ export default {
         projectScale: "",
         currentWorkerNum: "",
         currentSubcontractorNum: "",
+        directWorkerNum:"",
          mainWorkerNum: "",
         outsourcingWorkerNum:"",
         adminDept: "",
@@ -747,6 +763,9 @@ export default {
         ],
         constructDeptId: [
           { required: true, message: "请输入施工单位", trigger: "change" },
+        ],
+        street:[
+          { required: false, message: "请输入乡镇/街道", trigger: "change" },
         ],
         detailedAddress: [
           { required: true, message: "请输入详细地址", trigger: "change" },
@@ -847,6 +866,25 @@ export default {
                 var reg = /^[1-9]\d*$/;
                 if (!reg.test(value)&& value!="0") {
                   callback(new Error("外包单位作业人员数需要整数，如：20"));
+                } else {
+                  callback();
+                }
+              } else {
+                callback();
+              }
+            }
+          }
+        ],
+        directWorkerNum:[
+          {
+            required: false,
+            trigger: "blur",
+            validator: (rule, value, callback) => {
+              if (value == "0") callback();
+              if (value != "" && value != null) {
+                var reg = /^[1-9]\d*$/;
+                if (!reg.test(value)&& value!="0") {
+                  callback(new Error("直属单位人数需要整数，如：20"));
                 } else {
                   callback();
                 }
@@ -978,6 +1016,7 @@ export default {
       this.projectForm.supervisionId = response.supervisionId;
       this.projectForm.constructDeptId = response.constructDeptId;
       this.projectForm.districtId = response.districtId;
+      this.projectForm.street = response.street;
       this.projectForm.detailedAddress = response.detailedAddress;
       this.projectForm.longitude = response.longitude;
       this.projectForm.latitude = response.latitude;
@@ -989,6 +1028,7 @@ export default {
       this.projectForm.projectScale = response.projectScale;
       this.projectForm.mainWorkerNum = response.mainWorkerNum;
       this.projectForm.outsourcingWorkerNum = response.outsourcingWorkerNum;
+      this.projectForm.directWorkerNum = response.directWorkerNum;
       this.projectForm.currentSubcontractorNum =
         response.currentSubcontractorNum;
       this.projectForm.adminDept = response.adminDept;
@@ -1072,6 +1112,9 @@ export default {
             this.projectForm.constructDeptId != this.firstData.constructDeptId
               ? this.projectForm.constructDeptId
               : undefined,
+          street:this.projectForm.street != this.firstData.street
+              ? this.projectForm.street
+              : undefined,
           detailedAddress:
             this.projectForm.detailedAddress != this.firstData.detailedAddress
               ? this.projectForm.detailedAddress
@@ -1119,6 +1162,9 @@ export default {
           outsourcingWorkerNum:
             this.projectForm.outsourcingWorkerNum != this.firstData.outsourcingWorkerNum
               ? this.projectForm.outsourcingWorkerNum
+              : undefined,
+          directWorkerNum:this.projectForm.directWorkerNum != this.firstData.directWorkerNum
+              ? this.projectForm.directWorkerNum
               : undefined,
           projectState:
             this.projectForm.projectState != this.firstData.projectState
