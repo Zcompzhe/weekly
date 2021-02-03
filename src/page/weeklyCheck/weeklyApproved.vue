@@ -495,11 +495,12 @@ export default {
     };
   },
   created: function () {
-    let startDate = new Date();
-    let endDate = api.getThisWeekStart(startDate);
-    this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
-    this.searchTable.weeklyEndTime = new Date(endDate);
-
+    this.searchTable.weeklyStartTime = new Date();
+    this.searchTable.weeklyEndTime = api.getThisWeekStart(
+        this.searchTable.weeklyStartTime
+      );
+      
+    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
     //获取项目列表
     getApi.getAllProjectName().then(response => {
       this.searchTable.options.projectIdOptions = response;

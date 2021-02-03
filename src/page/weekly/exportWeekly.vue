@@ -29,8 +29,16 @@
           <el-col :span="8">
             <div class="bar">
               <el-form-item label="所属部门" prop="adminDept" placeholder="项目名称">
-                <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:200px">
+                <!-- <el-select v-model="searchTable.adminDept" clearable placeholder="请选择" style="min-width:200px">
                   <el-option v-for="item in searchTable.options.adminDeptOptions" :key="item.name" :label="item.name" :value="item.name"></el-option>
+                </el-select> -->
+                <el-select v-model="searchTable.adminDept" multiple collapse-tags clearable placeholder="请选择" style="min-width:200px">
+                  <el-option
+                    v-for="item in searchTable.options.adminDeptOptions"
+                    :key="item.name"
+                    :label="item.name"
+                    :value="item.name">
+                  </el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -254,9 +262,113 @@ export default {
           key: 36,
           label: `是否E安全上线`,
         },
-
+        {
+          key: 37,
+          label: `电压等级`,
+        },
+        {
+          key: 38,
+          label: `作业类型`,
+        },
+        {
+          key: 39,
+          label: `施工单位类别`,
+        },
+        {
+          key: 40,
+          label: `主业单位作业人数`,
+        },
+        {
+          key: 41,
+          label: `外包单位作业人数`,
+        },
+        {
+          key: 42,
+          label: `施工单位负责人`,
+        },
+        {
+          key: 43,
+          label: `施工单位负责人联系方式`,
+        },
+        {
+          key: 44,
+          label: `最大风险等级`,
+        },
+        {
+          key: 45,
+          label: `作业数量`,
+        },
+        {
+          key: 46,
+          label: `乡镇/街道`,
+        },
+        {
+          key: 47,
+          label: `项目性质`,
+        },
+        {
+          key: 48,
+          label: `工程类别`,
+        },
+        {
+          key: 49,
+          label: `直属和省管产业单位人数`,
+        },
+        {
+          key: 50,
+          label: `施工开始日期`,
+        },
+        {
+          key: 51,
+          label: `施工结束日期`,
+        },
+        {
+          key: 52,
+          label: `是否带电`,
+        },
+        {
+          key: 53,
+          label: `劳务分包单位`,
+        },
+        {
+          key: 54,
+          label: `专业分包单位`,
+        },
+        {
+          key: 55,
+          label: `到岗人员姓名`,
+        },
+        {
+          key: 56,
+          label: `到岗人员职位`,
+        },
+        {
+          key: 57,
+          label: `到岗人员电话`,
+        },
+        {
+          key: 58,
+          label: `到岗人员到岗时间`,
+        },
+        {
+          key:59,
+          label:"下周预计参建人员总数"
+        },
+        {
+          key:60,
+          label:"下周检查计划"
+        },
+        {
+          key:61,
+          label:"建设管理单位联系人"
+        },
+        {
+          key:62,
+          label:"建设管理单位联系人电话"
+        },
       ],
-      value: [0, 1, 2, 21, 22, 23, 14, 15, 16, 17, 18],
+      value: [0,37,38,22,44,52,50,51,5,46,6,7,8,2,4,39,53,54,3,40,41,49,42,43,55,56,57,58],
+      valueExportProjectWeekly: [0,47,36,48,2,3,4,6,21,19,59,22,23,60,61,62],
       //搜索条件数据
       searchTable: {
         weeklyStartTime: "",
@@ -296,11 +408,17 @@ export default {
   created: function () {
     let data = this.$route.params;
     this.flag = data.flag;
+    if(this.flag == "exportProjectWeekly")
+    {
+      this.value = this.valueExportProjectWeekly;
+    }
     //空搜索获取信息
-    let startDate = new Date();
-    let endDate = api.getThisWeekStart(startDate);
-    this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
-    this.searchTable.weeklyEndTime = new Date(endDate);
+    this.searchTable.weeklyStartTime = new Date();
+    this.searchTable.weeklyEndTime = api.getThisWeekStart(
+        this.searchTable.weeklyStartTime
+      );
+      
+    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
     //获取所属部门
     getApi.getAllProjectAdminDeptEnum().then(response => {
       this.searchTable.options.adminDeptOptions = response;
@@ -341,7 +459,7 @@ export default {
                 .then(response => {
                   let content = response;
                   let blob = new Blob([content]);
-                  let da = api.changeDate(new Date());
+                  let da = api.changeDate(this.searchTable.weeklyStartTime);
                   let fileName = "weekly-" + da + ".xlsx";
                   console.log(response);
                   if ("download" in document.createElement("a")) {
@@ -364,7 +482,7 @@ export default {
                 .then(response => {
                   let content = response;
                   let blob = new Blob([content]);
-                  let da = api.changeDate(new Date());
+                  let da = api.changeDate(this.searchTable.weeklyStartTime);
                   let fileName = "weekly-" + da + ".xlsx";
                   console.log(response);
                   if ("download" in document.createElement("a")) {
@@ -393,14 +511,10 @@ export default {
         this.searchTable.weeklyEndTime = "";
         return;
       }
-      this.searchTable.weeklyEndTime = api.getThisWeekStart(
+       this.searchTable.weeklyEndTime = api.getThisWeekStart(
         this.searchTable.weeklyStartTime
       );
-      this.searchTable.monthShowTime = api
-        .changeDate(this.searchTable.weeklyStartTime)
-        .substring(0, 7);
-      this.searchTable.monthStartTime =
-        api.changeDate(this.searchTable.weeklyStartTime).substring(0, 7) + "-01";
+      this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
     },
     goback() {
       this.$router.push({

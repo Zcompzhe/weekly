@@ -377,28 +377,17 @@
        </el-col>
           <el-col :span="8">
             <div class="bar">
-              <div class="title">周报开始日期</div>
+              <div class="title">作业统计日期</div>
                <el-date-picker
                   v-model="exportPanel.weeklyStartTime"
                   type="date"
                   placeholder="选择日期时间"
                   style="min-width: 200px; margin-left: 0px"
-                  @change = "exportWeeklyStartTimeChanged"
+                  @change="exportWeeklyStartTimeChanged"
                 ></el-date-picker>
             </div>
           </el-col>
-          <el-col :span="8">
-            <div class="bar">
-              <div class="title">周报结束日期</div>
-              <el-date-picker
-                  disabled
-                  v-model="exportPanel.weeklyEndTime"
-                  type="date"
-                  placeholder="选择日期时间"
-                  style="min-width: 200px; margin-left: 2px"
-                ></el-date-picker>
-            </div>
-          </el-col>
+
           <el-col :span="8">
        </el-col>
 
@@ -1226,18 +1215,20 @@ export default {
 
   created: function () {
     //空搜索获取信息
-    let startDate = new Date();
-    let endDate = api.getThisWeekStart(startDate);
-    this.searchTable.weeklyStartTime = new Date(api.changeDate(startDate));
-    this.searchTable.weeklyEndTime = new Date(endDate);
-
+    this.searchTable.weeklyStartTime = new Date();
+    this.searchTable.weeklyEndTime = api.getThisWeekStart(
+        this.searchTable.weeklyStartTime
+      );
+      
+    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
+    
     this.tableTitle =
       "公司" +
       new Date().getFullYear() +
       "年在建工程周报(" +
-      api.changeDate(startDate) +
+      api.changeDate(this.searchTable.weeklyStartTime) +
       "~" +
-      endDate +
+      api.changeDate(this.searchTable.weeklyEndTime) +
       ")";
     let list = {
       numberOfPage: this.pagination.pageSize,
@@ -1429,7 +1420,7 @@ export default {
               "年在建工程周报(" +
               api.changeDate(startDate) +
               "~" +
-              endDate +
+              api.changeDate(new Date(endDate)) +
               ")";
           });
         }
@@ -1467,15 +1458,10 @@ export default {
         this.exportPanel.weeklyEndTime = "";
         return;
       }
-      this.exportPanel.weeklyEndTime = api.getThisWeekStart(
+      this.exportPanel.weeklyStartTime = api.getLastFriday(
         this.exportPanel.weeklyStartTime
       );
-      this.exportPanel.monthShowTime = api
-        .changeDate(this.exportPanel.weeklyStartTime)
-        .substring(0, 7);
-      this.exportPanel.monthStartTime =
-        api.changeDate(this.exportPanel.weeklyStartTime).substring(0, 7) +
-        "-01";
+      console.log(this.exportPanel.weeklyStartTime)
     },
     weeklyStartTimeChanged() {
       if (this.searchTable.weeklyStartTime == null) {
@@ -1488,6 +1474,8 @@ export default {
       this.searchTable.weeklyEndTime = api.getThisWeekStart(
         this.searchTable.weeklyStartTime
       );
+      this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
+      
       this.searchTable.monthShowTime = api
         .changeDate(this.searchTable.weeklyStartTime)
         .substring(0, 7);

@@ -1,5 +1,6 @@
 export const changeDate = date => {
   console.log(date)
+  date = new Date(date);
   if (!date) {
     return undefined;
   } else {
@@ -47,19 +48,19 @@ export const changeDateToSecond2 = date => {
   }
 };
 
-//获得本周五到下周五
+//获得本周五到下周日
 export const getThisWeekStart = weeklyStartTime => {
+  weeklyStartTime = new Date(weeklyStartTime);
   //先求星期几
   var c = changeDate(weeklyStartTime);
   var b = new Date(Date.parse(c.replace(/\-/g, "/")));
-  console.log("选择的日期是星期", b.getDay());
   let weeklyStartTime2;
   //如果星期大于等于5
   if (b.getDay() >= 5) {
     //第一步，将截止日期求出来
 
     weeklyStartTime2 = new Date(weeklyStartTime);
-    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 14);
+    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 15);
     weeklyStartTime2 = changeDate(weeklyStartTime2);
 
     //第二步，将起始日期求出来
@@ -70,7 +71,7 @@ export const getThisWeekStart = weeklyStartTime => {
     //第一步，将截止日期求出来
 
     weeklyStartTime2 = new Date(weeklyStartTime);
-    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 7);
+    weeklyStartTime2.setDate(weeklyStartTime2.getDate() - b.getDay() + 8);
     weeklyStartTime2 = changeDate(weeklyStartTime2);
 
     //第二步，将起始日期求出来
@@ -110,3 +111,28 @@ export const getThisWeekStartTwo = weeklyStartTime => {
 
   return weeklyStartTime2;
 };
+
+
+// 日期加减 
+export const addDate = (date,days) => { 
+  var d=new Date(date); 
+  d.setDate(d.getDate()+days); 
+  var m=d.getMonth()+1; 
+  return d.getFullYear()+'-'+m+'-'+d.getDate(); 
+} 
+
+// 获得上一个周五
+export const getLastFriday = (date) => { 
+  var d=new Date(date); 
+  var c = changeDate(d);
+  var b = new Date(Date.parse(c.replace(/\-/g, "/")));
+  let returnDate = new Date();
+  console.log("星期:",b.getDay())
+  if(b.getDay() == 0)
+  {
+    returnDate = addDate(d,-9);
+  }else{
+    returnDate = addDate(d,-b.getDay()-2);
+  }
+  return returnDate;
+} 
