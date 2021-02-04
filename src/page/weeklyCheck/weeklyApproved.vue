@@ -500,7 +500,7 @@ export default {
         this.searchTable.weeklyStartTime
       );
       
-    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
+    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -8);
     //获取项目列表
     getApi.getAllProjectName().then(response => {
       this.searchTable.options.projectIdOptions = response;

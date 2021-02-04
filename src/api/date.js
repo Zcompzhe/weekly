@@ -114,12 +114,26 @@ export const getThisWeekStartTwo = weeklyStartTime => {
 
 
 // 日期加减 
-export const addDate = (date,days) => { 
-  var d=new Date(date); 
-  d.setDate(d.getDate()+days); 
-  var m=d.getMonth()+1; 
-  return d.getFullYear()+'-'+m+'-'+d.getDate(); 
-} 
+// export const addDate = (date,days) => { 
+//   var d=new Date(date); 
+//   d.setDate(d.getDate()+days); 
+//   var m=d.getMonth()+1; 
+//   return d.getFullYear()+'-'+m+'-'+d.getDate(); 
+// } 
+
+export const addDate = (date,addDays) => { //date传入你需要的日期，格式"xxxx-xx-xx"。addDays传要加减的日期数，往前传正数，往后传负数
+    var Dates = new Date(date);
+    Dates.setDate(Dates.getDate() + addDays);
+    var mon = Dates.getMonth() + 1,
+        day = Dates.getDate();
+    if(mon < 10){
+        mon = "0" + mon;//月份小于10，在前面补充0
+    }
+    if(day < 10){
+        day = "0" + day;//日小于10，在前面补充0
+    }
+    return Dates.getFullYear() + "-" + mon + "-" +day;
+}
 
 // 获得上一个周五
 export const getLastFriday = (date) => { 
@@ -130,9 +144,9 @@ export const getLastFriday = (date) => {
   console.log("星期:",b.getDay())
   if(b.getDay() == 0)
   {
-    returnDate = addDate(d,-9);
+    returnDate = addDate(d,-8);
   }else{
-    returnDate = addDate(d,-b.getDay()-2);
+    returnDate = addDate(d,-b.getDay()-1);
   }
   return returnDate;
 } 
