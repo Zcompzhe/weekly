@@ -144,9 +144,9 @@ export const getLastFriday = (date) => {
   console.log("星期:",b.getDay())
   if(b.getDay() == 0)
   {
-    returnDate = addDate(d,-8);
+    returnDate = addDate(d,-9);
   }else{
-    returnDate = addDate(d,-b.getDay()-1);
+    returnDate = addDate(d,-b.getDay()-2);
   }
   return returnDate;
 } 
