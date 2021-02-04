@@ -1220,7 +1220,7 @@ export default {
         this.searchTable.weeklyStartTime
       );
       
-    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -8);
+    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
     
     this.tableTitle =
       "公司" +
@@ -1475,13 +1475,13 @@ export default {
         this.searchTable.weeklyStartTime
       );
       // this.searchTable.weeklyEndTime = api.changeDate(this.searchTable.weeklyEndTime);
-      this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -8);
+      this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
       
       this.searchTable.monthShowTime = api
         .changeDate(this.searchTable.weeklyStartTime)
         .substring(0, 7);
       this.searchTable.monthStartTime =
-        api.changeDate(this.searchTable.weeklyStartTime).substring(0, 7) +
+        api.changeDate(this.searchTable.weeklyStartTime).substring(0,   7) +
         "-01";
     },
     //页码操控部分

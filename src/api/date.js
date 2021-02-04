@@ -79,7 +79,7 @@ export const getThisWeekStart = weeklyStartTime => {
     weeklyStartTime.setDate(weeklyStartTime.getDate() - b.getDay() - 2);
     weeklyStartTime = changeDate(weeklyStartTime);
   }
-  return weeklyStartTime2;
+  return addDate(weeklyStartTime2,-1);
 };
 //获得本周一到下周一
 export const getThisWeekStartTwo = weeklyStartTime => {

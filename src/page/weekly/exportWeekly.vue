@@ -418,7 +418,7 @@ export default {
         this.searchTable.weeklyStartTime
       );
       
-    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -8);
+    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
     //获取所属部门
     getApi.getAllProjectAdminDeptEnum().then(response => {
       this.searchTable.options.adminDeptOptions = response;
@@ -514,7 +514,7 @@ export default {
        this.searchTable.weeklyEndTime = api.getThisWeekStart(
         this.searchTable.weeklyStartTime
       );
-      this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -8);
+      this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
     },
     goback() {
       this.$router.push({
