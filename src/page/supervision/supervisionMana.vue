@@ -922,7 +922,7 @@ export default {
     },
     //生成风险排名
     searchWeekly(pageNum) {
-      if ((new Date()).getHours() < 9) {
+      if ((new Date()).getHours() < 8) {
         this.$message({
           type: "info",
           message: "系统正在初始化，请8点以后再试!"
