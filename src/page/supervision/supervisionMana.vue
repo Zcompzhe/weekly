@@ -925,7 +925,7 @@ export default {
       if ((new Date()).getHours() < 9) {
         this.$message({
           type: "info",
-          message: "系统正在初始化，请9点以后再试!"
+          message: "系统正在初始化，请8点以后再试!"
         });
         return;
       }
