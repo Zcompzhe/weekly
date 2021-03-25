@@ -1033,8 +1033,8 @@ export default {
         response.currentSubcontractorNum;
       this.projectForm.adminDept = response.adminDept;
       this.projectForm.projectState = response.projectState;
-      this.projectForm.actualStartTime = new Date(response.actualStartTime);
-      this.projectForm.planCompletionTime = new Date(
+      if(response.actualStartTime) this.projectForm.actualStartTime = new Date(response.actualStartTime);
+      if(response.planCompletionTime) this.projectForm.planCompletionTime = new Date(
         response.planCompletionTime
       );
 

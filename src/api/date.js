@@ -1,9 +1,11 @@
 export const changeDate = date => {
-  console.log(date)
-  date = new Date(date);
   if (!date) {
     return undefined;
-  } else {
+  } 
+  else {
+  console.log(date)
+  date = new Date(date);
+ 
     // var date = new Date(date);
     var y = date.getFullYear();
     var m = date.getMonth() + 1;
