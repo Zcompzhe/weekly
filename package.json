@@ -21,7 +21,7 @@
     "loading-vue": "^0.0.2",
     "postcss-loader": "^3.0.0",
     "store": "^2.0.12",
-    "three": "^0.86.0",
+    "three": "^0.125.0",
     "vue": "^2.3.3",
     "vue-router": "^2.6.0",
     "vuex": "^2.3.1",
