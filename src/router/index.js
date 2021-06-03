@@ -16,7 +16,7 @@ const weeklyData = r =>
     () => r(require("../page/weekly/weeklyDataManage")),
     "weeklyDataManage"
   );
-  const noSubmit = r =>
+const noSubmit = r =>
   require.ensure(
     [],
     () => r(require("../page/weekly/noSubmit")),
@@ -33,6 +33,22 @@ const exportWeekly = r =>
     () => r(require("../page/weekly/exportWeekly")),
     "exportWeekly"
   );
+
+
+  const chartDisplay = r =>
+  require.ensure(
+    [],
+    () => r(require("../page/project/chartDisplay")),
+    "chartDisplay"
+  );
+
+  
+const workChartDisplay = r =>
+require.ensure(
+  [],
+  () => r(require("../page/project/workChartDisplay")),
+  "workChartDisplay"
+);
 const updateWeekly = r =>
   require.ensure(
     [],
@@ -153,14 +169,14 @@ const supervisionResult = r =>
     () => r(require("../page/supervision/supervisionResult")),
     "supervisionResult"
   );
-  const rectificationFeedback = r =>
+const rectificationFeedback = r =>
   require.ensure(
     [],
     () => r(require("../page/rectification/rectificationFeedback")),
     "rectificationFeedback"
   );
 
-  const userInfo = r =>
+const userInfo = r =>
   require.ensure(
     [],
     () => r(require("../page/infoMana/userInfo")),
@@ -236,6 +252,26 @@ export default [
         meta: {
           activePath: "/exception/exception",
           bcrumd: ["异常反馈"]
+        }
+      },
+      {
+        // 周报数据管理
+        path: "/project/chartDisplay",
+        name: "chartDisplay",
+        component: chartDisplay,
+        meta: {
+          activePath: "/project/chartDisplay",
+          bcrumd: ["项目图表展示"]
+        }
+      },
+      {
+        // 周报数据管理
+        path: "/project/workChartDisplay",
+        name: "workChartDisplay",
+        component: workChartDisplay,
+        meta: {
+          activePath: "/project/workChartDisplay",
+          bcrumd: ["周报图表展示"]
         }
       },
 

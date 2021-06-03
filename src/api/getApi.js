@@ -261,5 +261,17 @@ export const aa = () => {
   return request.get(`/projectWeeklyManagement/aa`);
 };
 
+//获取图表数据
+export const getProjectInfoDisplay = () => {
+  return request.get(`/projectWeeklyManagement/getProjectInfoDisplay`);
+};
+
+//获取图表数据
+export const getWorkInfoDisplay = (list) => {
+  return request.get(`/projectWeeklyManagement/getWorkInfoDisplay`,{
+    params:list
+  });
+};
+
 
 

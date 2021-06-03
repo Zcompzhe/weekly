@@ -243,13 +243,23 @@
           </div>
         </el-col>
 
-        <el-col :offset="1" :span="2">
+        <el-col :offset="1" :span="3">
           <div class="bar">
             <el-button
               type="primary"
               style="margin-right: 20px"
               @click="showNotSubmit"
               >本周未上报项目</el-button
+            >
+          </div>
+        </el-col>
+        <el-col :span="2">
+          <div class="bar">
+            <el-button
+              type="primary"
+              style="margin-right: 20px"
+              @click="chartDisplay"
+              >作业数量图表</el-button
             >
           </div>
         </el-col>
@@ -372,32 +382,30 @@
         width="1400px"
         :modal="false"
       >
-       <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px">
-       <el-col :span="8">
-       </el-col>
+        <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px">
+          <el-col :span="8"> </el-col>
           <el-col :span="8">
             <div class="bar">
               <div class="title">作业统计日期</div>
-               <el-date-picker
-                  v-model="exportPanel.weeklyStartTime"
-                  type="date"
-                  placeholder="选择日期时间"
-                  style="min-width: 200px; margin-left: 0px"
-                  @change="exportWeeklyStartTimeChanged"
-                ></el-date-picker>
+              <el-date-picker
+                v-model="exportPanel.weeklyStartTime"
+                type="date"
+                placeholder="选择日期时间"
+                style="min-width: 200px; margin-left: 0px"
+                @change="exportWeeklyStartTimeChanged"
+              ></el-date-picker>
             </div>
           </el-col>
 
-          <el-col :span="8">
-       </el-col>
-
+          <el-col :span="8"> </el-col>
         </el-row>
         <el-row :gutter="20" style="margin-top: 10px; margin-bottom: 5px">
-          <div style="margin:auto"><el-button type="primary" @click="exportWeeklyStatisticAsExcel()"
+          <div style="margin: auto">
+            <el-button type="primary" @click="exportWeeklyStatisticAsExcel()"
               >导出</el-button
-            ></div>
+            >
+          </div>
         </el-row>
-
       </el-dialog>
       <el-dialog
         title="详细信息"
@@ -844,7 +852,6 @@
               <el-input
                 disabled
                 v-model="weeklyDetail.projectManagerName"
-                
                 style="min-width: 200px"
               ></el-input>
             </div>
@@ -853,7 +860,6 @@
             <div class="bar">
               <div class="title">质量专责</div>
               <el-input
-                
                 v-model="weeklyDetail.qualityStaffName"
                 disabled
                 style="min-width: 200px"
@@ -864,7 +870,6 @@
             <div class="bar">
               <div class="title">安全专责</div>
               <el-input
-                
                 v-model="weeklyDetail.safetyStaffName"
                 disabled
                 style="min-width: 200px"
@@ -877,7 +882,6 @@
             <div class="bar">
               <div class="title">联系方式</div>
               <el-input
-                
                 v-model="weeklyDetail.projectManagerTEL"
                 disabled
                 style="min-width: 200px"
@@ -888,7 +892,6 @@
             <div class="bar">
               <div class="title">联系方式</div>
               <el-input
-                
                 v-model="weeklyDetail.qualityStaffTEL"
                 disabled
                 style="min-width: 200px"
@@ -899,7 +902,6 @@
             <div class="bar">
               <div class="title">联系方式</div>
               <el-input
-                
                 v-model="weeklyDetail.safetyStaffTEL"
                 disabled
                 style="min-width: 200px"
@@ -921,7 +923,6 @@
             <div class="bar">
               <div class="title">总监/总监代表</div>
               <el-input
-                
                 v-model="weeklyDetail.chiefInspectorName"
                 disabled
                 style="min-width: 200px"
@@ -934,7 +935,6 @@
               <el-input
                 disabled
                 v-model="weeklyDetail.professionalSupervisorName"
-                
                 style="min-width: 200px"
               ></el-input>
             </div>
@@ -945,7 +945,6 @@
               <el-input
                 disabled
                 v-model="weeklyDetail.safetySupervisorName"
-                
                 style="min-width: 200px"
               ></el-input>
             </div>
@@ -956,7 +955,6 @@
             <div class="bar">
               <div class="title">联系方式</div>
               <el-input
-                
                 v-model="weeklyDetail.chiefInspectorTEL"
                 disabled
                 style="min-width: 200px"
@@ -967,7 +965,6 @@
             <div class="bar">
               <div class="title">联系方式</div>
               <el-input
-                
                 v-model="weeklyDetail.professionalSupervisorTEL"
                 disabled
                 style="min-width: 200px"
@@ -980,7 +977,6 @@
               <el-input
                 disabled
                 v-model="weeklyDetail.safetySupervisorTEL"
-                
                 style="min-width: 200px"
               ></el-input>
             </div>
@@ -996,7 +992,6 @@
               <el-input
                 disabled
                 v-model="weeklyDetail.constructionPrincipal"
-                
                 style="min-width: 200px"
               ></el-input>
             </div>
@@ -1005,7 +1000,6 @@
             <div class="bar">
               <div class="title">施工单位负责人联系方式</div>
               <el-input
-                
                 v-model="weeklyDetail.constructionPrincipalNumber"
                 disabled
                 style="min-width: 200px"
@@ -1217,11 +1211,14 @@ export default {
     //空搜索获取信息
     this.searchTable.weeklyStartTime = new Date();
     this.searchTable.weeklyEndTime = api.getThisWeekStart(
-        this.searchTable.weeklyStartTime
-      );
-      
-    this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
-    
+      this.searchTable.weeklyStartTime
+    );
+
+    this.searchTable.weeklyStartTime = api.addDate(
+      this.searchTable.weeklyEndTime,
+      -9
+    );
+
     this.tableTitle =
       "公司" +
       new Date().getFullYear() +
@@ -1266,13 +1263,12 @@ export default {
     },
 
     exportWeeklyStatisticAsExcel() {
-      if(this.exportPanel.weeklyStartTime == "")
-      {
+      if (this.exportPanel.weeklyStartTime == "") {
         this.$message({
-            type: "error",
-            message: "请先选择周报开始日期再导出！",
-          });
-          return ;
+          type: "error",
+          message: "请先选择周报开始日期再导出！",
+        });
+        return;
       }
       let list = {
         weeklyStartTime:
@@ -1309,6 +1305,11 @@ export default {
     showNotSubmit() {
       this.$router.push({
         name: "noSubmit",
+      });
+    },
+    chartDisplay() {
+      this.$router.push({
+        name: "workChartDisplay",
       });
     },
     //历史信息
@@ -1461,7 +1462,7 @@ export default {
       this.exportPanel.weeklyStartTime = api.getLastFriday(
         this.exportPanel.weeklyStartTime
       );
-      console.log(this.exportPanel.weeklyStartTime)
+      console.log(this.exportPanel.weeklyStartTime);
     },
     weeklyStartTimeChanged() {
       if (this.searchTable.weeklyStartTime == null) {
@@ -1475,13 +1476,16 @@ export default {
         this.searchTable.weeklyStartTime
       );
       // this.searchTable.weeklyEndTime = api.changeDate(this.searchTable.weeklyEndTime);
-      this.searchTable.weeklyStartTime = api.addDate(this.searchTable.weeklyEndTime, -9);
-      
+      this.searchTable.weeklyStartTime = api.addDate(
+        this.searchTable.weeklyEndTime,
+        -9
+      );
+
       this.searchTable.monthShowTime = api
         .changeDate(this.searchTable.weeklyStartTime)
         .substring(0, 7);
       this.searchTable.monthStartTime =
-        api.changeDate(this.searchTable.weeklyStartTime).substring(0,   7) +
+        api.changeDate(this.searchTable.weeklyStartTime).substring(0, 7) +
         "-01";
     },
     //页码操控部分

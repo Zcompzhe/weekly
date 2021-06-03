@@ -83,8 +83,8 @@
         <el-menu-item index="/weekly/weeklyDataManage" v-if="flag3">
           <i class="el-icon-document"></i>周计划（周报）数据管理
         </el-menu-item>
-        <!-- <el-menu-item index="/weekly/exportWeekly">
-          <i class="el-icon-document"></i>周计划（周报）数据导出
+        <!-- <el-menu-item index="/project/workChartDisplay">
+          <i class="el-icon-document"></i>图表展示
         </el-menu-item> -->
       </el-submenu>
 

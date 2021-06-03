@@ -19,11 +19,12 @@ import axios from 'axios';
 //import { Message, loading } from 'element-ui';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import echarts from 'echarts'
 
 
 Vue.use(VueRouter);
 Vue.use(ElementUI);
-
+Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios;
 Vue.prototype.$loading = ElementUI.loading;
 Vue.prototype.$message = ElementUI.Message;
@@ -67,8 +68,8 @@ router.beforeEach((to, from, next) => {
 window.$config = {};
 
 //dev
-window.$config.PIC = 'http://172.16.14.20:8080';
-// window.$config.PIC = 'http://localhost:8080';
+// window.$config.PIC = 'http://172.16.14.20:8080';
+window.$config.PIC = 'http://localhost:8080';
 //dev
 window.$config.HOST = 'http://116.228.229.189:18081'
 
